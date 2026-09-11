@@ -363,25 +363,50 @@ function practiceNext(){
 function practicePrev(){if(practiceIndex>0){practiceIndex--;sessionStorage.setItem(practiceKey,practiceIndex);renderPractice();}}
 
 const questions=[
-["Nesta atividade, como calculamos o lucro simples?","Preço de venda menos custo","Custo mais preço de venda","Preço de venda dividido por 10","Idade mais custo","A atividade usa lucro simples = venda − custo."],
-["Se C2 é o preço de venda e B2 é o custo, qual fórmula calcula o lucro?","=C2-B2","=B2-C2","=C2/B2","C2-B2 sem sinal de igual","Fórmulas do Excel começam com =."],
-["Qual símbolo o Excel usa para divisão?","/","÷","x",":","Em fórmulas do Excel, a barra / representa divisão."],
-["Uma bicicleta de R$ 1.500 dividida em 10 partes iguais, sem juros, resulta em quanto?","R$ 150","R$ 15","R$ 1.490","R$ 1.510","1500 ÷ 10 = 150."],
-["A conta valor/10 representa necessariamente uma compra real parcelada?","Não","Sim, sempre","Somente para celulares","Somente para bicicletas","Compras reais podem incluir juros, taxas e preço total diferente."],
-["O que faz Alt+Tab no Windows?","Troca entre janelas abertas","Apaga uma célula","Cria uma fórmula","Fecha o Excel","Alt+Tab facilita a alternância entre a aula e o Excel."],
-["Qual é a vantagem da prática guiada desta aula?","Fazer uma ação por vez sem precisar memorizar muitos passos","Fazer tudo sem abrir o Excel","Evitar qualquer cálculo","Pular a explicação","Microtarefas reduzem a quantidade de instruções que o aluno precisa guardar de uma vez."],
-["Depois de terminar no PC da SEMAS, qual rotina está correta?","Enviar, salvar no Drive, apagar a cópia local e sair das contas","Deixar tudo aberto","Salvar a senha no navegador","Deixar a planilha na Área de Trabalho","A rotina protege a privacidade e prepara o computador para a próxima turma."]
+["Nesta atividade, como calculamos o lucro simples?","Preço de venda menos custo","Custo mais preço de venda","Preço de venda dividido por 10","Idade mais custo",0,"A atividade usa lucro simples = venda − custo."],
+["Se C2 é o preço de venda e B2 é o custo, qual fórmula calcula o lucro?","=C2-B2","=B2-C2","=C2/B2","C2-B2 sem sinal de igual",0,"Fórmulas do Excel começam com =."],
+["Qual símbolo o Excel usa para divisão?","/","÷","x",":",0,"Em fórmulas do Excel, a barra / representa divisão."],
+["Uma bicicleta de R$ 1.500 dividida em 10 partes iguais, sem juros, resulta em quanto?","R$ 150","R$ 15","R$ 1.490","R$ 1.510",0,"1500 ÷ 10 = 150."],
+["A conta valor/10 representa necessariamente uma compra real parcelada?","Não","Sim, sempre","Somente para celulares","Somente para bicicletas",0,"Compras reais podem incluir juros, taxas e preço total diferente."],
+["O que faz Alt+Tab no Windows?","Troca entre janelas abertas","Apaga uma célula","Cria uma fórmula","Fecha o Excel",0,"Alt+Tab facilita a alternância entre a aula e o Excel."],
+["Qual é a vantagem da prática guiada desta aula?","Fazer uma ação por vez sem precisar memorizar muitos passos","Fazer tudo sem abrir o Excel","Evitar qualquer cálculo","Pular a explicação",0,"Microtarefas reduzem a quantidade de instruções que o aluno precisa guardar de uma vez."],
+["Depois de terminar no PC da SEMAS, qual rotina está correta?","Enviar, salvar no Drive, apagar a cópia local e sair das contas","Deixar tudo aberto","Salvar a senha no navegador","Deixar a planilha na Área de Trabalho",0,"A rotina protege a privacidade e prepara o computador para a próxima turma."]
 ];
 let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
 const quiz=document.getElementById("quiz");
-questions.forEach((q,i)=>{const d=document.createElement("div");d.className="quiz-item";d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;quiz.appendChild(d)});
+function shuffleOptions(options){
+  const shuffled=[...options];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  return shuffled;
+}
+
+questions.forEach((q,i)=>{
+  const d=document.createElement("div");
+  d.className="quiz-item";
+
+  const options=q.slice(1,5).map((text,originalIndex)=>({
+    text,
+    originalIndex
+  }));
+
+  const shuffledOptions=shuffleOptions(options);
+
+  d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
+    shuffledOptions.map(o=>`<label><input type="radio" name="q${i}" value="${o.originalIndex}"> ${o.text}</label>`).join("")+
+    `<div class="answer" id="a${i}"></div>`;
+
+  quiz.appendChild(d);
+});
 function updateUI(){document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true}}
 updateUI();
 function showMode(mode){document.getElementById("pcMode").classList.toggle("active",mode==="pc");document.getElementById("phoneMode").classList.toggle("active",mode==="phone")}
-function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===0){score++;a.textContent="Correta! "+q[5]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}});if(!all)return;attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
+function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===q[5]){score++;a.textContent="Correta! "+q[6]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[6]}});if(!all)return;attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
 function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;updateUI()}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-function saveResult(){if(!completed)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return}let rows="";questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`});const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}</style></head><body><h1>SEMAS — Módulo 2 — Aula 07</h1><h2>Planejando uma Mini Empresa da Região</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Prática guiada alcançada:</strong> passo ${practiceIndex+1}/${practiceSteps.length}</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. Envie por e-mail, salve no Drive, apague a cópia local e saia das contas.</p></body></html>`;const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");a.href=url;a.download=`SEMAS_Modulo_2_Aula_07_${safe}.html`;a.click();URL.revokeObjectURL(url)}
+function saveResult(){if(!completed)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return}let rows="";questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===q[5]?"Correta":"Revisar"}</td></tr>`});const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}</style></head><body><h1>SEMAS — Módulo 2 — Aula 07</h1><h2>Planejando uma Mini Empresa da Região</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Prática guiada alcançada:</strong> passo ${practiceIndex+1}/${practiceSteps.length}</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. Envie por e-mail, salve no Drive, apague a cópia local e saia das contas.</p></body></html>`;const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");a.href=url;a.download=`SEMAS_Modulo_2_Aula_07_${safe}.html`;a.click();URL.revokeObjectURL(url)}
 function finishSession(){if(!confirm("Encerrar a sessão e limpar esta aula neste navegador?"))return;sessionStorage.removeItem(lessonKey);sessionStorage.removeItem(practiceKey);location.reload()}
 </script>
 </body>
