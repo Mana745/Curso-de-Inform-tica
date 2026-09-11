@@ -384,6 +384,7 @@ const questions=[
     "Geração → transmissão → subestações → distribuição → casa",
     "Tomada → nuvem → usina → lâmpada",
     "Celular → poste → geração → tomada",
+    1,
     "A energia é gerada e percorre redes de transmissão e distribuição, passando por equipamentos que adequam a rede até chegar ao consumo."
   ],
   [
@@ -392,6 +393,7 @@ const questions=[
     "Uma pilha isolada",
     "A bateria interna de uma lanterna",
     "Uma bateria de celular sem estar carregando",
+    0,
     "A alimentação da tomada residencial"
   ],
   [
@@ -400,6 +402,7 @@ const questions=[
     "Uma tomada residencial",
     "Uma linha de transmissão",
     "Uma subestação",
+    0,
     "Pilhas e baterias são exemplos comuns de fontes de corrente contínua."
   ],
   [
@@ -408,6 +411,7 @@ const questions=[
     "Transforma o celular em uma tomada de 220 V",
     "Guarda corrente alternada dentro do cabo",
     "Elimina a necessidade de bateria",
+    0,
     "O carregador possui eletrônica que recebe a alimentação da rede e entrega uma saída adequada ao aparelho."
   ],
   [
@@ -416,6 +420,7 @@ const questions=[
     "Velocidade da internet",
     "Volume do aparelho",
     "Volt, unidade de tensão elétrica",
+    3,
     "V é o símbolo de volt, unidade usada para medir tensão elétrica."
   ],
   [
@@ -424,6 +429,7 @@ const questions=[
     "12 V",
     "127 V",
     "380 V em todo lugar",
+    2,
     "Em muitas regiões brasileiras, o valor nominal residencial é 127 V, embora '110' ainda seja usado popularmente."
   ],
   [
@@ -432,6 +438,7 @@ const questions=[
     "Testar a tomada com o dedo",
     "Abrir o aparelho para olhar os fios",
     "Verificar a tensão indicada no aparelho ou no manual",
+    3,
     "A compatibilidade de tensão deve ser conferida antes de conectar o equipamento."
   ],
   [
@@ -440,6 +447,7 @@ const questions=[
     "Que só pode funcionar em 100 V exatos",
     "Que não usa eletricidade",
     "Que a tomada muda automaticamente de tamanho",
+    0,
     "Uma entrada 100–240 V indica uma faixa ampla de tensão aceita pelo equipamento, conforme especificação do fabricante."
   ]
 ];
@@ -500,12 +508,12 @@ function checkQuiz(){
       return;
     }
 
-    if(+s.value===0){
+    if(+s.value===q[5]){
       score++;
-      a.textContent="Correta! "+q[5];
+      a.textContent="Correta! "+q[6];
     }else{
       wrong.push(i+1);
-      a.textContent="Vale revisar: "+q[5];
+      a.textContent="Vale revisar: "+q[6];
     }
   });
 
@@ -579,13 +587,13 @@ function saveResult(){
   questions.forEach((q,i)=>{
     const s=document.querySelector(`input[name="q${i}"]:checked`);
     const n=s?+s.value:-1;
-    if(n!==0)wrong.push(i+1);
+    if(n!==q[5])wrong.push(i+1);
 
     rows+=`<tr>
       <td>${i+1}</td>
       <td>${esc(q[0])}</td>
       <td>${n>=0?esc(q[n+1]):"Sem resposta"}</td>
-      <td>${n===0?"Correta":"Revisar"}</td>
+      <td>${n===q[5]?"Correta":"Revisar"}</td>
     </tr>`;
   });
 
