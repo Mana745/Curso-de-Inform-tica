@@ -250,27 +250,52 @@ button:disabled{opacity:.5;cursor:not-allowed}
 <script>
 const lessonKey="semas_mod1_aula02_attempt";
 const questions=[
-["Qual frase descreve melhor o PowerShell?","Um shell de linha de comando e ferramenta de automação mais avançada","Um tipo de placa-mãe","Um navegador de internet","Uma memória externa","PowerShell combina shell, comandos e recursos de automação."],
-["O CMD ainda existe no Windows?","Sim","Não, foi removido","Só em celulares","Só no Linux","CMD e PowerShell continuam disponíveis no Windows."],
-["Qual comando mostra informações como IPv4 e gateway?","ipconfig","systeminfo","format","shutdown","ipconfig exibe informações atuais de configuração de rede TCP/IP."],
-["O IPv4 mostrado pelo ipconfig em uma rede local costuma ser o quê?","Um endereço privado/local do computador naquela rede","Sempre o IP público da internet","A senha do Wi-Fi","O endereço MAC","Em redes domésticas e escolares, o endereço IPv4 mostrado geralmente é local/privado."],
-["O que Test-Connection faz?","Testa se um destino responde pela rede usando solicitações de eco","Mede a capacidade do SSD","Cria uma pasta","Desliga o roteador","Test-Connection é usado para verificar se um destino pode ser alcançado em uma rede IP."],
-["O que significa ms em um teste de rede?","Milissegundos de tempo de resposta","Megabytes por segundo de download","Memória do sistema","Modelo do servidor","ms significa milissegundos e representa tempo, não largura de banda."],
-["Latência baixa significa necessariamente internet com download rápido?","Não","Sim, sempre","Somente no cabo","Somente no Wi-Fi","Latência e velocidade de download medem aspectos diferentes da conexão."],
-["Por que dois alunos podem obter tempos diferentes no mesmo teste?","Porque rede, rota, Wi-Fi e momento do teste podem variar","Porque o PowerShell inventa números","Porque cada teclado muda a internet","Porque o monitor interfere no servidor","Resultados de rede podem variar conforme condições locais e caminho até o destino."]
+["Qual frase descreve melhor o PowerShell?","Um shell de linha de comando e ferramenta de automação mais avançada","Um tipo de placa-mãe","Um navegador de internet","Uma memória externa",0,"PowerShell combina shell, comandos e recursos de automação."],
+["O CMD ainda existe no Windows?","Sim","Não, foi removido","Só em celulares","Só no Linux",0,"CMD e PowerShell continuam disponíveis no Windows."],
+["Qual comando mostra informações como IPv4 e gateway?","ipconfig","systeminfo","format","shutdown",0,"ipconfig exibe informações atuais de configuração de rede TCP/IP."],
+["O IPv4 mostrado pelo ipconfig em uma rede local costuma ser o quê?","Um endereço privado/local do computador naquela rede","Sempre o IP público da internet","A senha do Wi-Fi","O endereço MAC",0,"Em redes domésticas e escolares, o endereço IPv4 mostrado geralmente é local/privado."],
+["O que Test-Connection faz?","Testa se um destino responde pela rede usando solicitações de eco","Mede a capacidade do SSD","Cria uma pasta","Desliga o roteador",0,"Test-Connection é usado para verificar se um destino pode ser alcançado em uma rede IP."],
+["O que significa ms em um teste de rede?","Milissegundos de tempo de resposta","Megabytes por segundo de download","Memória do sistema","Modelo do servidor",0,"ms significa milissegundos e representa tempo, não largura de banda."],
+["Latência baixa significa necessariamente internet com download rápido?","Não","Sim, sempre","Somente no cabo","Somente no Wi-Fi",0,"Latência e velocidade de download medem aspectos diferentes da conexão."],
+["Por que dois alunos podem obter tempos diferentes no mesmo teste?","Porque rede, rota, Wi-Fi e momento do teste podem variar","Porque o PowerShell inventa números","Porque cada teclado muda a internet","Porque o monitor interfere no servidor",0,"Resultados de rede podem variar conforme condições locais e caminho até o destino."]
 ];
 
 let attempt=Number(sessionStorage.getItem(lessonKey)||0);
 let completed=false,lastScore=null,startedAt=Date.now(),finishedAt=null,currentMode="não informado";
 const quiz=document.getElementById("quiz");
-questions.forEach((q,i)=>{const d=document.createElement("div");d.className="quiz-item";d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;quiz.appendChild(d);});
+function shuffleOptions(options){
+  const shuffled=[...options];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  return shuffled;
+}
+
+questions.forEach((q,i)=>{
+  const d=document.createElement("div");
+  d.className="quiz-item";
+
+  const options=q.slice(1,5).map((text,originalIndex)=>({
+    text,
+    originalIndex
+  }));
+
+  const shuffledOptions=shuffleOptions(options);
+
+  d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
+    shuffledOptions.map(o=>`<label><input type="radio" name="q${i}" value="${o.originalIndex}"> ${o.text}</label>`).join("")+
+    `<div class="answer" id="a${i}"></div>`;
+
+  quiz.appendChild(d);
+});
 function formatTime(ms){const s=Math.max(0,Math.round(ms/1000)),m=Math.floor(s/60),sec=s%60;return `${m}min ${String(sec).padStart(2,"0")}s`;}
 function showMode(mode){currentMode=mode==="pc"?"SEMAS — computador":"Casa/fora da SEMAS — celular";document.getElementById("pcMode").classList.toggle("active",mode==="pc");document.getElementById("phoneMode").classList.toggle("active",mode==="phone");}
 function updateUI(){const r=document.getElementById("result");if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true;if(!completed)r.innerHTML="<strong>Duas tentativas foram usadas nesta sessão.</strong><br>Em uma nova sessão, o quiz começa novamente.";}else if(!completed){r.innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;}}
 updateUI();
 function checkQuiz(){
  if(attempt>=2)return;let score=0,all=true,wrong=[];
- questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return;}if(+s.value===0){score++;a.textContent="Correta! "+q[5];}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5];}});
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return;}if(+s.value===q[5]){score++;a.textContent="Correta! "+q[6];}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[6];}});
  if(!all){document.getElementById("result").innerHTML="<strong>Responda todas as perguntas antes de finalizar.</strong>";return;}
  attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;finishedAt=Date.now();
  document.getElementById("result").innerHTML=`<strong>Resultado da tentativa ${attempt}: ${score} de ${questions.length}.</strong><br>Tempo: ${formatTime(finishedAt-startedAt)}.<br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas as questões foram respondidas corretamente."}<br><span style="color:var(--muted)">Não existe nota mínima: o objetivo é interpretar corretamente o que os comandos medem.</span>`;
@@ -281,7 +306,7 @@ function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",
 function saveResult(){
  if(!completed||lastScore===null)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return;}
  const now=new Date();let rows="",wrong=[];
- questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;if(n!==0)wrong.push(i+1);rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;});
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;if(n!==q[5])wrong.push(i+1);rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===q[5]?"Correta":"Revisar"}</td></tr>`;});
  const report=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SEMAS - Módulo 1 Aula 02 - ${esc(name)}</title><style>body{font-family:Arial,sans-serif;max-width:950px;margin:30px auto;padding:18px;color:#172033;line-height:1.5}h1{color:#123b55}.meta{padding:18px;background:#f1f5f8;border-radius:10px}table{border-collapse:collapse;width:100%;margin-top:15px}th,td{border:1px solid #ccd3dc;padding:8px;text-align:left;vertical-align:top}th{background:#eaf2f7}.note{padding:14px;background:#fff8df;border-radius:8px}</style></head><body><h1>SEMAS — Módulo 1 — Aula 02</h1><h2>Testando a Internet e Comandos do PowerShell</h2><div class="meta"><strong>Aluno:</strong> ${esc(name)}<br><strong>Data e hora:</strong> ${now.toLocaleString("pt-BR")}<br><strong>Modo:</strong> ${esc(currentMode)}<br><strong>Tentativa:</strong> ${attempt} de 2<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Tempo:</strong> ${formatTime(finishedAt-startedAt)}</div><p class="note"><strong>Não existe nota mínima.</strong> Este relatório registra uma atividade de aprendizagem.</p><p><strong>Questões para revisar:</strong> ${wrong.length?wrong.join(", "):"nenhuma"}.</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Envie por e-mail ao professor, salve no Drive e apague o arquivo local do computador compartilhado.</p></body></html>`;
  const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
  a.href=url;a.download=`SEMAS_Modulo_1_Aula_02_${safe}_Tentativa_${attempt}.html`;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
