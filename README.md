@@ -1,5 +1,9 @@
 # 💻 Curso de Informática Básica Interativa — SEMAS
 
+!(imagens/01.png)
+!(imagens/02.png)
+!(imagens/03.png)
+!(imagens/04.png)
 Este ambiente de aprendizagem foi desenvolvido especialmente para as turmas de inclusão digital da **Secretaria Municipal de Assistência Social (SEMAS)**. O projeto utiliza tecnologias web estáticas (**HTML5, CSS3 e JavaScript**) para fornecer um material didático leve, acessível e totalmente gratuito para a comunidade.
 
 Eu desenvolvi esse curso com intuito de ser o mais prático e dinâmico possível evitar evasão e dar oportunidade para quem mora longe, em comunidades rurais de difícil acesso.
