@@ -5,23 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Curso de Informática</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; line-height: 1.6; }
-        h1 { color: #333; text-align: center; }
-        ul { list-style: none; padding: 0; }
-        li { margin: 10px 0; }
-        a { display: block; padding: 10px; background: #007bff; color: white; text-align: center; text-decoration: none; border-radius: 5px; }
-        a:hover { background: #0056b3; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; background-color: #f4f7f6; color: #333; }
+        h1 { text-align: center; color: #007bff; margin-bottom: 30px; }
+        .modulo-card { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .modulo-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 12px; color: #2c3e50; border-bottom: 2px solid #ecf0f1; padding-bottom: 5px; }
+        .aulas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+        .aulas-grid a { display: block; padding: 10px; background: #007bff; color: white; text-align: center; text-decoration: none; border-radius: 5px; font-size: 0.9rem; transition: background 0.2s; }
+        .aulas-grid a:hover { background: #0056b3; }
     </style>
 </head>
 <body>
+
     <h1>Curso de Informática</h1>
-    <p>Selecione o módulo que deseja acessar:</p>
-    <ul>
-        <li><a href="Modulo_0/">Módulo 0</a></li>
-        <li><a href="Modulo_01/">Módulo 1</a></li>
-        <li><a href="Modulo_02/">Módulo 2</a></li>
-        <li><a href="Modulo_03/">Módulo 3</a></li>
-        <li><a href="Modulo_04/">Módulo 4</a></li>
-    </ul>
+
+    <!-- MÓDULO 0 -->
+    <div class="modulo-card">
+        <div class="modulo-title">Módulo 0</div>
+        <div class="aulas-grid">
+            <a href="Modulo_0/Modulo_0_aula_01.html">Aula 1</a>
+            <a href="Modulo_0/Modulo_0_aula_02.html">Aula 2</a>
+            <a href="Modulo_0/Modulo_0_aula_03.html">Aula 3</a>
+            <a href="Modulo_0/Modulo_0_aula_04.html">Aula 4</a>
+            <a href="Modulo_0/Modulo_0_aula_05.html">Aula 5</a>
+            <a href="Modulo_0/Modulo_0_aula_06.html">Aula 6</a>
+            <a href="Modulo_0/Modulo_0_aula_07.html">Aula 7</a>
+            <a href="Modulo_0/Modulo_0_aula_08.html">Aula 8</a>
+        </div>
+    </div>
+
+    <!-- MÓDULO 1 -->
+    <div class="modulo-card">
+        <div class="modulo-title">Módulo 1</div>
+        <div class="aulas-grid">
+            <a href="Modulo_01/Modulo_01_aula_01.html">Aula 1</a>
+            <a href="Modulo_01/Modulo_01_aula_02.html">Aula 2</a>
+            <a href="Modulo_01/Modulo_01_aula_03.html">Aula 3</a>
+            <a href="Modulo_01/Modulo_01_aula_04.html">Aula 4</a>
+            <a href="Modulo_01/Modulo_01_aula_05.html">Aula 5</a>
+            <a href="Modulo_01/Modulo_01_aula_06.html">Aula 6</a>
+            <a href="Modulo_01/Modulo_01_aula_07.html">Aula 7</a>
+            <a href="Modulo_01/Modulo_01_aula_08.html">Aula 8</a>
+        </div>
+    </div>
+
+    <!-- Nota: Você pode copiar o padrão acima para os Módulos 2, 3 e 4 mudando apenas o nome das pastas nos links! -->
+
 </body>
 </html>
