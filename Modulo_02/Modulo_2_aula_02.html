@@ -332,26 +332,51 @@ A/C: Senhor(a) Prefeito(a) ______________________________</p>
 <script>
 const lessonKey="semas_mod2_aula02_attempt";
 const questions=[
-["Qual tamanho de papel vamos usar nesta atividade?","A4","Carta","A3","Qualquer tamanho","Nesta atividade usamos papel A4."],
-["Quais margens vamos configurar?","Superior e esquerda 3 cm; inferior e direita 2 cm","Todas com 1 cm","Todas com 5 cm","Somente margem superior","Usaremos 3 cm na parte superior e esquerda e 2 cm na inferior e direita."],
-["Qual fonte e tamanho são adequados para a atividade?","Arial ou Times New Roman, tamanho 12","Comic Sans tamanho 20","Arial tamanho 8","Qualquer fonte colorida","Arial ou Times New Roman em tamanho 12 deixam o texto simples e legível."],
-["Como ficará o corpo do texto?","Justificado, com espaçamento 1,5","Centralizado e com espaçamento 3","Todo alinhado à direita","Sem espaçamento entre linhas","O corpo da atividade será justificado e terá espaçamento 1,5."],
-["Qual recuo vamos usar no início dos parágrafos?","1,25 cm na primeira linha","10 cm","Nenhum em qualquer situação","5 cm em todo o parágrafo","Nesta atividade usamos recuo de primeira linha de 1,25 cm."],
-["Para que serve Ctrl + A no Word?","Selecionar todo o conteúdo do documento","Salvar o arquivo","Fechar o Word","Abrir a internet","Ctrl + A ajuda a selecionar todo o conteúdo para conferir ou aplicar a formatação."],
-["O que um pedido bem escrito deve explicar?","Onde está o problema, o que acontece, quem é afetado e o que se solicita","Somente o nome do prefeito","Somente a data","Somente a opinião do autor","Esses quatro elementos tornam a solicitação mais clara."],
-["Usar estas regras de formatação transforma a carta em um documento oficial da Prefeitura?","Não","Sim","Somente se estiver em PDF","Somente se usar Arial","A formatação é usada aqui para aprender Word; órgãos públicos podem ter modelos e regras próprios."]
+["Qual tamanho de papel vamos usar nesta atividade?","A4","Carta","A3","Qualquer tamanho",0,"Nesta atividade usamos papel A4."],
+["Quais margens vamos configurar?","Superior e esquerda 3 cm; inferior e direita 2 cm","Todas com 1 cm","Todas com 5 cm","Somente margem superior",0,"Usaremos 3 cm na parte superior e esquerda e 2 cm na inferior e direita."],
+["Qual fonte e tamanho são adequados para a atividade?","Arial ou Times New Roman, tamanho 12","Comic Sans tamanho 20","Arial tamanho 8","Qualquer fonte colorida",0,"Arial ou Times New Roman em tamanho 12 deixam o texto simples e legível."],
+["Como ficará o corpo do texto?","Justificado, com espaçamento 1,5","Centralizado e com espaçamento 3","Todo alinhado à direita","Sem espaçamento entre linhas",0,"O corpo da atividade será justificado e terá espaçamento 1,5."],
+["Qual recuo vamos usar no início dos parágrafos?","1,25 cm na primeira linha","10 cm","Nenhum em qualquer situação","5 cm em todo o parágrafo",0,"Nesta atividade usamos recuo de primeira linha de 1,25 cm."],
+["Para que serve Ctrl + A no Word?","Selecionar todo o conteúdo do documento","Salvar o arquivo","Fechar o Word","Abrir a internet",0,"Ctrl + A ajuda a selecionar todo o conteúdo para conferir ou aplicar a formatação."],
+["O que um pedido bem escrito deve explicar?","Onde está o problema, o que acontece, quem é afetado e o que se solicita","Somente o nome do prefeito","Somente a data","Somente a opinião do autor",0,"Esses quatro elementos tornam a solicitação mais clara."],
+["Usar estas regras de formatação transforma a carta em um documento oficial da Prefeitura?","Não","Sim","Somente se estiver em PDF","Somente se usar Arial",0,"A formatação é usada aqui para aprender Word; órgãos públicos podem ter modelos e regras próprios."]
 ];
 let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null,startedAt=Date.now(),finishedAt=null,currentMode="não informado";
 const quiz=document.getElementById("quiz");
-questions.forEach((q,i)=>{const d=document.createElement("div");d.className="quiz-item";d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;quiz.appendChild(d);});
+function shuffleOptions(options){
+  const shuffled=[...options];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  return shuffled;
+}
+
+questions.forEach((q,i)=>{
+  const d=document.createElement("div");
+  d.className="quiz-item";
+
+  const options=q.slice(1,5).map((text,originalIndex)=>({
+    text,
+    originalIndex
+  }));
+
+  const shuffledOptions=shuffleOptions(options);
+
+  d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
+    shuffledOptions.map(o=>`<label><input type="radio" name="q${i}" value="${o.originalIndex}"> ${o.text}</label>`).join("")+
+    `<div class="answer" id="a${i}"></div>`;
+
+  quiz.appendChild(d);
+});
 function formatTime(ms){const s=Math.max(0,Math.round(ms/1000)),m=Math.floor(s/60),sec=s%60;return `${m}min ${String(sec).padStart(2,"0")}s`;}
 function showMode(mode){currentMode=mode==="pc"?"SEMAS — computador":"Casa/fora da SEMAS — celular";document.getElementById("pcMode").classList.toggle("active",mode==="pc");document.getElementById("phoneMode").classList.toggle("active",mode==="phone");}
 function updateUI(){const r=document.getElementById("result");if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true;if(!completed)r.innerHTML="<strong>Duas tentativas foram usadas nesta sessão.</strong>"}else if(!completed)r.innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;}
 updateUI();
-function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===0){score++;a.textContent="Correta! "+q[5]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}});if(!all){document.getElementById("result").innerHTML="<strong>Responda todas as perguntas.</strong>";return}attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;finishedAt=Date.now();document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
+function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===q[5]){score++;a.textContent="Correta! "+q[6]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[6]}});if(!all){document.getElementById("result").innerHTML="<strong>Responda todas as perguntas.</strong>";return}attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;finishedAt=Date.now();document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
 function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;startedAt=Date.now();document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;document.getElementById("result").innerHTML=`Tentativa ${attempt+1} disponível.`}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-function saveResult(){if(!completed)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return}const topic=document.getElementById("requestTopic").value.trim(),now=new Date();let rows="",wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;if(n!==0)wrong.push(i+1);rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`});const report=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>SEMAS M2 A2</title><style>body{font-family:Arial;max-width:950px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}</style></head><body><h1>SEMAS — Módulo 2 — Aula 02</h1><h2>Carta Formal e Formatação no Word</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Data:</strong> ${now.toLocaleString("pt-BR")}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}</p>${topic?`<p><strong>Tema escolhido:</strong> ${esc(topic)}</p>`:""}<p><strong>Questões para revisar:</strong> ${wrong.length?wrong.join(", "):"nenhuma"}.</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. Envie por e-mail, salve no Drive, apague a cópia local e saia das contas.</p></body></html>`;const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");a.href=url;a.download=`SEMAS_Modulo_2_Aula_02_${safe}.html`;a.click();URL.revokeObjectURL(url)}
+function saveResult(){if(!completed)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return}const topic=document.getElementById("requestTopic").value.trim(),now=new Date();let rows="",wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;if(n!==q[5])wrong.push(i+1);rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===q[5]?"Correta":"Revisar"}</td></tr>`});const report=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>SEMAS M2 A2</title><style>body{font-family:Arial;max-width:950px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}</style></head><body><h1>SEMAS — Módulo 2 — Aula 02</h1><h2>Carta Formal e Formatação no Word</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Data:</strong> ${now.toLocaleString("pt-BR")}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}</p>${topic?`<p><strong>Tema escolhido:</strong> ${esc(topic)}</p>`:""}<p><strong>Questões para revisar:</strong> ${wrong.length?wrong.join(", "):"nenhuma"}.</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. Envie por e-mail, salve no Drive, apague a cópia local e saia das contas.</p></body></html>`;const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");a.href=url;a.download=`SEMAS_Modulo_2_Aula_02_${safe}.html`;a.click();URL.revokeObjectURL(url)}
 function finishSession(){if(!confirm("Encerrar a sessão e limpar esta aula neste navegador?"))return;sessionStorage.removeItem(lessonKey);location.reload()}
 </script>
 </body>
