@@ -509,26 +509,44 @@ function practicePrev(){
 renderPractice();
 
 const questions=[
-["Para que serve principalmente o CSS?","Controlar a apresentação visual de documentos como HTML","Criar a internet","Substituir o HTML","Salvar imagens","CSS descreve como o conteúdo deve ser apresentado."],
-["O que background-color altera?","A cor de fundo","A senha","O endereço do link","O nome do arquivo","background-color define a cor de fundo do elemento."],
-["O que a propriedade color altera?","A cor do texto","A largura da internet","O caminho da imagem","A pasta do projeto","color define a cor do texto."],
-["O que text-align: center faz?","Centraliza horizontalmente o conteúdo textual dentro do elemento","Centraliza o computador na mesa","Aumenta a fonte","Cria uma imagem","text-align controla o alinhamento horizontal do conteúdo inline."],
-["Para que serve padding?","Criar espaço interno entre conteúdo e borda","Criar um link","Mudar a senha","Apagar a borda","Padding cria espaço dentro da caixa."],
-["O que border-radius faz?","Arredonda cantos","Centraliza texto","Cria uma sombra","Muda a internet","border-radius arredonda os cantos da borda externa."],
-["O que box-shadow faz?","Adiciona uma sombra à caixa","Cria uma imagem","Abre um link","Apaga o fundo","box-shadow desenha sombra ao redor do elemento."],
-["Qual é uma boa regra de design para esta aula?","Usar efeitos para melhorar clareza sem atrapalhar leitura","Colocar o máximo de cores possível","Fazer tudo piscar","Centralizar todos os textos sempre","Estilo deve servir à legibilidade e organização."]
+["Para que serve principalmente o CSS?","Controlar a apresentação visual de documentos como HTML","Criar a internet","Substituir o HTML","Salvar imagens",0,"CSS descreve como o conteúdo deve ser apresentado."],
+["O que background-color altera?","A cor de fundo","A senha","O endereço do link","O nome do arquivo",0,"background-color define a cor de fundo do elemento."],
+["O que a propriedade color altera?","A cor do texto","A largura da internet","O caminho da imagem","A pasta do projeto",0,"color define a cor do texto."],
+["O que text-align: center faz?","Centraliza horizontalmente o conteúdo textual dentro do elemento","Centraliza o computador na mesa","Aumenta a fonte","Cria uma imagem",0,"text-align controla o alinhamento horizontal do conteúdo inline."],
+["Para que serve padding?","Criar espaço interno entre conteúdo e borda","Criar um link","Mudar a senha","Apagar a borda",0,"Padding cria espaço dentro da caixa."],
+["O que border-radius faz?","Arredonda cantos","Centraliza texto","Cria uma sombra","Muda a internet",0,"border-radius arredonda os cantos da borda externa."],
+["O que box-shadow faz?","Adiciona uma sombra à caixa","Cria uma imagem","Abre um link","Apaga o fundo",0,"box-shadow desenha sombra ao redor do elemento."],
+["Qual é uma boa regra de design para esta aula?","Usar efeitos para melhorar clareza sem atrapalhar leitura","Colocar o máximo de cores possível","Fazer tudo piscar","Centralizar todos os textos sempre",0,"Estilo deve servir à legibilidade e organização."]
 ];
 
 let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
 const quiz=document.getElementById("quiz");
 
+function shuffleOptions(options){
+  const shuffled=[...options];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  return shuffled;
+}
+
 questions.forEach((q,i)=>{
- const d=document.createElement("div");
- d.className="quiz-item";
- d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
- q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+
- `<div class="answer" id="a${i}"></div>`;
- quiz.appendChild(d);
+  const d=document.createElement("div");
+  d.className="quiz-item";
+
+  const options=q.slice(1,5).map((text,originalIndex)=>({
+    text,
+    originalIndex
+  }));
+
+  const shuffledOptions=shuffleOptions(options);
+
+  d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
+    shuffledOptions.map(o=>`<label><input type="radio" name="q${i}" value="${o.originalIndex}"> ${o.text}</label>`).join("")+
+    `<div class="answer" id="a${i}"></div>`;
+
+  quiz.appendChild(d);
 });
 
 function updateUI(){
@@ -547,8 +565,8 @@ function checkQuiz(){
   const s=document.querySelector(`input[name="q${i}"]:checked`);
   const a=document.getElementById("a"+i);
   if(!s){all=false;a.textContent="Responda esta questão.";return}
-  if(+s.value===0){score++;a.textContent="Correta! "+q[5]}
-  else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}
+  if(+s.value===q[5]){score++;a.textContent="Correta! "+q[6]}
+  else{wrong.push(i+1);a.textContent="Vale revisar: "+q[6]}
  });
  if(!all)return;
  attempt++;
@@ -585,7 +603,7 @@ function saveResult(){
  questions.forEach((q,i)=>{
   const s=document.querySelector(`input[name="q${i}"]:checked`);
   const n=s?+s.value:-1;
-  rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;
+  rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===q[5]?"Correta":"Revisar"}</td></tr>`;
  });
  const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}.note{padding:12px;background:#f2f5f8;border-radius:8px;white-space:pre-wrap;font-family:monospace}</style></head><body><h1>SEMAS — Módulo 4 — Aula 06</h1><h2>Deixando o Site Colorido e Animado</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Prática guiada:</strong> passo ${practiceIndex+1}/${practiceSteps.length}</p>${note?`<p><strong>Meu CSS:</strong></p><div class="note">${esc(note)}</div>`:""}<table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. O objetivo é aprender a usar CSS para melhorar apresentação e legibilidade.</p></body></html>`;
  const blob=new Blob([report],{type:"text/html;charset=utf-8"});
