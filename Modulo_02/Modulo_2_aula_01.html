@@ -282,27 +282,52 @@ button:disabled{opacity:.5;cursor:not-allowed}
 <script>
 const lessonKey="semas_mod2_aula01_attempt";
 const questions=[
-["O que é um documento em branco no Word?","Uma página digital onde podemos começar a escrever","Uma página da internet","Um antivírus","Uma pasta do Windows","Um documento em branco é o ponto inicial para criar um novo texto."],
-["Quais são as teclas-guia da mão esquerda nesta aula?","A, S, D, F","Q, W, E, R","Z, X, C, V","1, 2, 3, 4","Na posição básica, os dedos da mão esquerda repousam sobre A, S, D e F."],
-["Quais são as teclas-guia da mão direita no teclado português brasileiro?","J, K, L, Ç","U, I, O, P","H, J, K, L","7, 8, 9, 0","Na posição básica ensinada, a mão direita repousa sobre J, K, L e Ç."],
-["Para que servem as pequenas marcas nas teclas F e J?","Ajudam a localizar a posição das mãos sem olhar tanto para o teclado","Aumentam a velocidade do computador","Ativam o Word","Ligam o Wi-Fi","As marcas em F e J ajudam a encontrar a posição inicial pelo tato."],
-["No começo da digitação, o que é mais importante?","Precisão e postura confortável","Ser mais rápido que o colega","Digitar sem respirar","Usar só dois dedos","A velocidade cresce com prática; primeiro vêm precisão e conforto."],
-["Qual informação NÃO devemos colocar nessa atividade?","Senha ou endereço completo","O que gostamos de fazer","Nosso sonho","Nosso primeiro nome","Dados sensíveis e desnecessários não devem entrar no texto."],
-["Antes de salvar, o que é uma boa prática?","Reler e revisar o texto","Apagar tudo","Fechar o computador à força","Trocar a senha do Wi-Fi","Revisar ajuda a perceber letras faltando, espaços e erros simples."],
-["Num PC compartilhado da SEMAS, o que fazer depois de enviar e guardar o arquivo?","Apagar a cópia local e sair das contas","Deixar o Gmail aberto","Salvar a senha no navegador","Deixar o documento na área de trabalho","A rotina protege a privacidade do aluno e deixa a máquina pronta para a próxima turma."]
+["O que é um documento em branco no Word?","Uma página digital onde podemos começar a escrever","Uma página da internet","Um antivírus","Uma pasta do Windows",0,"Um documento em branco é o ponto inicial para criar um novo texto."],
+["Quais são as teclas-guia da mão esquerda nesta aula?","A, S, D, F","Q, W, E, R","Z, X, C, V","1, 2, 3, 4",0,"Na posição básica, os dedos da mão esquerda repousam sobre A, S, D e F."],
+["Quais são as teclas-guia da mão direita no teclado português brasileiro?","J, K, L, Ç","U, I, O, P","H, J, K, L","7, 8, 9, 0",0,"Na posição básica ensinada, a mão direita repousa sobre J, K, L e Ç."],
+["Para que servem as pequenas marcas nas teclas F e J?","Ajudam a localizar a posição das mãos sem olhar tanto para o teclado","Aumentam a velocidade do computador","Ativam o Word","Ligam o Wi-Fi",0,"As marcas em F e J ajudam a encontrar a posição inicial pelo tato."],
+["No começo da digitação, o que é mais importante?","Precisão e postura confortável","Ser mais rápido que o colega","Digitar sem respirar","Usar só dois dedos",0,"A velocidade cresce com prática; primeiro vêm precisão e conforto."],
+["Qual informação NÃO devemos colocar nessa atividade?","Senha ou endereço completo","O que gostamos de fazer","Nosso sonho","Nosso primeiro nome",0,"Dados sensíveis e desnecessários não devem entrar no texto."],
+["Antes de salvar, o que é uma boa prática?","Reler e revisar o texto","Apagar tudo","Fechar o computador à força","Trocar a senha do Wi-Fi",0,"Revisar ajuda a perceber letras faltando, espaços e erros simples."],
+["Num PC compartilhado da SEMAS, o que fazer depois de enviar e guardar o arquivo?","Apagar a cópia local e sair das contas","Deixar o Gmail aberto","Salvar a senha no navegador","Deixar o documento na área de trabalho",0,"A rotina protege a privacidade do aluno e deixa a máquina pronta para a próxima turma."]
 ];
 
 let attempt=Number(sessionStorage.getItem(lessonKey)||0);
 let completed=false,lastScore=null,startedAt=Date.now(),finishedAt=null,currentMode="não informado";
 const quiz=document.getElementById("quiz");
-questions.forEach((q,i)=>{const d=document.createElement("div");d.className="quiz-item";d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;quiz.appendChild(d);});
+function shuffleOptions(options){
+  const shuffled=[...options];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  return shuffled;
+}
+
+questions.forEach((q,i)=>{
+  const d=document.createElement("div");
+  d.className="quiz-item";
+
+  const options=q.slice(1,5).map((text,originalIndex)=>({
+    text,
+    originalIndex
+  }));
+
+  const shuffledOptions=shuffleOptions(options);
+
+  d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
+    shuffledOptions.map(o=>`<label><input type="radio" name="q${i}" value="${o.originalIndex}"> ${o.text}</label>`).join("")+
+    `<div class="answer" id="a${i}"></div>`;
+
+  quiz.appendChild(d);
+});
 function formatTime(ms){const s=Math.max(0,Math.round(ms/1000)),m=Math.floor(s/60),sec=s%60;return `${m}min ${String(sec).padStart(2,"0")}s`;}
 function showMode(mode){currentMode=mode==="pc"?"SEMAS — computador":"Casa/fora da SEMAS — celular";document.getElementById("pcMode").classList.toggle("active",mode==="pc");document.getElementById("phoneMode").classList.toggle("active",mode==="phone");}
 function updateUI(){const r=document.getElementById("result");if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true;if(!completed)r.innerHTML="<strong>Duas tentativas foram usadas nesta sessão.</strong><br>Em uma nova sessão, o quiz começa novamente.";}else if(!completed){r.innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;}}
 updateUI();
 function checkQuiz(){
  if(attempt>=2)return;let score=0,all=true,wrong=[];
- questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return;}if(+s.value===0){score++;a.textContent="Correta! "+q[5];}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5];}});
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return;}if(+s.value===q[5]){score++;a.textContent="Correta! "+q[6];}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[6];}});
  if(!all){document.getElementById("result").innerHTML="<strong>Responda todas as perguntas antes de finalizar.</strong>";return;}
  attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;finishedAt=Date.now();
  document.getElementById("result").innerHTML=`<strong>Resultado da tentativa ${attempt}: ${score} de ${questions.length}.</strong><br>Tempo: ${formatTime(finishedAt-startedAt)}.<br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas as questões foram respondidas corretamente."}<br><span style="color:var(--muted)">Não existe nota mínima: o objetivo é desenvolver conforto, precisão e confiança para escrever.</span>`;
@@ -313,7 +338,7 @@ function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",
 function saveResult(){
  if(!completed||lastScore===null)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return;}
  const dream=document.getElementById("dream").value.trim();const now=new Date();let rows="",wrong=[];
- questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;if(n!==0)wrong.push(i+1);rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;});
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;if(n!==q[5])wrong.push(i+1);rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===q[5]?"Correta":"Revisar"}</td></tr>`;});
  const report=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SEMAS - Módulo 2 Aula 01 - ${esc(name)}</title><style>body{font-family:Arial,sans-serif;max-width:950px;margin:30px auto;padding:18px;color:#172033;line-height:1.5}h1{color:#123b55}.meta{padding:18px;background:#f1f5f8;border-radius:10px}table{border-collapse:collapse;width:100%;margin-top:15px}th,td{border:1px solid #ccd3dc;padding:8px;text-align:left;vertical-align:top}th{background:#eaf2f7}.note{padding:14px;background:#fff8df;border-radius:8px}</style></head><body><h1>SEMAS — Módulo 2 — Aula 01</h1><h2>Escrevendo no Word e a Postura das Mãos</h2><div class="meta"><strong>Aluno:</strong> ${esc(name)}<br><strong>Data e hora:</strong> ${now.toLocaleString("pt-BR")}<br><strong>Modo:</strong> ${esc(currentMode)}<br><strong>Tentativa:</strong> ${attempt} de 2<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Tempo:</strong> ${formatTime(finishedAt-startedAt)}</div><p class="note"><strong>Não existe nota mínima.</strong> Este relatório registra uma atividade de aprendizagem.</p>${dream?`<p><strong>Meu sonho:</strong> ${esc(dream)}</p>`:""}<p><strong>Questões para revisar:</strong> ${wrong.length?wrong.join(", "):"nenhuma"}.</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Envie por e-mail ao professor, salve no Drive, apague seu arquivo local e saia das contas no computador compartilhado.</p></body></html>`;
  const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
  a.href=url;a.download=`SEMAS_Modulo_2_Aula_01_${safe}_Tentativa_${attempt}.html`;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
