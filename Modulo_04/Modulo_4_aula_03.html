@@ -378,22 +378,43 @@ footer{margin-top:30px;color:var(--muted);font-size:.9rem}
 <script>
 const lessonKey="semas_mod4_aula03_attempt";
 const questions=[
-["O que é o VS Code?","Um editor de código","Um navegador","Um antivírus","Uma rede social","VS Code é uma ferramenta para escrever e organizar código e arquivos de desenvolvimento."],
-["Para que serve o Explorer do VS Code?","Ver e organizar arquivos e pastas do projeto","Pesquisar na internet","Trocar a senha do Windows","Aumentar o Wi-Fi","O Explorer mostra e gerencia os arquivos da pasta aberta."],
-["O que é realce de sintaxe?","Uso de cores para ajudar a distinguir partes do código","Correção automática de todos os erros","Um antivírus","Uma forma de imprimir","As cores ajudam na leitura da estrutura do código."],
-["Se o código aparece colorido, ele está necessariamente correto?","Não","Sim","Somente HTML","Somente no Windows","Realce de sintaxe ajuda a ler, mas não garante que o código esteja correto."],
-["O que acontece quando abrimos uma pasta no VS Code?","Ela pode se tornar nosso espaço de trabalho","Ela vira um site automaticamente","Ela é enviada para a internet","Ela é apagada","O VS Code trabalha com arquivos e pastas abertas no workspace."],
-["Qual pasta criamos nesta aula?","Curso_SEMAS_HTML","Windows_System","Meus_Jogos","Internet","A pasta organiza os projetos HTML do curso."],
-["Devemos instalar várias extensões nesta aula?","Não","Sim, todas","Somente extensões de jogos","É obrigatório instalar dez","HTML já tem suporte integrado e o foco agora é aprender a interface."],
-["O que fazer se uma pasta desconhecida pedir confiança no VS Code?","Pedir orientação e não confiar automaticamente","Aceitar sempre","Apagar o Windows","Desligar a internet","Workspace Trust existe para reduzir riscos com código de origem desconhecida."]
+["O que é o VS Code?","Um editor de código","Um navegador","Um antivírus","Uma rede social",0,"VS Code é uma ferramenta para escrever e organizar código e arquivos de desenvolvimento."],
+["Para que serve o Explorer do VS Code?","Ver e organizar arquivos e pastas do projeto","Pesquisar na internet","Trocar a senha do Windows","Aumentar o Wi-Fi",0,"O Explorer mostra e gerencia os arquivos da pasta aberta."],
+["O que é realce de sintaxe?","Uso de cores para ajudar a distinguir partes do código","Correção automática de todos os erros","Um antivírus","Uma forma de imprimir",0,"As cores ajudam na leitura da estrutura do código."],
+["Se o código aparece colorido, ele está necessariamente correto?","Não","Sim","Somente HTML","Somente no Windows",0,"Realce de sintaxe ajuda a ler, mas não garante que o código esteja correto."],
+["O que acontece quando abrimos uma pasta no VS Code?","Ela pode se tornar nosso espaço de trabalho","Ela vira um site automaticamente","Ela é enviada para a internet","Ela é apagada",0,"O VS Code trabalha com arquivos e pastas abertas no workspace."],
+["Qual pasta criamos nesta aula?","Curso_SEMAS_HTML","Windows_System","Meus_Jogos","Internet",0,"A pasta organiza os projetos HTML do curso."],
+["Devemos instalar várias extensões nesta aula?","Não","Sim, todas","Somente extensões de jogos","É obrigatório instalar dez",0,"HTML já tem suporte integrado e o foco agora é aprender a interface."],
+["O que fazer se uma pasta desconhecida pedir confiança no VS Code?","Pedir orientação e não confiar automaticamente","Aceitar sempre","Apagar o Windows","Desligar a internet",0,"Workspace Trust existe para reduzir riscos com código de origem desconhecida."]
 ];
 
 let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
 const quiz=document.getElementById("quiz");
+function shuffleOptions(options){
+  const shuffled=[...options];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  return shuffled;
+}
+
 questions.forEach((q,i)=>{
- const d=document.createElement("div");d.className="quiz-item";
- d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;
- quiz.appendChild(d);
+  const d=document.createElement("div");
+  d.className="quiz-item";
+
+  const options=q.slice(1,5).map((text,originalIndex)=>({
+    text,
+    originalIndex
+  }));
+
+  const shuffledOptions=shuffleOptions(options);
+
+  d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
+    shuffledOptions.map(o=>`<label><input type="radio" name="q${i}" value="${o.originalIndex}"> ${o.text}</label>`).join("")+
+    `<div class="answer" id="a${i}"></div>`;
+
+  quiz.appendChild(d);
 });
 function updateUI(){
  document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;
@@ -406,8 +427,8 @@ function checkQuiz(){
  questions.forEach((q,i)=>{
   const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);
   if(!s){all=false;a.textContent="Responda esta questão.";return}
-  if(+s.value===0){score++;a.textContent="Correta! "+q[5]}
-  else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}
+  if(+s.value===q[5]){score++;a.textContent="Correta! "+q[6]}
+  else{wrong.push(i+1);a.textContent="Vale revisar: "+q[6]}
  });
  if(!all)return;
  attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;
@@ -430,7 +451,7 @@ function saveResult(){
  let rows="";
  questions.forEach((q,i)=>{
   const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;
-  rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;
+  rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===q[5]?"Correta":"Revisar"}</td></tr>`;
  });
  const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}.note{padding:12px;background:#f2f5f8;border-radius:8px;white-space:pre-wrap}</style></head><body><h1>SEMAS — Módulo 4 — Aula 03</h1><h2>Conhecendo o Editor de Código (VS Code)</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}</p>${note?`<p><strong>Minha pasta/progresso:</strong></p><div class="note">${esc(note)}</div>`:""}<table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. O objetivo é conhecer e organizar o ambiente de código.</p></body></html>`;
  const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
