@@ -309,25 +309,46 @@ Compare:
 <script>
 const lessonKey="semas_mod3_aula07_attempt";
 const questions=[
-["O que devemos fazer antes de compartilhar uma notícia duvidosa?","Verificar fonte, data e confirmação","Compartilhar primeiro","Perguntar apenas para uma IA","Acreditar se veio da família","A origem, a data e outras fontes ajudam a verificar a informação."],
-["O que é deepfake?","Conteúdo sintético ou manipulado que pode alterar imagem, vídeo ou voz de forma convincente","Um antivírus","Um tipo de planilha","Uma senha forte","Deepfakes podem criar mídia falsa com aparência ou som realista."],
-["Uma imagem que parece perfeita é prova de que é verdadeira?","Não","Sim","Somente se estiver em alta resolução","Somente no WhatsApp","Conteúdo falso pode parecer muito realista."],
-["Qual frase deve aumentar nossa desconfiança?","Compartilhe agora antes que apaguem!","Veja a fonte oficial","Confira a data","Procure outra fonte","Pressa e apelo ao compartilhamento podem ser sinais de manipulação."],
-["Receber uma notícia de alguém conhecido significa que ela é verdadeira?","Não","Sim","Somente se for parente","Somente em áudio","Pessoas conhecidas também podem compartilhar algo errado sem perceber."],
-["É correto usar IA para colocar um colega em uma foto falsa para ridicularizá-lo?","Não","Sim","Se for brincadeira","Se ninguém contar","Isso pode humilhar, enganar e causar dano real."],
-["Qual é um uso ético da IA nos deveres?","Pedir explicações e exercícios para aprender","Entregar texto da IA como se fosse seu","Pedir resposta da prova","Copiar sem ler","A IA deve apoiar o aprendizado, não substituir a autoria do aluno."],
-["Se você não conseguiu verificar uma mensagem, o que fazer?","Não compartilhar","Compartilhar com aviso","Mandar só para a família","Trocar o título","Não encaminhar é a opção mais segura quando a informação não foi verificada."]
+["O que devemos fazer antes de compartilhar uma notícia duvidosa?","Verificar fonte, data e confirmação","Compartilhar primeiro","Perguntar apenas para uma IA","Acreditar se veio da família",0,"A origem, a data e outras fontes ajudam a verificar a informação."],
+["O que é deepfake?","Conteúdo sintético ou manipulado que pode alterar imagem, vídeo ou voz de forma convincente","Um antivírus","Um tipo de planilha","Uma senha forte",0,"Deepfakes podem criar mídia falsa com aparência ou som realista."],
+["Uma imagem que parece perfeita é prova de que é verdadeira?","Não","Sim","Somente se estiver em alta resolução","Somente no WhatsApp",0,"Conteúdo falso pode parecer muito realista."],
+["Qual frase deve aumentar nossa desconfiança?","Compartilhe agora antes que apaguem!","Veja a fonte oficial","Confira a data","Procure outra fonte",0,"Pressa e apelo ao compartilhamento podem ser sinais de manipulação."],
+["Receber uma notícia de alguém conhecido significa que ela é verdadeira?","Não","Sim","Somente se for parente","Somente em áudio",0,"Pessoas conhecidas também podem compartilhar algo errado sem perceber."],
+["É correto usar IA para colocar um colega em uma foto falsa para ridicularizá-lo?","Não","Sim","Se for brincadeira","Se ninguém contar",0,"Isso pode humilhar, enganar e causar dano real."],
+["Qual é um uso ético da IA nos deveres?","Pedir explicações e exercícios para aprender","Entregar texto da IA como se fosse seu","Pedir resposta da prova","Copiar sem ler",0,"A IA deve apoiar o aprendizado, não substituir a autoria do aluno."],
+["Se você não conseguiu verificar uma mensagem, o que fazer?","Não compartilhar","Compartilhar com aviso","Mandar só para a família","Trocar o título",0,"Não encaminhar é a opção mais segura quando a informação não foi verificada."]
 ];
 let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
 const quiz=document.getElementById("quiz");
+function shuffleOptions(options){
+  const shuffled=[...options];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  return shuffled;
+}
+
 questions.forEach((q,i)=>{
- const d=document.createElement("div");d.className="quiz-item";
- d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;
- quiz.appendChild(d);
+  const d=document.createElement("div");
+  d.className="quiz-item";
+
+  const options=q.slice(1,5).map((text,originalIndex)=>({
+    text,
+    originalIndex
+  }));
+
+  const shuffledOptions=shuffleOptions(options);
+
+  d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
+    shuffledOptions.map(o=>`<label><input type="radio" name="q${i}" value="${o.originalIndex}"> ${o.text}</label>`).join("")+
+    `<div class="answer" id="a${i}"></div>`;
+
+  quiz.appendChild(d);
 });
 function updateUI(){document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true}}
 updateUI();
-function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===0){score++;a.textContent="Correta! "+q[5]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}});if(!all)return;attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
+function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===q[5]){score++;a.textContent="Correta! "+q[6]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[6]}});if(!all)return;attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
 function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;updateUI()}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
 function saveResult(){
@@ -336,7 +357,7 @@ function saveResult(){
  if(!name){alert("Digite seu nome completo.");return}
  const note=document.getElementById("checkNote").value.trim();
  let rows="";
- questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`});
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===q[5]?"Correta":"Revisar"}</td></tr>`});
  const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}.note{padding:12px;background:#f2f5f8;border-radius:8px;white-space:pre-wrap}</style></head><body><h1>SEMAS — Módulo 3 — Aula 07</h1><h2>Fake News e os Perigos da IA</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}</p>${note?`<p><strong>Minha regra de checagem:</strong></p><div class="note">${esc(note)}</div>`:""}<table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. O objetivo é verificar antes de acreditar ou compartilhar.</p></body></html>`;
  const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
  a.href=url;a.download=`SEMAS_Modulo_3_Aula_07_${safe}.html`;a.click();URL.revokeObjectURL(url);
