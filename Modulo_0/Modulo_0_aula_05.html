@@ -345,6 +345,7 @@ const questions=[
     "Guardar todos os arquivos para sempre",
     "Fornecer energia da tomada",
     "Resfriar o gabinete",
+    0,
     "A CPU executa instruções e realiza operações necessárias para o funcionamento dos programas."
   ],
   [
@@ -353,6 +354,7 @@ const questions=[
     "Porque a CPU é feita de tecido humano",
     "Porque ela possui sentimentos",
     "Porque ela funciona sem eletricidade",
+    0,
     "A comparação é didática. A CPU processa instruções, mas isso não significa pensamento humano."
   ],
   [
@@ -361,6 +363,7 @@ const questions=[
     "Porque recebe luz do monitor",
     "Porque o teclado manda ar quente",
     "Porque o SSD ferve",
+    0,
     "Componentes eletrônicos dissipam calor durante o funcionamento."
   ],
   [
@@ -369,6 +372,7 @@ const questions=[
     "Guardar arquivos",
     "Aumentar a tensão da tomada",
     "Substituir a fonte de alimentação",
+    0,
     "O dissipador espalha o calor e a ventoinha ajuda a movimentar o ar."
   ],
   [
@@ -377,6 +381,7 @@ const questions=[
     "Tela limpa",
     "Mouse desligado",
     "Arquivo pequeno",
+    0,
     "Fluxo de ar ruim e poeira podem prejudicar a refrigeração."
   ],
   [
@@ -385,6 +390,7 @@ const questions=[
     "Servir apenas como extensão da tomada",
     "Guardar fotos",
     "Substituir o processador",
+    0,
     "A fonte recebe energia da rede e fornece energia apropriada para diferentes partes do computador."
   ],
   [
@@ -393,6 +399,7 @@ const questions=[
     "Porque fontes não usam eletricidade",
     "Porque toda fonte serve em todo PC",
     "Porque a fonte só funciona com internet",
+    0,
     "A fonte deve ser compatível e fornecer potência suficiente para o sistema."
   ],
   [
@@ -401,6 +408,7 @@ const questions=[
     "Abrir a fonte ligada",
     "Tocar componentes internos energizados",
     "Testar com objetos metálicos",
+    0,
     "Fontes não devem ser abertas por alunos; a atividade deve ser apenas de observação segura."
   ]
 ];
@@ -409,11 +417,29 @@ let attempt=Number(sessionStorage.getItem(lessonKey)||0);
 let completed=false,lastScore=null,startedAt=Date.now(),finishedAt=null,currentMode="não informado";
 const quiz=document.getElementById("quiz");
 
+function shuffleOptions(options){
+  const shuffled=[...options];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  return shuffled;
+}
+
 questions.forEach((q,i)=>{
   const d=document.createElement("div");d.className="quiz-item";
+
+  const options=q.slice(1,5).map((text,originalIndex)=>({
+    text,
+    originalIndex
+  }));
+
+  const shuffledOptions=shuffleOptions(options);
+
   d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
-    q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+
+    shuffledOptions.map(o=>`<label><input type="radio" name="q${i}" value="${o.originalIndex}"> ${o.text}</label>`).join("")+
     `<div class="answer" id="a${i}"></div>`;
+
   quiz.appendChild(d);
 });
 
@@ -448,8 +474,8 @@ function checkQuiz(){
     const s=document.querySelector(`input[name="q${i}"]:checked`);
     const a=document.getElementById("a"+i);
     if(!s){all=false;a.textContent="Responda esta questão antes de finalizar.";return;}
-    if(+s.value===0){score++;a.textContent="Correta! "+q[5];}
-    else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5];}
+    if(+s.value===q[5]){score++;a.textContent="Correta! "+q[6];}
+    else{wrong.push(i+1);a.textContent="Vale revisar: "+q[6];}
   });
 
   if(!all){
@@ -501,8 +527,8 @@ function saveResult(){
   questions.forEach((q,i)=>{
     const s=document.querySelector(`input[name="q${i}"]:checked`);
     const n=s?+s.value:-1;
-    if(n!==0)wrong.push(i+1);
-    rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;
+    if(n!==q[5])wrong.push(i+1);
+    rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===q[5]?"Correta":"Revisar"}</td></tr>`;
   });
 
   const report=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
