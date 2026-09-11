@@ -463,25 +463,43 @@ function practicePrev(){
 renderPractice();
 
 const questions=[
-["Qual é a função do catálogo nesta aula?","Organizar produtos e suas informações em uma página","Criar uma rede social","Substituir uma loja real automaticamente","Instalar programas","Um catálogo organiza itens para visualização e comparação."],
-["Por que podemos usar <article> para cada produto?","Porque cada card pode representar um conteúdo independente","Porque article cria internet","Porque article é obrigatório em toda imagem","Porque article substitui CSS","article pode representar uma unidade independente de conteúdo, como um card de produto."],
-["O que <button> representa?","Um elemento interativo ativável pelo usuário","Uma imagem","Uma pasta","Um título","button representa um controle interativo."],
-["O botão sozinho registra um pedido real?","Não","Sim","Sempre","Somente no celular","Um botão precisa estar ligado a lógica e, em pedidos reais, normalmente a outros sistemas."],
-["Para que usamos CSS Grid no catálogo?","Organizar os cards em uma grade","Criar as imagens","Enviar pedidos","Salvar arquivos","Grid ajuda a distribuir os produtos em linhas e colunas."],
-["Qual é a melhor estratégia para criar 12 cards?","Fazer e testar um primeiro card, depois repetir a estrutura","Criar 12 de uma vez sem testar","Usar estruturas diferentes para todos","Não organizar as imagens","Testar um padrão primeiro reduz erros na repetição."],
-["O que devemos fazer com informações de produtos reais?","Usar dados verdadeiros e verificáveis","Inventar preços","Prometer benefícios sem prova","Copiar qualquer propaganda","Catálogos devem evitar informações inventadas ou enganosas."],
-["Qual é o resultado esperado desta aula?","Uma feira digital com 12 produtos, cards e interação demonstrativa","Um sistema bancário completo","Um marketplace publicado mundialmente","Um aplicativo de celular","O projeto é um catálogo front-end educativo, não um e-commerce completo."]
+["Qual é a função do catálogo nesta aula?","Organizar produtos e suas informações em uma página","Criar uma rede social","Substituir uma loja real automaticamente","Instalar programas",0,"Um catálogo organiza itens para visualização e comparação."],
+["Por que podemos usar <article> para cada produto?","Porque cada card pode representar um conteúdo independente","Porque article cria internet","Porque article é obrigatório em toda imagem","Porque article substitui CSS",0,"article pode representar uma unidade independente de conteúdo, como um card de produto."],
+["O que <button> representa?","Um elemento interativo ativável pelo usuário","Uma imagem","Uma pasta","Um título",0,"button representa um controle interativo."],
+["O botão sozinho registra um pedido real?","Não","Sim","Sempre","Somente no celular",0,"Um botão precisa estar ligado a lógica e, em pedidos reais, normalmente a outros sistemas."],
+["Para que usamos CSS Grid no catálogo?","Organizar os cards em uma grade","Criar as imagens","Enviar pedidos","Salvar arquivos",0,"Grid ajuda a distribuir os produtos em linhas e colunas."],
+["Qual é a melhor estratégia para criar 12 cards?","Fazer e testar um primeiro card, depois repetir a estrutura","Criar 12 de uma vez sem testar","Usar estruturas diferentes para todos","Não organizar as imagens",0,"Testar um padrão primeiro reduz erros na repetição."],
+["O que devemos fazer com informações de produtos reais?","Usar dados verdadeiros e verificáveis","Inventar preços","Prometer benefícios sem prova","Copiar qualquer propaganda",0,"Catálogos devem evitar informações inventadas ou enganosas."],
+["Qual é o resultado esperado desta aula?","Uma feira digital com 12 produtos, cards e interação demonstrativa","Um sistema bancário completo","Um marketplace publicado mundialmente","Um aplicativo de celular",0,"O projeto é um catálogo front-end educativo, não um e-commerce completo."]
 ];
 
 let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
 const quiz=document.getElementById("quiz");
+function shuffleOptions(options){
+  const shuffled=[...options];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  return shuffled;
+}
+
 questions.forEach((q,i)=>{
- const d=document.createElement("div");
- d.className="quiz-item";
- d.innerHTML=`<h3>${i+1}. ${q[0].replace(/</g,"&lt;").replace(/>/g,"&gt;")}</h3>`+
- q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</label>`).join("")+
- `<div class="answer" id="a${i}"></div>`;
- quiz.appendChild(d);
+  const d=document.createElement("div");
+  d.className="quiz-item";
+
+  const options=q.slice(1,5).map((text,originalIndex)=>({
+    text,
+    originalIndex
+  }));
+
+  const shuffledOptions=shuffleOptions(options);
+
+  d.innerHTML=`<h3>${i+1}. ${q[0].replace(/</g,"&lt;").replace(/>/g,"&gt;")}</h3>`+
+    shuffledOptions.map(o=>`<label><input type="radio" name="q${i}" value="${o.originalIndex}"> ${o.text.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</label>`).join("")+
+    `<div class="answer" id="a${i}"></div>`;
+
+  quiz.appendChild(d);
 });
 
 function updateUI(){
@@ -500,8 +518,8 @@ function checkQuiz(){
   const s=document.querySelector(`input[name="q${i}"]:checked`);
   const a=document.getElementById("a"+i);
   if(!s){all=false;a.textContent="Responda esta questão.";return}
-  if(+s.value===0){score++;a.textContent="Correta! "+q[5]}
-  else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}
+  if(+s.value===q[5]){score++;a.textContent="Correta! "+q[6]}
+  else{wrong.push(i+1);a.textContent="Vale revisar: "+q[6]}
  });
  if(!all)return;
  attempt++;
@@ -538,7 +556,7 @@ function saveResult(){
  questions.forEach((q,i)=>{
   const s=document.querySelector(`input[name="q${i}"]:checked`);
   const n=s?+s.value:-1;
-  rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;
+  rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===q[5]?"Correta":"Revisar"}</td></tr>`;
  });
  const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}.note{padding:12px;background:#f2f5f8;border-radius:8px;white-space:pre-wrap}</style></head><body><h1>SEMAS — Módulo 4 — Aula 07</h1><h2>Criando um Catálogo de Produtos Regionais</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Prática guiada:</strong> passo ${practiceIndex+1}/${practiceSteps.length}</p>${note?`<p><strong>Meus produtos:</strong></p><div class="note">${esc(note)}</div>`:""}<table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. O objetivo é construir um catálogo organizado e interativo.</p></body></html>`;
  const blob=new Blob([report],{type:"text/html;charset=utf-8"});
