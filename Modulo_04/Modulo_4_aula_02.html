@@ -337,22 +337,43 @@ footer{margin-top:30px;color:var(--muted);font-size:.9rem}
 <script>
 const lessonKey="semas_mod4_aula02_attempt";
 const questions=[
-["Para que serve principalmente o HTML?","Para estruturar e dar significado ao conteúdo de páginas Web","Para fornecer internet","Para substituir o navegador","Para funcionar como antivírus","HTML define estrutura e significado do conteúdo da Web."],
-["O que é uma tag HTML?","Uma marcação escrita com o nome do elemento entre sinais como < e >","Uma senha","Um endereço IP","Uma pasta do Windows","Tags participam da construção dos elementos HTML."],
-["Qual tag representa normalmente o conteúdo principal visível da página?","<body>","<head>","<title>","<html> somente","O body contém o conteúdo principal exibido no documento."],
-["O que faz a tag <h1>?","Representa um título principal","Cria uma senha","Fecha o navegador","Conecta o Wi-Fi","h1 representa um cabeçalho de nível 1."],
-["Tag e elemento são sempre exatamente a mesma coisa?","Não","Sim","Somente no celular","Somente no Windows","Um elemento geralmente inclui tags e conteúdo, além de poder ter atributos."],
-["Qual frase é tecnicamente melhor?","O navegador interpreta o HTML e renderiza a página","O HTML é um programa vivo","O HTML cria internet","O navegador vira HTML","O navegador analisa a estrutura HTML e apresenta o documento."],
-["Um arquivo HTML local pode abrir sem internet?","Sim","Não","Somente no celular","Somente se estiver no Google","Um navegador pode abrir um arquivo HTML salvo localmente."],
-["Por que a mesma página pode parecer diferente no PC e no celular?","Porque tamanho de tela, navegador e estilos podem afetar a apresentação","Porque HTML só funciona no PC","Porque celulares não usam navegador","Porque o arquivo muda sozinho","A Web funciona em diferentes dispositivos, mas a apresentação pode se adaptar."]
+["Para que serve principalmente o HTML?","Para estruturar e dar significado ao conteúdo de páginas Web","Para fornecer internet","Para substituir o navegador","Para funcionar como antivírus",0,"HTML define estrutura e significado do conteúdo da Web."],
+["O que é uma tag HTML?","Uma marcação escrita com o nome do elemento entre sinais como < e >","Uma senha","Um endereço IP","Uma pasta do Windows",0,"Tags participam da construção dos elementos HTML."],
+["Qual tag representa normalmente o conteúdo principal visível da página?","<body>","<head>","<title>","<html> somente",0,"O body contém o conteúdo principal exibido no documento."],
+["O que faz a tag <h1>?","Representa um título principal","Cria uma senha","Fecha o navegador","Conecta o Wi-Fi",0,"h1 representa um cabeçalho de nível 1."],
+["Tag e elemento são sempre exatamente a mesma coisa?","Não","Sim","Somente no celular","Somente no Windows",0,"Um elemento geralmente inclui tags e conteúdo, além de poder ter atributos."],
+["Qual frase é tecnicamente melhor?","O navegador interpreta o HTML e renderiza a página","O HTML é um programa vivo","O HTML cria internet","O navegador vira HTML",0,"O navegador analisa a estrutura HTML e apresenta o documento."],
+["Um arquivo HTML local pode abrir sem internet?","Sim","Não","Somente no celular","Somente se estiver no Google",0,"Um navegador pode abrir um arquivo HTML salvo localmente."],
+["Por que a mesma página pode parecer diferente no PC e no celular?","Porque tamanho de tela, navegador e estilos podem afetar a apresentação","Porque HTML só funciona no PC","Porque celulares não usam navegador","Porque o arquivo muda sozinho",0,"A Web funciona em diferentes dispositivos, mas a apresentação pode se adaptar."]
 ];
 
 let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
 const quiz=document.getElementById("quiz");
+function shuffleOptions(options){
+  const shuffled=[...options];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  return shuffled;
+}
+
 questions.forEach((q,i)=>{
- const d=document.createElement("div");d.className="quiz-item";
- d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;
- quiz.appendChild(d);
+  const d=document.createElement("div");
+  d.className="quiz-item";
+
+  const options=q.slice(1,5).map((text,originalIndex)=>({
+    text,
+    originalIndex
+  }));
+
+  const shuffledOptions=shuffleOptions(options);
+
+  d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
+    shuffledOptions.map(o=>`<label><input type="radio" name="q${i}" value="${o.originalIndex}"> ${o.text.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</label>`).join("")+
+    `<div class="answer" id="a${i}"></div>`;
+
+  quiz.appendChild(d);
 });
 function updateUI(){
  document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;
@@ -365,8 +386,8 @@ function checkQuiz(){
  questions.forEach((q,i)=>{
   const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);
   if(!s){all=false;a.textContent="Responda esta questão.";return}
-  if(+s.value===0){score++;a.textContent="Correta! "+q[5]}
-  else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}
+  if(+s.value===q[5]){score++;a.textContent="Correta! "+q[6]}
+  else{wrong.push(i+1);a.textContent="Vale revisar: "+q[6]}
  });
  if(!all)return;
  attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;
@@ -389,7 +410,7 @@ function saveResult(){
  let rows="";
  questions.forEach((q,i)=>{
   const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;
-  rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;
+  rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===q[5]?"Correta":"Revisar"}</td></tr>`;
  });
  const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}.txt{padding:12px;background:#f2f5f8;border-radius:8px;white-space:pre-wrap}</style></head><body><h1>SEMAS — Módulo 4 — Aula 02</h1><h2>O Que é o Código HTML?</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}</p>${thought?`<p><strong>Minha explicação:</strong></p><div class="txt">${esc(thought)}</div>`:""}<table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. O objetivo é compreender a estrutura básica da Web.</p></body></html>`;
  const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
