@@ -423,24 +423,43 @@ function practicePrev(){
 renderPractice();
 
 const questions=[
-["Para que serve o elemento <h1>?","Representar um título de nível mais alto","Criar um parágrafo","Desenhar uma linha","Salvar o arquivo","h1 indica um título importante na estrutura do documento."],
-["Para que serve o elemento <p>?","Representar um parágrafo","Criar uma imagem","Abrir o navegador","Criar uma pasta","p representa um parágrafo de conteúdo."],
-["O que <hr> representa em HTML?","Uma mudança ou separação temática","Um título","Uma senha","Um link","hr representa uma quebra temática entre partes do conteúdo."],
-["O elemento <hr> precisa de </hr>?","Não","Sim, sempre","Somente no celular","Somente no VS Code","hr é um elemento vazio e não envolve conteúdo."],
-["Por que usamos o nome index.html nesta aula?","Porque é uma convenção muito comum para a página principal","Porque outros nomes são proibidos","Porque o Windows exige","Porque HTML só funciona com esse nome","index.html é uma convenção comum, não uma regra absoluta para todo arquivo HTML."],
-["Depois de mudar o código, o que devemos fazer para ver a mudança?","Salvar e atualizar a página no navegador","Desligar o computador","Renomear o navegador","Apagar a pasta","O navegador precisa receber a versão salva do arquivo."],
-["Onde fica o conteúdo principal visível da página?","Dentro de <body>","Somente em <head>","Somente em <title>","Fora de <html>","O body contém o conteúdo principal apresentado no documento."],
-["Qual é o principal resultado desta aula?","Criar um index.html com título, parágrafos e separação","Decorar todas as tags HTML","Publicar um site mundial","Instalar várias extensões","O foco é criar e testar uma primeira página simples."]
+["Para que serve o elemento <h1>?","Representar um título de nível mais alto","Criar um parágrafo","Desenhar uma linha","Salvar o arquivo",0,"h1 indica um título importante na estrutura do documento."],
+["Para que serve o elemento <p>?","Representar um parágrafo","Criar uma imagem","Abrir o navegador","Criar uma pasta",0,"p representa um parágrafo de conteúdo."],
+["O que <hr> representa em HTML?","Uma mudança ou separação temática","Um título","Uma senha","Um link",0,"hr representa uma quebra temática entre partes do conteúdo."],
+["O elemento <hr> precisa de </hr>?","Não","Sim, sempre","Somente no celular","Somente no VS Code",0,"hr é um elemento vazio e não envolve conteúdo."],
+["Por que usamos o nome index.html nesta aula?","Porque é uma convenção muito comum para a página principal","Porque outros nomes são proibidos","Porque o Windows exige","Porque HTML só funciona com esse nome",0,"index.html é uma convenção comum, não uma regra absoluta para todo arquivo HTML."],
+["Depois de mudar o código, o que devemos fazer para ver a mudança?","Salvar e atualizar a página no navegador","Desligar o computador","Renomear o navegador","Apagar a pasta",0,"O navegador precisa receber a versão salva do arquivo."],
+["Onde fica o conteúdo principal visível da página?","Dentro de <body>","Somente em <head>","Somente em <title>","Fora de <html>",0,"O body contém o conteúdo principal apresentado no documento."],
+["Qual é o principal resultado desta aula?","Criar um index.html com título, parágrafos e separação","Decorar todas as tags HTML","Publicar um site mundial","Instalar várias extensões",0,"O foco é criar e testar uma primeira página simples."]
 ];
 
 let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
 const quiz=document.getElementById("quiz");
+function shuffleOptions(options){
+  const shuffled=[...options];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  return shuffled;
+}
+
 questions.forEach((q,i)=>{
- const d=document.createElement("div");d.className="quiz-item";
- d.innerHTML=`<h3>${i+1}. ${q[0].replace(/</g,"&lt;").replace(/>/g,"&gt;")}</h3>`+
- q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</label>`).join("")+
- `<div class="answer" id="a${i}"></div>`;
- quiz.appendChild(d);
+  const d=document.createElement("div");
+  d.className="quiz-item";
+
+  const options=q.slice(1,5).map((text,originalIndex)=>({
+    text,
+    originalIndex
+  }));
+
+  const shuffledOptions=shuffleOptions(options);
+
+  d.innerHTML=`<h3>${i+1}. ${q[0].replace(/</g,"&lt;").replace(/>/g,"&gt;")}</h3>`+
+    shuffledOptions.map(o=>`<label><input type="radio" name="q${i}" value="${o.originalIndex}"> ${o.text.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</label>`).join("")+
+    `<div class="answer" id="a${i}"></div>`;
+
+  quiz.appendChild(d);
 });
 function updateUI(){
  document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;
@@ -453,8 +472,8 @@ function checkQuiz(){
  questions.forEach((q,i)=>{
   const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);
   if(!s){all=false;a.textContent="Responda esta questão.";return}
-  if(+s.value===0){score++;a.textContent="Correta! "+q[5]}
-  else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}
+  if(+s.value===q[5]){score++;a.textContent="Correta! "+q[6]}
+  else{wrong.push(i+1);a.textContent="Vale revisar: "+q[6]}
  });
  if(!all)return;
  attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;
@@ -477,7 +496,7 @@ function saveResult(){
  let rows="";
  questions.forEach((q,i)=>{
   const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;
-  rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;
+  rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===q[5]?"Correta":"Revisar"}</td></tr>`;
  });
  const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}.note{padding:12px;background:#f2f5f8;border-radius:8px;white-space:pre-wrap;font-family:monospace}</style></head><body><h1>SEMAS — Módulo 4 — Aula 04</h1><h2>As Primeiras Peças do Nosso Site</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Prática guiada:</strong> passo ${practiceIndex+1}/${practiceSteps.length}</p>${note?`<p><strong>Meu código:</strong></p><div class="note">${esc(note)}</div>`:""}<table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. O objetivo é criar e compreender uma primeira página HTML.</p></body></html>`;
  const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
