@@ -573,26 +573,44 @@ function practicePrev(){
 renderPractice();
 
 const questions=[
-["O que significa uma página responsiva?","Uma página que se adapta a diferentes tamanhos de tela","Uma página que responde por e-mail sozinha","Uma página com muitas animações","Uma página exclusiva para computador","Responsividade busca manter conteúdo e interface utilizáveis em diferentes larguras de tela."],
-["Para que serve a meta viewport nesta aula?","Ajudar o navegador móvel a usar a largura do dispositivo como referência","Criar os produtos","Fazer pagamento","Salvar imagens","A viewport é parte importante da configuração de páginas móveis."],
-["Por que usamos max-width: 100% nas imagens?","Para ajudar a imagem a não ultrapassar a largura disponível","Para deixar toda imagem gigante","Para apagar o alt","Para criar um botão","Imagens flexíveis ajudam o layout em telas menores."],
-["O que uma media query permite fazer?","Aplicar estilos de acordo com características como largura do viewport","Enviar pedidos para a loja","Criar uma senha","Transformar HTML em aplicativo","Media queries permitem adaptar estilos ao ambiente de exibição."],
-["Nossa página final já é um e-commerce completo?","Não","Sim","Sim, porque tem botões","Sim, porque tem 12 produtos","O projeto é uma vitrine front-end; vendas completas exigem sistemas adicionais."],
-["Devemos coletar cartão e senha bancária em um HTML estático da aula?","Não","Sim","Somente no celular","Somente se o aluno apagar depois","Dados financeiros exigem infraestrutura apropriada e não pertencem a esta atividade."],
-["Se o projeto representar vendas reais, qual contato deve aparecer?","Um canal comercial autorizado pelo responsável pelo negócio","O telefone pessoal de qualquer aluno","O endereço residencial do aluno","Uma senha de e-mail","A operação real deve usar contato responsável e autorizado."],
-["Qual é um bom teste final?","Abrir, reduzir a tela, testar links/botões e pedir para outra pessoa usar","Olhar somente o código","Testar apenas o título","Adicionar mais cores sem verificar","Teste funcional e com diferentes larguras revela problemas reais."]
+["O que significa uma página responsiva?","Uma página que se adapta a diferentes tamanhos de tela","Uma página que responde por e-mail sozinha","Uma página com muitas animações","Uma página exclusiva para computador",0,"Responsividade busca manter conteúdo e interface utilizáveis em diferentes larguras de tela."],
+["Para que serve a meta viewport nesta aula?","Ajudar o navegador móvel a usar a largura do dispositivo como referência","Criar os produtos","Fazer pagamento","Salvar imagens",0,"A viewport é parte importante da configuração de páginas móveis."],
+["Por que usamos max-width: 100% nas imagens?","Para ajudar a imagem a não ultrapassar a largura disponível","Para deixar toda imagem gigante","Para apagar o alt","Para criar um botão",0,"Imagens flexíveis ajudam o layout em telas menores."],
+["O que uma media query permite fazer?","Aplicar estilos de acordo com características como largura do viewport","Enviar pedidos para a loja","Criar uma senha","Transformar HTML em aplicativo",0,"Media queries permitem adaptar estilos ao ambiente de exibição."],
+["Nossa página final já é um e-commerce completo?","Não","Sim","Sim, porque tem botões","Sim, porque tem 12 produtos",0,"O projeto é uma vitrine front-end; vendas completas exigem sistemas adicionais."],
+["Devemos coletar cartão e senha bancária em um HTML estático da aula?","Não","Sim","Somente no celular","Somente se o aluno apagar depois",0,"Dados financeiros exigem infraestrutura apropriada e não pertencem a esta atividade."],
+["Se o projeto representar vendas reais, qual contato deve aparecer?","Um canal comercial autorizado pelo responsável pelo negócio","O telefone pessoal de qualquer aluno","O endereço residencial do aluno","Uma senha de e-mail",0,"A operação real deve usar contato responsável e autorizado."],
+["Qual é um bom teste final?","Abrir, reduzir a tela, testar links/botões e pedir para outra pessoa usar","Olhar somente o código","Testar apenas o título","Adicionar mais cores sem verificar",0,"Teste funcional e com diferentes larguras revela problemas reais."]
 ];
 
 let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
 const quiz=document.getElementById("quiz");
 
+function shuffleOptions(options){
+  const shuffled=[...options];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  return shuffled;
+}
+
 questions.forEach((q,i)=>{
- const d=document.createElement("div");
- d.className="quiz-item";
- d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
- q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+
- `<div class="answer" id="a${i}"></div>`;
- quiz.appendChild(d);
+  const d=document.createElement("div");
+  d.className="quiz-item";
+
+  const options=q.slice(1,5).map((text,originalIndex)=>({
+    text,
+    originalIndex
+  }));
+
+  const shuffledOptions=shuffleOptions(options);
+
+  d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
+    shuffledOptions.map(o=>`<label><input type="radio" name="q${i}" value="${o.originalIndex}"> ${o.text}</label>`).join("")+
+    `<div class="answer" id="a${i}"></div>`;
+
+  quiz.appendChild(d);
 });
 
 function updateUI(){
@@ -611,8 +629,8 @@ function checkQuiz(){
   const s=document.querySelector(`input[name="q${i}"]:checked`);
   const a=document.getElementById("a"+i);
   if(!s){all=false;a.textContent="Responda esta questão.";return}
-  if(+s.value===0){score++;a.textContent="Correta! "+q[5]}
-  else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}
+  if(+s.value===q[5]){score++;a.textContent="Correta! "+q[6]}
+  else{wrong.push(i+1);a.textContent="Vale revisar: "+q[6]}
  });
  if(!all)return;
  attempt++;
@@ -649,7 +667,7 @@ function saveResult(){
  questions.forEach((q,i)=>{
   const s=document.querySelector(`input[name="q${i}"]:checked`);
   const n=s?+s.value:-1;
-  rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;
+  rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===q[5]?"Correta":"Revisar"}</td></tr>`;
  });
  const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}.note{padding:12px;background:#f2f5f8;border-radius:8px;white-space:pre-wrap}</style></head><body><h1>SEMAS — Projeto Final</h1><h2>Módulo 4 — Aula 08 — Sua Loja Virtual na Internet</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Quiz:</strong> ${lastScore}/${questions.length}<br><strong>Revisão guiada:</strong> passo ${practiceIndex+1}/${practiceSteps.length}</p>${note?`<h3>Reflexão sobre meu projeto</h3><div class="note">${esc(note)}</div>`:""}<table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. Este relatório registra a conclusão e revisão do projeto final.</p></body></html>`;
  const blob=new Blob([report],{type:"text/html;charset=utf-8"});
