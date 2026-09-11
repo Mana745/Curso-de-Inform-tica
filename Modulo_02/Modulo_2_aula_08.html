@@ -392,25 +392,50 @@ function practiceNext(){if(practiceIndex<practiceSteps.length-1){practiceIndex++
 function practicePrev(){if(practiceIndex>0){practiceIndex--;sessionStorage.setItem(practiceKey,practiceIndex);renderPractice()}}
 
 const questions=[
-["Para que serve um gráfico?","Representar visualmente dados para facilitar comparação e compreensão","Substituir todos os dados da tabela","Criar uma senha","Aumentar a internet","O gráfico mostra visualmente dados que continuam armazenados na tabela."],
-["Qual gráfico é uma boa escolha para comparar preços de quatro produtos?","Gráfico de colunas","Gráfico de pizza obrigatoriamente","Nenhum gráfico","Somente gráfico 3D","Colunas facilitam comparar magnitudes entre categorias."],
-["Quando um gráfico de pizza costuma funcionar melhor?","Quando poucas categorias representam partes de um total","Quando existem muitas séries diferentes","Quando queremos mostrar qualquer tabela","Quando não existem números","Pizza é mais adequada para uma única série e poucas categorias."],
-["Qual deve ser a primeira ação antes de inserir um gráfico?","Selecionar os dados que serão representados","Fechar o Excel","Abrir o Gmail","Apagar a tabela","O Excel precisa saber quais dados devem alimentar o gráfico."],
-["O gráfico substitui a tabela?","Não","Sim","Somente no celular","Somente se for colorido","A tabela é a fonte dos dados; o gráfico é uma representação visual."],
-["O que deve ser conferido antes de enviar o trabalho por e-mail?","Destinatário, assunto, mensagem e anexo","Somente a cor do gráfico","Somente o tamanho da fonte","Nada","Conferir os quatro itens evita erros de entrega."],
-["É obrigatório criar um arquivo separado só para o gráfico nesta atividade?","Não, ele pode estar dentro da própria planilha","Sim, sempre","Somente em PDF","Somente como imagem","O arquivo Excel pode conter tabela e gráfico juntos."],
-["Qual é o último passo no PC compartilhado?","Guardar no Drive, apagar seus arquivos locais, sair das contas e fechar os programas","Deixar o Gmail aberto","Salvar a senha no navegador","Deixar a planilha na Área de Trabalho","Isso protege a privacidade e deixa o computador pronto para a próxima turma."]
+["Para que serve um gráfico?","Representar visualmente dados para facilitar comparação e compreensão","Substituir todos os dados da tabela","Criar uma senha","Aumentar a internet",0,"O gráfico mostra visualmente dados que continuam armazenados na tabela."],
+["Qual gráfico é uma boa escolha para comparar preços de quatro produtos?","Gráfico de colunas","Gráfico de pizza obrigatoriamente","Nenhum gráfico","Somente gráfico 3D",0,"Colunas facilitam comparar magnitudes entre categorias."],
+["Quando um gráfico de pizza costuma funcionar melhor?","Quando poucas categorias representam partes de um total","Quando existem muitas séries diferentes","Quando queremos mostrar qualquer tabela","Quando não existem números",0,"Pizza é mais adequada para uma única série e poucas categorias."],
+["Qual deve ser a primeira ação antes de inserir um gráfico?","Selecionar os dados que serão representados","Fechar o Excel","Abrir o Gmail","Apagar a tabela",0,"O Excel precisa saber quais dados devem alimentar o gráfico."],
+["O gráfico substitui a tabela?","Não","Sim","Somente no celular","Somente se for colorido",0,"A tabela é a fonte dos dados; o gráfico é uma representação visual."],
+["O que deve ser conferido antes de enviar o trabalho por e-mail?","Destinatário, assunto, mensagem e anexo","Somente a cor do gráfico","Somente o tamanho da fonte","Nada",0,"Conferir os quatro itens evita erros de entrega."],
+["É obrigatório criar um arquivo separado só para o gráfico nesta atividade?","Não, ele pode estar dentro da própria planilha","Sim, sempre","Somente em PDF","Somente como imagem",0,"O arquivo Excel pode conter tabela e gráfico juntos."],
+["Qual é o último passo no PC compartilhado?","Guardar no Drive, apagar seus arquivos locais, sair das contas e fechar os programas","Deixar o Gmail aberto","Salvar a senha no navegador","Deixar a planilha na Área de Trabalho",0,"Isso protege a privacidade e deixa o computador pronto para a próxima turma."]
 ];
 let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
 const quiz=document.getElementById("quiz");
-questions.forEach((q,i)=>{const d=document.createElement("div");d.className="quiz-item";d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;quiz.appendChild(d)});
+function shuffleOptions(options){
+  const shuffled=[...options];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  return shuffled;
+}
+
+questions.forEach((q,i)=>{
+  const d=document.createElement("div");
+  d.className="quiz-item";
+
+  const options=q.slice(1,5).map((text,originalIndex)=>({
+    text,
+    originalIndex
+  }));
+
+  const shuffledOptions=shuffleOptions(options);
+
+  d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
+    shuffledOptions.map(o=>`<label><input type="radio" name="q${i}" value="${o.originalIndex}"> ${o.text}</label>`).join("")+
+    `<div class="answer" id="a${i}"></div>`;
+
+  quiz.appendChild(d);
+});
 function updateUI(){document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true}}
 updateUI();
 function showMode(mode){document.getElementById("pcMode").classList.toggle("active",mode==="pc");document.getElementById("phoneMode").classList.toggle("active",mode==="phone")}
-function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===0){score++;a.textContent="Correta! "+q[5]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}});if(!all)return;attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
+function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===q[5]){score++;a.textContent="Correta! "+q[6]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[6]}});if(!all)return;attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
 function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;updateUI()}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-function saveResult(){if(!completed)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return}let rows="";questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`});const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}</style></head><body><h1>SEMAS — Módulo 2 — Aula 08</h1><h2>Criando Gráficos Coloridos e Entregando o Trabalho</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Prática guiada alcançada:</strong> passo ${practiceIndex+1}/${practiceSteps.length}</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. Módulo 2 concluído.</p></body></html>`;const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");a.href=url;a.download=`SEMAS_Modulo_2_Aula_08_${safe}.html`;a.click();URL.revokeObjectURL(url)}
+function saveResult(){if(!completed)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return}let rows="";questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===q[5]?"Correta":"Revisar"}</td></tr>`});const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}</style></head><body><h1>SEMAS — Módulo 2 — Aula 08</h1><h2>Criando Gráficos Coloridos e Entregando o Trabalho</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Prática guiada alcançada:</strong> passo ${practiceIndex+1}/${practiceSteps.length}</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. Módulo 2 concluído.</p></body></html>`;const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");a.href=url;a.download=`SEMAS_Modulo_2_Aula_08_${safe}.html`;a.click();URL.revokeObjectURL(url)}
 function finishSession(){if(!confirm("Encerrar a sessão e limpar esta aula neste navegador?"))return;sessionStorage.removeItem(lessonKey);sessionStorage.removeItem(practiceKey);location.reload()}
 </script>
 </body>
