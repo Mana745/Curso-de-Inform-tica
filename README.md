@@ -48,7 +48,24 @@ Para o perfeito andamento das aulas e controle pedagógico, o curso utiliza trê
 
 ---
 *Material didático desenvolvido para turmas de Informática.* 🖥️
+## Licença e finalidade do projeto
 
+Este curso foi desenvolvido originalmente para alunos da SEMAS
+e para ampliar o acesso ao ensino de informática na comunidade.
+
+O material pode ser utilizado gratuitamente para fins educacionais,
+sociais e comunitários.
+
+Não é permitido transformar este projeto em produto comercial,
+curso pago, plataforma paga ou qualquer outra forma de exploração
+econômica sem autorização expressa do autor.
+
+Código:
+PolyForm Noncommercial License 1.0.0
+
+Conteúdo educacional:
+Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+(CC BY-NC-SA 4.0)
 
 
 
