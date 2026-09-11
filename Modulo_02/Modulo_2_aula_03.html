@@ -275,25 +275,50 @@ button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#15
 <script>
 const lessonKey="semas_mod2_aula03_attempt";
 const questions=[
-["Para que serve a formatação?","Ajudar a organizar e destacar informações sem prejudicar a leitura","Encher o texto de cores","Aumentar a velocidade da internet","Criar uma senha","Formatação deve facilitar a leitura e a organização."],
-["Qual é um bom uso do negrito?","Destacar um título ou assunto importante","Colocar o documento inteiro em negrito","Trocar todas as letras por símbolos","Usar apenas no rodapé","Negrito funciona melhor quando usado em pontos realmente importantes."],
-["O PDF serve principalmente para quê nesta aula?","Criar uma cópia compartilhável que preserva melhor a apresentação","Substituir o antivírus","Editar vídeos","Aumentar a memória RAM","PDF é muito usado para compartilhar documentos mantendo o layout consistente."],
-["PDF significa que o arquivo nunca pode ser editado?","Não","Sim, nunca","Somente no celular","Somente no Windows","PDF pode ser editado com ferramentas próprias; sua vantagem principal é preservar a apresentação."],
-["Qual arquivo devemos manter se quisermos continuar editando a carta?","O DOCX","Somente o PDF","Uma imagem JPG","Um arquivo ZIP","O DOCX é o documento editável do Word."],
-["Antes de enviar o PDF, o que devemos fazer?","Abrir e conferir se ficou correto","Enviar sem olhar","Apagar o DOCX","Trocar a senha do Gmail","Conferir o PDF evita enviar uma versão com erro."],
-["Como anexar um arquivo no Gmail pelo computador?","Criar a mensagem e usar o botão Anexar","Colar o arquivo no assunto","Escrever o nome do PDF no corpo","Mandar uma foto da tela","O Gmail possui o botão Anexar para escolher o arquivo."],
-["Qual é a melhor sequência antes de terminar no PC compartilhado?","Enviar, salvar no Drive, apagar cópias locais e sair das contas","Deixar Gmail e Drive abertos","Salvar a senha no navegador","Deixar o PDF na Área de Trabalho","Essa sequência protege a privacidade e deixa o PC pronto para o próximo aluno."]
+["Para que serve a formatação?","Ajudar a organizar e destacar informações sem prejudicar a leitura","Encher o texto de cores","Aumentar a velocidade da internet","Criar uma senha",0,"Formatação deve facilitar a leitura e a organização."],
+["Qual é um bom uso do negrito?","Destacar um título ou assunto importante","Colocar o documento inteiro em negrito","Trocar todas as letras por símbolos","Usar apenas no rodapé",0,"Negrito funciona melhor quando usado em pontos realmente importantes."],
+["O PDF serve principalmente para quê nesta aula?","Criar uma cópia compartilhável que preserva melhor a apresentação","Substituir o antivírus","Editar vídeos","Aumentar a memória RAM",0,"PDF é muito usado para compartilhar documentos mantendo o layout consistente."],
+["PDF significa que o arquivo nunca pode ser editado?","Não","Sim, nunca","Somente no celular","Somente no Windows",0,"PDF pode ser editado com ferramentas próprias; sua vantagem principal é preservar a apresentação."],
+["Qual arquivo devemos manter se quisermos continuar editando a carta?","O DOCX","Somente o PDF","Uma imagem JPG","Um arquivo ZIP",0,"O DOCX é o documento editável do Word."],
+["Antes de enviar o PDF, o que devemos fazer?","Abrir e conferir se ficou correto","Enviar sem olhar","Apagar o DOCX","Trocar a senha do Gmail",0,"Conferir o PDF evita enviar uma versão com erro."],
+["Como anexar um arquivo no Gmail pelo computador?","Criar a mensagem e usar o botão Anexar","Colar o arquivo no assunto","Escrever o nome do PDF no corpo","Mandar uma foto da tela",0,"O Gmail possui o botão Anexar para escolher o arquivo."],
+["Qual é a melhor sequência antes de terminar no PC compartilhado?","Enviar, salvar no Drive, apagar cópias locais e sair das contas","Deixar Gmail e Drive abertos","Salvar a senha no navegador","Deixar o PDF na Área de Trabalho",0,"Essa sequência protege a privacidade e deixa o PC pronto para o próximo aluno."]
 ];
 let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null,startedAt=Date.now();
 const quiz=document.getElementById("quiz");
-questions.forEach((q,i)=>{const d=document.createElement("div");d.className="quiz-item";d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;quiz.appendChild(d)});
+function shuffleOptions(options){
+  const shuffled=[...options];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  return shuffled;
+}
+
+questions.forEach((q,i)=>{
+  const d=document.createElement("div");
+  d.className="quiz-item";
+
+  const options=q.slice(1,5).map((text,originalIndex)=>({
+    text,
+    originalIndex
+  }));
+
+  const shuffledOptions=shuffleOptions(options);
+
+  d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
+    shuffledOptions.map(o=>`<label><input type="radio" name="q${i}" value="${o.originalIndex}"> ${o.text}</label>`).join("")+
+    `<div class="answer" id="a${i}"></div>`;
+
+  quiz.appendChild(d);
+});
 function updateUI(){document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true}}
 updateUI();
 function showMode(mode){document.getElementById("pcMode").classList.toggle("active",mode==="pc");document.getElementById("phoneMode").classList.toggle("active",mode==="phone")}
-function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===0){score++;a.textContent="Correta! "+q[5]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}});if(!all)return;attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
+function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===q[5]){score++;a.textContent="Correta! "+q[6]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[6]}});if(!all)return;attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
 function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;startedAt=Date.now();document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;updateUI()}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-function saveResult(){if(!completed)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return}let rows="";questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`});const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}</style></head><body><h1>SEMAS — Módulo 2 — Aula 03</h1><h2>Formatando e Transformando em PDF</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. Envie por e-mail, salve no Drive, apague a cópia local e saia das contas.</p></body></html>`;const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");a.href=url;a.download=`SEMAS_Modulo_2_Aula_03_${safe}.html`;a.click();URL.revokeObjectURL(url)}
+function saveResult(){if(!completed)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return}let rows="";questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===q[5]?"Correta":"Revisar"}</td></tr>`});const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}</style></head><body><h1>SEMAS — Módulo 2 — Aula 03</h1><h2>Formatando e Transformando em PDF</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. Envie por e-mail, salve no Drive, apague a cópia local e saia das contas.</p></body></html>`;const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");a.href=url;a.download=`SEMAS_Modulo_2_Aula_03_${safe}.html`;a.click();URL.revokeObjectURL(url)}
 function finishSession(){if(!confirm("Encerrar a sessão e limpar esta aula neste navegador?"))return;sessionStorage.removeItem(lessonKey);location.reload()}
 </script>
 </body>
