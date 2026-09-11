@@ -240,27 +240,52 @@ button:disabled{opacity:.5;cursor:not-allowed}
 <script>
 const lessonKey="semas_mod1_aula05_attempt";
 const questions=[
-["Qual faixa costuma alcançar mais longe em ambientes comuns?","2,4 GHz","5 GHz","As duas sempre exatamente igual","Nenhuma usa rádio","2,4 GHz costuma ter melhor alcance e atravessar obstáculos com mais facilidade."],
-["Qual faixa costuma oferecer maior capacidade/velocidade perto do roteador?","5 GHz","2,4 GHz","As duas nunca mudam","Bluetooth","5 GHz costuma oferecer maior largura de banda e velocidades mais altas em boas condições."],
-["Por que 5 GHz costuma perder sinal mais rápido com paredes e distância?","Porque sua propagação é mais sensível a obstáculos e distância","Porque não usa ondas de rádio","Porque não funciona dentro de casas","Porque depende de cabo USB","Frequências mais altas tendem a sofrer mais atenuação em obstáculos comuns."],
-["Qual destes pode enfraquecer o Wi‑Fi?","Paredes, lajes e grandes obstáculos","Somente o teclado","A cor da tela","O nome do computador","Barreiras físicas podem reduzir a intensidade do sinal."],
-["Redes Wi‑Fi vizinhas podem influenciar sua conexão?","Sim","Não, nunca","Somente se tiverem a mesma senha","Somente em computadores antigos","Redes próximas podem disputar canais e aumentar a interferência."],
-["Ter todas as barrinhas de Wi‑Fi significa obrigatoriamente internet rápida?","Não","Sim, sempre","Somente em 5 GHz","Somente no celular","Sinal Wi‑Fi forte não garante velocidade do provedor ou do servidor acessado."],
-["Por que usar senha forte no Wi‑Fi?","Para impedir acesso não autorizado à rede","Para aumentar a memória RAM","Para melhorar a tela","Para resfriar o roteador","A senha ajuda a proteger a rede contra pessoas não autorizadas."],
-["Qual segurança é preferível quando roteador e aparelhos suportam?","WPA3","Rede aberta","Sem senha","WEP antigo","A Microsoft recomenda WPA3 quando disponível e compatível."]
+["Qual faixa costuma alcançar mais longe em ambientes comuns?","2,4 GHz","5 GHz","As duas sempre exatamente igual","Nenhuma usa rádio",0,"2,4 GHz costuma ter melhor alcance e atravessar obstáculos com mais facilidade."],
+["Qual faixa costuma oferecer maior capacidade/velocidade perto do roteador?","5 GHz","2,4 GHz","As duas nunca mudam","Bluetooth",0,"5 GHz costuma oferecer maior largura de banda e velocidades mais altas em boas condições."],
+["Por que 5 GHz costuma perder sinal mais rápido com paredes e distância?","Porque sua propagação é mais sensível a obstáculos e distância","Porque não usa ondas de rádio","Porque não funciona dentro de casas","Porque depende de cabo USB",0,"Frequências mais altas tendem a sofrer mais atenuação em obstáculos comuns."],
+["Qual destes pode enfraquecer o Wi‑Fi?","Paredes, lajes e grandes obstáculos","Somente o teclado","A cor da tela","O nome do computador",0,"Barreiras físicas podem reduzir a intensidade do sinal."],
+["Redes Wi‑Fi vizinhas podem influenciar sua conexão?","Sim","Não, nunca","Somente se tiverem a mesma senha","Somente em computadores antigos",0,"Redes próximas podem disputar canais e aumentar a interferência."],
+["Ter todas as barrinhas de Wi‑Fi significa obrigatoriamente internet rápida?","Não","Sim, sempre","Somente em 5 GHz","Somente no celular",0,"Sinal Wi‑Fi forte não garante velocidade do provedor ou do servidor acessado."],
+["Por que usar senha forte no Wi‑Fi?","Para impedir acesso não autorizado à rede","Para aumentar a memória RAM","Para melhorar a tela","Para resfriar o roteador",0,"A senha ajuda a proteger a rede contra pessoas não autorizadas."],
+["Qual segurança é preferível quando roteador e aparelhos suportam?","WPA3","Rede aberta","Sem senha","WEP antigo",0,"A Microsoft recomenda WPA3 quando disponível e compatível."]
 ];
 
 let attempt=Number(sessionStorage.getItem(lessonKey)||0);
 let completed=false,lastScore=null,startedAt=Date.now(),finishedAt=null,currentMode="não informado";
 const quiz=document.getElementById("quiz");
-questions.forEach((q,i)=>{const d=document.createElement("div");d.className="quiz-item";d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;quiz.appendChild(d);});
+function shuffleOptions(options){
+  const shuffled=[...options];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  return shuffled;
+}
+
+questions.forEach((q,i)=>{
+  const d=document.createElement("div");
+  d.className="quiz-item";
+
+  const options=q.slice(1,5).map((text,originalIndex)=>({
+    text,
+    originalIndex
+  }));
+
+  const shuffledOptions=shuffleOptions(options);
+
+  d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
+    shuffledOptions.map(o=>`<label><input type="radio" name="q${i}" value="${o.originalIndex}"> ${o.text}</label>`).join("")+
+    `<div class="answer" id="a${i}"></div>`;
+
+  quiz.appendChild(d);
+});
 function formatTime(ms){const s=Math.max(0,Math.round(ms/1000)),m=Math.floor(s/60),sec=s%60;return `${m}min ${String(sec).padStart(2,"0")}s`;}
 function showMode(mode){currentMode=mode==="pc"?"SEMAS — computador":"Casa/fora da SEMAS — celular";document.getElementById("pcMode").classList.toggle("active",mode==="pc");document.getElementById("phoneMode").classList.toggle("active",mode==="phone");}
 function updateUI(){const r=document.getElementById("result");if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true;if(!completed)r.innerHTML="<strong>Duas tentativas foram usadas nesta sessão.</strong><br>Em uma nova sessão, o quiz começa novamente.";}else if(!completed){r.innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;}}
 updateUI();
 function checkQuiz(){
  if(attempt>=2)return;let score=0,all=true,wrong=[];
- questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return;}if(+s.value===0){score++;a.textContent="Correta! "+q[5];}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5];}});
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return;}if(+s.value===q[5]){score++;a.textContent="Correta! "+q[6];}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[6];}});
  if(!all){document.getElementById("result").innerHTML="<strong>Responda todas as perguntas antes de finalizar.</strong>";return;}
  attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;finishedAt=Date.now();
  document.getElementById("result").innerHTML=`<strong>Resultado da tentativa ${attempt}: ${score} de ${questions.length}.</strong><br>Tempo: ${formatTime(finishedAt-startedAt)}.<br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas as questões foram respondidas corretamente."}<br><span style="color:var(--muted)">Não existe nota mínima: o objetivo é entender como ambiente e segurança influenciam o Wi‑Fi.</span>`;
@@ -271,7 +296,7 @@ function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",
 function saveResult(){
  if(!completed||lastScore===null)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return;}
  const now=new Date();let rows="",wrong=[];
- questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;if(n!==0)wrong.push(i+1);rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;});
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;if(n!==q[5])wrong.push(i+1);rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===q[5]?"Correta":"Revisar"}</td></tr>`;});
  const report=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SEMAS - Módulo 1 Aula 05 - ${esc(name)}</title><style>body{font-family:Arial,sans-serif;max-width:950px;margin:30px auto;padding:18px;color:#172033;line-height:1.5}h1{color:#123b55}.meta{padding:18px;background:#f1f5f8;border-radius:10px}table{border-collapse:collapse;width:100%;margin-top:15px}th,td{border:1px solid #ccd3dc;padding:8px;text-align:left;vertical-align:top}th{background:#eaf2f7}.note{padding:14px;background:#fff8df;border-radius:8px}</style></head><body><h1>SEMAS — Módulo 1 — Aula 05</h1><h2>O Wi‑Fi e os Seus Obstáculos</h2><div class="meta"><strong>Aluno:</strong> ${esc(name)}<br><strong>Data e hora:</strong> ${now.toLocaleString("pt-BR")}<br><strong>Modo:</strong> ${esc(currentMode)}<br><strong>Tentativa:</strong> ${attempt} de 2<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Tempo:</strong> ${formatTime(finishedAt-startedAt)}</div><p class="note"><strong>Não existe nota mínima.</strong> Este relatório registra uma atividade de aprendizagem.</p><p><strong>Questões para revisar:</strong> ${wrong.length?wrong.join(", "):"nenhuma"}.</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Envie por e-mail ao professor, salve no Drive e apague o arquivo local do computador compartilhado.</p></body></html>`;
  const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
  a.href=url;a.download=`SEMAS_Modulo_1_Aula_05_${safe}_Tentativa_${attempt}.html`;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
