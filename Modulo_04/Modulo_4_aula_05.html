@@ -442,24 +442,43 @@ function practicePrev(){
 renderPractice();
 
 const questions=[
-["Para que serve a tag <img>?","Mostrar/incorporar uma imagem na página","Criar um parágrafo","Criar um título","Abrir uma pasta","img incorpora uma imagem ao documento HTML."],
-["O que o atributo src informa?","Onde está o arquivo da imagem","A cor do texto","O nome do navegador","A senha do site","src informa a origem ou caminho do recurso."],
-["Para que serve o atributo alt?","Fornecer uma alternativa textual adequada para a imagem","Aumentar a imagem","Criar um link","Salvar o arquivo","alt descreve a imagem de forma útil quando apropriado, inclusive para acessibilidade."],
-["Qual tag cria um hiperlink?","<a>","<p>","<hr>","<h1>","O elemento a cria links."],
-["O que o atributo href informa?","O destino do link","O tamanho da imagem","A pasta do projeto","A cor do botão","href contém o endereço de destino do hiperlink."],
-["Um link precisa parecer um botão para funcionar?","Não","Sim","Somente no celular","Somente em sites oficiais","Um link pode ser texto simples; CSS pode dar aparência de botão."],
-["Se a imagem não aparece, qual é uma boa primeira investigação?","Conferir nome, pasta e src","Apagar o projeto","Reinstalar o Windows","Trocar a internet","Erros de caminho são causas comuns de imagem local não encontrada."],
-["Antes de usar um link oficial importante, o que devemos fazer?","Confirmar o endereço correto","Usar qualquer resultado parecido","Inventar uma URL","Copiar sem testar","Links devem ser conferidos e testados."]
+["Para que serve a tag <img>?","Mostrar/incorporar uma imagem na página","Criar um parágrafo","Criar um título","Abrir uma pasta",0,"img incorpora uma imagem ao documento HTML."],
+["O que o atributo src informa?","Onde está o arquivo da imagem","A cor do texto","O nome do navegador","A senha do site",0,"src informa a origem ou caminho do recurso."],
+["Para que serve o atributo alt?","Fornecer uma alternativa textual adequada para a imagem","Aumentar a imagem","Criar um link","Salvar o arquivo",0,"alt descreve a imagem de forma útil quando apropriado, inclusive para acessibilidade."],
+["Qual tag cria um hiperlink?","<a>","<p>","<hr>","<h1>",0,"O elemento a cria links."],
+["O que o atributo href informa?","O destino do link","O tamanho da imagem","A pasta do projeto","A cor do botão",0,"href contém o endereço de destino do hiperlink."],
+["Um link precisa parecer um botão para funcionar?","Não","Sim","Somente no celular","Somente em sites oficiais",0,"Um link pode ser texto simples; CSS pode dar aparência de botão."],
+["Se a imagem não aparece, qual é uma boa primeira investigação?","Conferir nome, pasta e src","Apagar o projeto","Reinstalar o Windows","Trocar a internet",0,"Erros de caminho são causas comuns de imagem local não encontrada."],
+["Antes de usar um link oficial importante, o que devemos fazer?","Confirmar o endereço correto","Usar qualquer resultado parecido","Inventar uma URL","Copiar sem testar",0,"Links devem ser conferidos e testados."]
 ];
 
 let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
 const quiz=document.getElementById("quiz");
+function shuffleOptions(options){
+  const shuffled=[...options];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  return shuffled;
+}
+
 questions.forEach((q,i)=>{
- const d=document.createElement("div");d.className="quiz-item";
- d.innerHTML=`<h3>${i+1}. ${q[0].replace(/</g,"&lt;").replace(/>/g,"&gt;")}</h3>`+
- q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</label>`).join("")+
- `<div class="answer" id="a${i}"></div>`;
- quiz.appendChild(d);
+  const d=document.createElement("div");
+  d.className="quiz-item";
+
+  const options=q.slice(1,5).map((text,originalIndex)=>({
+    text,
+    originalIndex
+  }));
+
+  const shuffledOptions=shuffleOptions(options);
+
+  d.innerHTML=`<h3>${i+1}. ${q[0].replace(/</g,"&lt;").replace(/>/g,"&gt;")}</h3>`+
+    shuffledOptions.map(o=>`<label><input type="radio" name="q${i}" value="${o.originalIndex}"> ${o.text.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</label>`).join("")+
+    `<div class="answer" id="a${i}"></div>`;
+
+  quiz.appendChild(d);
 });
 function updateUI(){
  document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;
@@ -473,8 +492,8 @@ function checkQuiz(){
  questions.forEach((q,i)=>{
   const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);
   if(!s){all=false;a.textContent="Responda esta questão.";return}
-  if(+s.value===0){score++;a.textContent="Correta! "+q[5]}
-  else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}
+  if(+s.value===q[5]){score++;a.textContent="Correta! "+q[6]}
+  else{wrong.push(i+1);a.textContent="Vale revisar: "+q[6]}
  });
  if(!all)return;
  attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;
@@ -506,7 +525,7 @@ function saveResult(){
  let rows="";
  questions.forEach((q,i)=>{
   const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;
-  rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;
+  rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===q[5]?"Correta":"Revisar"}</td></tr>`;
  });
  const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}.note{padding:12px;background:#f2f5f8;border-radius:8px;white-space:pre-wrap;font-family:monospace}</style></head><body><h1>SEMAS — Módulo 4 — Aula 05</h1><h2>Colocando Fotos e Links na Nossa Página</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Prática guiada:</strong> passo ${practiceIndex+1}/${practiceSteps.length}</p>${note?`<p><strong>Meu código:</strong></p><div class="note">${esc(note)}</div>`:""}<table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. O objetivo é aprender a incorporar imagens e criar links corretamente.</p></body></html>`;
  const blob=new Blob([report],{type:"text/html;charset=utf-8"});
