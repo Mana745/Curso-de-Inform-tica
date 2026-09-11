@@ -251,22 +251,42 @@ footer{margin-top:30px;color:var(--muted);font-size:.9rem}
 <script>
 const lessonKey="semas_mod0_aula06_attempt";
 const questions=[
-["Qual é a função principal de um sistema operacional?","Organizar recursos do computador e permitir que programas e usuário trabalhem com o hardware","Guardar energia da tomada","Substituir o processador","Servir apenas para acessar a internet","O sistema operacional gerencia recursos e cria o ambiente em que os programas funcionam."],
-["Qual destes é um sistema operacional?","Windows","HD","Teclado","Pen drive","Windows é uma família de sistemas operacionais."],
-["Ubuntu é um exemplo de quê?","Uma distribuição Linux de código aberto","Um tipo de SSD","Uma fonte de alimentação","Um navegador obrigatório","Ubuntu é um sistema operacional baseado em Linux e de código aberto."],
-["Qual elemento ajuda a encontrar programas e opções no Windows?","Menu Iniciar","Cabo USB","Cooler","Fonte de alimentação","O Menu Iniciar reúne acesso a aplicativos, configurações e opções de energia."],
-["Qual é a forma correta de desligar o Windows?","Usar Iniciar → Ligar/Desligar → Desligar","Arrancar o cabo da tomada","Segurar qualquer tecla","Fechar apenas o monitor","O desligamento pelo sistema permite que programas e arquivos sejam encerrados corretamente."],
-["Por que não devemos desligar o PC cortando a energia sem necessidade?","Porque o sistema pode estar salvando dados e finalizando tarefas","Porque a tela perde a cor","Porque o mouse descarrega","Porque o teclado fica lento","Interromper a energia pode interromper operações que ainda estavam em andamento."],
-["O que é uma pasta?","Um local usado para organizar arquivos e outras pastas","Um tipo de processador","Uma tomada de energia","Um programa antivírus","Pastas ajudam a organizar informações no sistema de arquivos."],
-["Qual sequência pode criar uma pasta na Área de Trabalho?","Botão direito em área vazia → Novo → Pasta","Desligar → Reiniciar → USB","Abrir navegador → Fechar → Imprimir","Ctrl+Alt+Delete → Monitor → Fonte","No Windows, o menu de contexto da Área de Trabalho permite criar uma nova pasta."]
+["Qual é a função principal de um sistema operacional?","Organizar recursos do computador e permitir que programas e usuário trabalhem com o hardware","Guardar energia da tomada","Substituir o processador","Servir apenas para acessar a internet",0,"O sistema operacional gerencia recursos e cria o ambiente em que os programas funcionam."],
+["Qual destes é um sistema operacional?","Windows","HD","Teclado","Pen drive",0,"Windows é uma família de sistemas operacionais."],
+["Ubuntu é um exemplo de quê?","Uma distribuição Linux de código aberto","Um tipo de SSD","Uma fonte de alimentação","Um navegador obrigatório",0,"Ubuntu é um sistema operacional baseado em Linux e de código aberto."],
+["Qual elemento ajuda a encontrar programas e opções no Windows?","Menu Iniciar","Cabo USB","Cooler","Fonte de alimentação",0,"O Menu Iniciar reúne acesso a aplicativos, configurações e opções de energia."],
+["Qual é a forma correta de desligar o Windows?","Usar Iniciar → Ligar/Desligar → Desligar","Arrancar o cabo da tomada","Segurar qualquer tecla","Fechar apenas o monitor",0,"O desligamento pelo sistema permite que programas e arquivos sejam encerrados corretamente."],
+["Por que não devemos desligar o PC cortando a energia sem necessidade?","Porque o sistema pode estar salvando dados e finalizando tarefas","Porque a tela perde a cor","Porque o mouse descarrega","Porque o teclado fica lento",0,"Interromper a energia pode interromper operações que ainda estavam em andamento."],
+["O que é uma pasta?","Um local usado para organizar arquivos e outras pastas","Um tipo de processador","Uma tomada de energia","Um programa antivírus",0,"Pastas ajudam a organizar informações no sistema de arquivos."],
+["Qual sequência pode criar uma pasta na Área de Trabalho?","Botão direito em área vazia → Novo → Pasta","Desligar → Reiniciar → USB","Abrir navegador → Fechar → Imprimir","Ctrl+Alt+Delete → Monitor → Fonte",0,"No Windows, o menu de contexto da Área de Trabalho permite criar uma nova pasta."]
 ];
 
 let attempt=Number(sessionStorage.getItem(lessonKey)||0);
 let completed=false,lastScore=null,startedAt=Date.now(),finishedAt=null,currentMode="não informado";
 const quiz=document.getElementById("quiz");
+function shuffleOptions(options){
+  const shuffled=[...options];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  return shuffled;
+}
+
 questions.forEach((q,i)=>{
   const d=document.createElement("div");d.className="quiz-item";
-  d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;
+
+  const options=q.slice(1,5).map((text,originalIndex)=>({
+    text,
+    originalIndex
+  }));
+
+  const shuffledOptions=shuffleOptions(options);
+
+  d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
+    shuffledOptions.map(o=>`<label><input type="radio" name="q${i}" value="${o.originalIndex}"> ${o.text}</label>`).join("")+
+    `<div class="answer" id="a${i}"></div>`;
+
   quiz.appendChild(d);
 });
 function formatTime(ms){const s=Math.max(0,Math.round(ms/1000)),m=Math.floor(s/60),sec=s%60;return `${m}min ${String(sec).padStart(2,"0")}s`;}
@@ -275,7 +295,7 @@ function updateUI(){const r=document.getElementById("result");if(attempt>=2){doc
 updateUI();
 function checkQuiz(){
   if(attempt>=2)return;let score=0,all=true,wrong=[];
-  questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return;}if(+s.value===0){score++;a.textContent="Correta! "+q[5];}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5];}});
+  questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return;}if(+s.value===q[5]){score++;a.textContent="Correta! "+q[6];}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[6];}});
   if(!all){document.getElementById("result").innerHTML="<strong>Responda todas as perguntas antes de finalizar.</strong>";return;}
   attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;finishedAt=Date.now();
   document.getElementById("result").innerHTML=`<strong>Resultado da tentativa ${attempt}: ${score} de ${questions.length}.</strong><br>Tempo: ${formatTime(finishedAt-startedAt)}.<br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas as questões foram respondidas corretamente."}<br><span style="color:var(--muted)">Não existe nota mínima: o objetivo é aprender e praticar.</span>`;
@@ -286,7 +306,7 @@ function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",
 function saveResult(){
   if(!completed||lastScore===null)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return;}
   const now=new Date();let rows="",wrong=[];
-  questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;if(n!==0)wrong.push(i+1);rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;});
+  questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;if(n!==q[5])wrong.push(i+1);rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===q[5]?"Correta":"Revisar"}</td></tr>`;});
   const report=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SEMAS - Aula 06 - ${esc(name)}</title><style>body{font-family:Arial,sans-serif;max-width:950px;margin:30px auto;padding:18px;color:#172033;line-height:1.5}h1{color:#123b55}.meta{padding:18px;background:#f1f5f8;border-radius:10px}table{border-collapse:collapse;width:100%;margin-top:15px}th,td{border:1px solid #ccd3dc;padding:8px;text-align:left;vertical-align:top}th{background:#eaf2f7}.note{padding:14px;background:#fff8df;border-radius:8px}</style></head><body><h1>SEMAS — Módulo 0 — Aula 06</h1><h2>Sistemas Operacionais</h2><div class="meta"><strong>Aluno:</strong> ${esc(name)}<br><strong>Data e hora:</strong> ${now.toLocaleString("pt-BR")}<br><strong>Modo:</strong> ${esc(currentMode)}<br><strong>Tentativa:</strong> ${attempt} de 2<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Tempo:</strong> ${formatTime(finishedAt-startedAt)}</div><p class="note"><strong>Não existe nota mínima.</strong> Este relatório registra uma atividade de aprendizagem.</p><p><strong>Questões para revisar:</strong> ${wrong.length?wrong.join(", "):"nenhuma"}.</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Envie por e-mail ao professor, salve no Drive e apague o arquivo local do computador compartilhado.</p></body></html>`;
   const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
   a.href=url;a.download=`SEMAS_Modulo_0_Aula_06_${safe}_Tentativa_${attempt}.html`;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
