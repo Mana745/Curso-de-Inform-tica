@@ -269,27 +269,52 @@ button:disabled{opacity:.5;cursor:not-allowed}
 <script>
 const lessonKey="semas_mod0_aula07_attempt";
 const questions=[
-["O que é a internet, de forma simples?","Uma grande rede de redes interligadas","Um único computador gigante","Apenas o Wi‑Fi da casa","Um programa instalado no celular","A internet é formada por muitas redes conectadas que trocam dados entre si."],
-["Qual tecnologia transporta dados usando sinais de luz?","Fibra óptica","HD","Teclado","Fonte de alimentação","A fibra óptica transmite dados por sinais luminosos."],
-["O que permite ao celular se comunicar com a rede móvel?","Ondas de rádio e estações rádio base","Somente cabos USB","A bateria do aparelho","O monitor","Celulares se conectam às redes móveis por rádio através de antenas e estações da operadora."],
-["O que caracteriza a internet via rádio?","A transmissão de dados entre pontos usando antenas","O uso obrigatório de satélites","A ausência de qualquer infraestrutura","O uso de cabos dentro do celular","Internet via rádio usa enlaces sem fio por antenas."],
-["Por que internet via satélite pode ser útil em áreas rurais e remotas?","Porque pode atender locais onde redes terrestres não chegam bem","Porque elimina toda latência","Porque não precisa de nenhum equipamento","Porque substitui todos os cabos do mundo","Satélite pode ampliar conectividade em regiões de difícil acesso."],
-["O que é um servidor?","Um computador ou sistema que oferece dados e serviços para outros dispositivos","Um tipo de tomada","Uma antena doméstica obrigatória","Um cabo de energia","Servidores disponibilizam dados e serviços através da rede."],
-["Onde podem ficar vídeos, e-mails e dados de jogos online?","Em servidores e infraestrutura de data centers","Dentro do teclado","Na tomada elétrica","Somente no roteador da casa","Serviços online usam servidores e data centers para armazenar, processar e entregar conteúdo."],
-["Qual frase está correta?","Mesmo conexões sem fio dependem de infraestrutura física e redes","Wi‑Fi significa que não existem cabos em lugar nenhum","Satélite não usa estações em solo","Internet funciona sem servidores","Conexões sem fio fazem parte de uma infraestrutura maior que inclui equipamentos, enlaces e redes físicas."]
+["O que é a internet, de forma simples?","Uma grande rede de redes interligadas","Um único computador gigante","Apenas o Wi‑Fi da casa","Um programa instalado no celular",0,"A internet é formada por muitas redes conectadas que trocam dados entre si."],
+["Qual tecnologia transporta dados usando sinais de luz?","Fibra óptica","HD","Teclado","Fonte de alimentação",0,"A fibra óptica transmite dados por sinais luminosos."],
+["O que permite ao celular se comunicar com a rede móvel?","Ondas de rádio e estações rádio base","Somente cabos USB","A bateria do aparelho","O monitor",0,"Celulares se conectam às redes móveis por rádio através de antenas e estações da operadora."],
+["O que caracteriza a internet via rádio?","A transmissão de dados entre pontos usando antenas","O uso obrigatório de satélites","A ausência de qualquer infraestrutura","O uso de cabos dentro do celular",0,"Internet via rádio usa enlaces sem fio por antenas."],
+["Por que internet via satélite pode ser útil em áreas rurais e remotas?","Porque pode atender locais onde redes terrestres não chegam bem","Porque elimina toda latência","Porque não precisa de nenhum equipamento","Porque substitui todos os cabos do mundo",0,"Satélite pode ampliar conectividade em regiões de difícil acesso."],
+["O que é um servidor?","Um computador ou sistema que oferece dados e serviços para outros dispositivos","Um tipo de tomada","Uma antena doméstica obrigatória","Um cabo de energia",0,"Servidores disponibilizam dados e serviços através da rede."],
+["Onde podem ficar vídeos, e-mails e dados de jogos online?","Em servidores e infraestrutura de data centers","Dentro do teclado","Na tomada elétrica","Somente no roteador da casa",0,"Serviços online usam servidores e data centers para armazenar, processar e entregar conteúdo."],
+["Qual frase está correta?","Mesmo conexões sem fio dependem de infraestrutura física e redes","Wi‑Fi significa que não existem cabos em lugar nenhum","Satélite não usa estações em solo","Internet funciona sem servidores",0,"Conexões sem fio fazem parte de uma infraestrutura maior que inclui equipamentos, enlaces e redes físicas."]
 ];
 
 let attempt=Number(sessionStorage.getItem(lessonKey)||0);
 let completed=false,lastScore=null,startedAt=Date.now(),finishedAt=null,currentMode="não informado";
 const quiz=document.getElementById("quiz");
-questions.forEach((q,i)=>{const d=document.createElement("div");d.className="quiz-item";d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;quiz.appendChild(d);});
+function shuffleOptions(options){
+  const shuffled=[...options];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  return shuffled;
+}
+
+questions.forEach((q,i)=>{
+  const d=document.createElement("div");
+  d.className="quiz-item";
+
+  const options=q.slice(1,5).map((text,originalIndex)=>({
+    text,
+    originalIndex
+  }));
+
+  const shuffledOptions=shuffleOptions(options);
+
+  d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
+    shuffledOptions.map(o=>`<label><input type="radio" name="q${i}" value="${o.originalIndex}"> ${o.text}</label>`).join("")+
+    `<div class="answer" id="a${i}"></div>`;
+
+  quiz.appendChild(d);
+});
 function formatTime(ms){const s=Math.max(0,Math.round(ms/1000)),m=Math.floor(s/60),sec=s%60;return `${m}min ${String(sec).padStart(2,"0")}s`;}
 function showMode(mode){currentMode=mode==="pc"?"SEMAS — computador":"Casa/fora da SEMAS — celular";document.getElementById("pcMode").classList.toggle("active",mode==="pc");document.getElementById("phoneMode").classList.toggle("active",mode==="phone");}
 function updateUI(){const r=document.getElementById("result");if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true;if(!completed)r.innerHTML="<strong>Duas tentativas foram usadas nesta sessão.</strong><br>Em uma nova sessão, o quiz começa novamente.";}else if(!completed){r.innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;}}
 updateUI();
 function checkQuiz(){
   if(attempt>=2)return;let score=0,all=true,wrong=[];
-  questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return;}if(+s.value===0){score++;a.textContent="Correta! "+q[5];}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5];}});
+  questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return;}if(+s.value===q[5]){score++;a.textContent="Correta! "+q[6];}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[6];}});
   if(!all){document.getElementById("result").innerHTML="<strong>Responda todas as perguntas antes de finalizar.</strong>";return;}
   attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;finishedAt=Date.now();
   document.getElementById("result").innerHTML=`<strong>Resultado da tentativa ${attempt}: ${score} de ${questions.length}.</strong><br>Tempo: ${formatTime(finishedAt-startedAt)}.<br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas as questões foram respondidas corretamente."}<br><span style="color:var(--muted)">Não existe nota mínima: o objetivo é aprender e conseguir explicar o caminho da informação.</span>`;
@@ -300,7 +325,7 @@ function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",
 function saveResult(){
   if(!completed||lastScore===null)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return;}
   const now=new Date();let rows="",wrong=[];
-  questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;if(n!==0)wrong.push(i+1);rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;});
+  questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;if(n!==q[5])wrong.push(i+1);rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===q[5]?"Correta":"Revisar"}</td></tr>`;});
   const report=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SEMAS - Aula 07 - ${esc(name)}</title><style>body{font-family:Arial,sans-serif;max-width:950px;margin:30px auto;padding:18px;color:#172033;line-height:1.5}h1{color:#123b55}.meta{padding:18px;background:#f1f5f8;border-radius:10px}table{border-collapse:collapse;width:100%;margin-top:15px}th,td{border:1px solid #ccd3dc;padding:8px;text-align:left;vertical-align:top}th{background:#eaf2f7}.note{padding:14px;background:#fff8df;border-radius:8px}</style></head><body><h1>SEMAS — Módulo 0 — Aula 07</h1><h2>O Que é a Internet e Como Ela Viaja?</h2><div class="meta"><strong>Aluno:</strong> ${esc(name)}<br><strong>Data e hora:</strong> ${now.toLocaleString("pt-BR")}<br><strong>Modo:</strong> ${esc(currentMode)}<br><strong>Tentativa:</strong> ${attempt} de 2<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Tempo:</strong> ${formatTime(finishedAt-startedAt)}</div><p class="note"><strong>Não existe nota mínima.</strong> Este relatório registra uma atividade de aprendizagem.</p><p><strong>Questões para revisar:</strong> ${wrong.length?wrong.join(", "):"nenhuma"}.</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Envie por e-mail ao professor, salve no Drive e apague o arquivo local do computador compartilhado.</p></body></html>`;
   const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
   a.href=url;a.download=`SEMAS_Modulo_0_Aula_07_${safe}_Tentativa_${attempt}.html`;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
