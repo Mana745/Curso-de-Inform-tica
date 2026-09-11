@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 4 — Aula 02 — O Que é o Código HTML?</title>
+<style>
+:root{
+  --bg:#08101c;--card:#101a2c;--card2:#0c1524;--ink:#eef6ff;--muted:#afbdd2;
+  --accent:#73ddff;--accent2:#a8ffb9;--warn:#ffd47d;--danger:#ff9e9e;--line:#2b3b55;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 16% 0%,#1a355c 0,transparent 30%),linear-gradient(135deg,#070c15,#0d1729 55%,#10203a);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1040px;margin:auto;padding:24px 18px 70px}
+.hero{padding:42px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#265984,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)}h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)}.warning{border-left:4px solid var(--warn);background:#251f12}.danger{border-left:4px solid var(--danger);background:#29171b}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.code{font-family:Consolas,monospace;background:#07101e;color:#ffd479;padding:14px;border-radius:10px;white-space:pre-wrap;overflow:auto}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.good{border-left:4px solid var(--accent2)}.bad{border-left:4px solid var(--danger)}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.step{counter-increment:s;padding:16px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.step:before{content:counter(s);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#07101e;font-weight:900}
+.tag{font-family:Consolas,monospace;background:#07101e;color:#ffd479;padding:3px 7px;border-radius:7px}
+.browser-demo{background:white;color:#1b2430;border-radius:16px;padding:18px;border:1px solid #cfd7df}
+.browser-top{display:flex;gap:7px;align-items:center;margin-bottom:14px}
+.dot{width:10px;height:10px;border-radius:50%;background:#bbb}
+.addr{flex:1;padding:7px 10px;border-radius:8px;background:#eef1f5;color:#5a6470;font-size:.9rem}
+.site-box{padding:18px;border:1px solid #d7dee7;border-radius:10px}
+.site-box h1{font-size:2rem;color:#1c4d72;margin:.2em 0}.site-box p{color:#333}
+.anatomy{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start}
+.anatomy .num{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#06111a;font-weight:900}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}button:disabled{opacity:.5}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.answer{margin-top:10px;color:var(--muted)}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input,.savebox textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}
+footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:760px){main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.compare{grid-template-columns:1fr}button{width:100%;min-height:48px}}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 4 • Aula 02</div>
+<h1>O Que é o Código HTML?</h1>
+<p class="lead">Quando você abre uma página da internet, o navegador recebe informações estruturadas. Uma das tecnologias usadas para construir essa estrutura é o <strong>HTML</strong>.</p>
+<p><strong>Desafio da aula:</strong> reconhecer as partes básicas de um documento HTML e entender como um texto escrito em código vira uma página no navegador.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>7 min</strong>O que é HTML</div>
+<div class="slot"><strong>10 min</strong>Tags e elementos</div>
+<div class="slot"><strong>10 min</strong>Estrutura básica</div>
+<div class="slot"><strong>10 min</strong>Código × página</div>
+<div class="slot"><strong>10 min</strong>PC e celular</div>
+<div class="slot"><strong>8 min</strong>Atividade</div>
+<div class="slot"><strong>5 min</strong>Quiz/relatório</div>
+</div>
+</section>
+
+<section>
+<h2>2. O que você vai aprender</h2>
+<div class="grid">
+<div class="card goal"><h3>🌐 HTML</h3><p>Entender para que serve a linguagem de marcação usada para estruturar páginas Web.</p></div>
+<div class="card goal"><h3>🏷️ Tags</h3><p>Reconhecer marcas como <span class="tag">&lt;h1&gt;</span> e <span class="tag">&lt;p&gt;</span>.</p></div>
+<div class="card goal"><h3>🧱 Estrutura</h3><p>Conhecer <span class="tag">&lt;html&gt;</span>, <span class="tag">&lt;head&gt;</span> e <span class="tag">&lt;body&gt;</span>.</p></div>
+<div class="card goal"><h3>📱 Navegador</h3><p>Entender que navegadores interpretam HTML em computadores, celulares e outros dispositivos.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. O que significa HTML?</h2>
+<p><strong>HTML</strong> significa <strong>HyperText Markup Language</strong>, em português, Linguagem de Marcação de Hipertexto.</p>
+<p>Ela define a <strong>estrutura e o significado</strong> do conteúdo de uma página da Web: títulos, parágrafos, links, imagens, listas e muitas outras partes.</p>
+<div class="card warning">
+<h3>HTML não é “o site inteiro”</h3>
+<p>HTML cuida principalmente da estrutura e do conteúdo. CSS costuma cuidar da aparência, e JavaScript pode adicionar comportamento e interatividade.</p>
+</div>
+</section>
+
+<section>
+<h2>4. A comparação do esqueleto</h2>
+<div class="grid">
+<div class="card"><h3>🦴 HTML</h3><p>Estrutura e organização do conteúdo.</p></div>
+<div class="card"><h3>🎨 CSS</h3><p>Aparência: cores, tamanhos, espaços e layout.</p></div>
+<div class="card"><h3>⚙️ JavaScript</h3><p>Comportamentos e interações.</p></div>
+</div>
+<div class="card warning">
+<h3>É uma analogia</h3>
+<p>Dizer que HTML é o “esqueleto” ajuda a visualizar sua função, mas tecnicamente HTML é uma <strong>linguagem de marcação</strong> que estrutura e dá significado ao conteúdo.</p>
+</div>
+</section>
+
+<section>
+<h2>5. O que são tags?</h2>
+<p>Tags são marcações escritas entre os sinais <span class="tag">&lt;</span> e <span class="tag">&gt;</span>. Elas ajudam a formar elementos HTML.</p>
+<div class="code">&lt;h1&gt;Minha primeira página&lt;/h1&gt;
+
+&lt;p&gt;Estou aprendendo HTML.&lt;/p&gt;</div>
+<p>No exemplo acima:</p>
+<div class="grid">
+<div class="card"><h3><span class="tag">&lt;h1&gt;</span></h3><p>Marca o início de um título principal.</p></div>
+<div class="card"><h3><span class="tag">&lt;/h1&gt;</span></h3><p>Marca o fechamento desse título.</p></div>
+<div class="card"><h3><span class="tag">&lt;p&gt;</span></h3><p>Marca o início de um parágrafo.</p></div>
+<div class="card"><h3><span class="tag">&lt;/p&gt;</span></h3><p>Fecha o parágrafo.</p></div>
+</div>
+</section>
+
+<section>
+<h2>6. Tag e elemento não são exatamente a mesma coisa</h2>
+<div class="anatomy">
+<div class="num">1</div><div><strong>Tag de abertura:</strong> <span class="tag">&lt;p&gt;</span></div>
+<div class="num">2</div><div><strong>Conteúdo:</strong> Minha comunidade</div>
+<div class="num">3</div><div><strong>Tag de fechamento:</strong> <span class="tag">&lt;/p&gt;</span></div>
+</div>
+<div class="code">&lt;p&gt;Minha comunidade&lt;/p&gt;</div>
+<p>O conjunto completo forma um <strong>elemento HTML</strong>. Muitos elementos usam abertura + conteúdo + fechamento.</p>
+</section>
+
+<section>
+<h2>7. Nem toda tag funciona exatamente do mesmo jeito</h2>
+<div class="card warning">
+<p>Alguns elementos HTML não envolvem texto e não usam uma tag de fechamento da mesma forma, como imagens. Vamos aprender essas diferenças nas próximas aulas.</p>
+</div>
+</section>
+
+<section>
+<h2>8. A estrutura básica de uma página</h2>
+<div class="code">&lt;!doctype html&gt;
+&lt;html lang="pt-BR"&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;Minha página&lt;/title&gt;
+  &lt;/head&gt;
+
+  &lt;body&gt;
+    &lt;h1&gt;Olá!&lt;/h1&gt;
+    &lt;p&gt;Esta é minha primeira página.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</div>
+</section>
+
+<section>
+<h2>9. O que cada parte faz?</h2>
+<div class="grid">
+<div class="card"><h3><span class="tag">&lt;!doctype html&gt;</span></h3><p>Indica ao navegador que estamos usando um documento HTML moderno.</p></div>
+<div class="card"><h3><span class="tag">&lt;html&gt;</span></h3><p>É o elemento raiz do documento HTML.</p></div>
+<div class="card"><h3><span class="tag">&lt;head&gt;</span></h3><p>Guarda informações sobre a página que normalmente não aparecem como conteúdo principal.</p></div>
+<div class="card"><h3><span class="tag">&lt;title&gt;</span></h3><p>Define o título do documento mostrado, por exemplo, na aba do navegador.</p></div>
+<div class="card"><h3><span class="tag">&lt;body&gt;</span></h3><p>Contém o conteúdo principal que aparece na página.</p></div>
+<div class="card"><h3><span class="tag">&lt;h1&gt;</span> e <span class="tag">&lt;p&gt;</span></h3><p>Representam um título principal e um parágrafo.</p></div>
+</div>
+</section>
+
+<section>
+<h2>10. Código de um lado, página do outro</h2>
+<div class="compare">
+<div class="card">
+<h3>⌨️ Código HTML</h3>
+<div class="code">&lt;h1&gt;Feira da Comunidade&lt;/h1&gt;
+&lt;p&gt;Sábado às 8h.&lt;/p&gt;</div>
+</div>
+<div class="browser-demo">
+<div class="browser-top"><span class="dot"></span><span class="dot"></span><span class="dot"></span><div class="addr">arquivo.html</div></div>
+<div class="site-box"><h1>Feira da Comunidade</h1><p>Sábado às 8h.</p></div>
+</div>
+</div>
+</section>
+
+<section>
+<h2>11. O HTML “roda”?</h2>
+<p>No dia a dia, alguém pode dizer que “o HTML roda no navegador”. Para aprender tecnicamente melhor, vamos usar outra frase:</p>
+<div class="card good">
+<h3>✅ O navegador interpreta o HTML e renderiza a página</h3>
+<p>O arquivo contém marcações. O navegador lê essa estrutura e apresenta o conteúdo visualmente.</p>
+</div>
+<div class="card warning">
+<h3>HTML não é um programa executável como muitos programas tradicionais</h3>
+<p>Ele é uma linguagem de marcação. A página pode também usar CSS e JavaScript, que cumprem outras funções.</p>
+</div>
+</section>
+
+<section>
+<h2>12. Um arquivo HTML pode existir sem internet</h2>
+<p>Você pode criar um arquivo como:</p>
+<div class="code">minha_pagina.html</div>
+<p>e abri-lo diretamente em um navegador do computador, mesmo sem publicar em um site.</p>
+<div class="card">
+<h3>Isso será importante no laboratório</h3>
+<p>Nas próximas aulas, podemos escrever os arquivos no PC da SEMAS e abrir localmente no navegador para ver o resultado imediatamente.</p>
+</div>
+</section>
+
+<section>
+<h2>13. E no celular?</h2>
+<p>HTML é um padrão da Web amplamente suportado pelos navegadores modernos. Um documento HTML publicado na Web pode ser acessado tanto por computador quanto por celular.</p>
+<div class="compare">
+<div class="card good">
+<h3>💻 PC</h3>
+<p>Chrome, Edge, Firefox e outros navegadores conseguem interpretar páginas HTML.</p>
+</div>
+<div class="card good">
+<h3>📱 Celular</h3>
+<p>Navegadores móveis também interpretam HTML.</p>
+</div>
+</div>
+<div class="card warning">
+<h3>Mesma página não significa aparência idêntica</h3>
+<p>O tamanho da tela, o navegador e o CSS podem mudar a forma como a página aparece. Mais adiante aprenderemos a fazer páginas que se adaptam melhor.</p>
+</div>
+</section>
+
+<section>
+<h2>14. HTML não precisa de um programa especial para existir</h2>
+<p>Um arquivo HTML é essencialmente um arquivo de texto com marcações. Podemos escrevê-lo em um editor de texto ou em um editor de código.</p>
+<div class="grid">
+<div class="card"><h3>📝 Editor de texto</h3><p>Pode criar o arquivo, desde que ele seja salvo corretamente como <strong>.html</strong>.</p></div>
+<div class="card"><h3>💻 Editor de código</h3><p>Ferramentas como VS Code tornam a escrita e organização do código mais confortável.</p></div>
+<div class="card"><h3>🌐 Navegador</h3><p>Abre o arquivo e mostra o resultado.</p></div>
+</div>
+</section>
+
+<section>
+<h2>15. Atividade: Quem é quem no HTML?</h2>
+<p>Leia este código:</p>
+<div class="code">&lt;!doctype html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Minha Cidade&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Conheça minha região&lt;/h1&gt;
+    &lt;p&gt;Aqui temos histórias, pessoas e lugares importantes.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</div>
+
+<div class="grid">
+<div class="card"><h3>Pergunta 1</h3><p>Qual texto deve aparecer como título principal dentro da página?</p></div>
+<div class="card"><h3>Pergunta 2</h3><p>Qual parte contém o conteúdo visível principal?</p></div>
+<div class="card"><h3>Pergunta 3</h3><p>Qual tag cria o parágrafo?</p></div>
+<div class="card"><h3>Pergunta 4</h3><p>O que provavelmente aparece na aba do navegador?</p></div>
+</div>
+</section>
+
+<section>
+<h2>16. Microdesafio: imagine antes de abrir</h2>
+<div class="code">&lt;h1&gt;Meu Primeiro Site&lt;/h1&gt;
+&lt;p&gt;Eu estou aprendendo HTML na SEMAS.&lt;/p&gt;</div>
+<p>Antes de testar, desenhe no papel como você imagina que esse conteúdo aparecerá no navegador.</p>
+<p>Depois, nas próximas aulas, vamos criar e abrir código de verdade.</p>
+</section>
+
+<section>
+<h2>17. Cuidado com três confusões comuns</h2>
+<div class="grid">
+<div class="card danger"><h3>HTML ≠ Internet</h3><p>HTML é uma linguagem usada em documentos Web. Internet é a rede que conecta sistemas.</p></div>
+<div class="card danger"><h3>HTML ≠ navegador</h3><p>O navegador é o programa que interpreta e exibe a página.</p></div>
+<div class="card danger"><h3>HTML ≠ “site bonito”</h3><p>HTML sozinho já estrutura conteúdo, mas aparência sofisticada geralmente envolve CSS.</p></div>
+</div>
+</section>
+
+<section>
+<h2>18. 🏠 Para rever em casa — 10 minutos</h2>
+<div class="card">
+<p>Abra uma das aulas deste curso pelo celular e explique para alguém da casa:</p>
+<ol>
+<li>que aquela tela é uma página feita com HTML;</li>
+<li>que o navegador interpreta a estrutura;</li>
+<li>que títulos, parágrafos e botões podem fazer parte do documento;</li>
+<li>que a mesma página pode ser acessada em telas diferentes.</li>
+</ol>
+<p>Não precisa editar nada no celular. O objetivo é reconhecer o que existe por trás da página.</p>
+</div>
+</section>
+
+<section>
+<h2>19. Pesquise depois — fontes oficiais</h2>
+<div class="links">
+<a href="https://developer.mozilla.org/pt-BR/docs/Web/HTML" target="_blank" rel="noopener">🔎 MDN — HTML: Linguagem de Marcação de Hipertexto</a>
+<a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Basic_HTML_syntax" target="_blank" rel="noopener">🔎 MDN — Sintaxe básica de HTML</a>
+<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements" target="_blank" rel="noopener">🔎 MDN — Referência de elementos HTML</a>
+</div>
+</section>
+
+<section>
+<h2>20. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é reconhecer a estrutura básica antes de começar a escrever páginas completas.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+
+<div class="savebox">
+<h3>Salvar meu registro da aula</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<textarea id="htmlThought" rows="5" placeholder="Opcional: explique com suas palavras o que é HTML."></textarea>
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+<p class="notice">Na SEMAS: envie conforme orientação, salve no Drive quando necessário, apague arquivos locais e saia das contas.</p>
+</div>
+</section>
+
+<section>
+<h2>21. Missão final</h2>
+<div class="card">
+<ol>
+<li>Explique o que significa HTML.</li>
+<li>Mostre uma tag de abertura e uma de fechamento.</li>
+<li>Explique a função do <span class="tag">&lt;body&gt;</span>.</li>
+<li>Diga o que o navegador faz com o HTML.</li>
+<li>Explique por que uma página pode abrir tanto no PC quanto no celular.</li>
+</ol>
+<p><strong>Regra da turma:</strong> HTML não é uma coleção de símbolos para decorar. Cada marcação existe para dar estrutura ou significado ao conteúdo.</p>
+</div>
+</section>
+
+<footer>
+<p>SEMAS • Curso de Informática • Módulo 4 — Aula 02</p>
+<p>O Que é o Código HTML?</p>
+</footer>
+
+</main>
+
+<script>
+const lessonKey="semas_mod4_aula02_attempt";
+const questions=[
+["Para que serve principalmente o HTML?","Para estruturar e dar significado ao conteúdo de páginas Web","Para fornecer internet","Para substituir o navegador","Para funcionar como antivírus","HTML define estrutura e significado do conteúdo da Web."],
+["O que é uma tag HTML?","Uma marcação escrita com o nome do elemento entre sinais como < e >","Uma senha","Um endereço IP","Uma pasta do Windows","Tags participam da construção dos elementos HTML."],
+["Qual tag representa normalmente o conteúdo principal visível da página?","<body>","<head>","<title>","<html> somente","O body contém o conteúdo principal exibido no documento."],
+["O que faz a tag <h1>?","Representa um título principal","Cria uma senha","Fecha o navegador","Conecta o Wi-Fi","h1 representa um cabeçalho de nível 1."],
+["Tag e elemento são sempre exatamente a mesma coisa?","Não","Sim","Somente no celular","Somente no Windows","Um elemento geralmente inclui tags e conteúdo, além de poder ter atributos."],
+["Qual frase é tecnicamente melhor?","O navegador interpreta o HTML e renderiza a página","O HTML é um programa vivo","O HTML cria internet","O navegador vira HTML","O navegador analisa a estrutura HTML e apresenta o documento."],
+["Um arquivo HTML local pode abrir sem internet?","Sim","Não","Somente no celular","Somente se estiver no Google","Um navegador pode abrir um arquivo HTML salvo localmente."],
+["Por que a mesma página pode parecer diferente no PC e no celular?","Porque tamanho de tela, navegador e estilos podem afetar a apresentação","Porque HTML só funciona no PC","Porque celulares não usam navegador","Porque o arquivo muda sozinho","A Web funciona em diferentes dispositivos, mas a apresentação pode se adaptar."]
+];
+
+let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{
+ const d=document.createElement("div");d.className="quiz-item";
+ d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;
+ quiz.appendChild(d);
+});
+function updateUI(){
+ document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;
+ if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true}
+}
+updateUI();
+function checkQuiz(){
+ if(attempt>=2)return;
+ let score=0,all=true,wrong=[];
+ questions.forEach((q,i)=>{
+  const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);
+  if(!s){all=false;a.textContent="Responda esta questão.";return}
+  if(+s.value===0){score++;a.textContent="Correta! "+q[5]}
+  else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}
+ });
+ if(!all)return;
+ attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;
+ document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;
+ document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;
+ document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true);
+}
+function retryQuiz(){
+ if(attempt>=2||!completed)return;
+ document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});
+ questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");
+ completed=false;lastScore=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;updateUI();
+}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function saveResult(){
+ if(!completed)return;
+ const name=document.getElementById("studentName").value.trim();
+ if(!name){alert("Digite seu nome completo.");return}
+ const thought=document.getElementById("htmlThought").value.trim();
+ let rows="";
+ questions.forEach((q,i)=>{
+  const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;
+  rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;
+ });
+ const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}.txt{padding:12px;background:#f2f5f8;border-radius:8px;white-space:pre-wrap}</style></head><body><h1>SEMAS — Módulo 4 — Aula 02</h1><h2>O Que é o Código HTML?</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}</p>${thought?`<p><strong>Minha explicação:</strong></p><div class="txt">${esc(thought)}</div>`:""}<table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. O objetivo é compreender a estrutura básica da Web.</p></body></html>`;
+ const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
+ a.href=url;a.download=`SEMAS_Modulo_4_Aula_02_${safe}.html`;a.click();URL.revokeObjectURL(url);
+}
+function finishSession(){
+ if(!confirm("Encerrar a sessão e limpar esta aula neste navegador?"))return;
+ sessionStorage.removeItem(lessonKey);location.reload();
+}
+</script>
+</body>
+</html>

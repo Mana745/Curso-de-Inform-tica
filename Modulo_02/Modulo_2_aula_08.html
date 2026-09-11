@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 2 — Aula 08 — Criando Gráficos Coloridos e Entregando o Trabalho</title>
+<style>
+:root{
+  --bg:#08101d;--card:#111b2e;--card2:#0d1728;--ink:#eef5ff;--muted:#afbdd4;
+  --accent:#69ddff;--accent2:#9dffb7;--warn:#ffd479;--danger:#ff9d9d;--line:#293955;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 15% 0%,#173053 0,transparent 28%),linear-gradient(135deg,#070c16,#0c1628 55%,#0e1d34);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1050px;margin:auto;padding:24px 18px 70px}
+.hero{padding:40px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#23517a,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)}h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)}.warning{border-left:4px solid var(--warn);background:#251f12}.pc{border-left:4px solid var(--accent)}.phone{border-left:4px solid #bd9cff}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.excel{overflow:auto;border:1px solid var(--line);border-radius:14px;background:#0a1425}
+.sheet{border-collapse:collapse;min-width:720px;width:100%;background:#fff;color:#222}
+.sheet th,.sheet td{border:1px solid #c7ccd4;padding:10px;text-align:left}
+.sheet .colhead,.sheet .rowhead{background:#e8edf2;font-weight:800;text-align:center}
+.chart-demo{display:grid;grid-template-columns:repeat(4,1fr);align-items:end;gap:16px;height:240px;padding:20px;border:1px solid var(--line);border-radius:16px;background:#091322}
+.bar{background:linear-gradient(#69ddff,#9dffb7);border-radius:8px 8px 0 0;min-height:20px;display:flex;align-items:flex-start;justify-content:center;color:#06111a;font-weight:900;padding-top:6px}
+.barlabel{text-align:center;color:var(--muted);margin-top:8px}
+.modebar{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}button:disabled{opacity:.5}
+.learn-panel{display:none}.learn-panel.active{display:block}
+.practice-shell{border:1px solid #3b5577;background:#091526;border-radius:18px;padding:18px}
+.progress{height:10px;border-radius:999px;background:#1a2940;overflow:hidden;margin:10px 0 20px}
+.progress>div{height:100%;background:linear-gradient(90deg,#69ddff,#9dffb7);width:0;transition:.25s}
+.practice-card{padding:22px;border:1px solid var(--line);border-radius:16px;background:#0d1728}
+.stepnum{font-size:.92rem;color:var(--muted);text-transform:uppercase;font-weight:800}
+.command{font-size:1.45rem;line-height:1.35;font-weight:900;margin:12px 0}
+.memory{padding:12px 14px;border-left:4px solid var(--accent);background:#0a1425;border-radius:8px;margin:14px 0}
+.practice-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.step{counter-increment:s;padding:16px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.step:before{content:counter(s);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#07101e;font-weight:900}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+.mode-buttons{display:flex;flex-wrap:wrap;gap:10px}.mode-panel{display:none;margin-top:14px}.mode-panel.active{display:block}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.answer{margin-top:10px;color:var(--muted)}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:760px){main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.modebar{grid-template-columns:1fr}.mode-buttons{display:grid;grid-template-columns:1fr}button{width:100%;min-height:48px}.practice-actions{display:grid}.chart-demo{grid-template-columns:repeat(2,1fr);height:auto;align-items:end}}
+</style>
+</head>
+<body>
+<main>
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 2 • Aula 08</div>
+<h1>Criando Gráficos Coloridos e Entregando o Trabalho</h1>
+<p class="lead">Chegamos ao encerramento do módulo. Hoje vamos transformar números em imagens fáceis de compreender e depois entregar o trabalho completo por e-mail de forma organizada.</p>
+<p><strong>Desafio da aula:</strong> criar um gráfico a partir da miniempresa, enviar a planilha ao professor e deixar o computador pronto para a próxima turma.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>5 min</strong>O que é um gráfico</div>
+<div class="slot"><strong>8 min</strong>Colunas × pizza</div>
+<div class="slot"><strong>20 min</strong>Prática guiada</div>
+<div class="slot"><strong>10 min</strong>Ajustar gráfico</div>
+<div class="slot"><strong>10 min</strong>E-mail formal</div>
+<div class="slot"><strong>4 min</strong>Quiz</div>
+<div class="slot"><strong>3 min</strong>Limpeza final</div>
+</div>
+</section>
+
+<section>
+<h2>2. Escolha como quer usar esta aula</h2>
+<div class="modebar">
+<button onclick="switchLearn('understand')">📖 Quero entender</button>
+<button class="secondary" onclick="switchLearn('practice')">🧪 Prática guiada</button>
+<button class="secondary" onclick="switchLearn('home')">📱 Rever em casa</button>
+</div>
+</section>
+
+<div id="understand" class="learn-panel active">
+<section>
+<h2>3. O que um gráfico faz?</h2>
+<p>Um gráfico transforma números em uma representação visual. Em vez de apenas ler valores em células, podemos comparar tamanhos, diferenças e proporções com mais rapidez.</p>
+<div class="card warning">
+<h3>Gráfico não substitui a tabela</h3>
+<p>A tabela guarda os dados. O gráfico é uma forma de enxergar esses dados. Se a tabela estiver errada, o gráfico também estará.</p>
+</div>
+</section>
+
+<section>
+<h2>4. Exemplo: valores da miniempresa</h2>
+<div class="excel">
+<table class="sheet">
+<tr><th>Produto</th><th>Custo</th><th>Venda</th></tr>
+<tr><td>Polpa</td><td>4,00</td><td>6,50</td></tr>
+<tr><td>Doce</td><td>2,00</td><td>3,50</td></tr>
+<tr><td>Artesanato</td><td>8,00</td><td>12,00</td></tr>
+<tr><td>Suco</td><td>3,00</td><td>5,00</td></tr>
+</table>
+</div>
+</section>
+
+<section>
+<h2>5. Gráfico de colunas</h2>
+<p>É ótimo para <strong>comparar categorias</strong>: qual produto custa mais, vende por mais, tem maior lucro etc.</p>
+<div class="chart-demo">
+<div><div class="bar" style="height:90px">6,5</div><div class="barlabel">Polpa</div></div>
+<div><div class="bar" style="height:55px">3,5</div><div class="barlabel">Doce</div></div>
+<div><div class="bar" style="height:170px">12</div><div class="barlabel">Artesanato</div></div>
+<div><div class="bar" style="height:75px">5</div><div class="barlabel">Suco</div></div>
+</div>
+<p>A Microsoft orienta selecionar os dados e depois usar <strong>Inserir → Gráficos Recomendados</strong> ou escolher diretamente um tipo de gráfico.</p>
+</section>
+
+<section>
+<h2>6. E o gráfico de pizza?</h2>
+<div class="grid">
+<div class="card"><h3>🍕 Bom uso</h3><p>Mostrar como algumas partes formam um total.</p></div>
+<div class="card"><h3>⚠️ Evite exagero</h3><p>Muitas fatias dificultam a leitura.</p></div>
+<div class="card"><h3>📊 Colunas</h3><p>Melhores quando queremos comparar valores com clareza.</p></div>
+</div>
+<div class="card warning">
+<h3>Nem todo conjunto de dados deve virar pizza</h3>
+<p>A Microsoft recomenda gráfico de pizza principalmente para uma única série de dados e poucas categorias. Para comparar custo, venda ou lucro entre produtos, gráfico de colunas costuma ser mais fácil de ler.</p>
+</div>
+</section>
+
+<section>
+<h2>7. O gráfico precisa ter sentido</h2>
+<div class="grid">
+<div class="card"><h3>✅ Título claro</h3><p>Ex.: “Preço de venda dos produtos”.</p></div>
+<div class="card"><h3>✅ Dados corretos</h3><p>Selecione apenas o que quer comparar.</p></div>
+<div class="card"><h3>✅ Fácil de ler</h3><p>Evite excesso de efeitos e informações.</p></div>
+<div class="card"><h3>❌ Só porque é colorido</h3><p>Cor bonita não corrige gráfico confuso.</p></div>
+</div>
+</section>
+</div>
+
+<div id="practice" class="learn-panel">
+<section>
+<h2>8. 🧪 Prática guiada — criando o gráfico</h2>
+<p>Faça apenas uma ação por vez. Depois volte e clique em <strong>Consegui — próximo passo</strong>.</p>
+<div class="practice-shell">
+<div id="practiceStepLabel" class="stepnum"></div>
+<div class="progress"><div id="practiceProgress"></div></div>
+<div class="practice-card">
+<div id="practiceCommand" class="command"></div>
+<div id="practiceMemory" class="memory"></div>
+<div id="practiceVisual"></div>
+<div class="practice-actions">
+<button id="prevPractice" class="secondary" onclick="practicePrev()">← Voltar um passo</button>
+<button id="nextPractice" onclick="practiceNext()">Consegui — próximo passo →</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+<div id="home" class="learn-panel">
+<section>
+<h2>9. 📱 Rever em casa</h2>
+<div class="grid">
+<div class="card"><h3>📊 Colunas</h3><p>Use quando quiser comparar valores entre categorias.</p></div>
+<div class="card"><h3>🍕 Pizza</h3><p>Use quando poucas partes representam um total.</p></div>
+<div class="card"><h3>📋 Tabela</h3><p>Continua sendo a fonte dos números.</p></div>
+</div>
+<div class="card">
+<h3>Teste rápido</h3>
+<p>Se você quer comparar o preço de venda de quatro produtos, qual gráfico provavelmente será mais fácil?</p>
+<details><summary>Ver resposta</summary><p>Gráfico de colunas.</p></details>
+</div>
+</section>
+</div>
+
+<section>
+<h2>10. Como criar um gráfico no Excel</h2>
+<div class="steps">
+<div class="step"><h3>Abra a planilha</h3><p>Use a miniempresa da Aula 07.</p></div>
+<div class="step"><h3>Selecione os dados</h3><p>Escolha os nomes dos produtos e uma coluna de valores.</p></div>
+<div class="step"><h3>Inserir</h3><p>Abra a guia Inserir.</p></div>
+<div class="step"><h3>Escolha o gráfico</h3><p>Comece por Colunas.</p></div>
+<div class="step"><h3>Confira</h3><p>Veja se produtos e valores estão corretos.</p></div>
+<div class="step"><h3>Dê um título</h3><p>Ex.: “Preço de venda dos produtos”.</p></div>
+</div>
+</section>
+
+<section>
+<h2>11. Entregando o trabalho por e-mail</h2>
+<p>O trabalho final do módulo será enviado em anexo pelo Gmail.</p>
+<div class="steps">
+<div class="step"><h3>Abra o Gmail</h3><p>Entre na sua própria conta.</p></div>
+<div class="step"><h3>Escrever</h3><p>Crie uma nova mensagem.</p></div>
+<div class="step"><h3>Destinatário</h3><p>Use o endereço do professor informado em aula.</p></div>
+<div class="step"><h3>Assunto</h3><p><strong>Módulo 2 — Trabalho Final — Seu Nome</strong>.</p></div>
+<div class="step"><h3>Mensagem</h3><p>Escreva uma frase curta e respeitosa.</p></div>
+<div class="step"><h3>📎 Anexar</h3><p>Escolha a planilha do Excel.</p></div>
+<div class="step"><h3>Conferir</h3><p>Veja destinatário, assunto e arquivo.</p></div>
+<div class="step"><h3>Enviar</h3><p>Somente depois da conferência.</p></div>
+</div>
+</section>
+
+<section>
+<h2>12. Modelo de e-mail formal</h2>
+<div class="card">
+<p><strong>Assunto:</strong> Módulo 2 — Trabalho Final — Seu Nome</p>
+<p>Olá, professor.</p>
+<p>Estou enviando em anexo minha atividade final do Módulo 2, com a tabela e o gráfico criados no Excel.</p>
+<p>Atenciosamente,<br><strong>Seu nome</strong></p>
+</div>
+<div class="card warning">
+<h3>Formal não significa complicado</h3>
+<p>Um bom e-mail pode ser curto, educado e claro.</p>
+</div>
+</section>
+
+<section>
+<h2>13. O gráfico está dentro da planilha</h2>
+<div class="card">
+<p>Para esta atividade, não é obrigatório criar um arquivo separado só para o gráfico. Se o gráfico estiver corretamente inserido na própria planilha do Excel, ele viaja junto com o arquivo <strong>.xlsx</strong>.</p>
+<p>Se o professor pedir posteriormente uma imagem ou PDF do gráfico, isso pode ser feito como atividade complementar.</p>
+</div>
+</section>
+
+<section>
+<h2>14. Checklist antes de enviar</h2>
+<div class="grid">
+<div class="card"><h3>☑️ Tabela</h3><p>Os números estão corretos?</p></div>
+<div class="card"><h3>☑️ Gráfico</h3><p>Ele mostra os dados certos?</p></div>
+<div class="card"><h3>☑️ Título</h3><p>Quem olhar entende o que está vendo?</p></div>
+<div class="card"><h3>☑️ Arquivo</h3><p>O nome identifica aluno e atividade?</p></div>
+<div class="card"><h3>☑️ E-mail</h3><p>Destinatário e assunto estão corretos?</p></div>
+<div class="card"><h3>☑️ Anexo</h3><p>O arquivo realmente aparece na mensagem?</p></div>
+</div>
+</section>
+
+<section>
+<h2>15. Regra de ouro da SEMAS — encerramento</h2>
+<div class="steps">
+<div class="step"><h3>Enviar</h3><p>Confirme que o e-mail foi enviado.</p></div>
+<div class="step"><h3>Guardar</h3><p>Salve a planilha no seu Drive.</p></div>
+<div class="step"><h3>Apagar local</h3><p>Remova sua cópia da pasta Downloads/Documentos usada na aula.</p></div>
+<div class="step"><h3>Sair das contas</h3><p>Faça logout do Gmail e Drive.</p></div>
+<div class="step"><h3>Fechar</h3><p>Feche Excel e navegador.</p></div>
+<div class="step"><h3>Conferir</h3><p>O PC está pronto para o próximo aluno?</p></div>
+</div>
+<div class="card warning">
+<h3>Não apague arquivos de outras pessoas</h3>
+<p>Limpar o PC significa remover apenas seus próprios arquivos temporários e encerrar suas sessões.</p>
+</div>
+</section>
+
+<section>
+<h2>16. Atividade final do Módulo 2</h2>
+<div class="mode-buttons">
+<button onclick="showMode('pc')">🏫 Estou na SEMAS</button>
+<button class="secondary" onclick="showMode('phone')">📱 Estou acompanhando pelo celular</button>
+</div>
+<div id="pcMode" class="mode-panel">
+<div class="card pc">
+<ol>
+<li>Abra a planilha da miniempresa.</li>
+<li>Crie um gráfico de colunas usando uma série de valores.</li>
+<li>Dê um título claro.</li>
+<li>Salve como <strong>Modulo_2_Trabalho_Final_SeuNome.xlsx</strong>.</li>
+<li>Abra o Gmail.</li>
+<li>Escreva o e-mail formal.</li>
+<li>Anexe a planilha.</li>
+<li>Confira tudo e envie.</li>
+<li>Salve no Drive.</li>
+<li>Apague a cópia local e saia das contas.</li>
+</ol>
+</div>
+</div>
+<div id="phoneMode" class="mode-panel">
+<div class="card phone">
+<p>Em casa, reveja a diferença entre gráfico de colunas e pizza. Se sua planilha estiver no Drive, abra apenas para observar o trabalho concluído.</p>
+</div>
+</div>
+</section>
+
+<section>
+<h2>17. 🏠 Para rever em casa — 10 minutos</h2>
+<div class="card">
+<p>Se puder, mostre o gráfico para alguém da casa e pergunte:</p>
+<ol>
+<li>“Qual produto tem o maior valor?”</li>
+<li>“Qual tem o menor?”</li>
+<li>“Você entendeu o gráfico sem eu precisar explicar muito?”</li>
+</ol>
+<p>Se a pessoa conseguiu responder olhando o gráfico, ele provavelmente está comunicando bem.</p>
+</div>
+</section>
+
+<section>
+<h2>18. Pesquise depois — fontes oficiais</h2>
+<div class="links">
+<a href="https://support.microsoft.com/pt-br/excel/get-started/create-a-chart-from-start-to-finish" target="_blank" rel="noopener">🔎 Microsoft — Criar um gráfico do início ao fim</a>
+<a href="https://support.microsoft.com/pt-br/excel/add-a-pie-chart" target="_blank" rel="noopener">🔎 Microsoft — Adicionar um gráfico de pizza</a>
+<a href="https://support.microsoft.com/pt-br/excel/select-data-for-a-chart" target="_blank" rel="noopener">🔎 Microsoft — Selecionar dados para um gráfico</a>
+<a href="https://support.google.com/mail/answer/6584?co=GENIE.Platform%3DDesktop&hl=pt-BR" target="_blank" rel="noopener">🔎 Google — Enviar anexos pelo Gmail</a>
+</div>
+</section>
+
+<section>
+<h2>19. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é interpretar dados, criar um gráfico adequado e entregar um trabalho com organização.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+<div class="savebox">
+<h3>Salvar meu registro da aula</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+<p class="notice">Na SEMAS: envie o trabalho, salve no Drive, apague seus arquivos locais e saia das contas.</p>
+</div>
+</section>
+
+<section>
+<h2>20. Encerramento do Módulo 2</h2>
+<div class="card">
+<p>Neste módulo você aprendeu a:</p>
+<ul>
+<li>escrever no Word;</li>
+<li>usar atalhos e imagens;</li>
+<li>criar documentos e PDF;</li>
+<li>organizar dados no Excel;</li>
+<li>usar fórmulas;</li>
+<li>calcular descontos e parcelas simples;</li>
+<li>criar gráficos;</li>
+<li>enviar um trabalho por e-mail;</li>
+<li>usar um computador compartilhado com responsabilidade.</li>
+</ul>
+<p><strong>Regra final:</strong> aprender informática não é decorar onde clicar. É aprender a usar ferramentas para resolver problemas, comunicar ideias e organizar a vida.</p>
+</div>
+</section>
+
+<footer><p>SEMAS • Curso de Informática • Módulo 2 — Aula 08</p><p>Criando Gráficos Coloridos e Entregando o Trabalho</p></footer>
+</main>
+
+<script>
+const lessonKey="semas_mod2_aula08_attempt";
+const practiceKey="semas_mod2_aula08_practice";
+const practiceSteps=[
+ {c:"Abra a planilha da miniempresa da Aula 07.",m:"Não altere os dados ainda.",v:""},
+ {c:"Localize as colunas Produto e Venda.",m:"Vamos criar um gráfico usando apenas os nomes dos produtos e os preços de venda.",v:"Produto + Venda"},
+ {c:"Selecione os nomes dos produtos e seus valores de venda.",m:"Inclua os cabeçalhos se o professor orientar. Evite selecionar colunas que não serão usadas no gráfico.",v:"Exemplo: Produto | Venda"},
+ {c:"Clique na guia Inserir.",m:"O Excel reúne nessa guia as opções de gráficos.",v:"Inserir"},
+ {c:"Escolha um gráfico de Colunas.",m:"Começamos com colunas porque queremos comparar valores entre produtos.",v:"Inserir → Colunas"},
+ {c:"Observe o gráfico criado.",m:"Confira se cada produto aparece com seu valor correspondente.",v:"Produtos no eixo + valores nas colunas"},
+ {c:"Clique no título do gráfico e escreva: Preço de venda dos produtos",m:"Um título deve explicar rapidamente o que o gráfico mostra.",v:"Título → Preço de venda dos produtos"},
+ {c:"Se o gráfico estiver cobrindo a tabela, mova-o para um espaço livre da planilha.",m:"Não precisa ficar perfeito. Precisa ficar legível.",v:"Tabela + gráfico visíveis"},
+ {c:"Salve a planilha com o nome: Modulo_2_Trabalho_Final_SeuNome.xlsx",m:"Salve antes de abrir o Gmail.",v:"Arquivo .xlsx"},
+ {c:"Abra o Gmail e clique em Escrever.",m:"Se quiser, use Alt+Tab para alternar entre Excel, aula e navegador.",v:"Gmail → Escrever"},
+ {c:"Digite o e-mail do professor e o assunto: Módulo 2 — Trabalho Final — Seu Nome",m:"Confira o destinatário antes de continuar.",v:"Assunto claro"},
+ {c:"No corpo, escreva uma saudação e diga que está enviando a atividade final do Módulo 2.",m:"Pode ser curto e respeitoso.",v:"Olá, professor..."},
+ {c:"Clique no clipe de Anexar e escolha a planilha que acabou de salvar.",m:"Veja se o nome do arquivo aparece na mensagem.",v:"📎 Modulo_2_Trabalho_Final_SeuNome.xlsx"},
+ {c:"Antes de enviar, confira: destinatário, assunto, mensagem e anexo.",m:"Esse é o último controle antes do envio.",v:"4 conferências"},
+ {c:"Envie o e-mail.",m:"Depois do envio, ainda falta cuidar do computador compartilhado.",v:"Enviar"},
+ {c:"Salve a planilha no Drive.",m:"Guarde a cópia que você quer manter.",v:"Drive"},
+ {c:"Apague sua cópia local e saia do Gmail e Drive.",m:"Apague apenas seus próprios arquivos. Não mexa nos arquivos de colegas ou do sistema.",v:"PC limpo"},
+ {c:"Feche Excel e navegador. Trabalho concluído.",m:"O computador agora deve estar pronto para o próximo aluno.",v:"Módulo 2 concluído ✓"}
+];
+let practiceIndex=Number(sessionStorage.getItem(practiceKey)||0);
+if(practiceIndex<0||practiceIndex>=practiceSteps.length)practiceIndex=0;
+
+function switchLearn(id){
+ document.querySelectorAll(".learn-panel").forEach(x=>x.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ if(id==="practice")renderPractice();
+ document.getElementById(id).scrollIntoView({behavior:"smooth",block:"start"});
+}
+function renderPractice(){
+ const s=practiceSteps[practiceIndex];
+ document.getElementById("practiceStepLabel").textContent=`Passo ${practiceIndex+1} de ${practiceSteps.length}`;
+ document.getElementById("practiceCommand").textContent=s.c;
+ document.getElementById("practiceMemory").textContent=s.m;
+ document.getElementById("practiceVisual").innerHTML=s.v?`<div class="card"><strong>${s.v}</strong></div>`:"";
+ document.getElementById("practiceProgress").style.width=`${((practiceIndex+1)/practiceSteps.length)*100}%`;
+ document.getElementById("prevPractice").disabled=practiceIndex===0;
+ document.getElementById("nextPractice").textContent=practiceIndex===practiceSteps.length-1?"Concluí o Módulo 2 ✓":"Consegui — próximo passo →";
+}
+function practiceNext(){if(practiceIndex<practiceSteps.length-1){practiceIndex++;sessionStorage.setItem(practiceKey,practiceIndex);renderPractice()}else alert("Parabéns: prática final do Módulo 2 concluída.");}
+function practicePrev(){if(practiceIndex>0){practiceIndex--;sessionStorage.setItem(practiceKey,practiceIndex);renderPractice()}}
+
+const questions=[
+["Para que serve um gráfico?","Representar visualmente dados para facilitar comparação e compreensão","Substituir todos os dados da tabela","Criar uma senha","Aumentar a internet","O gráfico mostra visualmente dados que continuam armazenados na tabela."],
+["Qual gráfico é uma boa escolha para comparar preços de quatro produtos?","Gráfico de colunas","Gráfico de pizza obrigatoriamente","Nenhum gráfico","Somente gráfico 3D","Colunas facilitam comparar magnitudes entre categorias."],
+["Quando um gráfico de pizza costuma funcionar melhor?","Quando poucas categorias representam partes de um total","Quando existem muitas séries diferentes","Quando queremos mostrar qualquer tabela","Quando não existem números","Pizza é mais adequada para uma única série e poucas categorias."],
+["Qual deve ser a primeira ação antes de inserir um gráfico?","Selecionar os dados que serão representados","Fechar o Excel","Abrir o Gmail","Apagar a tabela","O Excel precisa saber quais dados devem alimentar o gráfico."],
+["O gráfico substitui a tabela?","Não","Sim","Somente no celular","Somente se for colorido","A tabela é a fonte dos dados; o gráfico é uma representação visual."],
+["O que deve ser conferido antes de enviar o trabalho por e-mail?","Destinatário, assunto, mensagem e anexo","Somente a cor do gráfico","Somente o tamanho da fonte","Nada","Conferir os quatro itens evita erros de entrega."],
+["É obrigatório criar um arquivo separado só para o gráfico nesta atividade?","Não, ele pode estar dentro da própria planilha","Sim, sempre","Somente em PDF","Somente como imagem","O arquivo Excel pode conter tabela e gráfico juntos."],
+["Qual é o último passo no PC compartilhado?","Guardar no Drive, apagar seus arquivos locais, sair das contas e fechar os programas","Deixar o Gmail aberto","Salvar a senha no navegador","Deixar a planilha na Área de Trabalho","Isso protege a privacidade e deixa o computador pronto para a próxima turma."]
+];
+let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{const d=document.createElement("div");d.className="quiz-item";d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;quiz.appendChild(d)});
+function updateUI(){document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true}}
+updateUI();
+function showMode(mode){document.getElementById("pcMode").classList.toggle("active",mode==="pc");document.getElementById("phoneMode").classList.toggle("active",mode==="phone")}
+function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===0){score++;a.textContent="Correta! "+q[5]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}});if(!all)return;attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
+function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;updateUI()}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function saveResult(){if(!completed)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return}let rows="";questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`});const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}</style></head><body><h1>SEMAS — Módulo 2 — Aula 08</h1><h2>Criando Gráficos Coloridos e Entregando o Trabalho</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Prática guiada alcançada:</strong> passo ${practiceIndex+1}/${practiceSteps.length}</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. Módulo 2 concluído.</p></body></html>`;const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");a.href=url;a.download=`SEMAS_Modulo_2_Aula_08_${safe}.html`;a.click();URL.revokeObjectURL(url)}
+function finishSession(){if(!confirm("Encerrar a sessão e limpar esta aula neste navegador?"))return;sessionStorage.removeItem(lessonKey);sessionStorage.removeItem(practiceKey);location.reload()}
+</script>
+</body>
+</html>

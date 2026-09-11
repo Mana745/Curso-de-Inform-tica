@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 4 — Aula 06 — Deixando o Site Colorido e Animado</title>
+<style>
+:root{
+  --bg:#08101c;--card:#101a2c;--card2:#0c1524;--ink:#eef6ff;--muted:#afbdd2;
+  --accent:#73ddff;--accent2:#a8ffb9;--warn:#ffd47d;--danger:#ff9e9e;--line:#2b3b55;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 16% 0%,#1a355c 0,transparent 30%),linear-gradient(135deg,#070c15,#0d1729 55%,#10203a);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1040px;margin:auto;padding:24px 18px 70px}
+.hero{padding:42px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#265984,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)}h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)}.warning{border-left:4px solid var(--warn);background:#251f12}.danger{border-left:4px solid var(--danger);background:#29171b}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.code{font-family:Consolas,monospace;background:#07101e;color:#ffd479;padding:14px;border-radius:10px;white-space:pre-wrap;overflow:auto}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.good{border-left:4px solid var(--accent2)}.bad{border-left:4px solid var(--danger)}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.step{counter-increment:s;padding:16px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.step:before{content:counter(s);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#07101e;font-weight:900}
+.tag{font-family:Consolas,monospace;background:#07101e;color:#ffd479;padding:3px 7px;border-radius:7px}
+.browser{background:#fff;color:#202733;border-radius:16px;padding:18px;border:1px solid #d3dae3}
+.browser-demo{background:#f3f8ff;color:#173047;border-radius:18px;padding:24px;transition:.25s}
+.browser-demo h1{margin-top:0;text-align:center;color:#0d5c87;font-size:2rem}
+.browser-demo .boxdemo{background:#fff;border:2px solid #76bfe4;border-radius:16px;padding:18px;box-shadow:0 8px 18px rgba(0,0,0,.12);transition:transform .25s,box-shadow .25s}
+.browser-demo .boxdemo:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(0,0,0,.18)}
+.property{display:grid;grid-template-columns:160px 1fr;gap:12px;padding:12px;border-bottom:1px solid var(--line)}
+.property:last-child{border-bottom:0}
+.practice-shell{border:1px solid #3b5577;background:#091526;border-radius:18px;padding:18px}
+.progress{height:10px;border-radius:999px;background:#1a2940;overflow:hidden;margin:10px 0 20px}
+.progress>div{height:100%;background:linear-gradient(90deg,#69ddff,#9dffb7);width:0;transition:.25s}
+.practice-card{padding:22px;border:1px solid var(--line);border-radius:16px;background:#0d1728}
+.stepnum{font-size:.92rem;color:var(--muted);text-transform:uppercase;font-weight:800}
+.command{font-size:1.35rem;line-height:1.35;font-weight:900;margin:12px 0}
+.memory{padding:12px 14px;border-left:4px solid var(--accent);background:#0a1425;border-radius:8px;margin:14px 0}
+.practice-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}button:disabled{opacity:.5}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.answer{margin-top:10px;color:var(--muted)}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input,.savebox textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}
+footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:760px){
+ main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.compare{grid-template-columns:1fr}
+ .property{grid-template-columns:1fr}.practice-actions{display:grid}button{width:100%;min-height:48px}
+}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 4 • Aula 06</div>
+<h1>Deixando o Site Colorido e Animado</h1>
+<p class="lead">O HTML organiza o conteúdo. Agora vamos conhecer o <strong>CSS</strong>, a linguagem usada para controlar a aparência da página: cores, alinhamento, espaços, bordas, cantos e efeitos visuais.</p>
+<p><strong>Desafio da aula:</strong> transformar a página simples das aulas anteriores em uma página mais agradável, legível e organizada — sem exagerar nos efeitos.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>7 min</strong>O que é CSS</div>
+<div class="slot"><strong>8 min</strong>Cores</div>
+<div class="slot"><strong>8 min</strong>Centralização</div>
+<div class="slot"><strong>10 min</strong>Caixas</div>
+<div class="slot"><strong>8 min</strong>Sombra e efeito</div>
+<div class="slot"><strong>14 min</strong>Prática guiada</div>
+<div class="slot"><strong>5 min</strong>Quiz/relatório</div>
+</div>
+</section>
+
+<section>
+<h2>2. O que você vai aprender</h2>
+<div class="grid">
+<div class="card goal"><h3>🎨 CSS</h3><p>Entender que CSS cuida da apresentação visual da página.</p></div>
+<div class="card goal"><h3>🌈 Cores</h3><p>Mudar fundo e cor das letras.</p></div>
+<div class="card goal"><h3>↔️ Alinhamento</h3><p>Centralizar textos quando isso fizer sentido.</p></div>
+<div class="card goal"><h3>📦 Caixas</h3><p>Usar borda, espaço interno e cantos arredondados.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. O que é CSS?</h2>
+<p><strong>CSS</strong> significa <em>Cascading Style Sheets</em>, ou Folhas de Estilo em Cascata. É a linguagem usada para descrever a apresentação de documentos como HTML.</p>
+<div class="compare">
+<div class="card">
+<h3>HTML</h3>
+<p>“Isto é um título.”<br>“Isto é um parágrafo.”</p>
+</div>
+<div class="card good">
+<h3>CSS</h3>
+<p>“O título será azul.”<br>“O fundo será claro.”<br>“A caixa terá borda e espaço interno.”</p>
+</div>
+</div>
+</section>
+
+<section>
+<h2>4. Onde vamos colocar o CSS hoje?</h2>
+<p>Para não criar muitos arquivos de uma vez, nesta aula colocaremos o CSS dentro da tag <span class="tag">&lt;style&gt;</span>, no <span class="tag">&lt;head&gt;</span>.</p>
+<div class="code">&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;Minha Página&lt;/title&gt;
+
+  &lt;style&gt;
+    body {
+      background-color: lightblue;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;</div>
+<div class="card warning">
+<h3>Mais adiante existem outras formas</h3>
+<p>Projetos maiores normalmente podem usar arquivos CSS separados. Hoje o objetivo é enxergar claramente a relação entre uma regra CSS e o resultado.</p>
+</div>
+</section>
+
+<section>
+<h2>5. Como ler uma regra CSS</h2>
+<div class="code">body {
+  background-color: lightblue;
+}</div>
+<div class="property"><strong>body</strong><span>É o <strong>seletor</strong>: diz qual elemento queremos estilizar.</span></div>
+<div class="property"><strong>background-color</strong><span>É a <strong>propriedade</strong>: diz o que queremos alterar.</span></div>
+<div class="property"><strong>lightblue</strong><span>É o <strong>valor</strong>: diz qual configuração será usada.</span></div>
+</section>
+
+<section>
+<h2>6. Mudando a cor do fundo</h2>
+<div class="code">body {
+  background-color: lightblue;
+}</div>
+<p>A propriedade <span class="tag">background-color</span> define a cor de fundo do elemento.</p>
+<div class="card warning">
+<h3>Bonito também precisa ser legível</h3>
+<p>Uma cor de fundo não deve dificultar a leitura. Fundo e texto precisam ter contraste suficiente.</p>
+</div>
+</section>
+
+<section>
+<h2>7. Mudando a cor das letras</h2>
+<div class="code">body {
+  background-color: lightblue;
+  color: darkblue;
+}</div>
+<p>A propriedade <span class="tag">color</span> define a cor do texto.</p>
+</section>
+
+<section>
+<h2>8. Estilizando apenas o título</h2>
+<div class="code">h1 {
+  color: darkgreen;
+}</div>
+<p>Agora a regra afeta elementos <span class="tag">&lt;h1&gt;</span>, não toda a página.</p>
+</section>
+
+<section>
+<h2>9. Centralizando o texto</h2>
+<div class="code">h1 {
+  text-align: center;
+}</div>
+<p>A propriedade <span class="tag">text-align</span> controla o alinhamento horizontal do conteúdo textual dentro do elemento.</p>
+<div class="card warning">
+<h3>Nem tudo precisa ficar centralizado</h3>
+<p>Títulos curtos podem funcionar bem no centro. Parágrafos longos costumam ser mais confortáveis alinhados à esquerda. Design também é escolher onde <strong>não</strong> aplicar um efeito.</p>
+</div>
+</section>
+
+<section>
+<h2>10. Criando uma caixa de conteúdo</h2>
+<p>Vamos usar um elemento <span class="tag">&lt;div&gt;</span> como uma caixa que agrupa conteúdo.</p>
+<div class="code">&lt;div class="caixa"&gt;
+  &lt;h2&gt;Sobre nossa região&lt;/h2&gt;
+  &lt;p&gt;Aqui vai um texto importante.&lt;/p&gt;
+&lt;/div&gt;</div>
+<p>Depois damos estilo a essa caixa:</p>
+<div class="code">.caixa {
+  background-color: white;
+  border: 2px solid steelblue;
+  padding: 20px;
+  border-radius: 12px;
+}</div>
+</section>
+
+<section>
+<h2>11. O que cada propriedade da caixa faz?</h2>
+<div class="grid">
+<div class="card"><h3>background-color</h3><p>Cor do fundo da caixa.</p></div>
+<div class="card"><h3>border</h3><p>Cria uma borda em volta.</p></div>
+<div class="card"><h3>padding</h3><p>Cria espaço entre o conteúdo e a borda.</p></div>
+<div class="card"><h3>border-radius</h3><p>Arredonda os cantos.</p></div>
+</div>
+</section>
+
+<section>
+<h2>12. O começo do “modelo de caixa”</h2>
+<div class="card">
+<p>Elementos de uma página podem ser pensados como caixas. Dentro está o conteúdo; ao redor podem existir <strong>padding</strong>, <strong>border</strong> e espaço externo.</p>
+</div>
+<p>Hoje não precisamos decorar todo o modelo de caixa. Basta perceber que <strong>padding</strong> cria espaço dentro da borda.</p>
+</section>
+
+<section>
+<h2>13. Adicionando uma sombra leve</h2>
+<div class="code">.caixa {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}</div>
+<p><span class="tag">box-shadow</span> permite desenhar uma sombra ao redor da caixa.</p>
+<div class="card warning">
+<h3>Sombra é destaque, não obrigação</h3>
+<p>Uma sombra discreta pode ajudar a separar visualmente elementos. Muitas sombras fortes deixam a página confusa.</p>
+</div>
+</section>
+
+<section>
+<h2>14. Um efeito visual simples ao passar o mouse</h2>
+<div class="code">.caixa {
+  transition: transform 0.2s;
+}
+
+.caixa:hover {
+  transform: translateY(-3px);
+}</div>
+<p>A ideia é simples: quando o ponteiro passa sobre a caixa, ela se move alguns pixels e a mudança acontece suavemente.</p>
+<div class="card warning">
+<h3>“Animado” não significa “ficar mexendo o tempo todo”</h3>
+<p>Efeitos devem ajudar a perceber interação ou destaque. Piscadas, movimentos contínuos e exageros podem atrapalhar leitura e concentração.</p>
+</div>
+</section>
+
+<section>
+<h2>15. Veja o resultado</h2>
+<div class="browser">
+<div class="browser-demo">
+<h1>Conheça Minha Região</h1>
+<div class="boxdemo">
+<h2>Um lugar especial</h2>
+<p>Esta caixa possui fundo, borda, espaço interno, cantos arredondados e sombra.</p>
+</div>
+</div>
+</div>
+<p class="notice">Passe o mouse sobre a caixa acima para perceber o pequeno efeito.</p>
+</section>
+
+<section>
+<h2>16. Nosso código completo de exemplo</h2>
+<div class="code">&lt;!doctype html&gt;
+&lt;html lang="pt-BR"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;Minha Região&lt;/title&gt;
+
+  &lt;style&gt;
+    body {
+      background-color: lightblue;
+      color: #173047;
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      color: darkblue;
+      text-align: center;
+    }
+
+    .caixa {
+      background-color: white;
+      border: 2px solid steelblue;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s;
+    }
+
+    .caixa:hover {
+      transform: translateY(-3px);
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;h1&gt;Conheça Minha Região&lt;/h1&gt;
+
+  &lt;div class="caixa"&gt;
+    &lt;h2&gt;Nossa comunidade&lt;/h2&gt;
+    &lt;p&gt;Aqui vai um texto escrito pelo aluno.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div>
+</section>
+
+<section>
+<h2>17. O que é class="caixa"?</h2>
+<p>A palavra <span class="tag">class</span> permite dar um nome de classe a um elemento para que possamos selecioná-lo no CSS.</p>
+<div class="code">&lt;div class="caixa"&gt; ... &lt;/div&gt;</div>
+<p>No CSS, uma classe é selecionada com um ponto:</p>
+<div class="code">.caixa {
+  background-color: white;
+}</div>
+</section>
+
+<section>
+<h2>18. 🧪 Prática guiada — dando estilo à página</h2>
+<p>Continue usando seu <strong>index.html</strong>. Faça uma alteração por vez e veja o efeito no navegador.</p>
+<div class="practice-shell">
+<div id="practiceStepLabel" class="stepnum"></div>
+<div class="progress"><div id="practiceProgress"></div></div>
+<div class="practice-card">
+<div id="practiceCommand" class="command"></div>
+<div id="practiceMemory" class="memory"></div>
+<div id="practiceVisual"></div>
+<div class="practice-actions">
+<button id="prevPractice" class="secondary" onclick="practicePrev()">← Voltar um passo</button>
+<button id="nextPractice" onclick="practiceNext()">Consegui — próximo passo →</button>
+</div>
+</div>
+</div>
+</section>
+
+<section>
+<h2>19. Atividade principal — Meu primeiro visual</h2>
+<p>Ao final, sua página deverá ter:</p>
+<div class="grid">
+<div class="card"><h3>1 fundo</h3><p>Use <span class="tag">background-color</span>.</p></div>
+<div class="card"><h3>1 cor de texto</h3><p>Use <span class="tag">color</span>.</p></div>
+<div class="card"><h3>1 título centralizado</h3><p>Use <span class="tag">text-align: center</span>.</p></div>
+<div class="card"><h3>1 caixa</h3><p>Use <span class="tag">div class="caixa"</span>.</p></div>
+<div class="card"><h3>Borda + espaço</h3><p>Use <span class="tag">border</span> e <span class="tag">padding</span>.</p></div>
+<div class="card"><h3>1 efeito discreto</h3><p>Sombra ou movimento suave no hover.</p></div>
+</div>
+</section>
+
+<section>
+<h2>20. Testando sem bagunçar</h2>
+<div class="steps">
+<div class="step"><h3>Mude uma coisa</h3><p>Ex.: somente a cor do fundo.</p></div>
+<div class="step"><h3>Salve</h3><p>Ctrl + S.</p></div>
+<div class="step"><h3>Atualize</h3><p>Veja o resultado.</p></div>
+<div class="step"><h3>Decida</h3><p>Ficou legível?</p></div>
+<div class="step"><h3>Só depois continue</h3><p>Faça a próxima mudança.</p></div>
+</div>
+</section>
+
+<section>
+<h2>21. Erros comuns</h2>
+<div class="compare">
+<div class="card bad">
+<h3>❌ Esquecer ;</h3>
+<div class="code">color: blue
+background-color: white;</div>
+</div>
+<div class="card good">
+<h3>✅ Separar declarações</h3>
+<div class="code">color: blue;
+background-color: white;</div>
+</div>
+</div>
+<div class="compare" style="margin-top:14px">
+<div class="card bad">
+<h3>❌ Esquecer a chave</h3>
+<div class="code">h1 {
+  color: blue;</div>
+</div>
+<div class="card good">
+<h3>✅ Fechar o bloco</h3>
+<div class="code">h1 {
+  color: blue;
+}</div>
+</div>
+</div>
+</section>
+
+<section>
+<h2>22. Beleza não é só colocar mais coisas</h2>
+<div class="card warning">
+<h3>Design também é clareza</h3>
+<p>Uma página com 10 cores, textos piscando e muitas sombras pode ficar pior do que uma página simples. O objetivo é facilitar leitura, organização e compreensão.</p>
+</div>
+</section>
+
+<section>
+<h2>23. 🏠 Para rever em casa — 10 minutos</h2>
+<div class="card">
+<p>Abra esta aula pelo celular e explique para alguém:</p>
+<ol>
+<li>qual é a diferença entre HTML e CSS;</li>
+<li>o que <strong>background-color</strong> muda;</li>
+<li>o que <strong>color</strong> muda;</li>
+<li>o que <strong>text-align</strong> faz;</li>
+<li>para que servem <strong>border</strong>, <strong>padding</strong> e <strong>border-radius</strong>.</li>
+</ol>
+<p>Não é necessário editar código em casa.</p>
+</div>
+</section>
+
+<section>
+<h2>24. Pesquise depois — documentação oficial</h2>
+<div class="links">
+<a href="https://developer.mozilla.org/pt-BR/docs/Web/CSS" target="_blank" rel="noopener">🔎 MDN — CSS</a>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/text-align" target="_blank" rel="noopener">🔎 MDN — text-align</a>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Backgrounds_and_borders" target="_blank" rel="noopener">🔎 MDN — Fundos e bordas</a>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Box_model" target="_blank" rel="noopener">🔎 MDN — Modelo de caixa</a>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/box-shadow" target="_blank" rel="noopener">🔎 MDN — box-shadow</a>
+</div>
+</section>
+
+<section>
+<h2>25. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é entender que estilo visual também é código e precisa ter propósito.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+
+<div class="savebox">
+<h3>Salvar meu registro da aula</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<textarea id="codeNote" rows="7" placeholder="Opcional: cole aqui algumas regras CSS que você adicionou à sua página."></textarea>
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+<p class="notice">Na SEMAS: envie conforme orientação, salve no Drive quando necessário, apague arquivos locais e saia das contas.</p>
+</div>
+</section>
+
+<section>
+<h2>26. Missão final</h2>
+<div class="card">
+<ol>
+<li>Mostre uma regra CSS dentro de <span class="tag">&lt;style&gt;</span>.</li>
+<li>Troque a cor do fundo e atualize o navegador.</li>
+<li>Mude a cor de um título.</li>
+<li>Mostre uma caixa com borda e padding.</li>
+<li>Explique por que um efeito visual não deve atrapalhar a leitura.</li>
+</ol>
+<p><strong>Regra da turma:</strong> CSS não existe apenas para “deixar bonito”. Ele ajuda a organizar visualmente a informação para que a página seja mais clara e agradável de usar.</p>
+</div>
+</section>
+
+<footer>
+<p>SEMAS • Curso de Informática • Módulo 4 — Aula 06</p>
+<p>Deixando o Site Colorido e Animado</p>
+</footer>
+
+</main>
+
+<script>
+const lessonKey="semas_mod4_aula06_attempt";
+const practiceKey="semas_mod4_aula06_practice";
+
+const practiceSteps=[
+ {c:"Abra seu index.html no VS Code.",m:"Continue a página das aulas anteriores.",v:"📄 index.html"},
+ {c:"Dentro de <head>, crie uma tag <style> antes de </head>.",m:"Todo o CSS desta aula ficará dentro dela.",v:"&lt;style&gt; ... &lt;/style&gt;"},
+ {c:"Dentro de <style>, crie uma regra para body.",m:"O body representa a área principal da página.",v:"body { ... }"},
+ {c:"Adicione background-color ao body.",m:"Escolha uma cor clara para começar.",v:"background-color: lightblue;"},
+ {c:"Adicione color ao body.",m:"Escolha uma cor de texto que tenha boa leitura sobre o fundo.",v:"color: darkblue;"},
+ {c:"Salve com Ctrl + S e atualize o navegador.",m:"Veja primeiro apenas essas duas mudanças.",v:"Salvar → Atualizar"},
+ {c:"Crie uma regra para h1.",m:"Vamos estilizar o título principal separadamente.",v:"h1 { ... }"},
+ {c:"Adicione text-align: center ao h1.",m:"Centralize somente o título nesta atividade.",v:"text-align: center;"},
+ {c:"Escolha uma cor para o h1 usando color.",m:"Confira se a cor continua legível.",v:"color: ...;"},
+ {c:"No HTML, envolva um bloco de conteúdo com <div class=\"caixa\">.",m:"Coloque dentro dessa div um subtítulo e um parágrafo.",v:'&lt;div class="caixa"&gt;'},
+ {c:"No CSS, crie a regra .caixa.",m:"O ponto indica que estamos selecionando uma classe.",v:".caixa { ... }"},
+ {c:"Adicione background-color e border à caixa.",m:"Teste antes de continuar.",v:"background-color + border"},
+ {c:"Adicione padding: 20px à caixa.",m:"Observe como o conteúdo se afasta da borda.",v:"padding: 20px;"},
+ {c:"Adicione border-radius: 12px.",m:"Observe os cantos arredondados.",v:"border-radius: 12px;"},
+ {c:"Adicione uma box-shadow leve.",m:"A sombra deve destacar sem dominar a página.",v:"box-shadow: 0 6px 16px rgba(...);"},
+ {c:"Se houver tempo, adicione transition e :hover conforme o exemplo.",m:"O efeito é opcional; entendimento vem antes.",v:"transition + :hover"},
+ {c:"Salve e teste a página no navegador.",m:"Confira cores, leitura, caixa e efeito.",v:"🌐 Teste final"},
+ {c:"Prática concluída.",m:"Sua página agora possui estrutura HTML e apresentação CSS.",v:"🎉 HTML + CSS"}
+];
+
+let practiceIndex=Number(sessionStorage.getItem(practiceKey)||0);
+if(practiceIndex<0||practiceIndex>=practiceSteps.length)practiceIndex=0;
+
+function renderPractice(){
+ const s=practiceSteps[practiceIndex];
+ document.getElementById("practiceStepLabel").textContent=`Passo ${practiceIndex+1} de ${practiceSteps.length}`;
+ document.getElementById("practiceCommand").textContent=s.c;
+ document.getElementById("practiceMemory").textContent=s.m;
+ document.getElementById("practiceVisual").innerHTML=`<div class="card"><strong>${s.v}</strong></div>`;
+ document.getElementById("practiceProgress").style.width=`${((practiceIndex+1)/practiceSteps.length)*100}%`;
+ document.getElementById("prevPractice").disabled=practiceIndex===0;
+ document.getElementById("nextPractice").textContent=practiceIndex===practiceSteps.length-1?"Concluí o visual da página ✓":"Consegui — próximo passo →";
+}
+function practiceNext(){
+ if(practiceIndex<practiceSteps.length-1){
+  practiceIndex++;
+  sessionStorage.setItem(practiceKey,practiceIndex);
+  renderPractice();
+ } else {
+  alert("Parabéns: sua página agora usa HTML e CSS.");
+ }
+}
+function practicePrev(){
+ if(practiceIndex>0){
+  practiceIndex--;
+  sessionStorage.setItem(practiceKey,practiceIndex);
+  renderPractice();
+ }
+}
+renderPractice();
+
+const questions=[
+["Para que serve principalmente o CSS?","Controlar a apresentação visual de documentos como HTML","Criar a internet","Substituir o HTML","Salvar imagens","CSS descreve como o conteúdo deve ser apresentado."],
+["O que background-color altera?","A cor de fundo","A senha","O endereço do link","O nome do arquivo","background-color define a cor de fundo do elemento."],
+["O que a propriedade color altera?","A cor do texto","A largura da internet","O caminho da imagem","A pasta do projeto","color define a cor do texto."],
+["O que text-align: center faz?","Centraliza horizontalmente o conteúdo textual dentro do elemento","Centraliza o computador na mesa","Aumenta a fonte","Cria uma imagem","text-align controla o alinhamento horizontal do conteúdo inline."],
+["Para que serve padding?","Criar espaço interno entre conteúdo e borda","Criar um link","Mudar a senha","Apagar a borda","Padding cria espaço dentro da caixa."],
+["O que border-radius faz?","Arredonda cantos","Centraliza texto","Cria uma sombra","Muda a internet","border-radius arredonda os cantos da borda externa."],
+["O que box-shadow faz?","Adiciona uma sombra à caixa","Cria uma imagem","Abre um link","Apaga o fundo","box-shadow desenha sombra ao redor do elemento."],
+["Qual é uma boa regra de design para esta aula?","Usar efeitos para melhorar clareza sem atrapalhar leitura","Colocar o máximo de cores possível","Fazer tudo piscar","Centralizar todos os textos sempre","Estilo deve servir à legibilidade e organização."]
+];
+
+let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
+const quiz=document.getElementById("quiz");
+
+questions.forEach((q,i)=>{
+ const d=document.createElement("div");
+ d.className="quiz-item";
+ d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
+ q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+
+ `<div class="answer" id="a${i}"></div>`;
+ quiz.appendChild(d);
+});
+
+function updateUI(){
+ document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;
+ if(attempt>=2){
+  document.getElementById("checkBtn").disabled=true;
+  document.getElementById("retryBtn").disabled=true;
+ }
+}
+updateUI();
+
+function checkQuiz(){
+ if(attempt>=2)return;
+ let score=0,all=true,wrong=[];
+ questions.forEach((q,i)=>{
+  const s=document.querySelector(`input[name="q${i}"]:checked`);
+  const a=document.getElementById("a"+i);
+  if(!s){all=false;a.textContent="Responda esta questão.";return}
+  if(+s.value===0){score++;a.textContent="Correta! "+q[5]}
+  else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}
+ });
+ if(!all)return;
+ attempt++;
+ sessionStorage.setItem(lessonKey,attempt);
+ completed=true;
+ lastScore=score;
+ document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;
+ document.getElementById("saveBtn").disabled=false;
+ document.getElementById("checkBtn").disabled=true;
+ document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true);
+}
+
+function retryQuiz(){
+ if(attempt>=2||!completed)return;
+ document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});
+ questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");
+ completed=false;
+ lastScore=null;
+ document.getElementById("checkBtn").disabled=false;
+ document.getElementById("saveBtn").disabled=true;
+ updateUI();
+}
+
+function esc(s){
+ return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+}
+
+function saveResult(){
+ if(!completed)return;
+ const name=document.getElementById("studentName").value.trim();
+ if(!name){alert("Digite seu nome completo.");return}
+ const note=document.getElementById("codeNote").value.trim();
+ let rows="";
+ questions.forEach((q,i)=>{
+  const s=document.querySelector(`input[name="q${i}"]:checked`);
+  const n=s?+s.value:-1;
+  rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;
+ });
+ const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}.note{padding:12px;background:#f2f5f8;border-radius:8px;white-space:pre-wrap;font-family:monospace}</style></head><body><h1>SEMAS — Módulo 4 — Aula 06</h1><h2>Deixando o Site Colorido e Animado</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Prática guiada:</strong> passo ${practiceIndex+1}/${practiceSteps.length}</p>${note?`<p><strong>Meu CSS:</strong></p><div class="note">${esc(note)}</div>`:""}<table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. O objetivo é aprender a usar CSS para melhorar apresentação e legibilidade.</p></body></html>`;
+ const blob=new Blob([report],{type:"text/html;charset=utf-8"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ const safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
+ a.href=url;
+ a.download=`SEMAS_Modulo_4_Aula_06_${safe}.html`;
+ a.click();
+ URL.revokeObjectURL(url);
+}
+
+function finishSession(){
+ if(!confirm("Encerrar a sessão e limpar esta aula neste navegador?"))return;
+ sessionStorage.removeItem(lessonKey);
+ sessionStorage.removeItem(practiceKey);
+ location.reload();
+}
+</script>
+</body>
+</html>

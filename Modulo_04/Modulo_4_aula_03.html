@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 4 — Aula 03 — Conhecendo o Editor de Código (VS Code)</title>
+<style>
+:root{
+  --bg:#08101c;--card:#101a2c;--card2:#0c1524;--ink:#eef6ff;--muted:#afbdd2;
+  --accent:#73ddff;--accent2:#a8ffb9;--warn:#ffd47d;--danger:#ff9e9e;--line:#2b3b55;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 16% 0%,#1a355c 0,transparent 30%),linear-gradient(135deg,#070c15,#0d1729 55%,#10203a);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1040px;margin:auto;padding:24px 18px 70px}
+.hero{padding:42px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#265984,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)}h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)}.warning{border-left:4px solid var(--warn);background:#251f12}.danger{border-left:4px solid var(--danger);background:#29171b}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.code{font-family:Consolas,monospace;background:#07101e;color:#ffd479;padding:14px;border-radius:10px;white-space:pre-wrap;overflow:auto}
+.vscode{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#1e1e1e;color:#ddd}
+.vscode-top{height:34px;background:#181818;display:flex;align-items:center;padding:0 12px;font-size:.86rem;color:#bbb}
+.vscode-body{display:grid;grid-template-columns:54px 220px 1fr;min-height:360px}
+.activitybar{background:#181818;padding-top:10px;text-align:center;font-size:1.35rem}
+.activitybar div{padding:10px 0;border-left:3px solid transparent}.activitybar .on{border-left-color:#73ddff;background:#232323}
+.explorer{background:#252526;border-right:1px solid #333;padding:12px;font-size:.9rem}
+.editor{background:#1e1e1e}
+.tabs{height:36px;background:#252526;display:flex;align-items:center;padding:0 12px;border-bottom:1px solid #333}
+.tab{background:#1e1e1e;padding:9px 12px}
+.codearea{padding:18px;font-family:Consolas,monospace;line-height:1.7;overflow:auto}
+.c1{color:#569cd6}.c2{color:#dcdcaa}.c3{color:#ce9178}.c4{color:#9cdcfe}.c5{color:#c586c0}
+.status{height:26px;background:#007acc;color:white;padding:3px 10px;font-size:.82rem}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.good{border-left:4px solid var(--accent2)}.bad{border-left:4px solid var(--danger)}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.step{counter-increment:s;padding:16px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.step:before{content:counter(s);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#07101e;font-weight:900}
+.tag{font-family:Consolas,monospace;background:#07101e;color:#ffd479;padding:3px 7px;border-radius:7px}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}button:disabled{opacity:.5}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.answer{margin-top:10px;color:var(--muted)}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input,.savebox textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}
+footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:760px){
+ main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.compare{grid-template-columns:1fr}
+ .vscode-body{grid-template-columns:44px 1fr}.explorer{display:none}.codearea{font-size:.84rem}
+ button{width:100%;min-height:48px}
+}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 4 • Aula 03</div>
+<h1>Conhecendo o Editor de Código (VS Code)</h1>
+<p class="lead">Agora que já sabemos o que é HTML, vamos conhecer uma ferramenta usada para escrever e organizar código: o <strong>Visual Studio Code</strong>, também chamado de VS Code.</p>
+<p><strong>Desafio da aula:</strong> abrir o VS Code, reconhecer as principais áreas da tela e criar a primeira pasta de projetos da turma.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>5 min</strong>O que é VS Code</div>
+<div class="slot"><strong>10 min</strong>Abrindo o programa</div>
+<div class="slot"><strong>15 min</strong>Conhecendo a tela</div>
+<div class="slot"><strong>10 min</strong>Realce de sintaxe</div>
+<div class="slot"><strong>12 min</strong>Criar pasta de projetos</div>
+<div class="slot"><strong>5 min</strong>Organização</div>
+<div class="slot"><strong>3 min</strong>Quiz/relatório</div>
+</div>
+</section>
+
+<section>
+<h2>2. O que você vai aprender</h2>
+<div class="grid">
+<div class="card goal"><h3>💻 Editor</h3><p>Entender o que é um editor de código.</p></div>
+<div class="card goal"><h3>🧭 Interface</h3><p>Reconhecer Explorer, Editor, abas, barra lateral e barra de status.</p></div>
+<div class="card goal"><h3>🎨 Cores do código</h3><p>Entender o que significa realce de sintaxe.</p></div>
+<div class="card goal"><h3>📁 Projeto</h3><p>Criar uma pasta organizada para os arquivos HTML do curso.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. O que é o Visual Studio Code?</h2>
+<p>O VS Code é um <strong>editor de código</strong>. Ele ajuda a criar, visualizar e organizar arquivos de programação e desenvolvimento Web.</p>
+<div class="card warning">
+<h3>“Programadores de verdade usam VS Code” — melhor dizendo</h3>
+<p>Muitos profissionais usam VS Code, mas existem diversos outros editores e ambientes de desenvolvimento. O que faz alguém programar não é a marca do editor — é saber criar, entender, testar e corrigir código.</p>
+</div>
+</section>
+
+<section>
+<h2>4. Editor de texto × editor de código</h2>
+<div class="compare">
+<div class="card">
+<h3>📝 Editor de texto simples</h3>
+<p>Permite escrever texto puro e pode até criar HTML se o arquivo for salvo corretamente.</p>
+</div>
+<div class="card good">
+<h3>💻 Editor de código</h3>
+<p>Além de escrever texto, oferece recursos para organização de arquivos, realce de sintaxe, busca e outras ferramentas de desenvolvimento.</p>
+</div>
+</div>
+</section>
+
+<section>
+<h2>5. Abrindo o VS Code</h2>
+<div class="steps">
+<div class="step"><h3>Menu Iniciar</h3><p>Abra o menu do Windows.</p></div>
+<div class="step"><h3>Pesquise</h3><p>Digite <strong>Visual Studio Code</strong>.</p></div>
+<div class="step"><h3>Abra</h3><p>Clique no aplicativo.</p></div>
+<div class="step"><h3>Aguarde</h3><p>Espere a janela principal aparecer.</p></div>
+</div>
+<div class="card warning">
+<p>O VS Code deverá estar previamente instalado e preparado nos computadores da SEMAS. Os alunos não precisam instalar programas em casa.</p>
+</div>
+</section>
+
+<section>
+<h2>6. Conhecendo a tela</h2>
+<div class="vscode">
+<div class="vscode-top">Visual Studio Code — Projeto_SEMAS</div>
+<div class="vscode-body">
+<div class="activitybar">
+<div class="on">📄</div>
+<div>🔎</div>
+<div>⑂</div>
+<div>▶</div>
+<div>🧩</div>
+</div>
+<div class="explorer">
+<strong>EXPLORER</strong><br><br>
+📁 PROJETO_SEMAS<br>
+&nbsp;&nbsp;📄 index.html<br>
+&nbsp;&nbsp;📁 imagens<br>
+</div>
+<div class="editor">
+<div class="tabs"><div class="tab">index.html</div></div>
+<div class="codearea">
+<span class="c1">&lt;!doctype html&gt;</span><br>
+<span class="c1">&lt;html</span> <span class="c4">lang</span>=<span class="c3">"pt-BR"</span><span class="c1">&gt;</span><br>
+&nbsp;&nbsp;<span class="c1">&lt;body&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">&lt;h1&gt;</span>Minha página<span class="c1">&lt;/h1&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">&lt;p&gt;</span>Olá, SEMAS!<span class="c1">&lt;/p&gt;</span><br>
+&nbsp;&nbsp;<span class="c1">&lt;/body&gt;</span><br>
+<span class="c1">&lt;/html&gt;</span>
+</div>
+</div>
+</div>
+<div class="status">HTML &nbsp;&nbsp; UTF-8 &nbsp;&nbsp; Ln 4, Col 8</div>
+</div>
+<p class="notice">Esta é uma ilustração simplificada. A aparência real pode variar conforme a versão, o tema e as configurações do VS Code.</p>
+</section>
+
+<section>
+<h2>7. Activity Bar — a barra de atividades</h2>
+<p>Normalmente fica na lateral e dá acesso às principais áreas.</p>
+<div class="grid">
+<div class="card"><h3>📄 Explorer</h3><p>Arquivos e pastas do projeto.</p></div>
+<div class="card"><h3>🔎 Search</h3><p>Busca texto nos arquivos.</p></div>
+<div class="card"><h3>⑂ Source Control</h3><p>Ferramentas de controle de versão — conheceremos só mais adiante, se necessário.</p></div>
+<div class="card"><h3>▶ Run</h3><p>Área de execução e depuração para linguagens que usam esses recursos.</p></div>
+<div class="card"><h3>🧩 Extensions</h3><p>Permite adicionar recursos ao editor.</p></div>
+</div>
+</section>
+
+<section>
+<h2>8. Explorer — nosso armário de arquivos</h2>
+<p>O <strong>Explorer</strong> mostra os arquivos e pastas do projeto. É ali que podemos criar, renomear, excluir e organizar itens.</p>
+<div class="code">PROJETO_SEMAS/
+├── index.html
+├── imagens/
+└── outros_arquivos...</div>
+<div class="card warning">
+<h3>Explorer do VS Code ≠ Explorador de Arquivos do Windows</h3>
+<p>Os dois trabalham com arquivos e pastas, mas são interfaces diferentes. O Explorer do VS Code mostra principalmente o conteúdo da pasta de projeto aberta no editor.</p>
+</div>
+</section>
+
+<section>
+<h2>9. Editor — onde escrevemos o código</h2>
+<p>A região maior no centro é o <strong>Editor</strong>. Quando abrimos um arquivo, ele aparece ali para leitura e edição.</p>
+<div class="code">&lt;h1&gt;Minha primeira página&lt;/h1&gt;</div>
+<p>É nessa área que começaremos a escrever HTML nas próximas aulas.</p>
+</section>
+
+<section>
+<h2>10. Abas</h2>
+<p>Quando vários arquivos estão abertos, eles podem aparecer em abas.</p>
+<div class="code">[ index.html ]   [ contato.html ]   [ sobre.html ]</div>
+<p>Isso permite trocar rapidamente entre arquivos do mesmo projeto.</p>
+</section>
+
+<section>
+<h2>11. Barra de status</h2>
+<p>Na parte inferior, a barra de status pode mostrar informações úteis, como:</p>
+<div class="grid">
+<div class="card"><h3>HTML</h3><p>Linguagem detectada para o arquivo.</p></div>
+<div class="card"><h3>UTF-8</h3><p>Codificação do texto.</p></div>
+<div class="card"><h3>Ln / Col</h3><p>Linha e coluna onde o cursor está.</p></div>
+</div>
+</section>
+
+<section>
+<h2>12. Por que o código aparece colorido?</h2>
+<p>O VS Code usa <strong>realce de sintaxe</strong> para colorir partes do código de acordo com a linguagem.</p>
+<div class="code"><span style="color:#569cd6">&lt;h1&gt;</span>Meu título<span style="color:#569cd6">&lt;/h1&gt;</span>
+<span style="color:#569cd6">&lt;p&gt;</span>Meu texto<span style="color:#569cd6">&lt;/p&gt;</span></div>
+<div class="card good">
+<h3>As cores ajudam a ler</h3>
+<p>Elas facilitam distinguir tags, atributos, textos, palavras especiais e outras partes do código.</p>
+</div>
+</section>
+
+<section>
+<h2>13. Cor não significa “código correto”</h2>
+<div class="card danger">
+<h3>⚠️ O realce ajuda, mas não garante</h3>
+<p>Um trecho pode aparecer colorido e ainda conter erro de lógica, estrutura ou digitação. A cor é uma ajuda visual, não uma prova de que tudo está certo.</p>
+</div>
+</section>
+
+<section>
+<h2>14. O VS Code já entende HTML?</h2>
+<p>Sim. O VS Code possui suporte integrado para HTML, além de várias outras linguagens comuns.</p>
+<div class="card">
+<p>Quando salvamos um arquivo com extensão <strong>.html</strong>, o editor consegue reconhecer a linguagem e oferecer recursos adequados.</p>
+</div>
+</section>
+
+<section>
+<h2>15. O que é uma pasta de projeto?</h2>
+<p>Para nossas aulas, será uma pasta que reúne os arquivos de uma página ou atividade.</p>
+<div class="code">Curso_SEMAS_HTML/
+├── Aula_03/
+├── Aula_04/
+├── Aula_05/
+└── Projeto_Final/</div>
+<p>Organização importa porque, conforme um projeto cresce, podem existir páginas, imagens e outros arquivos relacionados.</p>
+</section>
+
+<section>
+<h2>16. Atividade principal — criar a primeira pasta de projetos</h2>
+<div class="steps">
+<div class="step"><h3>Abra o VS Code</h3><p>Use o Menu Iniciar.</p></div>
+<div class="step"><h3>Arquivo</h3><p>Clique em <strong>File / Arquivo</strong>.</p></div>
+<div class="step"><h3>Open Folder</h3><p>Escolha <strong>Open Folder / Abrir Pasta</strong>.</p></div>
+<div class="step"><h3>Nova pasta</h3><p>Crie uma pasta chamada <strong>Curso_SEMAS_HTML</strong> no local orientado pelo professor.</p></div>
+<div class="step"><h3>Abra a pasta</h3><p>Selecione-a para trabalhar nela.</p></div>
+<div class="step"><h3>Observe o Explorer</h3><p>O nome da pasta deve aparecer na lateral.</p></div>
+</div>
+</section>
+
+<section>
+<h2>17. O que é um workspace?</h2>
+<p>Quando abrimos uma pasta no VS Code, ela pode funcionar como nosso <strong>espaço de trabalho</strong> ou workspace.</p>
+<div class="card warning">
+<h3>Para esta turma, mantenha simples</h3>
+<p>Vamos trabalhar normalmente com <strong>uma pasta principal aberta por vez</strong>. O VS Code possui workspaces mais avançados com várias pastas, mas ainda não precisamos disso.</p>
+</div>
+</section>
+
+<section>
+<h2>18. Se aparecer “Do you trust the authors of the files in this folder?”</h2>
+<div class="card warning">
+<h3>Workspace Trust</h3>
+<p>O VS Code pode perguntar se você confia nos autores dos arquivos da pasta.</p>
+<p><strong>Na pasta criada por você durante a aula:</strong> siga a orientação do professor.</p>
+<p><strong>Em arquivo ou pasta de origem desconhecida:</strong> não marque confiança automaticamente. Peça orientação.</p>
+</div>
+</section>
+
+<section>
+<h2>19. Regra de organização para nossas próximas aulas</h2>
+<div class="code">Curso_SEMAS_HTML/
+└── meu_nome/
+    ├── aula_04/
+    ├── aula_05/
+    └── projeto_final/</div>
+<div class="card warning">
+<p>O professor poderá adaptar o local e os nomes conforme a organização dos computadores compartilhados. Não guarde dados pessoais desnecessários na pasta.</p>
+</div>
+</section>
+
+<section>
+<h2>20. Miniatividade — encontre as partes</h2>
+<p>Com o VS Code aberto, aponte na tela:</p>
+<div class="grid">
+<div class="card"><h3>1</h3><p>Onde está o Explorer?</p></div>
+<div class="card"><h3>2</h3><p>Onde um arquivo aberto aparece?</p></div>
+<div class="card"><h3>3</h3><p>Onde ficam as abas?</p></div>
+<div class="card"><h3>4</h3><p>Onde aparece a linguagem do arquivo?</p></div>
+<div class="card"><h3>5</h3><p>Onde criaremos arquivos dentro da pasta do projeto?</p></div>
+</div>
+</section>
+
+<section>
+<h2>21. Não vamos instalar extensões hoje</h2>
+<div class="card warning">
+<h3>Menos distração, mais fundamento</h3>
+<p>O VS Code possui milhares de extensões, mas HTML já tem suporte integrado. Nesta aula, o objetivo é conhecer a ferramenta e organizar o projeto.</p>
+</div>
+</section>
+
+<section>
+<h2>22. 🏠 Para rever em casa — 10 minutos</h2>
+<div class="card">
+<p>No celular, reveja esta aula e tente explicar para alguém:</p>
+<ol>
+<li>o que é um editor de código;</li>
+<li>para que serve o Explorer;</li>
+<li>por que o código aparece colorido;</li>
+<li>o que é uma pasta de projeto.</li>
+</ol>
+<p>Não é necessário instalar VS Code no celular ou em casa.</p>
+</div>
+</section>
+
+<section>
+<h2>23. Pesquise depois — documentação oficial</h2>
+<div class="links">
+<a href="https://code.visualstudio.com/docs/getstarted/userinterface" target="_blank" rel="noopener">🔎 VS Code — Interface do usuário</a>
+<a href="https://code.visualstudio.com/docs/editing/getting-started" target="_blank" rel="noopener">🔎 VS Code — Começando e abrindo uma pasta</a>
+<a href="https://code.visualstudio.com/docs/editing/workspaces/workspaces" target="_blank" rel="noopener">🔎 VS Code — O que é um workspace?</a>
+<a href="https://code.visualstudio.com/docs/editing/workspaces/workspace-trust" target="_blank" rel="noopener">🔎 VS Code — Workspace Trust</a>
+<a href="https://code.visualstudio.com/docs/languages/overview" target="_blank" rel="noopener">🔎 VS Code — Suporte a linguagens</a>
+</div>
+</section>
+
+<section>
+<h2>24. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é reconhecer a ferramenta antes de começar a escrever código nela.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+
+<div class="savebox">
+<h3>Salvar meu registro da aula</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<textarea id="folderNote" rows="5" placeholder="Opcional: escreva onde você criou sua pasta Curso_SEMAS_HTML e o que encontrou no Explorer."></textarea>
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+<p class="notice">Na SEMAS: envie conforme orientação, salve no Drive quando necessário, apague arquivos locais e saia das contas.</p>
+</div>
+</section>
+
+<section>
+<h2>25. Missão final</h2>
+<div class="card">
+<ol>
+<li>Explique o que é o VS Code.</li>
+<li>Mostre onde fica o Explorer.</li>
+<li>Explique para que serve o realce de sintaxe.</li>
+<li>Mostre a pasta <strong>Curso_SEMAS_HTML</strong>.</li>
+<li>Diga por que organizar arquivos desde o começo é importante.</li>
+</ol>
+<p><strong>Regra da turma:</strong> antes de criar páginas grandes, aprenda a dominar o lugar onde o código será escrito e organizado.</p>
+</div>
+</section>
+
+<footer>
+<p>SEMAS • Curso de Informática • Módulo 4 — Aula 03</p>
+<p>Conhecendo o Editor de Código (VS Code)</p>
+</footer>
+
+</main>
+
+<script>
+const lessonKey="semas_mod4_aula03_attempt";
+const questions=[
+["O que é o VS Code?","Um editor de código","Um navegador","Um antivírus","Uma rede social","VS Code é uma ferramenta para escrever e organizar código e arquivos de desenvolvimento."],
+["Para que serve o Explorer do VS Code?","Ver e organizar arquivos e pastas do projeto","Pesquisar na internet","Trocar a senha do Windows","Aumentar o Wi-Fi","O Explorer mostra e gerencia os arquivos da pasta aberta."],
+["O que é realce de sintaxe?","Uso de cores para ajudar a distinguir partes do código","Correção automática de todos os erros","Um antivírus","Uma forma de imprimir","As cores ajudam na leitura da estrutura do código."],
+["Se o código aparece colorido, ele está necessariamente correto?","Não","Sim","Somente HTML","Somente no Windows","Realce de sintaxe ajuda a ler, mas não garante que o código esteja correto."],
+["O que acontece quando abrimos uma pasta no VS Code?","Ela pode se tornar nosso espaço de trabalho","Ela vira um site automaticamente","Ela é enviada para a internet","Ela é apagada","O VS Code trabalha com arquivos e pastas abertas no workspace."],
+["Qual pasta criamos nesta aula?","Curso_SEMAS_HTML","Windows_System","Meus_Jogos","Internet","A pasta organiza os projetos HTML do curso."],
+["Devemos instalar várias extensões nesta aula?","Não","Sim, todas","Somente extensões de jogos","É obrigatório instalar dez","HTML já tem suporte integrado e o foco agora é aprender a interface."],
+["O que fazer se uma pasta desconhecida pedir confiança no VS Code?","Pedir orientação e não confiar automaticamente","Aceitar sempre","Apagar o Windows","Desligar a internet","Workspace Trust existe para reduzir riscos com código de origem desconhecida."]
+];
+
+let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{
+ const d=document.createElement("div");d.className="quiz-item";
+ d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;
+ quiz.appendChild(d);
+});
+function updateUI(){
+ document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;
+ if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true}
+}
+updateUI();
+function checkQuiz(){
+ if(attempt>=2)return;
+ let score=0,all=true,wrong=[];
+ questions.forEach((q,i)=>{
+  const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);
+  if(!s){all=false;a.textContent="Responda esta questão.";return}
+  if(+s.value===0){score++;a.textContent="Correta! "+q[5]}
+  else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}
+ });
+ if(!all)return;
+ attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;
+ document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;
+ document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;
+ document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true);
+}
+function retryQuiz(){
+ if(attempt>=2||!completed)return;
+ document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});
+ questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");
+ completed=false;lastScore=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;updateUI();
+}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function saveResult(){
+ if(!completed)return;
+ const name=document.getElementById("studentName").value.trim();
+ if(!name){alert("Digite seu nome completo.");return}
+ const note=document.getElementById("folderNote").value.trim();
+ let rows="";
+ questions.forEach((q,i)=>{
+  const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;
+  rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;
+ });
+ const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}.note{padding:12px;background:#f2f5f8;border-radius:8px;white-space:pre-wrap}</style></head><body><h1>SEMAS — Módulo 4 — Aula 03</h1><h2>Conhecendo o Editor de Código (VS Code)</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}</p>${note?`<p><strong>Minha pasta/progresso:</strong></p><div class="note">${esc(note)}</div>`:""}<table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. O objetivo é conhecer e organizar o ambiente de código.</p></body></html>`;
+ const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
+ a.href=url;a.download=`SEMAS_Modulo_4_Aula_03_${safe}.html`;a.click();URL.revokeObjectURL(url);
+}
+function finishSession(){
+ if(!confirm("Encerrar a sessão e limpar esta aula neste navegador?"))return;
+ sessionStorage.removeItem(lessonKey);location.reload();
+}
+</script>
+</body>
+</html>

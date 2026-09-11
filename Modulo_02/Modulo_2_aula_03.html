@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 2 — Aula 03 — Formatando e Transformando em PDF</title>
+<style>
+:root{
+  --bg:#08101d;--card:#111b2e;--card2:#0d1728;--ink:#eef5ff;--muted:#afbdd4;
+  --accent:#69ddff;--accent2:#9dffb7;--warn:#ffd479;--danger:#ff9d9d;--line:#293955;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 15% 0%,#173053 0,transparent 28%),linear-gradient(135deg,#070c16,#0c1628 55%,#0e1d34);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1000px;margin:auto;padding:24px 18px 70px}
+.hero{padding:40px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#23517a,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)}h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)}.warning{border-left:4px solid var(--warn);background:#251f12}.pc{border-left:4px solid var(--accent)}.phone{border-left:4px solid #bd9cff}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.tool{padding:8px 11px;border:1px solid var(--line);border-radius:8px;background:#091322;font-weight:800}
+.paper{background:#fff;color:#222;border-radius:8px;padding:30px;box-shadow:0 14px 35px #0006;max-width:760px;margin:18px auto}
+.paper h3{color:#18456f}
+.pdfbox{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center}
+.pdfdoc,.worddoc{padding:20px;border-radius:18px;border:1px solid var(--line);text-align:center;background:#0b1526}
+.arrow{font-size:2rem;color:var(--accent);font-weight:900}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.step{counter-increment:s;padding:16px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.step:before{content:counter(s);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#07101e;font-weight:900}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}button:disabled{opacity:.5}
+.mode-buttons{display:flex;flex-wrap:wrap;gap:10px}.mode-panel{display:none;margin-top:14px}.mode-panel.active{display:block}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.answer{margin-top:10px;color:var(--muted)}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:720px){main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.pdfbox{grid-template-columns:1fr}.arrow{transform:rotate(90deg);text-align:center}.mode-buttons{display:grid;grid-template-columns:1fr}button{width:100%;min-height:48px}.paper{padding:22px 18px}}
+</style>
+</head>
+<body>
+<main>
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 2 • Aula 03</div>
+<h1>Formatando e Transformando em PDF</h1>
+<p class="lead">Na aula anterior você escreveu uma carta. Agora vamos aprender a <strong>destacar o que importa sem exagerar</strong>, transformar o documento em PDF e enviar esse arquivo em anexo por e-mail.</p>
+<p><strong>Desafio da aula:</strong> terminar com dois arquivos: o documento editável e uma cópia em PDF pronta para compartilhar.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>5 min</strong>Reabrir a carta</div>
+<div class="slot"><strong>12 min</strong>Fonte, tamanho e negrito</div>
+<div class="slot"><strong>8 min</strong>Cor com propósito</div>
+<div class="slot"><strong>12 min</strong>O que é PDF</div>
+<div class="slot"><strong>12 min</strong>Exportar</div>
+<div class="slot"><strong>8 min</strong>Anexar no Gmail</div>
+<div class="slot"><strong>3 min</strong>Quiz/relatório</div>
+</div>
+</section>
+
+<section>
+<h2>2. O que você vai aprender</h2>
+<div class="grid">
+<div class="card goal"><h3>🔤 Formatação</h3><p>Mudar tamanho, aplicar negrito e usar cor com moderação.</p></div>
+<div class="card goal"><h3>📄 PDF</h3><p>Entender por que PDF é bom para compartilhar documentos mantendo a aparência.</p></div>
+<div class="card goal"><h3>📎 Anexo</h3><p>Enviar o PDF por e-mail para o professor.</p></div>
+<div class="card goal"><h3>🧹 Organização</h3><p>Guardar no Drive, apagar a cópia local e sair das contas.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. Formatar não é enfeitar</h2>
+<p>Formatação serve para ajudar a leitura. No Word, depois de selecionar um trecho, podemos mudar fonte, tamanho, cor e estilo.</p>
+<div class="toolbar">
+<div class="tool"><b>B</b> Negrito</div>
+<div class="tool">12 ▾ Tamanho</div>
+<div class="tool">A 🎨 Cor</div>
+<div class="tool">⬅ Alinhar</div>
+<div class="tool">☰ Justificar</div>
+</div>
+<div class="grid">
+<div class="card"><h3>✅ Bom uso</h3><p>Assunto em negrito, título um pouco maior e texto principal legível.</p></div>
+<div class="card"><h3>❌ Exagero</h3><p>Cada linha com uma cor, cinco fontes e tamanhos diferentes.</p></div>
+</div>
+<p>A Microsoft orienta selecionar o texto e usar as opções de fonte da guia Página Inicial para alterar cor e outras características. </p>
+</section>
+
+<section>
+<h2>4. Tamanho da letra</h2>
+<div class="paper">
+<p style="font-size:12px">Este texto está pequeno.</p>
+<p style="font-size:16px">Este texto está confortável para leitura.</p>
+<p style="font-size:28px"><strong>Este tamanho funciona melhor como título.</strong></p>
+</div>
+<div class="card warning">
+<h3>Maior não significa melhor</h3>
+<p>Um documento formal precisa ser legível e equilibrado. Títulos podem ser maiores; o corpo do texto deve manter um tamanho consistente.</p>
+</div>
+</section>
+
+<section>
+<h2>5. Negrito e cor: o que realmente merece destaque?</h2>
+<div class="grid">
+<div class="card"><h3><b>Negrito</b></h3><p>É ótimo para assunto, título ou palavras realmente importantes.</p></div>
+<div class="card"><h3 style="color:#69ddff">Cor</h3><p>Pode destacar algo, mas em uma carta formal deve ser usada com bastante moderação.</p></div>
+<div class="card"><h3>🧠 Regra simples</h3><p>Se tudo está destacado, nada realmente se destaca.</p></div>
+</div>
+</section>
+
+<section>
+<h2>6. O que é PDF?</h2>
+<div class="pdfbox">
+<div class="worddoc"><div style="font-size:3rem">📝</div><h3>Documento editável</h3><p>Você continua alterando texto, fonte e conteúdo.</p></div>
+<div class="arrow">→</div>
+<div class="pdfdoc"><div style="font-size:3rem">📄</div><h3>PDF</h3><p>Uma cópia pensada para compartilhar preservando melhor a apresentação.</p></div>
+</div>
+<div class="card warning" style="margin-top:14px">
+<h3>PDF não é uma “foto impossível de editar”</h3>
+<p>PDF pode ser editado com ferramentas próprias. A grande vantagem é que ele foi criado para <strong>manter a apresentação do documento de forma mais consistente</strong> entre diferentes dispositivos e programas.</p>
+</div>
+</section>
+
+<section>
+<h2>7. Por que PDF é bom para abrir no celular?</h2>
+<p>Quando um documento é exportado corretamente para PDF, fonte, margens, imagens e posicionamento tendem a permanecer muito próximos do original. A própria Microsoft descreve o PDF como uma forma conveniente de criar uma cópia compartilhável preservando a formatação. </p>
+<div class="grid">
+<div class="card"><h3>📱 Celular</h3><p>Normalmente abre sem precisar ter o Word instalado.</p></div>
+<div class="card"><h3>💻 Outro computador</h3><p>A aparência tende a continuar consistente.</p></div>
+<div class="card"><h3>🖨️ Impressão</h3><p>É muito utilizado quando queremos preservar o layout de uma página.</p></div>
+</div>
+</section>
+
+<section>
+<h2>8. Transformando a carta em PDF</h2>
+<p>No Word, a sequência pode variar conforme a versão, mas normalmente envolve <strong>Arquivo → Exportar</strong> ou <strong>Salvar como → PDF</strong>. No Word para a Web, a Microsoft orienta Arquivo → Exportar → Baixar como PDF. </p>
+<div class="steps">
+<div class="step"><h3>Abra a carta</h3><p>Use o arquivo da Aula 02.</p></div>
+<div class="step"><h3>Revise</h3><p>Veja se data, assunto e texto estão corretos.</p></div>
+<div class="step"><h3>Formate</h3><p>Ajuste tamanho, negrito e, se necessário, uma cor discreta.</p></div>
+<div class="step"><h3>Arquivo</h3><p>Abra as opções de salvar/exportar.</p></div>
+<div class="step"><h3>Escolha PDF</h3><p>Exporte ou salve uma cópia em PDF.</p></div>
+<div class="step"><h3>Confira</h3><p>Abra o PDF e veja se ele ficou correto.</p></div>
+</div>
+</section>
+
+<section>
+<h2>9. Dois arquivos, duas funções</h2>
+<div class="grid">
+<div class="card"><h3>📝 .docx</h3><p>É o arquivo que você pode continuar editando no Word.</p></div>
+<div class="card"><h3>📄 .pdf</h3><p>É a cópia que vamos usar para compartilhar.</p></div>
+</div>
+<div class="card warning">
+<h3>Não apague o DOCX antes de conferir o PDF</h3>
+<p>Se perceber um erro, volte ao documento editável, corrija e gere o PDF novamente.</p>
+</div>
+</section>
+
+<section>
+<h2>10. Enviando o PDF por e-mail</h2>
+<p>No Gmail pelo computador, o fluxo básico oficial é <strong>Escrever → Anexar → escolher o arquivo → enviar</strong>. </p>
+<div class="steps">
+<div class="step"><h3>Abra o Gmail</h3><p>Entre apenas na sua própria conta.</p></div>
+<div class="step"><h3>Escrever</h3><p>Crie uma nova mensagem.</p></div>
+<div class="step"><h3>Destinatário</h3><p>Coloque o e-mail do professor informado em aula.</p></div>
+<div class="step"><h3>Assunto</h3><p>Exemplo: <strong>Módulo 2 — Aula 03 — Seu Nome</strong>.</p></div>
+<div class="step"><h3>📎 Anexar</h3><p>Escolha o PDF correto.</p></div>
+<div class="step"><h3>Confira antes de enviar</h3><p>Veja nome do arquivo, destinatário e assunto.</p></div>
+</div>
+</section>
+
+<section>
+<h2>11. Antes de apertar Enviar: regra dos 3 C</h2>
+<div class="grid">
+<div class="card"><h3>👤 C de Contato</h3><p>O destinatário é realmente o professor?</p></div>
+<div class="card"><h3>📎 C de Conteúdo</h3><p>O PDF certo está anexado?</p></div>
+<div class="card"><h3>📝 C de Contexto</h3><p>O assunto e a mensagem explicam o que você está enviando?</p></div>
+</div>
+</section>
+
+<section>
+<h2>12. Atividade prática</h2>
+<div class="mode-buttons">
+<button onclick="showMode('pc')">🏫 Estou na SEMAS</button>
+<button class="secondary" onclick="showMode('phone')">📱 Estou acompanhando pelo celular</button>
+</div>
+<div id="pcMode" class="mode-panel">
+<div class="card pc">
+<h3>🏫 Na SEMAS</h3>
+<ol>
+<li>Abra a carta da aula anterior.</li>
+<li>Melhore a formatação sem exagerar.</li>
+<li>Salve o documento editável.</li>
+<li>Exporte uma cópia em PDF.</li>
+<li>Abra o PDF e confira a aparência.</li>
+<li>Entre no Gmail e crie um e-mail para o professor.</li>
+<li>Anexe o PDF.</li>
+<li>Confira destinatário, assunto e anexo antes de enviar.</li>
+<li>Salve no Drive, apague os arquivos locais e saia das contas.</li>
+</ol>
+</div>
+</div>
+<div id="phoneMode" class="mode-panel">
+<div class="card phone">
+<h3>📱 Em casa pelo celular</h3>
+<ol>
+<li>Abra o PDF salvo no seu Drive, se estiver disponível.</li>
+<li>Compare mentalmente com a versão do Word vista em aula.</li>
+<li>Observe se título, parágrafos e margens continuam organizados.</li>
+<li>Não é necessário editar a carta no celular.</li>
+</ol>
+</div>
+</div>
+</section>
+
+<section>
+<h2>13. 🏠 Para rever em casa — 10 minutos</h2>
+<div class="card">
+<p>Se puder, abra o PDF no celular da família e mostre para alguém:</p>
+<ol>
+<li>onde está o título;</li>
+<li>onde está o assunto;</li>
+<li>qual trecho você colocou em negrito;</li>
+<li>por que o PDF é útil para compartilhar.</li>
+</ol>
+</div>
+</section>
+
+<section>
+<h2>14. Pesquise depois — fontes oficiais</h2>
+<div class="links">
+<a href="https://support.microsoft.com/pt-br/office/exportar-word-documento-como-pdf-4e89b30d-9d7d-4866-af77-3af5536b974c" target="_blank" rel="noopener">🔎 Microsoft — Exportar documento do Word como PDF</a>
+<a href="https://support.microsoft.com/pt-br/word/change-the-font-color-in-a-word-document" target="_blank" rel="noopener">🔎 Microsoft — Alterar a cor da fonte no Word</a>
+<a href="https://support.google.com/mail/answer/6584?co=GENIE.Platform%3DDesktop&hl=pt-BR" target="_blank" rel="noopener">🔎 Google — Enviar anexos no Gmail</a>
+</div>
+</section>
+
+<section>
+<h2>15. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é aprender a preparar e compartilhar um documento com cuidado.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+<div class="savebox">
+<h3>Salvar meu registro da aula</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+<p class="notice">Na SEMAS: envie por e-mail, salve no Drive, apague os arquivos locais e saia das contas.</p>
+</div>
+</section>
+
+<section>
+<h2>16. Missão final</h2>
+<div class="card">
+<ol>
+<li>Explique a diferença entre DOCX e PDF.</li>
+<li>Mostre como colocar um trecho em negrito.</li>
+<li>Explique por que não devemos usar muitas cores num documento formal.</li>
+<li>Mostre como anexar o PDF em um e-mail.</li>
+</ol>
+<p><strong>Regra da turma:</strong> um documento bem feito não termina quando escrevemos — ele também precisa ser revisado, preparado e enviado corretamente.</p>
+</div>
+</section>
+
+<footer><p>SEMAS • Curso de Informática • Módulo 2 — Aula 03</p><p>Formatando e Transformando em PDF</p></footer>
+</main>
+
+<script>
+const lessonKey="semas_mod2_aula03_attempt";
+const questions=[
+["Para que serve a formatação?","Ajudar a organizar e destacar informações sem prejudicar a leitura","Encher o texto de cores","Aumentar a velocidade da internet","Criar uma senha","Formatação deve facilitar a leitura e a organização."],
+["Qual é um bom uso do negrito?","Destacar um título ou assunto importante","Colocar o documento inteiro em negrito","Trocar todas as letras por símbolos","Usar apenas no rodapé","Negrito funciona melhor quando usado em pontos realmente importantes."],
+["O PDF serve principalmente para quê nesta aula?","Criar uma cópia compartilhável que preserva melhor a apresentação","Substituir o antivírus","Editar vídeos","Aumentar a memória RAM","PDF é muito usado para compartilhar documentos mantendo o layout consistente."],
+["PDF significa que o arquivo nunca pode ser editado?","Não","Sim, nunca","Somente no celular","Somente no Windows","PDF pode ser editado com ferramentas próprias; sua vantagem principal é preservar a apresentação."],
+["Qual arquivo devemos manter se quisermos continuar editando a carta?","O DOCX","Somente o PDF","Uma imagem JPG","Um arquivo ZIP","O DOCX é o documento editável do Word."],
+["Antes de enviar o PDF, o que devemos fazer?","Abrir e conferir se ficou correto","Enviar sem olhar","Apagar o DOCX","Trocar a senha do Gmail","Conferir o PDF evita enviar uma versão com erro."],
+["Como anexar um arquivo no Gmail pelo computador?","Criar a mensagem e usar o botão Anexar","Colar o arquivo no assunto","Escrever o nome do PDF no corpo","Mandar uma foto da tela","O Gmail possui o botão Anexar para escolher o arquivo."],
+["Qual é a melhor sequência antes de terminar no PC compartilhado?","Enviar, salvar no Drive, apagar cópias locais e sair das contas","Deixar Gmail e Drive abertos","Salvar a senha no navegador","Deixar o PDF na Área de Trabalho","Essa sequência protege a privacidade e deixa o PC pronto para o próximo aluno."]
+];
+let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null,startedAt=Date.now();
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{const d=document.createElement("div");d.className="quiz-item";d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;quiz.appendChild(d)});
+function updateUI(){document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true}}
+updateUI();
+function showMode(mode){document.getElementById("pcMode").classList.toggle("active",mode==="pc");document.getElementById("phoneMode").classList.toggle("active",mode==="phone")}
+function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===0){score++;a.textContent="Correta! "+q[5]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}});if(!all)return;attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
+function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;startedAt=Date.now();document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;updateUI()}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function saveResult(){if(!completed)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return}let rows="";questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`});const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}</style></head><body><h1>SEMAS — Módulo 2 — Aula 03</h1><h2>Formatando e Transformando em PDF</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. Envie por e-mail, salve no Drive, apague a cópia local e saia das contas.</p></body></html>`;const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");a.href=url;a.download=`SEMAS_Modulo_2_Aula_03_${safe}.html`;a.click();URL.revokeObjectURL(url)}
+function finishSession(){if(!confirm("Encerrar a sessão e limpar esta aula neste navegador?"))return;sessionStorage.removeItem(lessonKey);location.reload()}
+</script>
+</body>
+</html>

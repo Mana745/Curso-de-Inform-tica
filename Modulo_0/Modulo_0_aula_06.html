@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 0 — Aula 06 — Sistemas Operacionais</title>
+<style>
+:root{
+  --bg:#08101d;--card:#111b2e;--card2:#0d1728;--ink:#eef5ff;--muted:#afbdd4;
+  --accent:#69ddff;--accent2:#9dffb7;--warn:#ffd479;--danger:#ff9d9d;--line:#293955;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 15% 0%,#173053 0,transparent 28%),linear-gradient(135deg,#070c16,#0c1628 55%,#0e1d34);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1000px;margin:auto;padding:24px 18px 70px}
+.hero{padding:40px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#23517a,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}
+.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)} h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)}
+.warning{border-left:4px solid var(--warn);background:#251f12}
+.pc{border-left:4px solid var(--accent)}
+.phone{border-left:4px solid #bd9cff}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}
+.slot strong{display:block;color:var(--accent2)}
+.os-compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.bigicon{font-size:2.2rem}
+.steps{counter-reset:step;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.step{counter-increment:step;padding:17px;border:1px solid var(--line);border-radius:15px;background:#0b1526}
+.step:before{content:counter(step);display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#06111a;font-weight:900;margin-bottom:8px}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+.links a:hover{text-decoration:underline;background:#13233a}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}
+button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.mode-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.mode-panel{display:none;margin-top:14px}.mode-panel.active{display:block}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px 11px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}
+.quiz-item label:hover{background:#16243b}
+.answer{margin-top:10px;color:var(--muted)}
+#result{font-size:1.1rem;font-weight:800;margin-top:18px}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}
+footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:720px){main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.os-compare{grid-template-columns:1fr}.mode-buttons{display:grid;grid-template-columns:1fr}button{width:100%;min-height:48px}.quiz-item label{padding:13px 12px}}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+  <div class="kicker">SEMAS • Curso de Informática • Módulo 0 • Aula 06</div>
+  <h1>Sistemas Operacionais: As Casas dos Nossos Programas</h1>
+  <p class="lead">O computador tem peças, mas precisamos de um sistema que organize tudo e permita usar programas, arquivos, teclado, mouse, internet e muito mais. Esse sistema é o <strong>Sistema Operacional</strong>.</p>
+  <p><strong>Desafio da aula:</strong> entender por que Windows e Linux fazem o mesmo tipo de trabalho, mesmo tendo aparência e características diferentes.</p>
+</header>
+
+<section>
+  <h2>1. Roteiro da nossa 1 hora</h2>
+  <div class="timeline-hour">
+    <div class="slot"><strong>5 min</strong>Pergunta inicial</div>
+    <div class="slot"><strong>15 min</strong>O que é um SO</div>
+    <div class="slot"><strong>12 min</strong>Windows × Linux</div>
+    <div class="slot"><strong>10 min</strong>Ligar e desligar</div>
+    <div class="slot"><strong>10 min</strong>Criar pastas</div>
+    <div class="slot"><strong>5 min</strong>Quiz</div>
+    <div class="slot"><strong>3 min</strong>Relatório</div>
+  </div>
+</section>
+
+<section>
+  <h2>2. O que você vai aprender</h2>
+  <div class="grid">
+    <div class="card goal"><h3>🖥️ Sistema Operacional</h3><p>Entender como ele faz a ligação entre usuário, programas e hardware.</p></div>
+    <div class="card goal"><h3>🪟 Windows</h3><p>Conhecer o sistema usado nos computadores desta aula e suas áreas principais.</p></div>
+    <div class="card goal"><h3>🐧 Linux</h3><p>Descobrir que existem sistemas abertos e livres, como distribuições Linux.</p></div>
+    <div class="card goal"><h3>📁 Pastas</h3><p>Criar uma pasta na Área de Trabalho e começar a organizar arquivos.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>3. A pergunta que abre a aula</h2>
+  <div class="card">
+    <p>Imagine um computador novo com processador, memória, SSD, teclado e monitor, mas sem nenhum sistema operacional instalado.</p>
+    <p><strong>Como você abriria um navegador, criaria uma pasta ou encontraria seus arquivos?</strong></p>
+  </div>
+</section>
+
+<section>
+  <h2>4. O que é um Sistema Operacional?</h2>
+  <p>O Sistema Operacional, ou <strong>SO</strong>, é o software principal que organiza recursos do computador e cria um ambiente para que outros programas funcionem.</p>
+  <div class="grid">
+    <div class="card"><div class="bigicon">⌨️🖱️</div><h3>Recebe comandos</h3><p>Ajuda a interpretar ações do teclado, mouse, tela sensível ao toque e outros dispositivos.</p></div>
+    <div class="card"><div class="bigicon">📁</div><h3>Organiza arquivos</h3><p>Permite criar, abrir, copiar, mover, renomear e apagar arquivos e pastas.</p></div>
+    <div class="card"><div class="bigicon">🧩</div><h3>Executa programas</h3><p>Navegadores, editores, jogos e outros aplicativos usam os serviços do sistema operacional.</p></div>
+    <div class="card"><div class="bigicon">⚙️</div><h3>Controla hardware</h3><p>Gerencia recursos como armazenamento, memória, rede, impressoras e outros dispositivos.</p></div>
+  </div>
+  <div class="card warning" style="margin-top:14px">
+    <h3>Uma comparação útil</h3>
+    <p>Podemos imaginar o sistema operacional como a <strong>casa onde os programas vivem</strong> ou a “roupa” que o computador veste para que possamos usá-lo. É uma comparação didática: tecnicamente, ele é um conjunto de softwares que gerencia o sistema.</p>
+  </div>
+</section>
+
+<section>
+  <h2>5. Windows e Linux</h2>
+  <div class="os-compare">
+    <div class="card">
+      <div class="bigicon">🪟</div>
+      <h3>Windows</h3>
+      <p>É uma família de sistemas operacionais da Microsoft e é muito comum em computadores pessoais, escolas e empresas.</p>
+      <p>Tem elementos como <strong>Área de Trabalho</strong>, <strong>Menu Iniciar</strong>, <strong>Barra de Tarefas</strong> e <strong>Explorador de Arquivos</strong>.</p>
+    </div>
+    <div class="card">
+      <div class="bigicon">🐧</div>
+      <h3>Linux</h3>
+      <p>Linux é o núcleo usado por várias distribuições. Uma delas é o <strong>Ubuntu</strong>, um sistema operacional de código aberto para PCs e notebooks.</p>
+      <p>Existem diferentes distribuições Linux, com interfaces e objetivos distintos. Muitas podem ser usadas gratuitamente.</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3>Quem é melhor?</h3>
+    <p>Essa não é a pergunta principal desta aula. Sistemas diferentes servem a necessidades diferentes. O importante agora é perceber que <strong>um computador pode funcionar com sistemas operacionais diferentes</strong>.</p>
+  </div>
+</section>
+
+<section>
+  <h2>6. Ligando e desligando do jeito certo</h2>
+  <div class="steps">
+    <div class="step"><h3>Ligar</h3><p>Pressione o botão de energia uma vez e espere o sistema iniciar.</p></div>
+    <div class="step"><h3>Entrar</h3><p>Espere a Área de Trabalho aparecer e o sistema terminar de carregar.</p></div>
+    <div class="step"><h3>Usar</h3><p>Abra programas e arquivos normalmente.</p></div>
+    <div class="step"><h3>Salvar</h3><p>Antes de sair, salve seus trabalhos e feche o que estiver usando.</p></div>
+    <div class="step"><h3>Desligar</h3><p>No Windows: <strong>Iniciar → Ligar/Desligar → Desligar</strong>.</p></div>
+    <div class="step"><h3>Esperar</h3><p>Espere o computador terminar o desligamento antes de desligar filtros de linha ou retirar energia.</p></div>
+  </div>
+
+  <div class="card warning" style="margin-top:14px">
+    <h3>Por que não arrancar da tomada?</h3>
+    <p>O sistema pode estar salvando arquivos, finalizando programas ou realizando outras operações. O desligamento correto permite que ele encerre essas tarefas de forma organizada.</p>
+  </div>
+</section>
+
+<section>
+  <h2>7. Área de Trabalho: nossa primeira organização</h2>
+  <p>Agora vem a parte prática. Vamos criar uma pasta para entender como o sistema organiza informações.</p>
+
+  <div class="steps">
+    <div class="step"><h3>Vá para a Área de Trabalho</h3><p>Minimize as janelas abertas até enxergar o fundo da Área de Trabalho.</p></div>
+    <div class="step"><h3>Clique com botão direito</h3><p>Escolha uma área vazia, sem clicar em um ícone existente.</p></div>
+    <div class="step"><h3>Escolha “Novo”</h3><p>No menu que aparecer, procure a opção <strong>Novo</strong>.</p></div>
+    <div class="step"><h3>Escolha “Pasta”</h3><p>O Windows criará uma nova pasta aguardando um nome.</p></div>
+    <div class="step"><h3>Dê um nome</h3><p>Digite <strong>Curso SEMAS</strong> e pressione Enter.</p></div>
+    <div class="step"><h3>Abra</h3><p>Dê dois cliques na pasta e observe que ela está vazia: acabamos de criar um espaço para organizar arquivos.</p></div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3>Atalho de teclado para explorar depois</h3>
+    <p><strong>Windows + E</strong> abre o Explorador de Arquivos, onde você pode navegar por pastas e unidades.</p>
+  </div>
+</section>
+
+<section>
+  <h2>8. Atividade prática</h2>
+  <div class="mode-buttons">
+    <button onclick="showMode('pc')">🏫 Estou na SEMAS</button>
+    <button class="secondary" onclick="showMode('phone')">📱 Estou acompanhando pelo celular</button>
+  </div>
+
+  <div id="pcMode" class="mode-panel">
+    <div class="card pc">
+      <h3>🏫 No laboratório</h3>
+      <ol>
+        <li>Identifique Área de Trabalho, Menu Iniciar e Barra de Tarefas.</li>
+        <li>Crie a pasta <strong>Curso SEMAS</strong> na Área de Trabalho.</li>
+        <li>Abra a pasta e volte para a Área de Trabalho.</li>
+        <li>No final da aula, apague a pasta criada se o professor orientar, mantendo o PC limpo para a próxima turma.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div id="phoneMode" class="mode-panel">
+    <div class="card phone">
+      <h3>📱 Pelo celular</h3>
+      <ol>
+        <li>Observe que Android e iPhone também possuem um sistema operacional.</li>
+        <li>Abra o aplicativo de arquivos do aparelho, se souber onde está, apenas para observar como pastas e arquivos são organizados.</li>
+        <li>Não apague nem mova nada que você não conheça.</li>
+        <li>Revise a sequência para criar uma pasta no Windows e faça a prática quando retornar à SEMAS.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>9. Pesquise depois — links úteis</h2>
+  <div class="links">
+    <a href="https://support.microsoft.com/pt-br/windows/" target="_blank" rel="noopener">🔎 Microsoft — Ajuda e aprendizado do Windows</a>
+    <a href="https://support.microsoft.com/pt-br/windows/desligar-desativar-seu-computador-893fd089-c851-71c7-af3e-63e159681b21" target="_blank" rel="noopener">🔎 Microsoft — Como desligar corretamente o computador</a>
+    <a href="https://support.microsoft.com/pt-br/office/criar-uma-nova-pasta-cbbfb6f5-59dd-4e5d-95f6-a12577952e17" target="_blank" rel="noopener">🔎 Microsoft — Como criar uma nova pasta</a>
+    <a href="https://ubuntu.com/desktop" target="_blank" rel="noopener">🔎 Ubuntu — Conheça um sistema operacional Linux de código aberto</a>
+  </div>
+  <p class="notice">O conteúdo principal da aula não depende desses links. Eles servem para continuar pesquisando depois.</p>
+</section>
+
+<section>
+  <h2>10. Quiz de descoberta</h2>
+  <p>Não existe nota mínima. O quiz serve para revisar.</p>
+  <div id="quiz"></div>
+
+  <button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+  <button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+  <div id="result"></div>
+
+  <div class="savebox">
+    <h3>Salvar meu registro da aula</h3>
+    <input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+    <button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+    <button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+    <p class="notice">Na SEMAS: envie por e-mail, salve no Drive, apague o arquivo local e encerre a sessão.</p>
+  </div>
+</section>
+
+<section>
+  <h2>11. Missão final</h2>
+  <div class="card">
+    <ol>
+      <li>Explique com suas palavras o que faz um sistema operacional.</li>
+      <li>Diga uma diferença que você percebeu entre Windows e Linux.</li>
+      <li>Mostre como criar uma pasta na Área de Trabalho.</li>
+    </ol>
+    <p><strong>Regra da turma:</strong> organizar arquivos é uma habilidade básica que vamos usar durante todo o curso.</p>
+  </div>
+</section>
+
+<footer>
+  <p>SEMAS • Curso de Informática • Módulo 0 — Aula 06</p>
+  <p>Sistemas Operacionais: As Casas dos Nossos Programas</p>
+</footer>
+
+</main>
+
+<script>
+const lessonKey="semas_mod0_aula06_attempt";
+const questions=[
+["Qual é a função principal de um sistema operacional?","Organizar recursos do computador e permitir que programas e usuário trabalhem com o hardware","Guardar energia da tomada","Substituir o processador","Servir apenas para acessar a internet","O sistema operacional gerencia recursos e cria o ambiente em que os programas funcionam."],
+["Qual destes é um sistema operacional?","Windows","HD","Teclado","Pen drive","Windows é uma família de sistemas operacionais."],
+["Ubuntu é um exemplo de quê?","Uma distribuição Linux de código aberto","Um tipo de SSD","Uma fonte de alimentação","Um navegador obrigatório","Ubuntu é um sistema operacional baseado em Linux e de código aberto."],
+["Qual elemento ajuda a encontrar programas e opções no Windows?","Menu Iniciar","Cabo USB","Cooler","Fonte de alimentação","O Menu Iniciar reúne acesso a aplicativos, configurações e opções de energia."],
+["Qual é a forma correta de desligar o Windows?","Usar Iniciar → Ligar/Desligar → Desligar","Arrancar o cabo da tomada","Segurar qualquer tecla","Fechar apenas o monitor","O desligamento pelo sistema permite que programas e arquivos sejam encerrados corretamente."],
+["Por que não devemos desligar o PC cortando a energia sem necessidade?","Porque o sistema pode estar salvando dados e finalizando tarefas","Porque a tela perde a cor","Porque o mouse descarrega","Porque o teclado fica lento","Interromper a energia pode interromper operações que ainda estavam em andamento."],
+["O que é uma pasta?","Um local usado para organizar arquivos e outras pastas","Um tipo de processador","Uma tomada de energia","Um programa antivírus","Pastas ajudam a organizar informações no sistema de arquivos."],
+["Qual sequência pode criar uma pasta na Área de Trabalho?","Botão direito em área vazia → Novo → Pasta","Desligar → Reiniciar → USB","Abrir navegador → Fechar → Imprimir","Ctrl+Alt+Delete → Monitor → Fonte","No Windows, o menu de contexto da Área de Trabalho permite criar uma nova pasta."]
+];
+
+let attempt=Number(sessionStorage.getItem(lessonKey)||0);
+let completed=false,lastScore=null,startedAt=Date.now(),finishedAt=null,currentMode="não informado";
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{
+  const d=document.createElement("div");d.className="quiz-item";
+  d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;
+  quiz.appendChild(d);
+});
+function formatTime(ms){const s=Math.max(0,Math.round(ms/1000)),m=Math.floor(s/60),sec=s%60;return `${m}min ${String(sec).padStart(2,"0")}s`;}
+function showMode(mode){currentMode=mode==="pc"?"SEMAS — computador":"Casa/fora da SEMAS — celular";document.getElementById("pcMode").classList.toggle("active",mode==="pc");document.getElementById("phoneMode").classList.toggle("active",mode==="phone");}
+function updateUI(){const r=document.getElementById("result");if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true;if(!completed)r.innerHTML="<strong>Duas tentativas foram usadas nesta sessão.</strong><br>Em uma nova sessão, o quiz começa novamente.";}else if(!completed){r.innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;}}
+updateUI();
+function checkQuiz(){
+  if(attempt>=2)return;let score=0,all=true,wrong=[];
+  questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return;}if(+s.value===0){score++;a.textContent="Correta! "+q[5];}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5];}});
+  if(!all){document.getElementById("result").innerHTML="<strong>Responda todas as perguntas antes de finalizar.</strong>";return;}
+  attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;finishedAt=Date.now();
+  document.getElementById("result").innerHTML=`<strong>Resultado da tentativa ${attempt}: ${score} de ${questions.length}.</strong><br>Tempo: ${formatTime(finishedAt-startedAt)}.<br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas as questões foram respondidas corretamente."}<br><span style="color:var(--muted)">Não existe nota mínima: o objetivo é aprender e praticar.</span>`;
+  document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true);updateUI();
+}
+function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false;});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;startedAt=Date.now();finishedAt=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;document.getElementById("result").innerHTML=`Tentativa ${attempt+1} disponível.`;}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+function saveResult(){
+  if(!completed||lastScore===null)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return;}
+  const now=new Date();let rows="",wrong=[];
+  questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;if(n!==0)wrong.push(i+1);rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;});
+  const report=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SEMAS - Aula 06 - ${esc(name)}</title><style>body{font-family:Arial,sans-serif;max-width:950px;margin:30px auto;padding:18px;color:#172033;line-height:1.5}h1{color:#123b55}.meta{padding:18px;background:#f1f5f8;border-radius:10px}table{border-collapse:collapse;width:100%;margin-top:15px}th,td{border:1px solid #ccd3dc;padding:8px;text-align:left;vertical-align:top}th{background:#eaf2f7}.note{padding:14px;background:#fff8df;border-radius:8px}</style></head><body><h1>SEMAS — Módulo 0 — Aula 06</h1><h2>Sistemas Operacionais</h2><div class="meta"><strong>Aluno:</strong> ${esc(name)}<br><strong>Data e hora:</strong> ${now.toLocaleString("pt-BR")}<br><strong>Modo:</strong> ${esc(currentMode)}<br><strong>Tentativa:</strong> ${attempt} de 2<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Tempo:</strong> ${formatTime(finishedAt-startedAt)}</div><p class="note"><strong>Não existe nota mínima.</strong> Este relatório registra uma atividade de aprendizagem.</p><p><strong>Questões para revisar:</strong> ${wrong.length?wrong.join(", "):"nenhuma"}.</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Envie por e-mail ao professor, salve no Drive e apague o arquivo local do computador compartilhado.</p></body></html>`;
+  const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
+  a.href=url;a.download=`SEMAS_Modulo_0_Aula_06_${safe}_Tentativa_${attempt}.html`;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+}
+function finishSession(){
+  if(!confirm("Encerrar a sessão e limpar respostas desta aula neste navegador?"))return;
+  sessionStorage.removeItem(lessonKey);document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false;});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");document.getElementById("studentName").value="";document.getElementById("saveBtn").disabled=true;document.getElementById("checkBtn").disabled=false;attempt=0;completed=false;lastScore=null;startedAt=Date.now();finishedAt=null;currentMode="não informado";document.getElementById("pcMode").classList.remove("active");document.getElementById("phoneMode").classList.remove("active");document.getElementById("result").innerHTML="Sessão encerrada. Este navegador está pronto para o próximo aluno.";window.scrollTo({top:0,behavior:"smooth"});
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 0 — Aula 03 — De Onde Veio o Computador?</title>
+<style>
+:root{
+  --bg:#08101d;--card:#111b2e;--card2:#0d1728;--ink:#eef5ff;--muted:#afbdd4;
+  --accent:#69ddff;--accent2:#9dffb7;--warn:#ffd479;--danger:#ff9d9d;--line:#293955;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:radial-gradient(circle at 15% 0%,#173053 0,transparent 28%),
+             linear-gradient(135deg,#070c16,#0c1628 55%,#0e1d34);
+  color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65
+}
+main{max-width:1000px;margin:auto;padding:24px 18px 70px}
+.hero{
+  padding:40px 28px;border:1px solid var(--line);border-radius:24px;
+  background:radial-gradient(circle at 85% 12%,#23517a,transparent 35%),var(--card);
+  box-shadow:0 20px 50px #0007
+}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}
+.lead{font-size:1.12rem;color:var(--muted);max-width:850px}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent);line-height:1.2}
+h3{color:var(--accent2);line-height:1.25}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)}
+.warning{border-left:4px solid var(--warn);background:#251f12}
+.danger{border-left:4px solid var(--danger);background:#291719}
+.phone{border-left:4px solid #bd9cff}
+.pc{border-left:4px solid var(--accent)}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}
+.slot strong{display:block;color:var(--accent2)}
+.history{position:relative;margin-top:14px;padding-left:26px;border-left:3px solid var(--accent)}
+.event{margin:18px 0 22px}
+.year{font-weight:900;color:var(--warn)}
+.icon{font-size:2rem}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.big-number{font-size:clamp(2rem,7vw,4rem);font-weight:1000;line-height:1;color:var(--accent)}
+.lab-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.rule{padding:16px;border:1px solid var(--line);border-radius:15px;background:#0b1526}
+.links a{
+  display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);
+  border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none
+}
+.links a:hover{text-decoration:underline;background:#13233a}
+button{
+  cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;
+  background:var(--accent);color:#06111a;font-size:1rem
+}
+button.secondary{background:#263650;color:var(--ink)}
+button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.mode-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.mode-panel{display:none;margin-top:14px}
+.mode-panel.active{display:block}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px 11px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}
+.quiz-item label:hover{background:#16243b}
+.answer{margin-top:10px;color:var(--muted)}
+#result{font-size:1.1rem;font-weight:800;margin-top:18px}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input{
+  width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);
+  background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem
+}
+.notice{color:var(--muted);font-size:.93rem}
+.badge{
+  display:inline-block;padding:4px 9px;border-radius:999px;border:1px solid var(--line);
+  color:var(--muted);background:#081321;font-size:.86rem;margin:2px 3px 2px 0
+}
+footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:720px){
+  main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}
+  .compare{grid-template-columns:1fr}.mode-buttons{display:grid;grid-template-columns:1fr}
+  button{width:100%;min-height:48px}.quiz-item label{padding:13px 12px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+  <div class="kicker">SEMAS • Curso de Informática • Módulo 0 • Aula 03</div>
+  <h1>De Onde Veio o Computador?</h1>
+  <p class="lead">Hoje vamos viajar de máquinas enormes, cheias de válvulas e cabos, até computadores que cabem na mochila — e até no bolso. Depois vamos descobrir que computação não serve apenas para escritório e jogos: ela também ajuda na cidade, no campo, na previsão do tempo e na agricultura.</p>
+  <p><strong>Desafio da aula:</strong> perceber uma ideia simples: <em>os computadores mudaram de tamanho e aparência, mas continuam sendo máquinas criadas para ajudar pessoas a resolver problemas.</em></p>
+</header>
+
+<section>
+  <h2>1. Roteiro da nossa 1 hora</h2>
+  <div class="timeline-hour">
+    <div class="slot"><strong>5 min</strong>Pergunta inicial</div>
+    <div class="slot"><strong>15 min</strong>Viagem pela história</div>
+    <div class="slot"><strong>10 min</strong>Do PC ao celular</div>
+    <div class="slot"><strong>10 min</strong>Tecnologia na cidade e no campo</div>
+    <div class="slot"><strong>8 min</strong>Laboratório SEMAS</div>
+    <div class="slot"><strong>7 min</strong>Quiz</div>
+    <div class="slot"><strong>5 min</strong>Relatório e fechamento</div>
+  </div>
+  <p class="notice">Os links de pesquisa ficam para quem quiser continuar explorando depois. Não é necessário abrir todos durante a aula.</p>
+</section>
+
+<section>
+  <h2>2. O que você vai aprender</h2>
+  <div class="grid">
+    <div class="card goal"><h3>🕰️ História</h3><p>Entender como passamos de máquinas gigantes para computadores pessoais e celulares.</p></div>
+    <div class="card goal"><h3>🌱 Tecnologia no campo</h3><p>Descobrir como clima, satélites, sensores, GPS e computadores podem ajudar a agricultura.</p></div>
+    <div class="card goal"><h3>🏙️ Tecnologia na cidade</h3><p>Perceber como computação aparece em hospitais, escolas, bancos, transporte e comunicação.</p></div>
+    <div class="card goal"><h3>🤝 Convivência</h3><p>Conhecer regras simples para que o laboratório da SEMAS funcione bem para todas as turmas.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>3. A pergunta que abre a aula</h2>
+  <div class="card">
+    <p>Hoje você pode segurar um celular com câmera, internet, jogos, mapas e inteligência artificial.</p>
+    <p><strong>Como chegamos até aqui se os primeiros computadores eletrônicos ocupavam salas inteiras?</strong></p>
+    <p class="notice">Não tente decorar datas. Observe o que foi ficando menor, mais rápido, mais barato e mais acessível.</p>
+  </div>
+</section>
+
+<section>
+  <h2>4. Quando uma sala podia ser um computador</h2>
+  <div class="compare">
+    <div class="card">
+      <div class="icon">🏢⚙️</div>
+      <h3>ENIAC — década de 1940</h3>
+      <p>O ENIAC foi um dos primeiros grandes computadores eletrônicos digitais de uso geral. Seu desenvolvimento começou durante a Segunda Guerra Mundial para realizar cálculos de balística.</p>
+      <p>Ele usava cerca de <strong>18 mil válvulas</strong>, ocupava uma grande área e pesava dezenas de toneladas.</p>
+      <p><span class="badge">válvulas</span><span class="badge">cabos</span><span class="badge">painéis</span><span class="badge">muito calor</span></p>
+    </div>
+    <div class="card">
+      <div class="icon">📱</div>
+      <h3>Computador no bolso — hoje</h3>
+      <p>Um smartphone moderno reúne processamento, armazenamento, câmera, sensores, GPS, rede sem fio e acesso à internet em um aparelho pequeno.</p>
+      <p>O mais interessante não é comparar números: é perceber o quanto a tecnologia conseguiu <strong>miniaturizar</strong> componentes.</p>
+      <p><span class="badge">chips</span><span class="badge">bateria</span><span class="badge">internet</span><span class="badge">sensores</span></p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>5. A grande viagem: do ENIAC ao celular</h2>
+  <div class="history">
+    <div class="event">
+      <span class="year">1940–1950</span>
+      <h3>🔥 Válvulas</h3>
+      <p>Os primeiros computadores eletrônicos usavam milhares de válvulas. Elas ocupavam espaço, consumiam muita energia e produziam bastante calor.</p>
+    </div>
+    <div class="event">
+      <span class="year">A partir do fim dos anos 1940</span>
+      <h3>🔹 Transistor</h3>
+      <p>O transistor abriu caminho para equipamentos menores, mais confiáveis e com menor consumo que os sistemas baseados em grandes quantidades de válvulas.</p>
+    </div>
+    <div class="event">
+      <span class="year">Décadas de 1950 e 1960</span>
+      <h3>🧩 Circuitos integrados</h3>
+      <p>Muitos componentes puderam ser reunidos em pequenas pastilhas de material semicondutor. A eletrônica começou a encolher rapidamente.</p>
+    </div>
+    <div class="event">
+      <span class="year">Década de 1970</span>
+      <h3>🧠 Microprocessadores</h3>
+      <p>Funções centrais de processamento passaram a caber em um único circuito integrado. Isso ajudou a tornar possível a expansão dos computadores pessoais.</p>
+    </div>
+    <div class="event">
+      <span class="year">1981</span>
+      <h3>🖥️ IBM PC</h3>
+      <p>O IBM PC 5150 tornou-se um marco importante da computação pessoal e ajudou a popularizar um padrão de computador que influenciaria muitas máquinas posteriores.</p>
+    </div>
+    <div class="event">
+      <span class="year">1990–2000</span>
+      <h3>🌐 Internet para mais pessoas</h3>
+      <p>Computadores pessoais conectados passaram a mudar a maneira de pesquisar, conversar, trabalhar, estudar e compartilhar informação.</p>
+    </div>
+    <div class="event">
+      <span class="year">2000–hoje</span>
+      <h3>📱☁️🤖 Celulares, nuvem e IA</h3>
+      <p>Hoje a computação está espalhada por celulares, carros, máquinas agrícolas, satélites, hospitais, escolas, bancos, casas e muitos outros lugares.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>6. Uma curiosidade: o “bug” que virou história</h2>
+  <div class="card">
+    <p>Em 1947, uma mariposa ficou presa em um componente do computador Harvard Mark II. O inseto foi colocado no diário de trabalho da equipe.</p>
+    <p>O episódio ajudou a tornar famosa a história de um <strong>“bug”</strong> real em uma máquina. Mas a palavra “bug” já era usada antes para descrever problemas técnicos.</p>
+    <p><strong>Debug</strong>, hoje, é uma palavra comum na programação para a atividade de procurar e corrigir erros.</p>
+  </div>
+</section>
+
+<section>
+  <h2>7. Computador não é só “coisa da cidade”</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="icon">🌦️</div>
+      <h3>Clima e previsão do tempo</h3>
+      <p>Computadores analisam dados de estações meteorológicas, radares e satélites. Essas informações ajudam a acompanhar chuva, temperatura, vento e outros fenômenos.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🛰️</div>
+      <h3>Satélites</h3>
+      <p>Imagens de satélite permitem observar grandes áreas e apoiar estudos sobre vegetação, queimadas, clima, rios e uso da terra.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🌱📡</div>
+      <h3>Sensores no campo</h3>
+      <p>Sensores podem medir características do solo, ambiente e clima. Com os dados, produtores e técnicos podem tomar decisões mais informadas.</p>
+    </div>
+    <div class="card">
+      <div class="icon">💧</div>
+      <h3>Irrigação</h3>
+      <p>Tecnologia pode ajudar a acompanhar solo, clima e necessidade de água, evitando decisões feitas apenas “no olho”.</p>
+    </div>
+    <div class="card">
+      <div class="icon">📍</div>
+      <h3>GPS</h3>
+      <p>GPS não serve apenas para encontrar ruas. Ele também pode apoiar mapeamento de áreas, máquinas e atividades de agricultura de precisão.</p>
+    </div>
+    <div class="card">
+      <div class="icon">📱🧑‍🌾</div>
+      <h3>Informação na mão</h3>
+      <p>Um celular conectado pode dar acesso a previsão do tempo, preços, orientação técnica, mapas, comunicação e serviços públicos mesmo longe dos grandes centros.</p>
+    </div>
+  </div>
+
+  <div class="card warning" style="margin-top:14px">
+    <h3>💡 Pense nisso</h3>
+    <p>Um jovem que vive na zona rural pode trabalhar com agricultura e, ao mesmo tempo, estudar programação, redes, eletrônica, geoprocessamento, automação ou engenharia. Tecnologia e campo não são mundos separados.</p>
+  </div>
+</section>
+
+<section>
+  <h2>8. E na cidade, onde a computação aparece?</h2>
+  <div class="grid">
+    <div class="card"><h3>🏥 Saúde</h3><p>Prontuários, exames, equipamentos médicos e sistemas de atendimento.</p></div>
+    <div class="card"><h3>🏫 Educação</h3><p>Pesquisa, aulas, bibliotecas digitais, produção de trabalhos e comunicação.</p></div>
+    <div class="card"><h3>🚌 Transporte</h3><p>Mapas, bilhetagem, localização e planejamento de rotas.</p></div>
+    <div class="card"><h3>🏦 Bancos</h3><p>Pagamentos, caixas eletrônicos, aplicativos e sistemas de segurança.</p></div>
+    <div class="card"><h3>🏪 Comércio</h3><p>Estoque, vendas, pagamentos, notas e divulgação.</p></div>
+    <div class="card"><h3>🏛️ Serviços públicos</h3><p>Cadastros, documentos, atendimento, comunicação e administração.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>9. Nosso laboratório da SEMAS</h2>
+  <p>Os computadores são compartilhados por várias turmas. Por isso, aprender informática também significa aprender a cuidar do espaço coletivo.</p>
+
+  <div class="lab-grid">
+    <div class="rule"><div class="icon">🧼</div><h3>1. Mãos limpas</h3><p>Evite comer ou beber sobre teclado, mouse e computador.</p></div>
+    <div class="rule"><div class="icon">🔌</div><h3>2. Cabos não são brinquedo</h3><p>Não puxe, troque ou desconecte cabos sem orientação do professor.</p></div>
+    <div class="rule"><div class="icon">🖥️</div><h3>3. Não altere o PC</h3><p>Não instale programas, não mude configurações importantes e não apague arquivos do sistema.</p></div>
+    <div class="rule"><div class="icon">🔐</div><h3>4. Proteja sua conta</h3><p>Não compartilhe senha. Ao terminar, saia do Gmail, Drive e outros serviços usados na aula.</p></div>
+    <div class="rule"><div class="icon">🗑️</div><h3>5. PC limpo</h3><p>Envie seu relatório, salve no Drive e apague seu arquivo pessoal do computador compartilhado.</p></div>
+    <div class="rule"><div class="icon">🤝</div><h3>6. Respeito</h3><p>Não mexa no trabalho do colega, não faça brincadeiras com contas alheias e peça ajuda quando precisar.</p></div>
+    <div class="rule"><div class="icon">🪑</div><h3>7. Cuide do posto</h3><p>Deixe cadeira, teclado e mouse organizados para a próxima pessoa.</p></div>
+    <div class="rule"><div class="icon">🙋</div><h3>8. Algo estranho?</h3><p>Se o computador travar, aparecer mensagem desconhecida ou houver equipamento danificado, chame o professor.</p></div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3>Regra principal do laboratório</h3>
+    <p><strong>Deixe o computador tão limpo e organizado quanto você gostaria de encontrá-lo.</strong></p>
+  </div>
+</section>
+
+<section>
+  <h2>10. Atividade rápida: tecnologia ao meu redor</h2>
+  <p>Escolha onde você está acompanhando a aula.</p>
+
+  <div class="mode-buttons">
+    <button onclick="showMode('pc')">🏫 Estou na SEMAS</button>
+    <button class="secondary" onclick="showMode('phone')">📱 Estou acompanhando pelo celular</button>
+  </div>
+
+  <div id="pcMode" class="mode-panel">
+    <div class="card pc">
+      <h3>🏫 No laboratório</h3>
+      <ol>
+        <li>Observe o computador à sua frente.</li>
+        <li>Liste mentalmente três diferenças entre ele e um celular.</li>
+        <li>Agora identifique três coisas que os dois conseguem fazer.</li>
+        <li>Escolha uma regra do laboratório que você considera mais importante e explique o motivo para um colega.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div id="phoneMode" class="mode-panel">
+    <div class="card phone">
+      <h3>📱 Pelo celular</h3>
+      <ol>
+        <li>Olhe para seu celular e imagine quantas máquinas antigas seriam necessárias para fazer tarefas que hoje estão num único aparelho.</li>
+        <li>Escolha uma tecnologia útil para sua comunidade: previsão do tempo, GPS, comunicação, agricultura, estudo ou outra.</li>
+        <li>Escreva em uma frase como ela pode ajudar alguém no seu dia a dia.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>11. Pesquise depois — em português</h2>
+  <p>Você não precisa abrir estes links durante a aula. Eles ficam disponíveis para quem quiser continuar pesquisando.</p>
+  <div class="links">
+    <a href="https://www.ibm.com/br-pt/about" target="_blank" rel="noopener">🔎 IBM Brasil — História da IBM e do IBM PC</a>
+    <a href="https://www.embrapa.br/agricultura-digital" target="_blank" rel="noopener">🔎 Embrapa — Agricultura Digital</a>
+    <a href="https://www.embrapa.br/tema-automacao-e-agricultura-de-precisao/perguntas-e-respostas" target="_blank" rel="noopener">🔎 Embrapa — Perguntas e respostas sobre automação e agricultura de precisão</a>
+    <a href="https://portal.inmet.gov.br/" target="_blank" rel="noopener">🔎 INMET — Previsão, clima, satélites e dados meteorológicos</a>
+    <a href="https://www.gov.br/inpe/pt-br" target="_blank" rel="noopener">🔎 INPE — Satélites, observação da Terra e previsão numérica</a>
+  </div>
+</section>
+
+<section>
+  <h2>12. Quiz de descoberta</h2>
+  <p>Não existe nota mínima. O quiz serve para descobrir o que ficou claro e o que vale pesquisar mais.</p>
+  <div id="quiz"></div>
+
+  <button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+  <button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+  <div id="result"></div>
+
+  <div class="savebox">
+    <h3>Salvar meu registro da aula</h3>
+    <p class="notice">O relatório é criado localmente no navegador. Nenhum resultado é enviado automaticamente.</p>
+    <input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+    <button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+    <button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+    <p class="notice"><strong>Na SEMAS:</strong> envie o relatório por e-mail, salve uma cópia no Drive, apague o arquivo do computador e encerre a sessão.</p>
+  </div>
+</section>
+
+<section>
+  <h2>13. Missão final</h2>
+  <div class="card">
+    <p>Escolha uma das perguntas e responda com suas próprias palavras:</p>
+    <ol>
+      <li>Qual mudança da história dos computadores mais chamou sua atenção?</li>
+      <li>Como um computador ou celular pode ajudar alguém que vive ou trabalha no campo?</li>
+      <li>Por que as regras do laboratório existem se o computador “não é nosso”?</li>
+      <li>Que profissão ligada à tecnologia você gostaria de conhecer melhor?</li>
+    </ol>
+    <p><strong>Regra da turma:</strong> não existe pergunta boba. Existe pergunta que ainda não foi respondida.</p>
+  </div>
+</section>
+
+<footer>
+  <p>SEMAS • Curso de Informática • Módulo 0 — Primeiros Passos e a Eletricidade no Nosso Dia a Dia • Aula 03</p>
+  <p>Material didático para uso no computador ou celular. Links externos são complementares.</p>
+</footer>
+
+</main>
+
+<script>
+const lessonKey="semas_mod0_aula03_attempt";
+const questions=[
+  [
+    "O que mais chama atenção ao comparar o ENIAC com um celular atual?",
+    "A enorme redução de tamanho e a integração de muitas funções em aparelhos pequenos",
+    "Os dois usam exatamente as mesmas peças",
+    "O ENIAC cabia no bolso",
+    "Celulares não são computadores",
+    "A evolução da eletrônica permitiu miniaturizar componentes e reunir muitas funções em dispositivos pequenos."
+  ],
+  [
+    "Por que as válvulas eram uma limitação nos primeiros computadores?",
+    "Ocupavam espaço, consumiam muita energia e produziam calor",
+    "Funcionavam sem eletricidade",
+    "Eram menores que os chips atuais",
+    "Serviam apenas para armazenar fotos",
+    "Computadores com muitas válvulas exigiam espaço, energia, refrigeração e manutenção."
+  ],
+  [
+    "Qual tecnologia ajudou a tornar os computadores menores e mais confiáveis do que os sistemas baseados em válvulas?",
+    "O transistor",
+    "A tomada residencial",
+    "O teclado",
+    "O papel",
+    "O transistor foi uma das grandes mudanças que permitiram reduzir tamanho e consumo dos equipamentos eletrônicos."
+  ],
+  [
+    "Por que o IBM PC de 1981 é lembrado na história da computação?",
+    "Porque ajudou a popularizar a computação pessoal e influenciou um padrão de PCs",
+    "Porque foi o primeiro celular do mundo",
+    "Porque criou a internet",
+    "Porque era maior que o ENIAC",
+    "O IBM PC tornou-se um marco da expansão dos computadores pessoais."
+  ],
+  [
+    "Qual destes é um exemplo real de computação ajudando no campo?",
+    "Usar sensores, GPS, dados meteorológicos e imagens de satélite para apoiar decisões",
+    "Substituir toda atividade agrícola por jogos",
+    "Desligar a previsão do tempo",
+    "Evitar qualquer tipo de informação",
+    "Agricultura digital utiliza dados, sensores, conectividade, localização e outras tecnologias para apoiar o trabalho rural."
+  ],
+  [
+    "Por que a previsão do tempo pode ser importante para quem trabalha no campo?",
+    "Porque chuva, temperatura e outros fatores podem influenciar decisões de produção",
+    "Porque muda a senha do Wi-Fi",
+    "Porque transforma o computador em trator",
+    "Porque elimina todas as incertezas",
+    "Informações meteorológicas ajudam no planejamento, embora nunca eliminem toda a incerteza."
+  ],
+  [
+    "Qual atitude combina com as regras do laboratório da SEMAS?",
+    "Sair das contas, salvar o trabalho no Drive e apagar arquivos pessoais do PC compartilhado",
+    "Deixar o Gmail aberto para o próximo aluno",
+    "Instalar qualquer programa sem avisar",
+    "Mexer nos arquivos do colega",
+    "O laboratório é compartilhado. Privacidade, organização e respeito protegem todos os alunos."
+  ],
+  [
+    "Se aparecer uma mensagem estranha ou o computador apresentar problema, o que o aluno deve fazer?",
+    "Chamar o professor e explicar o que aconteceu",
+    "Desmontar o computador",
+    "Puxar todos os cabos",
+    "Apagar pastas do sistema",
+    "Pedir ajuda evita que um problema pequeno vire um problema maior."
+  ]
+];
+
+let attempt=Number(sessionStorage.getItem(lessonKey)||0);
+let completed=false,lastScore=null,startedAt=Date.now(),finishedAt=null,currentMode="não informado";
+const quiz=document.getElementById("quiz");
+
+questions.forEach((q,i)=>{
+  const d=document.createElement("div");d.className="quiz-item";
+  d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
+    q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+
+    `<div class="answer" id="a${i}"></div>`;
+  quiz.appendChild(d);
+});
+
+function formatTime(ms){
+  const s=Math.max(0,Math.round(ms/1000)),m=Math.floor(s/60),sec=s%60;
+  return `${m}min ${String(sec).padStart(2,"0")}s`;
+}
+
+function showMode(mode){
+  currentMode=mode==="pc"?"SEMAS — computador":"Casa/fora da SEMAS — celular";
+  document.getElementById("pcMode").classList.toggle("active",mode==="pc");
+  document.getElementById("phoneMode").classList.toggle("active",mode==="phone");
+}
+
+function updateUI(){
+  const r=document.getElementById("result");
+  if(attempt>=2){
+    document.getElementById("checkBtn").disabled=true;
+    document.getElementById("retryBtn").disabled=true;
+    if(!completed)r.innerHTML="<strong>Duas tentativas foram usadas nesta sessão.</strong><br>Você pode continuar pesquisando. Em uma nova sessão, o quiz começa novamente.";
+  }else if(!completed){
+    r.innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;
+  }
+}
+updateUI();
+
+function checkQuiz(){
+  if(attempt>=2)return;
+  let score=0,all=true,wrong=[];
+
+  questions.forEach((q,i)=>{
+    const s=document.querySelector(`input[name="q${i}"]:checked`);
+    const a=document.getElementById("a"+i);
+    if(!s){all=false;a.textContent="Responda esta questão antes de finalizar.";return;}
+    if(+s.value===0){score++;a.textContent="Correta! "+q[5];}
+    else{wrong.push(i+1);a.textContent="Vale pesquisar mais: "+q[5];}
+  });
+
+  if(!all){
+    document.getElementById("result").innerHTML="<strong>Responda todas as perguntas antes de finalizar.</strong>";
+    return;
+  }
+
+  attempt++;sessionStorage.setItem(lessonKey,attempt);
+  completed=true;lastScore=score;finishedAt=Date.now();
+
+  const msg=score===questions.length
+    ?"Você acertou todas. Agora tente contar a história com suas próprias palavras."
+    :score>=6
+    ?"Você entendeu boa parte da viagem. As questões indicadas mostram onde ainda há coisas interessantes para descobrir."
+    :"O quiz mostrou pontos para explorar novamente. Não existe nota mínima nesta atividade.";
+
+  document.getElementById("result").innerHTML=
+    `<strong>Resultado da tentativa ${attempt}: ${score} de ${questions.length}.</strong><br>`+
+    `Tempo: ${formatTime(finishedAt-startedAt)}.<br>`+
+    `${wrong.length?`Questões para explorar novamente: ${wrong.join(", ")}.`:"Todas as questões foram respondidas corretamente."}<br>`+
+    `<span style="color:var(--muted)">${msg}</span>`;
+
+  document.getElementById("saveBtn").disabled=false;
+  document.getElementById("checkBtn").disabled=true;
+  document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true);
+  updateUI();
+}
+
+function retryQuiz(){
+  if(attempt>=2 || !completed)return;
+  document.querySelectorAll('#quiz input[type="radio"]').forEach(x=>{x.checked=false;x.disabled=false;});
+  questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");
+  completed=false;lastScore=null;startedAt=Date.now();finishedAt=null;
+  document.getElementById("checkBtn").disabled=false;
+  document.getElementById("saveBtn").disabled=true;
+  document.getElementById("result").innerHTML=`Tentativa ${attempt+1} disponível. Revise ou pesquise antes de responder novamente.`;
+}
+
+function esc(s){
+  return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+}
+
+function saveResult(){
+  if(!completed || lastScore===null)return;
+  const name=document.getElementById("studentName").value.trim();
+  if(!name){alert("Digite seu nome completo antes de baixar o relatório.");return;}
+
+  const now=new Date();let rows="",wrong=[];
+  questions.forEach((q,i)=>{
+    const s=document.querySelector(`input[name="q${i}"]:checked`);
+    const n=s?+s.value:-1;
+    if(n!==0)wrong.push(i+1);
+    rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;
+  });
+
+  const report=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SEMAS - Módulo 0 Aula 03 - ${esc(name)}</title>
+  <style>
+  body{font-family:Arial,sans-serif;max-width:950px;margin:30px auto;padding:18px;color:#172033;line-height:1.5}
+  h1{color:#123b55}.meta{padding:18px;background:#f1f5f8;border-radius:10px;margin-bottom:20px}
+  table{border-collapse:collapse;width:100%;margin-top:15px}th,td{border:1px solid #ccd3dc;padding:8px;text-align:left;vertical-align:top}
+  th{background:#eaf2f7}.note{padding:14px;background:#fff8df;border-radius:8px}
+  </style></head><body>
+  <h1>SEMAS — Módulo 0 — Aula 03</h1>
+  <h2>De Onde Veio o Computador?</h2>
+  <div class="meta">
+  <strong>Aluno:</strong> ${esc(name)}<br>
+  <strong>Data e hora:</strong> ${now.toLocaleString("pt-BR")}<br>
+  <strong>Modo informado:</strong> ${esc(currentMode)}<br>
+  <strong>Tentativa nesta sessão:</strong> ${attempt} de 2<br>
+  <strong>Resultado:</strong> ${lastScore}/${questions.length}<br>
+  <strong>Tempo de realização:</strong> ${formatTime(finishedAt-startedAt)}
+  </div>
+  <h2>Registro de aprendizagem</h2>
+  <p><strong>Questões para explorar novamente:</strong> ${wrong.length?wrong.join(", "):"nenhuma"}.</p>
+  <p class="note"><strong>Importante:</strong> não existe nota mínima. Este relatório registra uma atividade de aprendizagem e não mede isoladamente a capacidade do aluno.</p>
+  <h2>Respostas</h2>
+  <table><tr><th>#</th><th>Pergunta</th><th>Resposta marcada</th><th>Resultado</th></tr>${rows}</table>
+  <h2>Próximo passo</h2>
+  <p>Envie este relatório por e-mail ao professor, salve uma cópia no Google Drive e, se estiver em um computador compartilhado da SEMAS, apague o arquivo local depois do envio.</p>
+  </body></html>`;
+
+  const blob=new Blob([report],{type:"text/html;charset=utf-8"});
+  const url=URL.createObjectURL(blob),a=document.createElement("a");
+  const safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
+  a.href=url;a.download=`SEMAS_Modulo_0_Aula_03_${safe}_Tentativa_${attempt}.html`;
+  document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+}
+
+function finishSession(){
+  const ok=confirm("Use este botão depois de enviar/salvar seu relatório. Encerrar apagará deste navegador o contador desta aula e limpará as respostas. Continuar?");
+  if(!ok)return;
+  sessionStorage.removeItem(lessonKey);
+  document.querySelectorAll('#quiz input[type="radio"]').forEach(x=>{x.checked=false;x.disabled=false;});
+  questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");
+  document.getElementById("studentName").value="";
+  document.getElementById("saveBtn").disabled=true;
+  document.getElementById("checkBtn").disabled=false;
+  attempt=0;completed=false;lastScore=null;startedAt=Date.now();finishedAt=null;currentMode="não informado";
+  document.getElementById("pcMode").classList.remove("active");
+  document.getElementById("phoneMode").classList.remove("active");
+  document.getElementById("result").innerHTML="Sessão encerrada. Este navegador está pronto para o próximo aluno.";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+</script>
+</body>
+</html>

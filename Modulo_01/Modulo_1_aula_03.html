@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 1 — Aula 03 — Roteadores e Aparelhos de Rede</title>
+<style>
+:root{
+  --bg:#08101d;--card:#111b2e;--card2:#0d1728;--ink:#eef5ff;--muted:#afbdd4;
+  --accent:#69ddff;--accent2:#9dffb7;--warn:#ffd479;--danger:#ff9d9d;--line:#293955;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 15% 0%,#173053 0,transparent 28%),linear-gradient(135deg,#070c16,#0c1628 55%,#0e1d34);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1000px;margin:auto;padding:24px 18px 70px}
+.hero{padding:40px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#23517a,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}
+.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)} h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)} .warning{border-left:4px solid var(--warn);background:#251f12}
+.danger{border-left:4px solid var(--danger);background:#291719}.pc{border-left:4px solid var(--accent)}.phone{border-left:4px solid #bd9cff}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.diagram{border:1px solid var(--line);border-radius:18px;padding:14px;background:#081321}
+svg{max-width:100%;height:auto;display:block;margin:auto}
+.compare{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.command{font-family:Consolas,monospace;padding:4px 8px;border-radius:8px;background:#07101e;color:#ffd479}
+.terminal{font-family:Consolas,monospace;background:#050a11;border:1px solid #263650;border-radius:14px;padding:16px;color:#d8f6df;overflow:auto}
+.prompt{color:#69ddff}.cmd{color:#ffd479}.out{color:#d8f6df}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+.links a:hover{text-decoration:underline;background:#13233a}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.mode-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.mode-panel{display:none;margin-top:14px}.mode-panel.active{display:block}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px 11px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.quiz-item label:hover{background:#16243b}
+.answer{margin-top:10px;color:var(--muted)}#result{font-size:1.1rem;font-weight:800;margin-top:18px}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:720px){main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.compare{grid-template-columns:1fr}.mode-buttons{display:grid;grid-template-columns:1fr}button{width:100%;min-height:48px}.quiz-item label{padding:13px 12px}}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 1 • Aula 03</div>
+<h1>Roteadores e Aparelhos de Rede</h1>
+<p class="lead">Hoje vamos conhecer os aparelhos que fazem uma rede funcionar: o <strong>roteador</strong>, os <strong>pontos de acesso/antenas</strong> e o <strong>switch</strong>. A ideia é entender quem faz o quê, sem confundir Wi‑Fi com internet.</p>
+<p><strong>Desafio da aula:</strong> conseguir olhar para uma rede simples e explicar qual aparelho encaminha a rede, qual espalha o Wi‑Fi e qual conecta vários equipamentos por cabo.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>5 min</strong>Pergunta inicial</div>
+<div class="slot"><strong>15 min</strong>Roteador</div>
+<div class="slot"><strong>10 min</strong>Antena / Access Point</div>
+<div class="slot"><strong>12 min</strong>Switch</div>
+<div class="slot"><strong>10 min</strong>Etiqueta + gateway</div>
+<div class="slot"><strong>5 min</strong>Quiz</div>
+<div class="slot"><strong>3 min</strong>Relatório</div>
+</div>
+</section>
+
+<section>
+<h2>2. O que você vai aprender</h2>
+<div class="grid">
+<div class="card goal"><h3>📡 Roteador</h3><p>Entender que ele encaminha tráfego entre redes e, em muitos modelos domésticos, também oferece Wi‑Fi.</p></div>
+<div class="card goal"><h3>📶 Access Point</h3><p>Diferenciar o equipamento que fornece acesso sem fio da função de roteamento.</p></div>
+<div class="card goal"><h3>🔀 Switch</h3><p>Conhecer o aparelho que conecta vários dispositivos por cabo na mesma rede local.</p></div>
+<div class="card goal"><h3>🏠 Gateway</h3><p>Aprender a descobrir pelo computador o endereço do roteador/gateway local.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. A pergunta que abre a aula</h2>
+<div class="card">
+<p>Se desligarmos a antena de Wi‑Fi, a internet “some”? E se desligarmos o roteador? E o switch?</p>
+<p><strong>Esses aparelhos fazem a mesma coisa?</strong></p>
+</div>
+</section>
+
+<section>
+<h2>4. O que é o roteador?</h2>
+<p>O roteador conecta redes diferentes e decide para onde encaminhar os dados. Em casas e pequenos escritórios, é comum que o mesmo aparelho também tenha Wi‑Fi, portas de rede e outras funções.</p>
+
+<div class="diagram">
+<svg viewBox="0 0 820 390" role="img" aria-label="Diagrama didático de roteador conectando internet e rede local">
+  <rect x="40" y="120" width="175" height="110" rx="18" fill="#0b1526" stroke="#69ddff" stroke-width="4"/>
+  <text x="128" y="165" fill="#69ddff" text-anchor="middle" font-size="28">Internet</text>
+  <text x="128" y="198" fill="#afbdd4" text-anchor="middle" font-size="18">rede do provedor</text>
+
+  <line x1="215" y1="175" x2="310" y2="175" stroke="#ffd479" stroke-width="6"/>
+  <polygon points="310,175 286,160 286,190" fill="#ffd479"/>
+
+  <rect x="320" y="90" width="190" height="170" rx="22" fill="#172638" stroke="#ffd479" stroke-width="5"/>
+  <text x="415" y="150" fill="#ffd479" text-anchor="middle" font-size="31" font-weight="700">ROTEADOR</text>
+  <text x="415" y="193" fill="#9dffb7" text-anchor="middle" font-size="18">encaminha entre redes</text>
+  <text x="415" y="222" fill="#afbdd4" text-anchor="middle" font-size="16">pode também oferecer Wi‑Fi</text>
+
+  <line x1="510" y1="135" x2="610" y2="85" stroke="#9dffb7" stroke-width="5"/>
+  <line x1="510" y1="175" x2="610" y2="175" stroke="#9dffb7" stroke-width="5"/>
+  <line x1="510" y1="215" x2="610" y2="265" stroke="#9dffb7" stroke-width="5"/>
+
+  <rect x="620" y="45" width="155" height="80" rx="14" fill="#0b1526" stroke="#9dffb7" stroke-width="3"/>
+  <text x="698" y="93" fill="#9dffb7" text-anchor="middle" font-size="21">Wi‑Fi / AP</text>
+
+  <rect x="620" y="140" width="155" height="80" rx="14" fill="#0b1526" stroke="#9dffb7" stroke-width="3"/>
+  <text x="698" y="188" fill="#9dffb7" text-anchor="middle" font-size="21">Switch</text>
+
+  <rect x="620" y="235" width="155" height="80" rx="14" fill="#0b1526" stroke="#9dffb7" stroke-width="3"/>
+  <text x="698" y="283" fill="#9dffb7" text-anchor="middle" font-size="21">PCs / rede local</text>
+</svg>
+</div>
+
+<div class="card warning" style="margin-top:14px">
+<h3>Wi‑Fi não é sinônimo de roteador</h3>
+<p>Muitos roteadores domésticos possuem Wi‑Fi integrado, por isso parecem a mesma coisa. Mas roteamento e acesso sem fio são funções diferentes.</p>
+</div>
+</section>
+
+<section>
+<h2>5. E a “antena”? Conhecendo o Access Point</h2>
+<div class="compare">
+<div class="card">
+<h3>📡 Roteador</h3>
+<p>Encaminha tráfego entre redes e normalmente participa da saída da rede local para outras redes.</p>
+</div>
+<div class="card">
+<h3>📶 Access Point</h3>
+<p>Oferece acesso sem fio para que celulares, notebooks e outros dispositivos entrem na rede.</p>
+</div>
+<div class="card">
+<h3>🗼 Antena</h3>
+<p>A antena é a parte física que transmite/recebe sinais de rádio. Em equipamentos de rede, ela pode estar dentro ou fora do aparelho.</p>
+</div>
+</div>
+
+<div class="card warning" style="margin-top:14px">
+<h3>Na prática, os nomes se misturam</h3>
+<p>Muita gente chama todo equipamento Wi‑Fi de “roteador” ou “antena”. Nesta aula vamos aprender a olhar a <strong>função</strong> que o aparelho está exercendo.</p>
+</div>
+</section>
+
+<section>
+<h2>6. O que é um switch?</h2>
+<p>O switch conecta vários dispositivos dentro da mesma rede local, como computadores, impressoras e pontos de acesso. Ele permite que esses equipamentos troquem dados pela rede. citeturn585300search7</p>
+
+<div class="grid">
+<div class="card"><h3>🖥️ PC 1</h3><p>Cabo de rede conectado ao switch.</p></div>
+<div class="card"><h3>🖥️ PC 2</h3><p>Outro cabo, mesma rede local.</p></div>
+<div class="card"><h3>📶 Access Point</h3><p>Pode receber rede por cabo do switch.</p></div>
+<div class="card"><h3>🖨️ Impressora</h3><p>Também pode participar da rede.</p></div>
+</div>
+
+<div class="card" style="margin-top:14px">
+<h3>Switch “divide internet”?</h3>
+<p>Essa frase ajuda no começo, mas tecnicamente o switch <strong>conecta dispositivos na rede local</strong>. Se essa rede tiver acesso à internet pelo roteador, os aparelhos conectados ao switch também podem usar esse acesso.</p>
+</div>
+
+<div class="card warning" style="margin-top:14px">
+<h3>Switch simples × switch gerenciável</h3>
+<p>Um switch simples pode funcionar praticamente “ligou e conectou”. Switches gerenciáveis possuem recursos de configuração, VLANs e administração. Nesta aula vamos ficar apenas no conceito básico.</p>
+</div>
+</section>
+
+<section>
+<h2>7. Onde fica a senha e o endereço do roteador?</h2>
+<p>Muitos roteadores trazem uma etiqueta na parte inferior ou traseira. Dependendo do modelo, ela pode mostrar:</p>
+<div class="grid">
+<div class="card"><h3>📛 Nome da rede</h3><p>SSID padrão do Wi‑Fi.</p></div>
+<div class="card"><h3>🔑 Senha padrão</h3><p>Alguns aparelhos imprimem a senha Wi‑Fi original na etiqueta.</p></div>
+<div class="card"><h3>🌐 Endereço de acesso</h3><p>Pode aparecer um endereço como um IP local ou um nome do fabricante para acessar a página de gerenciamento.</p></div>
+<div class="card"><h3>🏷️ Modelo</h3><p>Modelo, número de série, MAC e outras informações podem aparecer.</p></div>
+</div>
+
+<div class="card warning" style="margin-top:14px">
+<h3>A etiqueta mostra sempre a senha atual?</h3>
+<p><strong>Não.</strong> A senha pode ter sido alterada depois da instalação. Alguns modelos nem imprimem uma senha Wi‑Fi pronta. Fabricantes como Mercusys mostram SSID e senha padrão em determinados modelos, mas isso varia. citeturn585300search2turn585300search13</p>
+</div>
+</section>
+
+<section>
+<h2>8. Descobrindo o endereço do roteador pelo computador</h2>
+<p>No Windows, use o comando que já aprendemos:</p>
+
+<div class="terminal">
+<span class="prompt">C:\Users\Aluno&gt;</span> <span class="cmd">ipconfig</span><br><br>
+<span class="out">Endereço IPv4. . . . . . . . . : 192.168.1.23</span><br>
+<span class="out">Gateway Padrão. . . . . . . . : 192.168.1.1</span>
+</div>
+
+<p>O <strong>Gateway Padrão</strong> normalmente indica o equipamento usado pelo computador para alcançar outras redes — em uma rede simples, geralmente o roteador local. O `ipconfig` mostra IPv4, máscara e gateway padrão. citeturn585300search8</p>
+
+<div class="card warning" style="margin-top:14px">
+<h3>Não decore 192.168.0.1 ou 192.168.1.1</h3>
+<p>Esses endereços são comuns, mas não são universais. A TP‑Link, por exemplo, usa diferentes endereços padrão conforme a linha do produto. O correto é <strong>consultar o gateway da rede ou a documentação/etiqueta do equipamento</strong>. citeturn585300search0</p>
+</div>
+</section>
+
+<section>
+<h2>9. Atividade prática: Quem faz o quê?</h2>
+<div class="mode-buttons">
+<button onclick="showMode('pc')">🏫 Estou na SEMAS</button>
+<button class="secondary" onclick="showMode('phone')">📱 Estou acompanhando pelo celular</button>
+</div>
+
+<div id="pcMode" class="mode-panel">
+<div class="card pc">
+<h3>🏫 No laboratório</h3>
+<ol>
+<li>Observe, sem desconectar nada, o roteador, switch ou access point que o professor mostrar.</li>
+<li>Conte quantas portas de rede você consegue identificar no switch.</li>
+<li>Observe a etiqueta de um equipamento de demonstração e procure modelo, SSID, endereço de acesso ou MAC.</li>
+<li>No computador, execute <span class="command">ipconfig</span>.</li>
+<li>Localize o <strong>Gateway Padrão</strong>.</li>
+<li>Explique para um colega: roteador, access point e switch fazem a mesma coisa? Por quê?</li>
+</ol>
+</div>
+</div>
+
+<div id="phoneMode" class="mode-panel">
+<div class="card phone">
+<h3>📱 Pelo celular</h3>
+<ol>
+<li>Observe o roteador ou equipamento Wi‑Fi da sua casa apenas por fora.</li>
+<li>Procure uma etiqueta sem alterar nada.</li>
+<li>Veja se ela mostra nome da rede, modelo ou endereço de gerenciamento.</li>
+<li>Não compartilhe em foto nenhuma senha, número de série ou dado da rede.</li>
+<li>Revise no material a diferença entre roteador, access point e switch.</li>
+</ol>
+</div>
+</div>
+</section>
+
+<section>
+<h2>10. Segurança de rede</h2>
+<div class="grid">
+<div class="card danger"><h3>🚫 Não aperte RESET</h3><p>O botão RESET pode apagar configurações do roteador. Não pressione durante uma atividade de observação.</p></div>
+<div class="card danger"><h3>🔐 Não compartilhe senha</h3><p>A senha do Wi‑Fi e a senha de administração do roteador são informações privadas.</p></div>
+<div class="card danger"><h3>🔌 Não desconecte cabos</h3><p>No laboratório, não remova cabos de rede sem orientação do professor.</p></div>
+<div class="card danger"><h3>⚙️ Não altere configurações</h3><p>Conhecer o endereço do roteador não significa ter autorização para entrar e mudar a configuração.</p></div>
+</div>
+</section>
+
+<section>
+<h2>11. Pesquise depois — links em português</h2>
+<div class="links">
+<a href="https://www.cisco.com/c/pt_br/solutions/small-business/resource-center/networking/network-switch-how.html" target="_blank" rel="noopener">🔎 Cisco — Como funciona um switch de rede?</a>
+<a href="https://www.tp-link.com/br/support/faq/2392/" target="_blank" rel="noopener">🔎 TP‑Link Brasil — Como encontrar o IP LAN do roteador</a>
+<a href="https://www.mercusys.com.br/faq-123/" target="_blank" rel="noopener">🔎 Mercusys Brasil — SSID, senha e configuração de roteador</a>
+<a href="https://learn.microsoft.com/pt-br/windows-server/administration/windows-commands/ipconfig" target="_blank" rel="noopener">🔎 Microsoft Learn — ipconfig e Gateway Padrão</a>
+</div>
+</section>
+
+<section>
+<h2>12. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é conseguir diferenciar os aparelhos da rede.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+
+<div class="savebox">
+<h3>Salvar meu registro da aula</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+<p class="notice">Na SEMAS: envie por e-mail, salve no Drive, apague o arquivo local e encerre a sessão.</p>
+</div>
+</section>
+
+<section>
+<h2>13. Missão final</h2>
+<div class="card">
+<ol>
+<li>Explique a diferença entre roteador e access point.</li>
+<li>Explique para que serve um switch.</li>
+<li>Mostre como descobrir o Gateway Padrão usando <span class="command">ipconfig</span>.</li>
+</ol>
+<p><strong>Regra da turma:</strong> em redes, não basta saber o nome do aparelho — precisamos entender a função que ele está exercendo.</p>
+</div>
+</section>
+
+<footer>
+<p>SEMAS • Curso de Informática • Módulo 1 — Aula 03</p>
+<p>Roteadores e Aparelhos de Rede</p>
+</footer>
+
+</main>
+
+<script>
+const lessonKey="semas_mod1_aula03_attempt";
+const questions=[
+["Qual é uma função principal do roteador?","Encaminhar dados entre redes","Servir apenas como antena","Guardar arquivos dos alunos","Substituir o monitor","O roteador encaminha tráfego entre redes e pode oferecer outras funções no mesmo aparelho."],
+["Todo roteador precisa oferecer Wi-Fi?","Não","Sim, obrigatoriamente","Somente no laboratório","Somente se tiver switch","Roteamento e Wi-Fi são funções diferentes, mesmo quando aparecem no mesmo aparelho."],
+["O que faz um access point?","Permite que dispositivos entrem na rede por conexão sem fio","Substitui o SSD","Armazena vídeos","Fornece energia ao PC","Um access point oferece acesso sem fio à rede."],
+["O que é um switch?","Um equipamento que conecta vários dispositivos dentro da mesma rede local","Uma antena de satélite","Um antivírus","Uma fonte de alimentação","Switches conectam computadores, access points, impressoras e outros dispositivos em uma LAN."],
+["Por que dizer que o switch 'divide a internet' é apenas uma simplificação?","Porque ele conecta dispositivos à rede local; o acesso à internet depende do roteador e da rede","Porque switch só funciona sem internet","Porque switch é um tipo de Wi-Fi","Porque ele guarda a senha da rede","O switch conecta dispositivos localmente; se essa LAN tem saída para internet, eles compartilham esse acesso."],
+["A etiqueta do roteador sempre mostra a senha atual do Wi-Fi?","Não","Sim, sempre","Somente em roteadores novos","Somente em redes públicas","A etiqueta pode mostrar dados padrão de fábrica, que podem ter sido alterados."],
+["Qual informação do ipconfig ajuda a encontrar o roteador numa rede simples?","Gateway Padrão","Nome do usuário","Memória física","Versão do Windows","O Gateway Padrão geralmente aponta para o equipamento usado para sair da rede local."],
+["O que o aluno deve fazer ao encontrar o botão RESET do roteador?","Não pressionar sem autorização","Pressionar para testar","Segurar por 10 segundos","Usar sempre antes de entrar no Wi-Fi","RESET pode apagar configurações do equipamento."]
+];
+
+let attempt=Number(sessionStorage.getItem(lessonKey)||0);
+let completed=false,lastScore=null,startedAt=Date.now(),finishedAt=null,currentMode="não informado";
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{const d=document.createElement("div");d.className="quiz-item";d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;quiz.appendChild(d);});
+function formatTime(ms){const s=Math.max(0,Math.round(ms/1000)),m=Math.floor(s/60),sec=s%60;return `${m}min ${String(sec).padStart(2,"0")}s`;}
+function showMode(mode){currentMode=mode==="pc"?"SEMAS — computador":"Casa/fora da SEMAS — celular";document.getElementById("pcMode").classList.toggle("active",mode==="pc");document.getElementById("phoneMode").classList.toggle("active",mode==="phone");}
+function updateUI(){const r=document.getElementById("result");if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true;if(!completed)r.innerHTML="<strong>Duas tentativas foram usadas nesta sessão.</strong><br>Em uma nova sessão, o quiz começa novamente.";}else if(!completed){r.innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;}}
+updateUI();
+function checkQuiz(){
+ if(attempt>=2)return;let score=0,all=true,wrong=[];
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return;}if(+s.value===0){score++;a.textContent="Correta! "+q[5];}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5];}});
+ if(!all){document.getElementById("result").innerHTML="<strong>Responda todas as perguntas antes de finalizar.</strong>";return;}
+ attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;finishedAt=Date.now();
+ document.getElementById("result").innerHTML=`<strong>Resultado da tentativa ${attempt}: ${score} de ${questions.length}.</strong><br>Tempo: ${formatTime(finishedAt-startedAt)}.<br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas as questões foram respondidas corretamente."}<br><span style="color:var(--muted)">Não existe nota mínima: o objetivo é entender o papel de cada equipamento.</span>`;
+ document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true);updateUI();
+}
+function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false;});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;startedAt=Date.now();finishedAt=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;document.getElementById("result").innerHTML=`Tentativa ${attempt+1} disponível.`;}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+function saveResult(){
+ if(!completed||lastScore===null)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return;}
+ const now=new Date();let rows="",wrong=[];
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;if(n!==0)wrong.push(i+1);rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;});
+ const report=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SEMAS - Módulo 1 Aula 03 - ${esc(name)}</title><style>body{font-family:Arial,sans-serif;max-width:950px;margin:30px auto;padding:18px;color:#172033;line-height:1.5}h1{color:#123b55}.meta{padding:18px;background:#f1f5f8;border-radius:10px}table{border-collapse:collapse;width:100%;margin-top:15px}th,td{border:1px solid #ccd3dc;padding:8px;text-align:left;vertical-align:top}th{background:#eaf2f7}.note{padding:14px;background:#fff8df;border-radius:8px}</style></head><body><h1>SEMAS — Módulo 1 — Aula 03</h1><h2>Roteadores e Aparelhos de Rede</h2><div class="meta"><strong>Aluno:</strong> ${esc(name)}<br><strong>Data e hora:</strong> ${now.toLocaleString("pt-BR")}<br><strong>Modo:</strong> ${esc(currentMode)}<br><strong>Tentativa:</strong> ${attempt} de 2<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Tempo:</strong> ${formatTime(finishedAt-startedAt)}</div><p class="note"><strong>Não existe nota mínima.</strong> Este relatório registra uma atividade de aprendizagem.</p><p><strong>Questões para revisar:</strong> ${wrong.length?wrong.join(", "):"nenhuma"}.</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Envie por e-mail ao professor, salve no Drive e apague o arquivo local do computador compartilhado.</p></body></html>`;
+ const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
+ a.href=url;a.download=`SEMAS_Modulo_1_Aula_03_${safe}_Tentativa_${attempt}.html`;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+}
+function finishSession(){
+ if(!confirm("Encerrar a sessão e limpar respostas desta aula neste navegador?"))return;
+ sessionStorage.removeItem(lessonKey);document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false;});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");document.getElementById("studentName").value="";document.getElementById("saveBtn").disabled=true;document.getElementById("checkBtn").disabled=false;attempt=0;completed=false;lastScore=null;startedAt=Date.now();finishedAt=null;currentMode="não informado";document.getElementById("pcMode").classList.remove("active");document.getElementById("phoneMode").classList.remove("active");document.getElementById("result").innerHTML="Sessão encerrada. Este navegador está pronto para o próximo aluno.";window.scrollTo({top:0,behavior:"smooth"});
+}
+</script>
+</body>
+</html>

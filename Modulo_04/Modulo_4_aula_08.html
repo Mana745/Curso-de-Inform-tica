@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 4 — Aula 08 — Projeto Final: Sua Loja Virtual na Internet</title>
+<style>
+:root{
+  --bg:#07101c;--card:#101b2d;--card2:#0b1525;--ink:#eff7ff;--muted:#afbed3;
+  --accent:#74dcff;--accent2:#a5ffb7;--warn:#ffd37b;--danger:#ff9e9e;--line:#2a3a54;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 15% 0%,#18345a 0,transparent 30%),linear-gradient(135deg,#070c15,#0c1628 55%,#102039);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1100px;margin:auto;padding:24px 18px 70px}
+.hero{padding:42px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#245684,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)}h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)}.warning{border-left:4px solid var(--warn);background:#251f12}.danger{border-left:4px solid var(--danger);background:#29171b}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.code{font-family:Consolas,monospace;background:#07101e;color:#ffd479;padding:14px;border-radius:10px;white-space:pre-wrap;overflow:auto}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.good{border-left:4px solid var(--accent2)}.bad{border-left:4px solid var(--danger)}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.step{counter-increment:s;padding:16px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.step:before{content:counter(s);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#07101e;font-weight:900}
+.tag{font-family:Consolas,monospace;background:#07101e;color:#ffd479;padding:3px 7px;border-radius:7px}
+.shop-demo{background:#f7fafc;color:#1d2935;border-radius:18px;overflow:hidden}
+.shop-header{padding:22px;background:#164d3b;color:#fff;text-align:center}
+.shop-header h3{color:#fff;margin:0;font-size:1.55rem}
+.shop-products{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:16px}
+.shop-product{background:white;border-radius:14px;padding:12px;box-shadow:0 5px 16px #0002}
+.shop-pic{height:90px;border-radius:10px;background:linear-gradient(135deg,#ffd673,#91cf79);display:grid;place-items:center;font-size:2.5rem}
+.shop-product h4{margin:.7em 0 .2em;color:#234b38}.shop-product p{font-size:.9rem;color:#566;margin:.2em 0}
+.shop-btn{display:block;text-align:center;margin-top:10px;padding:9px;border-radius:8px;background:#176b4c;color:white;text-decoration:none;font-weight:800}
+.practice-shell{border:1px solid #3b5577;background:#091526;border-radius:18px;padding:18px}
+.progress{height:10px;border-radius:999px;background:#1a2940;overflow:hidden;margin:10px 0 20px}
+.progress>div{height:100%;background:linear-gradient(90deg,#69ddff,#9dffb7);width:0;transition:.25s}
+.practice-card{padding:22px;border:1px solid var(--line);border-radius:16px;background:#0d1728}
+.stepnum{font-size:.92rem;color:var(--muted);text-transform:uppercase;font-weight:800}
+.command{font-size:1.3rem;line-height:1.35;font-weight:900;margin:12px 0}
+.memory{padding:12px 14px;border-left:4px solid var(--accent);background:#0a1425;border-radius:8px;margin:14px 0}
+.practice-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}button:disabled{opacity:.5}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.answer{margin-top:10px;color:var(--muted)}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input,.savebox textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}
+.final-badge{text-align:center;padding:28px;border:1px solid var(--accent);border-radius:20px;background:radial-gradient(circle at center,#173a55,#0b1627)}
+.final-badge strong{font-size:clamp(1.5rem,4vw,2.4rem);color:var(--accent2)}
+footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:780px){.shop-products{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){
+ main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.compare,.shop-products{grid-template-columns:1fr}
+ .practice-actions{display:grid}button{width:100%;min-height:48px}
+}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 4 • Aula 08 • Projeto Final</div>
+<h1>Sua Loja Virtual na Internet</h1>
+<p class="lead">Chegamos ao projeto final. O catálogo regional será revisado e transformado em uma <strong>vitrine digital organizada, responsiva e pronta para apresentar produtos reais da comunidade</strong>.</p>
+<p><strong>Missão:</strong> fazer a página funcionar bem no computador e no celular, revisar todo o código e saber explicar o que ainda seria necessário para transformar a vitrine em uma operação de vendas real.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>5 min</strong>Planejar revisão</div>
+<div class="slot"><strong>8 min</strong>Identidade da loja</div>
+<div class="slot"><strong>10 min</strong>Revisar 12 cards</div>
+<div class="slot"><strong>10 min</strong>Responsividade</div>
+<div class="slot"><strong>8 min</strong>Teste no PC</div>
+<div class="slot"><strong>8 min</strong>Teste no celular</div>
+<div class="slot"><strong>6 min</strong>Vendas reais e segurança</div>
+<div class="slot"><strong>5 min</strong>Fechamento</div>
+</div>
+</section>
+
+<section>
+<h2>2. O que você vai demonstrar</h2>
+<div class="grid">
+<div class="card goal"><h3>🧱 HTML</h3><p>Estrutura clara e organizada.</p></div>
+<div class="card goal"><h3>🎨 CSS</h3><p>Cores, espaços, cards e legibilidade.</p></div>
+<div class="card goal"><h3>🖼️ Conteúdo</h3><p>12 produtos com imagens e informações.</p></div>
+<div class="card goal"><h3>📱 Responsividade</h3><p>Página adaptada a telas menores.</p></div>
+<div class="card goal"><h3>🧪 Teste</h3><p>Revisar links, imagens, botões e textos.</p></div>
+<div class="card goal"><h3>🛡️ Responsabilidade</h3><p>Saber o que falta para vendas reais seguras.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. Catálogo × vitrine de e-commerce</h2>
+<div class="compare">
+<div class="card">
+<h3>📋 Catálogo</h3>
+<p>Mostra produtos e informações de forma organizada.</p>
+</div>
+<div class="card good">
+<h3>🛒 Vitrine de e-commerce</h3>
+<p>Além de apresentar produtos, prepara caminhos claros para interesse, contato ou compra.</p>
+</div>
+</div>
+<div class="card warning">
+<h3>Vitrine não é o mesmo que sistema completo de comércio eletrônico</h3>
+<p>Pagamento, estoque, autenticação, pedidos persistentes, dados de clientes e entrega exigem componentes adicionais. Nosso projeto final é o <strong>front-end da vitrine</strong>.</p>
+</div>
+</section>
+
+<section>
+<h2>4. O que uma vitrine precisa deixar claro?</h2>
+<div class="grid">
+<div class="card"><h3>Quem vende?</h3><p>Nome do negócio, associação, feira ou produtor responsável.</p></div>
+<div class="card"><h3>O que vende?</h3><p>Produtos bem identificados.</p></div>
+<div class="card"><h3>Como é?</h3><p>Foto e descrição verdadeira.</p></div>
+<div class="card"><h3>Quanto custa?</h3><p>Preço real e atualizado, se for exibido.</p></div>
+<div class="card"><h3>Como comprar?</h3><p>Canal oficial de contato ou sistema de pedido.</p></div>
+<div class="card"><h3>Onde atende?</h3><p>Região de entrega/retirada sem expor endereço residencial desnecessariamente.</p></div>
+</div>
+</section>
+
+<section>
+<h2>5. Exemplo visual da loja final</h2>
+<div class="shop-demo">
+<div class="shop-header"><h3>Feira da Nossa Comunidade</h3><div>Produtos locais • informação clara • contato responsável</div></div>
+<div class="shop-products">
+<div class="shop-product"><div class="shop-pic">🍌</div><h4>Produto 1</h4><p>Descrição curta e verdadeira.</p><span class="shop-btn">Tenho interesse</span></div>
+<div class="shop-product"><div class="shop-pic">🌾</div><h4>Produto 2</h4><p>Descrição curta e verdadeira.</p><span class="shop-btn">Tenho interesse</span></div>
+<div class="shop-product"><div class="shop-pic">🍯</div><h4>Produto 3</h4><p>Descrição curta e verdadeira.</p><span class="shop-btn">Tenho interesse</span></div>
+</div>
+</div>
+<p class="notice">A ilustração acima representa a organização visual. Seu projeto terá 12 produtos.</p>
+</section>
+
+<section>
+<h2>6. Dê identidade à loja</h2>
+<div class="code">&lt;header class="topo"&gt;
+  &lt;h1&gt;Feira da Nossa Comunidade&lt;/h1&gt;
+  &lt;p&gt;Produtos da nossa região em uma vitrine digital.&lt;/p&gt;
+&lt;/header&gt;</div>
+<p>Escolha um nome adequado ao projeto. Se for um comércio real, use apenas o nome autorizado pelo responsável.</p>
+</section>
+
+<section>
+<h2>7. Revise os 12 cards</h2>
+<div class="grid">
+<div class="card"><h3>01–12</h3><p>Todos os produtos estão presentes?</p></div>
+<div class="card"><h3>Imagem</h3><p>O arquivo aparece sem erro?</p></div>
+<div class="card"><h3>alt</h3><p>O texto alternativo está adequado?</p></div>
+<div class="card"><h3>Nome</h3><p>Está escrito corretamente?</p></div>
+<div class="card"><h3>Descrição</h3><p>É curta, útil e verdadeira?</p></div>
+<div class="card"><h3>Ação</h3><p>O botão/link tem texto claro?</p></div>
+</div>
+</section>
+
+<section>
+<h2>8. Preço real exige atualização real</h2>
+<div class="compare">
+<div class="card bad">
+<h3>❌ Para evitar</h3>
+<div class="code">R$ 10,00</div>
+<p>Colocar preço inventado apenas para “parecer loja”.</p>
+</div>
+<div class="card good">
+<h3>✅ Opções responsáveis</h3>
+<p>Usar preço fornecido pelo responsável e mantê-lo atualizado, ou escrever <strong>“Consulte o valor”</strong> quando a atividade não tiver dados reais.</p>
+</div>
+</div>
+</section>
+
+<section>
+<h2>9. O que significa responsivo?</h2>
+<p>Design responsivo é construir a página para que ela se adapte a diferentes tamanhos de tela e continue utilizável.</p>
+<div class="card good">
+<h3>Não criamos “um site para PC” e outro “para celular”</h3>
+<p>Podemos usar a mesma estrutura e deixar o CSS reorganizar o conteúdo conforme o espaço disponível.</p>
+</div>
+</section>
+
+<section>
+<h2>10. A meta viewport</h2>
+<p>Confira se o <span class="tag">&lt;head&gt;</span> contém:</p>
+<div class="code">&lt;meta name="viewport"
+      content="width=device-width, initial-scale=1"&gt;</div>
+<p>Isso ajuda o navegador móvel a usar a largura do dispositivo como referência para o layout.</p>
+</section>
+
+<section>
+<h2>11. Imagens que não estouram a tela</h2>
+<div class="code">img {
+  max-width: 100%;
+  height: auto;
+}</div>
+<p>Assim a imagem pode diminuir quando o espaço disponível for menor, mantendo sua proporção.</p>
+</section>
+
+<section>
+<h2>12. Grade flexível dos produtos</h2>
+<div class="code">.catalogo {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}</div>
+<p>O navegador encaixa quantas colunas couberem, respeitando o tamanho mínimo definido para os cards.</p>
+</section>
+
+<section>
+<h2>13. Uma media query simples</h2>
+<div class="code">@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  .topo h1 {
+    font-size: 1.8rem;
+  }
+
+  .produto {
+    padding: 14px;
+  }
+}</div>
+<p>Uma <strong>media query</strong> permite aplicar estilos conforme características da tela/viewport.</p>
+<div class="card warning">
+<h3>Não é “detectar marca de celular”</h3>
+<p>Estamos reagindo ao espaço disponível, não criando regras para um modelo específico de aparelho.</p>
+</div>
+</section>
+
+<section>
+<h2>14. Botões precisam funcionar com toque</h2>
+<div class="code">button,
+.botao-contato {
+  padding: 12px 16px;
+  font-size: 1rem;
+}</div>
+<p>Alvos muito pequenos são ruins no celular. Os controles precisam ser fáceis de tocar e ler.</p>
+</section>
+
+<section>
+<h2>15. Animação também deve respeitar o usuário</h2>
+<p>Se o projeto tiver efeitos, mantenha-os discretos. Uma melhoria opcional é respeitar quem prefere menos movimento:</p>
+<div class="code">@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto;
+    transition: none;
+  }
+}</div>
+<p>É uma introdução à ideia de acessibilidade: nem todo usuário interage com a página da mesma maneira.</p>
+</section>
+
+<section>
+<h2>16. Teste 1 — computador</h2>
+<div class="steps">
+<div class="step"><h3>Abra</h3><p>Carregue o <strong>index.html</strong> no navegador.</p></div>
+<div class="step"><h3>Role</h3><p>Veja os 12 produtos do começo ao fim.</p></div>
+<div class="step"><h3>Clique</h3><p>Teste links e botões.</p></div>
+<div class="step"><h3>Observe</h3><p>Procure imagem quebrada ou texto fora da caixa.</p></div>
+<div class="step"><h3>Corrija</h3><p>Volte ao VS Code, salve e teste novamente.</p></div>
+</div>
+</section>
+
+<section>
+<h2>17. Teste 2 — simular celular no PC</h2>
+<p>Antes mesmo de usar um telefone:</p>
+<div class="code">1. Deixe o navegador em modo janela.
+2. Arraste a lateral para diminuir a largura.
+3. Observe os cards.
+4. Confira se o texto continua legível.
+5. Confira se nada sai da tela.</div>
+<div class="card good">
+<h3>Esse teste já encontra muitos problemas</h3>
+<p>Se os cards se reorganizam em menos colunas conforme a janela diminui, a grade está reagindo ao espaço disponível.</p>
+</div>
+</section>
+
+<section>
+<h2>18. Teste 3 — celular</h2>
+<div class="card warning">
+<h3>Para abrir no celular, o arquivo precisa chegar até ele</h3>
+<p>Um arquivo salvo somente no PC do laboratório não aparece magicamente no telefone. O professor pode disponibilizar a página/arquivo pelo método definido para a turma, ou publicar o projeto quando houver infraestrutura para isso.</p>
+</div>
+<p>No celular, confira:</p>
+<div class="grid">
+<div class="card"><h3>Leitura</h3><p>Precisa dar zoom para ler?</p></div>
+<div class="card"><h3>Largura</h3><p>A página escapa para os lados?</p></div>
+<div class="card"><h3>Imagens</h3><p>Cabem na tela?</p></div>
+<div class="card"><h3>Botões</h3><p>São fáceis de tocar?</p></div>
+</div>
+</section>
+
+<section>
+<h2>19. Vendas reais: qual será o próximo passo?</h2>
+<div class="card warning">
+<h3>Escolha um canal oficial do negócio</h3>
+<p>Uma vitrine real pode direcionar o interessado para um número comercial, e-mail institucional, formulário ou outro canal autorizado pelo responsável pelo negócio.</p>
+</div>
+<div class="card danger">
+<h3>Não use dados pessoais do aluno como contato comercial</h3>
+<p>Telefone, endereço e conta pessoal de criança/adolescente não devem virar contato público da loja. Se o projeto representar um negócio real, o responsável adulto ou a instituição define o canal oficial.</p>
+</div>
+</section>
+
+<section>
+<h2>20. E um formulário de pedido?</h2>
+<p>HTML possui formulários para coletar informações, mas coletar e enviar dados de pessoas exige mais cuidado.</p>
+<div class="code">&lt;form&gt;
+  ...
+&lt;/form&gt;</div>
+<div class="card warning">
+<h3>Não vamos coletar dados reais nesta aula</h3>
+<p>Um formulário de produção precisa ter destino para os dados, validação, segurança, política de privacidade e tratamento responsável das informações. Isso está além do escopo deste curso básico.</p>
+</div>
+</section>
+
+<section>
+<h2>21. E pagamento?</h2>
+<div class="card danger">
+<h3>Não crie campo de cartão “de mentira”</h3>
+<p>Uma página HTML estática não deve pedir número de cartão, senha bancária ou outros dados financeiros. Pagamentos reais devem usar infraestrutura apropriada e segura escolhida pelo responsável pelo negócio.</p>
+</div>
+</section>
+
+<section>
+<h2>22. Checklist para uma vitrine que pode evoluir para uso real</h2>
+<div class="grid">
+<div class="card"><h3>☑ Responsável</h3><p>Quem é dono/gestor da operação?</p></div>
+<div class="card"><h3>☑ Produtos</h3><p>Informações verdadeiras?</p></div>
+<div class="card"><h3>☑ Preços</h3><p>Atualizados?</p></div>
+<div class="card"><h3>☑ Estoque</h3><p>Quem atualiza disponibilidade?</p></div>
+<div class="card"><h3>☑ Contato</h3><p>Canal comercial autorizado?</p></div>
+<div class="card"><h3>☑ Entrega</h3><p>Região e condições definidas?</p></div>
+<div class="card"><h3>☑ Privacidade</h3><p>Coleta mínima e responsável?</p></div>
+<div class="card"><h3>☑ Pagamento</h3><p>Sistema apropriado em vez de campos improvisados?</p></div>
+</div>
+</section>
+
+<section>
+<h2>23. 🧪 Revisão guiada do projeto final</h2>
+<div class="practice-shell">
+<div id="practiceStepLabel" class="stepnum"></div>
+<div class="progress"><div id="practiceProgress"></div></div>
+<div class="practice-card">
+<div id="practiceCommand" class="command"></div>
+<div id="practiceMemory" class="memory"></div>
+<div id="practiceVisual"></div>
+<div class="practice-actions">
+<button id="prevPractice" class="secondary" onclick="practicePrev()">← Voltar um passo</button>
+<button id="nextPractice" onclick="practiceNext()">Consegui — próximo passo →</button>
+</div>
+</div>
+</div>
+</section>
+
+<section>
+<h2>24. Código-base da responsividade</h2>
+<div class="code">* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 16px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.catalogo {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  .topo h1 {
+    font-size: 1.8rem;
+  }
+}</div>
+<p>O aluno pode adaptar cores e detalhes sem apagar a estrutura que já funciona.</p>
+</section>
+
+<section>
+<h2>25. Teste de qualidade — alguém que não criou consegue usar?</h2>
+<div class="steps">
+<div class="step"><h3>Troque de PC</h3><p>Se possível, abra o projeto de um colega.</p></div>
+<div class="step"><h3>Não explique</h3><p>Tente entender a página sozinho.</p></div>
+<div class="step"><h3>Encontre um produto</h3><p>Está fácil?</p></div>
+<div class="step"><h3>Entenda a ação</h3><p>O botão/link diz claramente o que faz?</p></div>
+<div class="step"><h3>Dê uma sugestão</h3><p>Uma melhoria clara, não apenas “ficou bonito”.</p></div>
+</div>
+</section>
+
+<section>
+<h2>26. Entrega do Projeto Final</h2>
+<div class="card goal">
+<h3>O projeto deve conter</h3>
+<ul>
+<li>arquivo principal <strong>index.html</strong>;</li>
+<li>título/identidade da vitrine;</li>
+<li>12 produtos regionais;</li>
+<li>imagens organizadas em pasta;</li>
+<li>texto alternativo nas imagens;</li>
+<li>descrições verdadeiras;</li>
+<li>botões ou links de ação demonstrativos;</li>
+<li>CSS organizado;</li>
+<li>layout que se adapta à largura da tela;</li>
+<li>teste no computador e em largura de celular.</li>
+</ul>
+</div>
+</section>
+
+<section>
+<h2>27. Como entregar</h2>
+<div class="steps">
+<div class="step"><h3>Revise</h3><p>Abra e teste tudo.</p></div>
+<div class="step"><h3>Organize</h3><p>index.html + pasta de imagens.</p></div>
+<div class="step"><h3>Compacte se necessário</h3><p>O professor definirá o formato de entrega da pasta.</p></div>
+<div class="step"><h3>E-mail</h3><p>Envie conforme orientação da turma.</p></div>
+<div class="step"><h3>Drive</h3><p>Guarde sua cópia pessoal quando aplicável.</p></div>
+<div class="step"><h3>Limpeza</h3><p>Remova seus arquivos locais e saia das contas no PC compartilhado.</p></div>
+</div>
+</section>
+
+<section>
+<h2>28. O que você construiu em 8 aulas de HTML Front-End</h2>
+<div class="grid">
+<div class="card"><h3>Aula 01</h3><p>Lógica e algoritmos.</p></div>
+<div class="card"><h3>Aula 02</h3><p>HTML, tags e estrutura.</p></div>
+<div class="card"><h3>Aula 03</h3><p>VS Code e organização.</p></div>
+<div class="card"><h3>Aula 04</h3><p>index.html, h1, p e hr.</p></div>
+<div class="card"><h3>Aula 05</h3><p>Imagens e links.</p></div>
+<div class="card"><h3>Aula 06</h3><p>CSS, cores e caixas.</p></div>
+<div class="card"><h3>Aula 07</h3><p>Catálogo com 12 produtos.</p></div>
+<div class="card"><h3>Aula 08</h3><p>Vitrine responsiva e revisão final.</p></div>
+</div>
+</section>
+
+<section>
+<h2>29. 🏠 Depois do curso — mostre o que você fez</h2>
+<div class="card">
+<p>Quando tiver sua cópia do projeto, mostre para alguém da família no celular e pergunte:</p>
+<ol>
+<li>Você consegue entender o que esta página oferece?</li>
+<li>Consegue encontrar os produtos facilmente?</li>
+<li>O texto está fácil de ler?</li>
+<li>O que você melhoraria?</li>
+</ol>
+<p>Explique que você escreveu o HTML e o CSS que organizam essa página.</p>
+</div>
+</section>
+
+<section>
+<h2>30. Pesquise depois — documentação técnica</h2>
+<div class="links">
+<a href="https://developer.mozilla.org/pt-BR/docs/Learn_web_development/Core/CSS_layout/Responsive_Design" target="_blank" rel="noopener">🔎 MDN — Design responsivo</a>
+<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/name/viewport" target="_blank" rel="noopener">🔎 MDN — Meta viewport</a>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Grid_layout" target="_blank" rel="noopener">🔎 MDN — CSS Grid</a>
+<a href="https://developer.mozilla.org/pt-BR/docs/Web/CSS/Guides/Media_queries/Using" target="_blank" rel="noopener">🔎 MDN — Media queries</a>
+<a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms" target="_blank" rel="noopener">🔎 MDN — Formulários Web</a>
+<a href="https://developer.mozilla.org/en-US/docs/Web/Privacy" target="_blank" rel="noopener">🔎 MDN — Privacidade na Web</a>
+</div>
+</section>
+
+<section>
+<h2>31. Quiz final do módulo</h2>
+<p>Não existe nota mínima. O quiz serve para você conferir se consegue explicar as decisões do próprio projeto.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+
+<div class="savebox">
+<h3>Relatório do Projeto Final</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<textarea id="projectNote" rows="8" placeholder="Escreva: nome da sua vitrine, 3 produtos escolhidos, uma melhoria feita para celular e algo que você aprendeu criando a página."></textarea>
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório final</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+</div>
+</section>
+
+<section>
+<h2>32. Encerramento</h2>
+<div class="final-badge">
+<strong>Você construiu uma página Web.</strong>
+<p>Não foi apenas clicar em botões de um programa pronto. Você organizou um problema, escreveu código, criou conteúdo, testou, encontrou erros, corrigiu e adaptou o resultado para outras telas.</p>
+</div>
+<p style="margin-top:18px"><strong>O próximo passo, para quem quiser continuar, não é “decorar mais tags”. É continuar criando, testando e tentando entender por que cada parte funciona.</strong></p>
+</section>
+
+<footer>
+<p>SEMAS • Curso de Informática • Módulo 4 — Aula 08</p>
+<p>Projeto Final: Sua Loja Virtual na Internet</p>
+</footer>
+
+</main>
+
+<script>
+const lessonKey="semas_mod4_aula08_attempt";
+const practiceKey="semas_mod4_aula08_practice";
+
+const practiceSteps=[
+ {c:"Abra a pasta do projeto e o index.html no VS Code.",m:"Comece pela versão que já possui os 12 produtos.",v:"📁 projeto / 📄 index.html"},
+ {c:"Faça uma cópia de segurança antes da revisão final, conforme orientação do professor.",m:"Se algo der errado, você preserva a versão anterior.",v:"Backup ✓"},
+ {c:"Confira se existe <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">.",m:"Essa configuração é importante para o layout em dispositivos móveis.",v:"viewport ✓"},
+ {c:"Defina ou revise o nome da vitrine no h1.",m:"Use nome fictício ou nome real autorizado.",v:"🏪 Nome da vitrine"},
+ {c:"Leia o texto de apresentação da loja.",m:"Ele deve explicar em uma ou duas frases o que a vitrine mostra.",v:"Apresentação ✓"},
+ {c:"Conte os cards: devem existir 12 produtos.",m:"Não confie apenas na memória. Conte no navegador.",v:"01 02 03 ... 12"},
+ {c:"Revise os nomes dos 12 produtos.",m:"Procure erros de digitação ou produto repetido por acidente.",v:"Nomes ✓"},
+ {c:"Revise as imagens.",m:"Nenhuma deve aparecer quebrada.",v:"Imagens ✓"},
+ {c:"Revise cada atributo alt.",m:"Ele deve comunicar o que importa na imagem.",v:"alt ✓"},
+ {c:"Revise as descrições.",m:"Retire informações inventadas, exageros e textos de exemplo esquecidos.",v:"Descrições ✓"},
+ {c:"Se houver preços, confirme se são dados reais fornecidos pelo responsável.",m:"Se não houver dado confiável, use uma solução orientada pelo professor como 'Consulte o valor'.",v:"Preços ✓"},
+ {c:"Teste todos os botões demonstrativos.",m:"Eles devem responder ao clique sem fingir que um pedido real foi enviado.",v:"Botões ✓"},
+ {c:"Teste todos os links.",m:"Confirme o destino, não apenas se alguma página abriu.",v:"Links ✓"},
+ {c:"No CSS, confira img { max-width: 100%; height: auto; }.",m:"Isso ajuda as imagens a caber em telas estreitas.",v:"Imagens responsivas ✓"},
+ {c:"Confira a regra .catalogo com CSS Grid.",m:"A grade deve se adaptar ao espaço disponível.",v:"Grid ✓"},
+ {c:"Salve tudo com Ctrl + S.",m:"Teste somente a versão salva.",v:"Ctrl + S"},
+ {c:"Abra o projeto no navegador em tela larga.",m:"Percorra a página inteira.",v:"💻 Desktop"},
+ {c:"Reduza lentamente a largura da janela.",m:"Observe quando os cards passam de várias colunas para menos colunas.",v:"↔️ Reduzir largura"},
+ {c:"Procure rolagem horizontal indesejada.",m:"A página não deve escapar para os lados por causa de imagem ou card.",v:"Sem estouro lateral ✓"},
+ {c:"Confira se os botões continuam fáceis de clicar.",m:"Eles não devem ficar minúsculos.",v:"Controles ✓"},
+ {c:"Se o professor disponibilizar o projeto no celular, abra-o no telefone.",m:"Compare leitura, imagens e toque com o teste feito no PC.",v:"📱 Teste real"},
+ {c:"Peça a um colega para usar sua página sem explicação.",m:"Observe onde ele hesita.",v:"Teste com usuário"},
+ {c:"Corrija um problema real encontrado no teste.",m:"Uma melhoria comprovada vale mais que adicionar decoração aleatória.",v:"Correção ✓"},
+ {c:"Faça a revisão final: HTML, CSS, imagens, textos, links e organização de pastas.",m:"Esta é sua versão de entrega.",v:"Revisão final ✓"},
+ {c:"Prática concluída.",m:"Seu catálogo virou uma vitrine responsiva pronta para apresentação e evolução futura.",v:"🎉 Projeto Final"}
+];
+
+let practiceIndex=Number(sessionStorage.getItem(practiceKey)||0);
+if(practiceIndex<0||practiceIndex>=practiceSteps.length)practiceIndex=0;
+
+function renderPractice(){
+ const s=practiceSteps[practiceIndex];
+ document.getElementById("practiceStepLabel").textContent=`Passo ${practiceIndex+1} de ${practiceSteps.length}`;
+ document.getElementById("practiceCommand").textContent=s.c;
+ document.getElementById("practiceMemory").textContent=s.m;
+ document.getElementById("practiceVisual").innerHTML=`<div class="card"><strong>${s.v}</strong></div>`;
+ document.getElementById("practiceProgress").style.width=`${((practiceIndex+1)/practiceSteps.length)*100}%`;
+ document.getElementById("prevPractice").disabled=practiceIndex===0;
+ document.getElementById("nextPractice").textContent=practiceIndex===practiceSteps.length-1?"Projeto Final concluído ✓":"Consegui — próximo passo →";
+}
+function practiceNext(){
+ if(practiceIndex<practiceSteps.length-1){
+  practiceIndex++;
+  sessionStorage.setItem(practiceKey,practiceIndex);
+  renderPractice();
+ } else alert("Parabéns: sua vitrine responsiva foi concluída.");
+}
+function practicePrev(){
+ if(practiceIndex>0){
+  practiceIndex--;
+  sessionStorage.setItem(practiceKey,practiceIndex);
+  renderPractice();
+ }
+}
+renderPractice();
+
+const questions=[
+["O que significa uma página responsiva?","Uma página que se adapta a diferentes tamanhos de tela","Uma página que responde por e-mail sozinha","Uma página com muitas animações","Uma página exclusiva para computador","Responsividade busca manter conteúdo e interface utilizáveis em diferentes larguras de tela."],
+["Para que serve a meta viewport nesta aula?","Ajudar o navegador móvel a usar a largura do dispositivo como referência","Criar os produtos","Fazer pagamento","Salvar imagens","A viewport é parte importante da configuração de páginas móveis."],
+["Por que usamos max-width: 100% nas imagens?","Para ajudar a imagem a não ultrapassar a largura disponível","Para deixar toda imagem gigante","Para apagar o alt","Para criar um botão","Imagens flexíveis ajudam o layout em telas menores."],
+["O que uma media query permite fazer?","Aplicar estilos de acordo com características como largura do viewport","Enviar pedidos para a loja","Criar uma senha","Transformar HTML em aplicativo","Media queries permitem adaptar estilos ao ambiente de exibição."],
+["Nossa página final já é um e-commerce completo?","Não","Sim","Sim, porque tem botões","Sim, porque tem 12 produtos","O projeto é uma vitrine front-end; vendas completas exigem sistemas adicionais."],
+["Devemos coletar cartão e senha bancária em um HTML estático da aula?","Não","Sim","Somente no celular","Somente se o aluno apagar depois","Dados financeiros exigem infraestrutura apropriada e não pertencem a esta atividade."],
+["Se o projeto representar vendas reais, qual contato deve aparecer?","Um canal comercial autorizado pelo responsável pelo negócio","O telefone pessoal de qualquer aluno","O endereço residencial do aluno","Uma senha de e-mail","A operação real deve usar contato responsável e autorizado."],
+["Qual é um bom teste final?","Abrir, reduzir a tela, testar links/botões e pedir para outra pessoa usar","Olhar somente o código","Testar apenas o título","Adicionar mais cores sem verificar","Teste funcional e com diferentes larguras revela problemas reais."]
+];
+
+let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
+const quiz=document.getElementById("quiz");
+
+questions.forEach((q,i)=>{
+ const d=document.createElement("div");
+ d.className="quiz-item";
+ d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
+ q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+
+ `<div class="answer" id="a${i}"></div>`;
+ quiz.appendChild(d);
+});
+
+function updateUI(){
+ document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;
+ if(attempt>=2){
+  document.getElementById("checkBtn").disabled=true;
+  document.getElementById("retryBtn").disabled=true;
+ }
+}
+updateUI();
+
+function checkQuiz(){
+ if(attempt>=2)return;
+ let score=0,all=true,wrong=[];
+ questions.forEach((q,i)=>{
+  const s=document.querySelector(`input[name="q${i}"]:checked`);
+  const a=document.getElementById("a"+i);
+  if(!s){all=false;a.textContent="Responda esta questão.";return}
+  if(+s.value===0){score++;a.textContent="Correta! "+q[5]}
+  else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}
+ });
+ if(!all)return;
+ attempt++;
+ sessionStorage.setItem(lessonKey,attempt);
+ completed=true;
+ lastScore=score;
+ document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;
+ document.getElementById("saveBtn").disabled=false;
+ document.getElementById("checkBtn").disabled=true;
+ document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true);
+}
+
+function retryQuiz(){
+ if(attempt>=2||!completed)return;
+ document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});
+ questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");
+ completed=false;
+ lastScore=null;
+ document.getElementById("checkBtn").disabled=false;
+ document.getElementById("saveBtn").disabled=true;
+ updateUI();
+}
+
+function esc(s){
+ return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+}
+
+function saveResult(){
+ if(!completed)return;
+ const name=document.getElementById("studentName").value.trim();
+ if(!name){alert("Digite seu nome completo.");return}
+ const note=document.getElementById("projectNote").value.trim();
+ let rows="";
+ questions.forEach((q,i)=>{
+  const s=document.querySelector(`input[name="q${i}"]:checked`);
+  const n=s?+s.value:-1;
+  rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;
+ });
+ const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}.note{padding:12px;background:#f2f5f8;border-radius:8px;white-space:pre-wrap}</style></head><body><h1>SEMAS — Projeto Final</h1><h2>Módulo 4 — Aula 08 — Sua Loja Virtual na Internet</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Quiz:</strong> ${lastScore}/${questions.length}<br><strong>Revisão guiada:</strong> passo ${practiceIndex+1}/${practiceSteps.length}</p>${note?`<h3>Reflexão sobre meu projeto</h3><div class="note">${esc(note)}</div>`:""}<table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. Este relatório registra a conclusão e revisão do projeto final.</p></body></html>`;
+ const blob=new Blob([report],{type:"text/html;charset=utf-8"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ const safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
+ a.href=url;
+ a.download=`SEMAS_Projeto_Final_Modulo_4_${safe}.html`;
+ a.click();
+ URL.revokeObjectURL(url);
+}
+
+function finishSession(){
+ if(!confirm("Encerrar a sessão e limpar o progresso desta aula neste navegador?"))return;
+ sessionStorage.removeItem(lessonKey);
+ sessionStorage.removeItem(practiceKey);
+ location.reload();
+}
+</script>
+</body>
+</html>

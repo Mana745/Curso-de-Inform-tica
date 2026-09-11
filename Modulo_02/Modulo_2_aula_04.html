@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 2 — Aula 04 — Textos com Imagens e Atalhos Mágicos</title>
+<style>
+:root{
+  --bg:#08101d;--card:#111b2e;--card2:#0d1728;--ink:#eef5ff;--muted:#afbdd4;
+  --accent:#69ddff;--accent2:#9dffb7;--warn:#ffd479;--danger:#ff9d9d;--line:#293955;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 15% 0%,#173053 0,transparent 28%),linear-gradient(135deg,#070c16,#0c1628 55%,#0e1d34);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1000px;margin:auto;padding:24px 18px 70px}
+.hero{padding:40px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#23517a,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)}h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)}.warning{border-left:4px solid var(--warn);background:#251f12}.pc{border-left:4px solid var(--accent)}.phone{border-left:4px solid #bd9cff}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.poster{background:#fff;color:#1e2430;border-radius:10px;padding:28px;max-width:760px;margin:18px auto;box-shadow:0 14px 35px #0006}
+.poster h2{color:#c63d2b;text-align:center;margin-bottom:8px}
+.poster .heroimg{display:grid;place-items:center;height:180px;border-radius:14px;background:linear-gradient(135deg,#f6d365,#fda085);font-size:5rem;margin:16px 0}
+.poster .center{text-align:center}
+.shortcuts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.keycombo{font-family:Consolas,monospace;font-size:1.3rem;font-weight:900;background:#07101e;color:#ffd479;padding:10px 12px;border-radius:10px;display:inline-block}
+.layout-demo{display:grid;grid-template-columns:170px 1fr;gap:18px;align-items:start;background:#fff;color:#222;padding:18px;border-radius:12px}
+.layout-demo .pic{height:120px;background:linear-gradient(135deg,#7dd3fc,#a7f3d0);border-radius:12px;display:grid;place-items:center;font-size:3rem}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.step{counter-increment:s;padding:16px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.step:before{content:counter(s);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#07101e;font-weight:900}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}button:disabled{opacity:.5}
+.mode-buttons{display:flex;flex-wrap:wrap;gap:10px}.mode-panel{display:none;margin-top:14px}.mode-panel.active{display:block}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.answer{margin-top:10px;color:var(--muted)}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:720px){main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.shortcuts{grid-template-columns:1fr}.layout-demo{grid-template-columns:1fr}.mode-buttons{display:grid;grid-template-columns:1fr}button{width:100%;min-height:48px}}
+</style>
+</head>
+<body>
+<main>
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 2 • Aula 04</div>
+<h1>Textos com Imagens e Atalhos Mágicos</h1>
+<p class="lead">Hoje vamos aprender a misturar <strong>texto e imagem</strong> de forma organizada e conhecer três atalhos que economizam muito tempo: copiar, colar e desfazer.</p>
+<p><strong>Desafio da aula:</strong> criar um cartaz ou aviso para a comunidade que seja fácil de entender em poucos segundos.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>5 min</strong>O que é um cartaz</div>
+<div class="slot"><strong>12 min</strong>Inserir imagem</div>
+<div class="slot"><strong>10 min</strong>Ajustar imagem no texto</div>
+<div class="slot"><strong>10 min</strong>Ctrl+C / V / Z</div>
+<div class="slot"><strong>15 min</strong>Criar cartaz</div>
+<div class="slot"><strong>5 min</strong>Quiz</div>
+<div class="slot"><strong>3 min</strong>Relatório</div>
+</div>
+</section>
+
+<section>
+<h2>2. O que você vai aprender</h2>
+<div class="grid">
+<div class="card goal"><h3>🖼️ Imagem</h3><p>Inserir uma foto ou figura no documento.</p></div>
+<div class="card goal"><h3>↔️ Layout</h3><p>Fazer o texto conviver com a imagem sem ficar bagunçado.</p></div>
+<div class="card goal"><h3>⌨️ Atalhos</h3><p>Usar Ctrl+C, Ctrl+V e Ctrl+Z.</p></div>
+<div class="card goal"><h3>📢 Comunicação</h3><p>Criar um aviso que outra pessoa entenda rapidamente.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. Texto + imagem: para que serve?</h2>
+<div class="poster">
+<h2>FESTA DA COMUNIDADE</h2>
+<div class="heroimg">🎉</div>
+<p class="center"><strong>Sábado • 18h • Quadra Comunitária</strong></p>
+<p class="center">Música, comidas e atividades para as famílias.</p>
+</div>
+<p>Cartazes, avisos e convites combinam palavras e imagens porque precisamos chamar atenção e transmitir informação rapidamente.</p>
+<div class="card warning">
+<h3>Imagem bonita não salva texto confuso</h3>
+<p>Antes da imagem, o leitor precisa entender: <strong>o quê, quando, onde e para quem</strong>.</p>
+</div>
+</section>
+
+<section>
+<h2>4. Como inserir uma imagem no Word</h2>
+<div class="steps">
+<div class="step"><h3>Clique onde quer a imagem</h3><p>Escolha aproximadamente a posição no documento.</p></div>
+<div class="step"><h3>Inserir</h3><p>Abra a guia <strong>Inserir</strong>.</p></div>
+<div class="step"><h3>Imagens</h3><p>Escolha uma imagem do computador ou outra opção autorizada pelo professor.</p></div>
+<div class="step"><h3>Selecione</h3><p>Escolha o arquivo correto e insira.</p></div>
+<div class="step"><h3>Redimensione</h3><p>Arraste uma das alças dos cantos para manter melhor a proporção.</p></div>
+</div>
+<p>A Microsoft orienta selecionar a imagem e usar as alças de canto para redimensioná-la. </p>
+</section>
+
+<section>
+<h2>5. Por que o texto às vezes “bagunça” quando colocamos uma imagem?</h2>
+<p>Uma imagem também ocupa espaço no documento. O Word precisa saber como o texto deve se comportar ao redor dela.</p>
+<div class="layout-demo">
+<div class="pic">🌳</div>
+<div>
+<h3 style="color:#18456f">Aviso de Mutirão</h3>
+<p>Este exemplo mostra uma imagem ao lado do texto. Dependendo da opção de layout, o texto pode ficar embaixo, ao redor ou ao lado da figura.</p>
+<p>O importante é escolher uma disposição que continue fácil de ler.</p>
+</div>
+</div>
+<p>A Microsoft chama esse recurso de <strong>quebra/disposição do texto</strong>. Ao inserir uma imagem, o Word pode inicialmente tratá-la como “Alinhado com o Texto”; depois é possível escolher outras opções de layout. </p>
+</section>
+
+<section>
+<h2>6. Três opções simples para começar</h2>
+<div class="grid">
+<div class="card"><h3>📄 Alinhado com o texto</h3><p>A imagem funciona quase como um caractere grande dentro da linha. É simples e previsível.</p></div>
+<div class="card"><h3>🧱 Quadrado</h3><p>O texto pode contornar a imagem em um formato retangular.</p></div>
+<div class="card"><h3>⬆️ Em cima e embaixo</h3><p>O texto fica acima e abaixo da figura. É ótimo para evitar confusão.</p></div>
+</div>
+<div class="card warning">
+<h3>Na primeira aula, simplicidade vence</h3>
+<p>Se a imagem começar a “fugir” pela página, use <strong>Alinhado com o texto</strong> ou <strong>Em cima e embaixo</strong>. Depois podemos explorar layouts mais livres.</p>
+</div>
+</section>
+
+<section>
+<h2>7. Os três atalhos mágicos</h2>
+<div class="shortcuts">
+<div class="card"><span class="keycombo">Ctrl + C</span><h3>Copiar</h3><p>Guarda uma cópia do conteúdo selecionado na Área de Transferência.</p></div>
+<div class="card"><span class="keycombo">Ctrl + V</span><h3>Colar</h3><p>Insere no local atual aquilo que foi copiado.</p></div>
+<div class="card"><span class="keycombo">Ctrl + Z</span><h3>Desfazer</h3><p>Volta atrás na ação mais recente quando possível.</p></div>
+</div>
+<p>A documentação oficial do Word confirma Ctrl+C para copiar e Ctrl+V para colar; Ctrl+Z é o atalho padrão para desfazer ações em aplicativos do Microsoft 365/Windows. </p>
+</section>
+
+<section>
+<h2>8. Atalhos não são “magia” de verdade</h2>
+<div class="grid">
+<div class="card"><h3>1. Selecionar</h3><p>Primeiro você marca o texto ou objeto.</p></div>
+<div class="card"><h3>2. Copiar</h3><p>Ctrl+C guarda uma cópia temporária.</p></div>
+<div class="card"><h3>3. Posicionar</h3><p>Clique onde quer colocar.</p></div>
+<div class="card"><h3>4. Colar</h3><p>Ctrl+V insere ali.</p></div>
+</div>
+<div class="card warning">
+<h3>Ctrl+Z não é máquina do tempo infinita</h3>
+<p>Ele desfaz ações recentes, mas nem toda ação em todo programa pode ser revertida para sempre. Use como ferramenta de correção, não como substituto de atenção.</p>
+</div>
+</section>
+
+<section>
+<h2>9. Cuidado com imagens da internet</h2>
+<div class="grid">
+<div class="card"><h3>📷 Imagem própria</h3><p>Pode ser usada quando não expõe pessoas ou dados sem autorização.</p></div>
+<div class="card"><h3>🏛️ Fonte oficial</h3><p>Imagens de órgãos públicos ou materiais autorizados podem ser úteis conforme a atividade.</p></div>
+<div class="card"><h3>⚖️ Direito autoral</h3><p>Nem toda imagem encontrada no Google está livre para copiar e publicar.</p></div>
+<div class="card"><h3>👶 Privacidade</h3><p>Não use foto de colegas, crianças ou familiares sem autorização.</p></div>
+</div>
+</section>
+
+<section>
+<h2>10. Atividade: crie um cartaz ou aviso</h2>
+<p>Escolha <strong>um</strong> tema:</p>
+<div class="grid">
+<div class="card"><h3>🎉 Festa comunitária</h3><p>Data, horário, local e atividade.</p></div>
+<div class="card"><h3>🧹 Mutirão</h3><p>Limpeza, plantio ou cuidado com um espaço.</p></div>
+<div class="card"><h3>📚 Reunião</h3><p>Encontro de pais, moradores ou estudantes.</p></div>
+<div class="card"><h3>⚠️ Aviso</h3><p>Interrupção de água, mudança de horário ou orientação importante.</p></div>
+</div>
+<div class="card warning">
+<h3>Seu cartaz precisa responder em poucos segundos</h3>
+<p><strong>O quê?</strong> &nbsp; <strong>Quando?</strong> &nbsp; <strong>Onde?</strong> &nbsp; <strong>Para quem?</strong></p>
+</div>
+</section>
+
+<section>
+<h2>11. Passo a passo da atividade</h2>
+<div class="steps">
+<div class="step"><h3>Novo documento</h3><p>Abra uma página em branco.</p></div>
+<div class="step"><h3>Título</h3><p>Escreva uma frase grande e curta.</p></div>
+<div class="step"><h3>Informações</h3><p>Data, horário, local e orientação.</p></div>
+<div class="step"><h3>Imagem</h3><p>Insira uma figura adequada ao tema.</p></div>
+<div class="step"><h3>Organize</h3><p>Ajuste o layout para o texto não ficar bagunçado.</p></div>
+<div class="step"><h3>Teste atalhos</h3><p>Use Ctrl+C, Ctrl+V e Ctrl+Z pelo menos uma vez.</p></div>
+<div class="step"><h3>Revise</h3><p>Leia como se você fosse um morador vendo pela primeira vez.</p></div>
+<div class="step"><h3>Salve</h3><p>Use um nome claro para o arquivo.</p></div>
+</div>
+</section>
+
+<section>
+<h2>12. Relação com a atividade de linguagem</h2>
+<div class="card">
+<p>A referência pedagógica fornecida para esta aula trabalha a produção de textos do cotidiano, como avisos, convites e outros gêneros com função social. Nosso cartaz segue essa mesma lógica: <strong>produzir uma mensagem real, destinada a alguém e com uma finalidade clara</strong>.</p>
+<a href="https://www.edocente.com.br/bncc/ef02lp18-b/" target="_blank" rel="noopener" style="color:var(--accent)">Abrir a referência fornecida →</a>
+</div>
+</section>
+
+<section>
+<h2>13. Atividade prática</h2>
+<div class="mode-buttons">
+<button onclick="showMode('pc')">🏫 Estou na SEMAS</button>
+<button class="secondary" onclick="showMode('phone')">📱 Estou acompanhando pelo celular</button>
+</div>
+<div id="pcMode" class="mode-panel">
+<div class="card pc">
+<h3>🏫 Na SEMAS</h3>
+<ol>
+<li>Crie um cartaz ou aviso no Word.</li>
+<li>Use pelo menos uma imagem.</li>
+<li>Ajuste o layout da imagem.</li>
+<li>Use Ctrl+C, Ctrl+V e Ctrl+Z durante a atividade.</li>
+<li>Confira se o aviso responde o quê, quando, onde e para quem.</li>
+<li>Salve como <strong>Modulo_2_Aula_04_Cartaz_SeuNome.docx</strong>.</li>
+<li>Envie ao professor, salve no Drive e apague a cópia local.</li>
+</ol>
+</div>
+</div>
+<div id="phoneMode" class="mode-panel">
+<div class="card phone">
+<h3>📱 Em casa pelo celular</h3>
+<ol>
+<li>Abra o cartaz salvo no Drive, se estiver disponível.</li>
+<li>Mostre a alguém da casa por 5 segundos.</li>
+<li>Feche a tela e pergunte: “Você entendeu qual era o aviso?”</li>
+<li>Se a pessoa não entendeu, pense no que poderia ficar mais claro.</li>
+</ol>
+</div>
+</div>
+</section>
+
+<section>
+<h2>14. 🏠 Para rever em casa — 10 minutos</h2>
+<div class="card">
+<p>Explique para alguém da sua casa:</p>
+<ol>
+<li>o que Ctrl+C faz;</li>
+<li>o que Ctrl+V faz;</li>
+<li>quando Ctrl+Z pode ajudar;</li>
+<li>por que imagem e texto precisam estar organizados.</li>
+</ol>
+</div>
+</section>
+
+<section>
+<h2>15. Pesquise depois — fontes oficiais</h2>
+<div class="links">
+<a href="https://support.microsoft.com/pt-br/office/inserir-imagens-3c51edf4-22e1-460a-b372-9329a8724344" target="_blank" rel="noopener">🔎 Microsoft — Inserir imagens no Word</a>
+<a href="https://support.microsoft.com/pt-br/office/v%C3%ADdeo-quebra-de-texto-autom%C3%A1tica-ao-redor-de-imagens-299b6f63-b44c-457d-bee7-8f9642018da2" target="_blank" rel="noopener">🔎 Microsoft — Quebra de texto ao redor de imagens</a>
+<a href="https://support.microsoft.com/pt-br/accessibility/word/keyboard-shortcuts-in-word" target="_blank" rel="noopener">🔎 Microsoft — Atalhos de teclado do Word</a>
+<a href="https://www.edocente.com.br/bncc/ef02lp18-b/" target="_blank" rel="noopener">🔎 Referência pedagógica fornecida — eDocente / BNCC</a>
+</div>
+</section>
+
+<section>
+<h2>16. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é organizar informação e trabalhar com mais confiança no Word.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+<div class="savebox">
+<h3>Salvar meu registro da aula</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+<p class="notice">Na SEMAS: envie por e-mail, salve no Drive, apague seus arquivos locais e saia das contas.</p>
+</div>
+</section>
+
+<section>
+<h2>17. Missão final</h2>
+<div class="card">
+<ol>
+<li>Mostre como inserir uma imagem no Word.</li>
+<li>Explique o que significa ajustar a disposição do texto.</li>
+<li>Diga de memória o que fazem Ctrl+C, Ctrl+V e Ctrl+Z.</li>
+<li>Explique por que um cartaz precisa ser entendido rapidamente.</li>
+</ol>
+<p><strong>Regra da turma:</strong> design não é encher a página de coisas — é organizar informação para que alguém consiga entender.</p>
+</div>
+</section>
+
+<footer><p>SEMAS • Curso de Informática • Módulo 2 — Aula 04</p><p>Textos com Imagens e Atalhos Mágicos</p></footer>
+</main>
+
+<script>
+const lessonKey="semas_mod2_aula04_attempt";
+const questions=[
+["Ao inserir uma imagem no Word, por que o texto pode mudar de posição?","Porque a imagem ocupa espaço e o Word precisa decidir como o texto fica ao redor dela","Porque a internet ficou lenta","Porque o teclado mudou","Porque o PDF abriu","Imagens fazem parte do layout do documento e afetam a disposição do texto."],
+["Qual é uma opção simples quando a imagem está bagunçando o texto?","Usar Alinhado com o texto ou Em cima e embaixo","Aumentar a imagem até ocupar a página inteira","Apagar todo o texto","Desligar o computador","Layouts simples ajudam a manter o documento previsível."],
+["O que Ctrl+C faz?","Copia o conteúdo selecionado","Cola o conteúdo","Desfaz a ação","Fecha o Word","Ctrl+C copia a seleção para a Área de Transferência."],
+["O que Ctrl+V faz?","Cola o conteúdo copiado","Copia o conteúdo","Desfaz a ação","Salva o documento","Ctrl+V cola o conteúdo armazenado na Área de Transferência."],
+["Para que serve Ctrl+Z?","Desfazer uma ação recente quando possível","Criar uma imagem","Abrir o Gmail","Copiar o documento","Ctrl+Z é usado para desfazer ações recentes."],
+["Podemos usar qualquer imagem encontrada na internet sem pensar?","Não","Sim, sempre","Somente se for colorida","Somente no Word","Imagens podem ter direitos autorais e também envolver privacidade."],
+["Um bom cartaz deve responder rapidamente a quê?","O quê, quando, onde e para quem","Somente ao nome do autor","Somente à cor da imagem","Somente ao tamanho da fonte","Essas informações ajudam o leitor a entender a finalidade do aviso."],
+["Depois de terminar no PC compartilhado, qual é a rotina correta?","Enviar, salvar no Drive, apagar a cópia local e sair das contas","Deixar tudo aberto","Salvar a senha no navegador","Deixar o arquivo na Área de Trabalho","Essa rotina protege a privacidade e prepara o PC para a próxima turma."]
+];
+let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{const d=document.createElement("div");d.className="quiz-item";d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;quiz.appendChild(d)});
+function updateUI(){document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true}}
+updateUI();
+function showMode(mode){document.getElementById("pcMode").classList.toggle("active",mode==="pc");document.getElementById("phoneMode").classList.toggle("active",mode==="phone")}
+function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===0){score++;a.textContent="Correta! "+q[5]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}});if(!all)return;attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
+function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;updateUI()}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function saveResult(){if(!completed)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return}let rows="";questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`});const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}</style></head><body><h1>SEMAS — Módulo 2 — Aula 04</h1><h2>Textos com Imagens e Atalhos Mágicos</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. Envie por e-mail, salve no Drive, apague a cópia local e saia das contas.</p></body></html>`;const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");a.href=url;a.download=`SEMAS_Modulo_2_Aula_04_${safe}.html`;a.click();URL.revokeObjectURL(url)}
+function finishSession(){if(!confirm("Encerrar a sessão e limpar esta aula neste navegador?"))return;sessionStorage.removeItem(lessonKey);location.reload()}
+</script>
+</body>
+</html>

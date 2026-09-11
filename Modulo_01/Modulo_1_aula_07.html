@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 1 — Aula 07 — Navegadores e Pesquisas Seguras na Web</title>
+<style>
+:root{
+  --bg:#08101d;--card:#111b2e;--card2:#0d1728;--ink:#eef5ff;--muted:#afbdd4;
+  --accent:#69ddff;--accent2:#9dffb7;--warn:#ffd479;--danger:#ff9d9d;--line:#293955;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 15% 0%,#173053 0,transparent 28%),linear-gradient(135deg,#070c16,#0c1628 55%,#0e1d34);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1000px;margin:auto;padding:24px 18px 70px}
+.hero{padding:40px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#23517a,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}
+.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)} h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)} .warning{border-left:4px solid var(--warn);background:#251f12}
+.danger{border-left:4px solid var(--danger);background:#291719}.pc{border-left:4px solid var(--accent)}.phone{border-left:4px solid #bd9cff}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.browserbar{background:#0a1425;border:1px solid var(--line);border-radius:15px;padding:12px}
+.address{background:#06101e;border:1px solid var(--line);border-radius:999px;padding:10px 16px;color:#d9e8ff;font-family:Consolas,monospace;overflow:auto}
+.fake-result{padding:15px;border:1px solid var(--line);border-radius:14px;background:#0b1526;margin:12px 0}
+.fake-result .url{font-size:.85rem;color:var(--accent2)}
+.fake-result h3{margin:.25rem 0;color:#8fcaff}
+.search{font-family:Consolas,monospace;background:#07101e;color:#ffd479;padding:5px 9px;border-radius:8px}
+.check{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.check .card{text-align:center}
+.big{font-size:2.2rem}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+.links a:hover{text-decoration:underline;background:#13233a}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.mode-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.mode-panel{display:none;margin-top:14px}.mode-panel.active{display:block}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px 11px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.quiz-item label:hover{background:#16243b}
+.answer{margin-top:10px;color:var(--muted)}#result{font-size:1.1rem;font-weight:800;margin-top:18px}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:720px){main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.mode-buttons{display:grid;grid-template-columns:1fr}button{width:100%;min-height:48px}.quiz-item label{padding:13px 12px}}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 1 • Aula 07</div>
+<h1>Navegadores e Pesquisas Seguras na Web</h1>
+<p class="lead">A internet tem milhões de páginas. O navegador ajuda a abrir essas páginas; o buscador ajuda a encontrá-las. Mas encontrar um resultado não significa que ele seja verdadeiro ou seguro.</p>
+<p><strong>Desafio da aula:</strong> fazer uma pesquisa escolar melhor, identificar sinais de risco e explicar por que um site com HTTPS ainda pode ser mal-intencionado.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>5 min</strong>Navegador × buscador</div>
+<div class="slot"><strong>12 min</strong>Chrome, Edge, Firefox</div>
+<div class="slot"><strong>15 min</strong>Pesquisa inteligente</div>
+<div class="slot"><strong>12 min</strong>Resultados e anúncios</div>
+<div class="slot"><strong>8 min</strong>HTTPS e golpes</div>
+<div class="slot"><strong>5 min</strong>Quiz</div>
+<div class="slot"><strong>3 min</strong>Relatório</div>
+</div>
+</section>
+
+<section>
+<h2>2. O que você vai aprender</h2>
+<div class="grid">
+<div class="card goal"><h3>🌐 Navegadores</h3><p>Reconhecer Chrome, Edge e Firefox como programas usados para abrir páginas da Web.</p></div>
+<div class="card goal"><h3>🔎 Pesquisa</h3><p>Pesquisar usando palavras mais específicas e alguns operadores simples.</p></div>
+<div class="card goal"><h3>🧠 Avaliação</h3><p>Comparar resultados antes de acreditar ou copiar uma informação.</p></div>
+<div class="card goal"><h3>🛡️ Segurança</h3><p>Reconhecer links suspeitos, promessas falsas e sinais de conexão segura.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. Navegador não é a mesma coisa que Google</h2>
+<div class="grid">
+<div class="card"><div class="big">🌐</div><h3>Navegador</h3><p>É o programa usado para abrir páginas, interpretar HTML/CSS/JavaScript e mostrar os sites.</p></div>
+<div class="card"><div class="big">🔎</div><h3>Buscador</h3><p>É um serviço de pesquisa que ajuda a encontrar páginas e informações na Web.</p></div>
+</div>
+<div class="card warning" style="margin-top:14px">
+<h3>Exemplo</h3>
+<p>Você pode abrir o <strong>Google</strong> usando Chrome, Edge ou Firefox. Portanto, Google Pesquisa é um buscador; Chrome é um navegador.</p>
+</div>
+</section>
+
+<section>
+<h2>4. Três navegadores conhecidos</h2>
+<div class="grid">
+<div class="card"><h3>🔴🟡🟢 Chrome</h3><p>Navegador desenvolvido pelo Google.</p></div>
+<div class="card"><h3>🔵 Edge</h3><p>Navegador da Microsoft, integrado ao Windows.</p></div>
+<div class="card"><h3>🦊 Firefox</h3><p>Navegador desenvolvido pela Mozilla.</p></div>
+</div>
+<p class="notice">Eles possuem diferenças, mas todos podem abrir páginas Web, trabalhar com abas, favoritos, downloads e navegação.</p>
+</section>
+
+<section>
+<h2>5. Conhecendo a barra de endereço</h2>
+<div class="browserbar">
+<div class="address">🔒 https://www.exemplo.gov.br/pagina</div>
+</div>
+<div class="grid" style="margin-top:14px">
+<div class="card"><h3>https://</h3><p>Indica o protocolo usado para uma conexão Web protegida por criptografia.</p></div>
+<div class="card"><h3>exemplo.gov.br</h3><p>É o domínio. Ele merece atenção porque ajuda a identificar de qual organização a página realmente é.</p></div>
+<div class="card"><h3>/pagina</h3><p>É parte do caminho dentro daquele site.</p></div>
+</div>
+</section>
+
+<section>
+<h2>6. Como fazer uma pesquisa melhor</h2>
+<p>Uma pesquisa boa começa com palavras específicas. Compare:</p>
+
+<div class="fake-result">
+<p><strong>Pesquisa muito ampla:</strong></p>
+<p><span class="search">água</span></p>
+<p>Pode trazer milhões de resultados sobre assuntos diferentes.</p>
+</div>
+
+<div class="fake-result">
+<p><strong>Pesquisa mais clara:</strong></p>
+<p><span class="search">ciclo da água ensino fundamental</span></p>
+<p>Agora o buscador entende melhor o assunto e o nível desejado.</p>
+</div>
+
+<div class="fake-result">
+<p><strong>Pesquisa ainda mais focada:</strong></p>
+<p><span class="search">ciclo da água ensino fundamental site:gov.br</span></p>
+<p>O operador <strong>site:</strong> restringe os resultados a um domínio.</p>
+</div>
+
+<div class="fake-result">
+<p><strong>Frase exata:</strong></p>
+<p><span class="search">"ciclo da água"</span></p>
+<p>As aspas podem ajudar quando você quer procurar aquela sequência exata de palavras.</p>
+</div>
+</section>
+
+<section>
+<h2>7. Dever de escola: pesquisar não é copiar</h2>
+<div class="check">
+<div class="card"><div class="big">1️⃣</div><h3>Leia</h3><p>Leia mais de um resultado.</p></div>
+<div class="card"><div class="big">2️⃣</div><h3>Compare</h3><p>Veja se fontes diferentes concordam.</p></div>
+<div class="card"><div class="big">3️⃣</div><h3>Identifique</h3><p>Veja quem publicou e quando.</p></div>
+<div class="card"><div class="big">4️⃣</div><h3>Entenda</h3><p>Escreva com suas palavras em vez de copiar sem compreender.</p></div>
+</div>
+</section>
+
+<section>
+<h2>8. Cuidado: resultado patrocinado também é resultado</h2>
+<p>Buscadores podem mostrar anúncios junto aos resultados. Um anúncio não é automaticamente golpe, mas <strong>também não é automaticamente a melhor fonte para um dever escolar</strong>.</p>
+
+<div class="fake-result">
+<div class="url">Patrocinado • super-premio-exemplo.test</div>
+<h3>🎁 VOCÊ GANHOU UM CELULAR! CLIQUE AGORA!</h3>
+<p>“Última chance! Digite seu e-mail, senha e dados pessoais para receber!”</p>
+</div>
+
+<div class="card danger">
+<h3>Sinais para desconfiar</h3>
+<p>Pressa exagerada, prêmio inesperado, pedido de senha, erros estranhos no endereço, promessa boa demais e pedidos de dados pessoais são sinais de alerta.</p>
+</div>
+</section>
+
+<section>
+<h2>9. O cadeado significa que o site é confiável?</h2>
+<p><strong>Não.</strong> O símbolo de segurança/HTTPS indica que a conexão entre seu navegador e aquele site está criptografada. Ele não garante que a pessoa ou empresa por trás do site seja honesta.</p>
+
+<div class="grid">
+<div class="card"><h3>🔒 HTTPS</h3><p>Protege a comunicação contra leitura ou alteração simples durante o caminho.</p></div>
+<div class="card"><h3>⚠️ Site malicioso com HTTPS</h3><p>Um criminoso também pode criar um site usando conexão criptografada.</p></div>
+<div class="card"><h3>👀 Leia o domínio</h3><p>Antes de digitar senha ou dados, confira cuidadosamente o endereço do site.</p></div>
+</div>
+</section>
+
+<section>
+<h2>10. Prêmios falsos e links recebidos por mensagem</h2>
+<div class="grid">
+<div class="card danger"><h3>🎁 “Você ganhou!”</h3><p>Se você nem participou de promoção, desconfie.</p></div>
+<div class="card danger"><h3>⏰ “Só agora!”</h3><p>Golpes usam urgência para impedir que a pessoa pense.</p></div>
+<div class="card danger"><h3>🔐 “Digite sua senha”</h3><p>Nunca entregue senha em página aberta por link suspeito.</p></div>
+<div class="card danger"><h3>📲 “Compartilhe com 10 pessoas”</h3><p>Esse tipo de corrente pode espalhar golpes e links maliciosos.</p></div>
+</div>
+</section>
+
+<section>
+<h2>11. Atividade prática: Detetive da Pesquisa</h2>
+<div class="mode-buttons">
+<button onclick="showMode('pc')">🏫 Estou na SEMAS</button>
+<button class="secondary" onclick="showMode('phone')">📱 Estou acompanhando pelo celular</button>
+</div>
+
+<div id="pcMode" class="mode-panel">
+<div class="card pc">
+<h3>🏫 No laboratório</h3>
+<ol>
+<li>Abra o navegador indicado pelo professor.</li>
+<li>Pesquise <span class="search">energia solar</span>.</li>
+<li>Depois pesquise <span class="search">energia solar vantagens ensino fundamental</span>.</li>
+<li>Compare: qual pesquisa trouxe resultados mais úteis?</li>
+<li>Agora teste <span class="search">energia solar site:gov.br</span>.</li>
+<li>Abra apenas uma fonte orientada pelo professor e identifique o domínio.</li>
+<li>Explique por que você escolheu aquela fonte.</li>
+</ol>
+</div>
+</div>
+
+<div id="phoneMode" class="mode-panel">
+<div class="card phone">
+<h3>📱 Pelo celular</h3>
+<ol>
+<li>Abra o navegador que já existe no aparelho.</li>
+<li>Faça as mesmas três pesquisas.</li>
+<li>Não clique em anúncios ou links estranhos apenas para “testar”.</li>
+<li>Compare os títulos e os domínios antes de abrir.</li>
+</ol>
+</div>
+</div>
+</section>
+
+<section>
+<h2>12. Desafio extra: questão de informática</h2>
+<div class="card">
+<p>Uma questão de concurso apresentada como referência considera a afirmação <strong>“Mozilla Firefox, Google Chrome e Microsoft Edge são navegadores”</strong>.</p>
+<p>Nosso objetivo aqui não é estudar para concurso, mas perceber que esse conhecimento básico também aparece em provas e situações profissionais.</p>
+<a href="https://www.qconcursos.com/questoes-de-concursos/questoes/93c8b134-9b" target="_blank" rel="noopener" style="color:var(--accent)">Abrir a questão fornecida pelo professor →</a>
+</div>
+</section>
+
+<section>
+<h2>13. Pesquise depois — links oficiais</h2>
+<div class="links">
+<a href="https://support.google.com/websearch/answer/2466433?hl=pt-BR" target="_blank" rel="noopener">🔎 Google — Refinar pesquisas e usar operadores</a>
+<a href="https://support.google.com/chrome/answer/95617?hl=pt-BR" target="_blank" rel="noopener">🔎 Google Chrome — Conferir a segurança da conexão de um site</a>
+<a href="https://support.mozilla.org/pt-BR/products/firefox/privacy-and-security" target="_blank" rel="noopener">🔎 Mozilla — Privacidade e segurança no Firefox</a>
+</div>
+</section>
+
+<section>
+<h2>14. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é pesquisar melhor e navegar com mais cuidado.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+
+<div class="savebox">
+<h3>Salvar meu registro da aula</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+<p class="notice">Na SEMAS: envie por e-mail, salve no Drive, apague o arquivo local e encerre a sessão.</p>
+</div>
+</section>
+
+<section>
+<h2>15. Missão final</h2>
+<div class="card">
+<ol>
+<li>Explique a diferença entre navegador e buscador.</li>
+<li>Faça uma pesquisa escolar usando palavras específicas e <span class="search">site:</span>.</li>
+<li>Explique por que um site com HTTPS ainda pode ser perigoso.</li>
+<li>Diga três sinais de um link suspeito.</li>
+</ol>
+<p><strong>Regra da turma:</strong> pesquisar bem não é clicar rápido — é formular uma boa pergunta, observar a fonte e pensar antes de confiar.</p>
+</div>
+</section>
+
+<footer>
+<p>SEMAS • Curso de Informática • Módulo 1 — Aula 07</p>
+<p>Navegadores e Pesquisas Seguras na Web</p>
+</footer>
+
+</main>
+
+<script>
+const lessonKey="semas_mod1_aula07_attempt";
+const questions=[
+["Qual destes grupos contém apenas navegadores?","Chrome, Edge e Firefox","Google, Bing e Yahoo","Word, Excel e Chrome","Wi-Fi, Firefox e DNS","Chrome, Edge e Firefox são navegadores usados para abrir páginas da Web."],
+["Google Pesquisa é principalmente o quê?","Um buscador","Um sistema operacional","Um cabo de rede","Uma memória RAM","Google Pesquisa é um serviço de busca; Chrome é um navegador."],
+["Qual pesquisa tende a ser mais específica para um trabalho escolar?","ciclo da água ensino fundamental","água","internet","trabalho","Termos específicos ajudam o buscador a entender melhor o que você procura."],
+["Para que serve o operador site:?","Restringir a pesquisa a um site ou domínio","Apagar resultados","Aumentar a velocidade da internet","Abrir o CMD","site: ajuda a limitar os resultados a um domínio específico."],
+["O que as aspas podem fazer em uma pesquisa?","Ajudar a procurar uma frase exata","Bloquear todos os anúncios","Garantir que a resposta seja verdadeira","Ativar o antivírus","Aspas são usadas para buscar uma sequência exata de palavras."],
+["Um resultado patrocinado é sempre golpe?","Não","Sim, sempre","Somente no celular","Somente se aparecer primeiro","Anúncio não significa automaticamente golpe, mas deve ser avaliado antes de clicar."],
+["O cadeado/HTTPS prova que um site é honesto?","Não","Sim, sempre","Somente em sites .com","Somente no Edge","HTTPS indica conexão criptografada, não garante que o responsável pelo site seja confiável."],
+["Qual atitude é mais segura diante de uma mensagem dizendo 'Você ganhou um prêmio, digite sua senha'?","Não clicar e desconfiar da mensagem","Digitar a senha rapidamente","Compartilhar com amigos","Desativar o antivírus","Prêmios inesperados e pedidos de senha são sinais fortes de tentativa de golpe."]
+];
+
+let attempt=Number(sessionStorage.getItem(lessonKey)||0);
+let completed=false,lastScore=null,startedAt=Date.now(),finishedAt=null,currentMode="não informado";
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{const d=document.createElement("div");d.className="quiz-item";d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;quiz.appendChild(d);});
+function formatTime(ms){const s=Math.max(0,Math.round(ms/1000)),m=Math.floor(s/60),sec=s%60;return `${m}min ${String(sec).padStart(2,"0")}s`;}
+function showMode(mode){currentMode=mode==="pc"?"SEMAS — computador":"Casa/fora da SEMAS — celular";document.getElementById("pcMode").classList.toggle("active",mode==="pc");document.getElementById("phoneMode").classList.toggle("active",mode==="phone");}
+function updateUI(){const r=document.getElementById("result");if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true;if(!completed)r.innerHTML="<strong>Duas tentativas foram usadas nesta sessão.</strong><br>Em uma nova sessão, o quiz começa novamente.";}else if(!completed){r.innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;}}
+updateUI();
+function checkQuiz(){
+ if(attempt>=2)return;let score=0,all=true,wrong=[];
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return;}if(+s.value===0){score++;a.textContent="Correta! "+q[5];}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5];}});
+ if(!all){document.getElementById("result").innerHTML="<strong>Responda todas as perguntas antes de finalizar.</strong>";return;}
+ attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;finishedAt=Date.now();
+ document.getElementById("result").innerHTML=`<strong>Resultado da tentativa ${attempt}: ${score} de ${questions.length}.</strong><br>Tempo: ${formatTime(finishedAt-startedAt)}.<br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas as questões foram respondidas corretamente."}<br><span style="color:var(--muted)">Não existe nota mínima: o objetivo é pesquisar com atenção e reconhecer riscos.</span>`;
+ document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true);updateUI();
+}
+function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false;});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;startedAt=Date.now();finishedAt=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;document.getElementById("result").innerHTML=`Tentativa ${attempt+1} disponível.`;}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+function saveResult(){
+ if(!completed||lastScore===null)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return;}
+ const now=new Date();let rows="",wrong=[];
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;if(n!==0)wrong.push(i+1);rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;});
+ const report=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SEMAS - Módulo 1 Aula 07 - ${esc(name)}</title><style>body{font-family:Arial,sans-serif;max-width:950px;margin:30px auto;padding:18px;color:#172033;line-height:1.5}h1{color:#123b55}.meta{padding:18px;background:#f1f5f8;border-radius:10px}table{border-collapse:collapse;width:100%;margin-top:15px}th,td{border:1px solid #ccd3dc;padding:8px;text-align:left;vertical-align:top}th{background:#eaf2f7}.note{padding:14px;background:#fff8df;border-radius:8px}</style></head><body><h1>SEMAS — Módulo 1 — Aula 07</h1><h2>Navegadores e Pesquisas Seguras na Web</h2><div class="meta"><strong>Aluno:</strong> ${esc(name)}<br><strong>Data e hora:</strong> ${now.toLocaleString("pt-BR")}<br><strong>Modo:</strong> ${esc(currentMode)}<br><strong>Tentativa:</strong> ${attempt} de 2<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Tempo:</strong> ${formatTime(finishedAt-startedAt)}</div><p class="note"><strong>Não existe nota mínima.</strong> Este relatório registra uma atividade de aprendizagem.</p><p><strong>Questões para revisar:</strong> ${wrong.length?wrong.join(", "):"nenhuma"}.</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Envie por e-mail ao professor, salve no Drive e apague o arquivo local do computador compartilhado.</p></body></html>`;
+ const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
+ a.href=url;a.download=`SEMAS_Modulo_1_Aula_07_${safe}_Tentativa_${attempt}.html`;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+}
+function finishSession(){
+ if(!confirm("Encerrar a sessão e limpar respostas desta aula neste navegador?"))return;
+ sessionStorage.removeItem(lessonKey);document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false;});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");document.getElementById("studentName").value="";document.getElementById("saveBtn").disabled=true;document.getElementById("checkBtn").disabled=false;attempt=0;completed=false;lastScore=null;startedAt=Date.now();finishedAt=null;currentMode="não informado";document.getElementById("pcMode").classList.remove("active");document.getElementById("phoneMode").classList.remove("active");document.getElementById("result").innerHTML="Sessão encerrada. Este navegador está pronto para o próximo aluno.";window.scrollTo({top:0,behavior:"smooth"});
+}
+</script>
+</body>
+</html>

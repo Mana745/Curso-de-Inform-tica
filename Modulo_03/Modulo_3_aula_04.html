@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 3 — Aula 04 — Criando Desenhos e Imagens com IA</title>
+<style>
+:root{
+  --bg:#07101c;--card:#101b2d;--card2:#0b1525;--ink:#eff7ff;--muted:#afbed3;
+  --accent:#74dcff;--accent2:#a5ffb7;--warn:#ffd37b;--danger:#ff9e9e;--line:#2a3a54;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 15% 0%,#18345a 0,transparent 30%),linear-gradient(135deg,#070c15,#0c1628 55%,#102039);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1040px;margin:auto;padding:24px 18px 70px}
+.hero{padding:42px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#245684,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)}h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)}.warning{border-left:4px solid var(--warn);background:#251f12}.danger{border-left:4px solid var(--danger);background:#29171b}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.prompt{font-family:Consolas,monospace;background:#07101e;color:#ffd479;padding:14px;border-radius:10px;white-space:pre-wrap}
+.recipe{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.recipe .card{text-align:center}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.good{border-left:4px solid var(--accent2)}.bad{border-left:4px solid var(--danger)}
+.scene{display:grid;grid-template-columns:1.2fr 1fr;gap:16px;align-items:center}
+.scene-box{height:260px;border-radius:18px;border:1px solid var(--line);background:
+radial-gradient(circle at 70% 25%,#ffcf70 0 8%,transparent 9%),
+linear-gradient(#79c2f2 0 45%,#5d963f 46% 66%,#835f38 67% 100%);position:relative;overflow:hidden}
+.scene-box:before{content:"";position:absolute;left:12%;bottom:18%;width:100px;height:80px;background:#d9bd86;clip-path:polygon(0 45%,50% 0,100% 45%,100% 100%,0 100%)}
+.scene-box:after{content:"🌴  🌿  🛶";position:absolute;right:8%;bottom:12%;font-size:2.2rem}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.step{counter-increment:s;padding:16px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.step:before{content:counter(s);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#07101e;font-weight:900}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}button:disabled{opacity:.5}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.answer{margin-top:10px;color:var(--muted)}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input,.savebox textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}
+details{margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425}
+summary{cursor:pointer;font-weight:850;color:var(--accent2)}
+footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:760px){main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.compare,.recipe,.scene{grid-template-columns:1fr}button{width:100%;min-height:48px}}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 3 • Aula 04</div>
+<h1>Criando Desenhos e Imagens com IA</h1>
+<p class="lead">Algumas inteligências artificiais conseguem criar imagens a partir de palavras. Você descreve a cena e o sistema tenta gerar uma imagem que combine com o pedido.</p>
+<p><strong>Desafio da aula:</strong> escrever um prompt visual detalhado que represente sua região ou cultura local e, quando a ferramenta usada em aula permitir, gerar e revisar a imagem.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>7 min</strong>Como a IA gera imagens</div>
+<div class="slot"><strong>10 min</strong>Descrever cenas</div>
+<div class="slot"><strong>10 min</strong>Cor, estilo e clima</div>
+<div class="slot"><strong>10 min</strong>Prompt visual</div>
+<div class="slot"><strong>12 min</strong>Atividade regional</div>
+<div class="slot"><strong>6 min</strong>Revisar/refinar</div>
+<div class="slot"><strong>5 min</strong>Quiz/relatório</div>
+</div>
+</section>
+
+<section>
+<h2>2. O que você vai aprender</h2>
+<div class="grid">
+<div class="card goal"><h3>🖼️ Geração</h3><p>Entender, de forma simples, como uma IA pode criar imagens a partir de descrições.</p></div>
+<div class="card goal"><h3>✍️ Descrição</h3><p>Aprender a descrever objetos, lugar, cores, estilo e clima.</p></div>
+<div class="card goal"><h3>🎨 Refinamento</h3><p>Perceber que o primeiro resultado pode ser melhorado com um novo pedido.</p></div>
+<div class="card goal"><h3>🌎 Cultura local</h3><p>Usar a ferramenta para representar paisagens, atividades e elementos da região.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. Como o computador consegue “desenhar”?</h2>
+<p>De forma simplificada, modelos de geração de imagens são treinados com muitos exemplos e aprendem relações entre palavras, formas, cores, objetos e estilos visuais.</p>
+<div class="steps">
+<div class="step"><h3>Você descreve</h3><p>Escreve o que gostaria de ver.</p></div>
+<div class="step"><h3>A IA interpreta</h3><p>Relaciona as palavras com padrões visuais aprendidos.</p></div>
+<div class="step"><h3>Ela gera</h3><p>Produz uma nova imagem baseada naquele pedido.</p></div>
+<div class="step"><h3>Você avalia</h3><p>Confere se o resultado combina com a ideia.</p></div>
+</div>
+<div class="card warning">
+<h3>A IA não está “imaginando” como uma pessoa</h3>
+<p>Ela usa modelos matemáticos para gerar pixels e formas com base em padrões. A palavra “desenhar” é uma maneira simples de explicar o resultado, não uma descrição literal do que acontece dentro do computador.</p>
+</div>
+</section>
+
+<section>
+<h2>4. Um prompt visual precisa responder: o que eu quero ver?</h2>
+<div class="recipe">
+<div class="card"><h3>1. Cena</h3><p>O que acontece?</p></div>
+<div class="card"><h3>2. Lugar</h3><p>Onde acontece?</p></div>
+<div class="card"><h3>3. Elementos</h3><p>Quais objetos aparecem?</p></div>
+<div class="card"><h3>4. Estilo</h3><p>Foto, desenho, pintura?</p></div>
+<div class="card"><h3>5. Clima</h3><p>Manhã, chuva, alegria, calma?</p></div>
+</div>
+</section>
+
+<section>
+<h2>5. Pedido simples × pedido detalhado</h2>
+<div class="compare">
+<div class="card bad">
+<h3>❌ Muito vago</h3>
+<div class="prompt">Faça uma imagem do interior.</div>
+<p>“Interior” pode significar muitos lugares e situações diferentes.</p>
+</div>
+<div class="card good">
+<h3>✅ Mais claro</h3>
+<div class="prompt">Crie uma ilustração de uma comunidade amazônica ao amanhecer, com casas simples, vegetação verde, um pequeno rio, canoa e céu alaranjado. Estilo de desenho educativo, cores suaves e clima tranquilo.</div>
+<p>Agora há lugar, objetos, horário, estilo, cores e clima.</p>
+</div>
+</div>
+</section>
+
+<section>
+<h2>6. Veja como uma cena pode ser pensada</h2>
+<div class="scene">
+<div class="scene-box" aria-label="Ilustração esquemática de paisagem rural amazônica"></div>
+<div>
+<h3>Antes de gerar, imagine os componentes</h3>
+<ul>
+<li>céu e horário;</li>
+<li>vegetação;</li>
+<li>casas ou construções;</li>
+<li>rio, estrada ou campo;</li>
+<li>objetos locais;</li>
+<li>cores predominantes;</li>
+<li>sensação da cena.</li>
+</ul>
+</div>
+</div>
+<p class="notice">A ilustração acima é apenas um desenho esquemático do material da aula, não uma imagem gerada por IA.</p>
+</section>
+
+<section>
+<h2>7. Cores, estilo e clima mudam muito o resultado</h2>
+<div class="grid">
+<div class="card"><h3>🎨 Cores</h3><div class="prompt">tons verdes, azul do rio, céu dourado</div></div>
+<div class="card"><h3>✏️ Estilo</h3><div class="prompt">ilustração educativa, pintura em aquarela, fotografia realista</div></div>
+<div class="card"><h3>🌤️ Clima</h3><div class="prompt">manhã tranquila, dia ensolarado, chuva leve</div></div>
+<div class="card"><h3>📐 Composição</h3><div class="prompt">rio ao centro, casas ao fundo, árvore em primeiro plano</div></div>
+</div>
+</section>
+
+<section>
+<h2>8. Um bom prompt não precisa usar palavras difíceis</h2>
+<div class="prompt">Crie uma ilustração colorida de uma feira de comunidade do Pará.
+Mostre barracas com frutas regionais, famílias caminhando e artesanato.
+Use cores vivas, clima alegre e estilo de cartaz educativo.
+Não coloque nomes de pessoas nem marcas.</div>
+<p>O que importa é a descrição ser clara, não parecer complicada.</p>
+</section>
+
+<section>
+<h2>9. A primeira imagem pode não ficar como você imaginou</h2>
+<p>Isso não significa que você “falhou”. Você pode observar o resultado e fazer um novo pedido.</p>
+<div class="grid">
+<div class="card"><h3>Faltou algo?</h3><div class="prompt">Adicione uma canoa no rio.</div></div>
+<div class="card"><h3>Cor errada?</h3><div class="prompt">Use cores mais suaves.</div></div>
+<div class="card"><h3>Estilo?</h3><div class="prompt">Transforme em ilustração de livro escolar.</div></div>
+<div class="card"><h3>Composição?</h3><div class="prompt">Deixe o rio mais visível no centro.</div></div>
+</div>
+</section>
+
+<section>
+<h2>10. Atividade principal: Minha região em uma imagem</h2>
+<p>Escolha um aspecto verdadeiro ou representativo da região/cultura local. Pode ser:</p>
+<div class="grid">
+<div class="card"><h3>🌿 Paisagem</h3><p>Rio, floresta, campo, estrada, comunidade.</p></div>
+<div class="card"><h3>🍍 Produção</h3><p>Frutas, agricultura, feira ou produção local.</p></div>
+<div class="card"><h3>🧺 Cultura</h3><p>Artesanato, culinária, festa ou tradição.</p></div>
+<div class="card"><h3>🚤 Cotidiano</h3><p>Barco, bicicleta, escola, praça ou trabalho.</p></div>
+</div>
+</section>
+
+<section>
+<h2>11. Monte o seu prompt em 5 passos</h2>
+<div class="prompt">1. Quero mostrar: ______________________________
+
+2. O lugar é: ___________________________________
+
+3. Devem aparecer: ______________________________
+
+4. O estilo será: _________________________________
+
+5. As cores/clima serão: __________________________</div>
+<p>Depois transforme essas respostas em um único pedido.</p>
+</section>
+
+<section>
+<h2>12. Exemplo completo</h2>
+<div class="prompt">Crie uma ilustração educativa de uma comunidade próxima a um rio no Pará ao amanhecer. Mostre uma canoa, casas simples, árvores, frutas regionais em uma pequena feira e pessoas vistas à distância. Use tons verdes, azul e dourado, com clima tranquilo e respeitoso. Não use marcas, textos nem pessoas reais específicas.</div>
+</section>
+
+<section>
+<h2>13. Segurança e respeito</h2>
+<div class="grid">
+<div class="card danger"><h3>👤 Pessoas reais</h3><p>Não use foto de colega, professor ou familiar para colocá-lo em uma situação criada por IA sem autorização.</p></div>
+<div class="card danger"><h3>🔐 Dados pessoais</h3><p>Não coloque endereço, telefone, documentos ou outras informações privadas no prompt.</p></div>
+<div class="card warning"><h3>🏷️ Marcas e personagens</h3><p>Nem tudo que podemos pedir deve ser publicado ou usado comercialmente. Direitos autorais e marcas continuam existindo.</p></div>
+<div class="card warning"><h3>📰 Imagem falsa</h3><p>Uma imagem gerada por IA não deve ser apresentada como fotografia verdadeira de um fato que nunca aconteceu.</p></div>
+</div>
+</section>
+
+<section>
+<h2>14. Ferramentas atuais conseguem gerar imagens por texto</h2>
+<div class="grid">
+<div class="card"><h3>ChatGPT</h3><p>Pode gerar imagens a partir de pedidos detalhados em experiências que oferecem geração de imagens.</p></div>
+<div class="card"><h3>Gemini</h3><p>O Gemini oferece geração de imagens em experiências e contas compatíveis.</p></div>
+<div class="card"><h3>Microsoft Copilot</h3><p>O Copilot possui geração de imagens a partir de prompts de texto em experiências compatíveis.</p></div>
+</div>
+<div class="card warning">
+<h3>Disponibilidade pode mudar</h3>
+<p>Recursos, limites e regras de idade podem variar por conta, região e plano. O objetivo da aula é aprender a descrever imagens, não depender de uma única plataforma.</p>
+</div>
+</section>
+
+<section>
+<h2>15. Atividade prática na SEMAS</h2>
+<div class="steps">
+<div class="step"><h3>Escolha a ideia</h3><p>Algo que represente sua região ou cultura.</p></div>
+<div class="step"><h3>Escreva o prompt</h3><p>Inclua cena, lugar, elementos, estilo e clima.</p></div>
+<div class="step"><h3>Mostre ao professor</h3><p>Confira se não há dados pessoais ou pedido inadequado.</p></div>
+<div class="step"><h3>Gere, se disponível</h3><p>Use a ferramenta autorizada para a turma ou acompanhe a demonstração do professor.</p></div>
+<div class="step"><h3>Avalie</h3><p>O resultado realmente representa sua ideia?</p></div>
+<div class="step"><h3>Refine</h3><p>Faça uma alteração no prompt e compare.</p></div>
+</div>
+<div class="card warning">
+<h3>Para alunos sem conta compatível</h3>
+<p>O prompt continua sendo a atividade principal. O professor pode escolher alguns prompts para demonstrar a geração na tela da turma, sem exigir cadastro individual.</p>
+</div>
+</section>
+
+<section>
+<h2>16. 🏠 Para rever em casa — 10 minutos</h2>
+<div class="card">
+<p>Sem precisar abrir nenhuma IA, escolha uma paisagem ou tradição da sua região e tente descrevê-la para alguém da casa sem mostrar nenhuma foto.</p>
+<p>Depois pergunte: <strong>“Você conseguiu imaginar a cena?”</strong></p>
+<p>Se a pessoa conseguiu, sua descrição provavelmente tem bons detalhes para virar um prompt visual.</p>
+</div>
+</section>
+
+<section>
+<h2>17. Pesquise depois — fontes oficiais</h2>
+<div class="links">
+<a href="https://help.openai.com/en/articles/10032626-prompt-engineering-best-practices-for-chatgpt" target="_blank" rel="noopener">🔎 OpenAI — Boas práticas de prompts</a>
+<a href="https://support.google.com/gemini/answer/14286560?co=GENIE.Platform%3DDesktop&hl=en" target="_blank" rel="noopener">🔎 Google — Gerar e editar imagens com Gemini</a>
+<a href="https://support.microsoft.com/en-us/microsoft-copilot/using-image-generation-in-microsoft-copilot" target="_blank" rel="noopener">🔎 Microsoft — Geração de imagens no Copilot</a>
+</div>
+</section>
+
+<section>
+<h2>18. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é aprender a transformar uma ideia em uma descrição visual clara e responsável.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+
+<div class="savebox">
+<h3>Salvar meu registro da aula</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<textarea id="imagePrompt" rows="6" placeholder="Opcional: escreva aqui o seu prompt visual sobre a região ou cultura local."></textarea>
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+<p class="notice">Na SEMAS: envie conforme orientação, salve no Drive quando necessário, apague arquivos locais e saia das contas.</p>
+</div>
+</section>
+
+<section>
+<h2>19. Missão final</h2>
+<div class="card">
+<ol>
+<li>Explique como palavras podem orientar uma IA a gerar uma imagem.</li>
+<li>Monte um prompt com cena, lugar, elementos, estilo e clima.</li>
+<li>Explique por que o primeiro resultado pode precisar de ajustes.</li>
+<li>Diga por que não devemos usar fotos de pessoas reais sem autorização.</li>
+<li>Explique por que uma imagem gerada por IA não deve ser apresentada como prova de um fato real.</li>
+</ol>
+<p><strong>Regra da turma:</strong> antes de pedir para a IA desenhar, aprenda a enxergar a cena na sua cabeça e descrevê-la com clareza.</p>
+</div>
+</section>
+
+<footer>
+<p>SEMAS • Curso de Informática • Módulo 3 — Aula 04</p>
+<p>Criando Desenhos e Imagens com IA</p>
+</footer>
+
+</main>
+
+<script>
+const lessonKey="semas_mod3_aula04_attempt";
+const questions=[
+["Como uma IA de imagens recebe a ideia do usuário?","Por meio de uma descrição ou prompt","Somente por telefone","Somente por planilha","Apenas por código","O prompt descreve a cena que o sistema deve tentar gerar."],
+["Qual prompt tende a produzir um resultado mais próximo da ideia?","Um prompt com cena, lugar, elementos, estilo e clima","Faça qualquer coisa","Desenhe algo","Imagem bonita","Detalhes dão mais contexto ao modelo."],
+["Qual item pode fazer parte de um prompt visual?","Cores e estilo","Senha do e-mail","CPF","Número de cartão","Cores e estilo ajudam a definir o resultado sem expor dados pessoais."],
+["Se a primeira imagem não ficou boa, o que fazer?","Refinar o prompt e tentar novamente","Concluir que a IA não funciona","Apagar o computador","Mudar a senha","A geração visual pode ser iterativa."],
+["É correto usar foto de um colega e colocá-lo em uma cena criada por IA sem autorização?","Não","Sim","Somente se for engraçado","Somente no celular","Pessoas reais merecem privacidade e consentimento."],
+["Uma imagem de IA pode ser apresentada como fotografia real de um evento que nunca ocorreu?","Não","Sim","Somente se estiver bonita","Somente na escola","Isso pode enganar outras pessoas e espalhar informação falsa."],
+["Qual é uma boa atividade para representar a cultura local?","Descrever paisagem, feira, artesanato ou atividade regional com respeito","Inventar dados pessoais de moradores","Usar nome completo de pessoas sem necessidade","Copiar qualquer imagem da internet","A proposta é representar elementos locais com descrição própria e respeito."],
+["Qual é a ideia principal da aula?","Aprender a descrever visualmente uma ideia antes de gerar a imagem","A IA desenha perfeitamente sem instruções","Toda imagem precisa ser uma fotografia","Quanto menos detalhes, sempre melhor","Clareza na descrição melhora a comunicação com a ferramenta."]
+];
+let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{
+ const d=document.createElement("div");d.className="quiz-item";
+ d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;
+ quiz.appendChild(d);
+});
+function updateUI(){document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true}}
+updateUI();
+function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===0){score++;a.textContent="Correta! "+q[5]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}});if(!all)return;attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
+function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;updateUI()}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function saveResult(){
+ if(!completed)return;
+ const name=document.getElementById("studentName").value.trim();
+ if(!name){alert("Digite seu nome completo.");return}
+ const prompt=document.getElementById("imagePrompt").value.trim();
+ let rows="";
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`});
+ const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}.prompt{padding:12px;background:#f2f5f8;border-radius:8px;white-space:pre-wrap}</style></head><body><h1>SEMAS — Módulo 3 — Aula 04</h1><h2>Criando Desenhos e Imagens com IA</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}</p>${prompt?`<p><strong>Meu prompt visual:</strong></p><div class="prompt">${esc(prompt)}</div>`:""}<table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. O objetivo é aprender a descrever e criar com responsabilidade.</p></body></html>`;
+ const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
+ a.href=url;a.download=`SEMAS_Modulo_3_Aula_04_${safe}.html`;a.click();URL.revokeObjectURL(url);
+}
+function finishSession(){if(!confirm("Encerrar a sessão e limpar esta aula neste navegador?"))return;sessionStorage.removeItem(lessonKey);location.reload()}
+</script>
+</body>
+</html>

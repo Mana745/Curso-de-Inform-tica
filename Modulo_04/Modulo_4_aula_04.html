@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 4 — Aula 04 — As Primeiras Peças do Nosso Site</title>
+<style>
+:root{
+  --bg:#08101c;--card:#101a2c;--card2:#0c1524;--ink:#eef6ff;--muted:#afbdd2;
+  --accent:#73ddff;--accent2:#a8ffb9;--warn:#ffd47d;--danger:#ff9e9e;--line:#2b3b55;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 16% 0%,#1a355c 0,transparent 30%),linear-gradient(135deg,#070c15,#0d1729 55%,#10203a);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1040px;margin:auto;padding:24px 18px 70px}
+.hero{padding:42px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#265984,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)}h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)}.warning{border-left:4px solid var(--warn);background:#251f12}.danger{border-left:4px solid var(--danger);background:#29171b}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.code{font-family:Consolas,monospace;background:#07101e;color:#ffd479;padding:14px;border-radius:10px;white-space:pre-wrap;overflow:auto}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.good{border-left:4px solid var(--accent2)}.bad{border-left:4px solid var(--danger)}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.step{counter-increment:s;padding:16px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.step:before{content:counter(s);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#07101e;font-weight:900}
+.browser{background:#fff;color:#202733;border-radius:16px;padding:18px;border:1px solid #d3dae3}
+.browser h1{font-size:2rem;color:#1d4e76;margin:.2em 0}.browser p{color:#333}
+.browser hr{border:0;border-top:1px solid #888;margin:18px 0}
+.tag{font-family:Consolas,monospace;background:#07101e;color:#ffd479;padding:3px 7px;border-radius:7px}
+.practice-shell{border:1px solid #3b5577;background:#091526;border-radius:18px;padding:18px}
+.progress{height:10px;border-radius:999px;background:#1a2940;overflow:hidden;margin:10px 0 20px}
+.progress>div{height:100%;background:linear-gradient(90deg,#69ddff,#9dffb7);width:0;transition:.25s}
+.practice-card{padding:22px;border:1px solid var(--line);border-radius:16px;background:#0d1728}
+.stepnum{font-size:.92rem;color:var(--muted);text-transform:uppercase;font-weight:800}
+.command{font-size:1.35rem;line-height:1.35;font-weight:900;margin:12px 0}
+.memory{padding:12px 14px;border-left:4px solid var(--accent);background:#0a1425;border-radius:8px;margin:14px 0}
+.practice-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}button:disabled{opacity:.5}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.answer{margin-top:10px;color:var(--muted)}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input,.savebox textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}
+footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:760px){
+ main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.compare{grid-template-columns:1fr}
+ button{width:100%;min-height:48px}.practice-actions{display:grid}
+}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 4 • Aula 04</div>
+<h1>As Primeiras Peças do Nosso Site</h1>
+<p class="lead">Hoje vamos deixar de apenas observar HTML e começar a <strong>escrever nossa primeira página de verdade</strong>. Vamos criar o arquivo <strong>index.html</strong>, colocar um título, parágrafos e uma separação entre assuntos.</p>
+<p><strong>Desafio da aula:</strong> criar um arquivo HTML no VS Code, salvar, abrir no navegador e enxergar o código virar uma página.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>5 min</strong>Revisão</div>
+<div class="slot"><strong>8 min</strong>index.html</div>
+<div class="slot"><strong>10 min</strong>&lt;h1&gt;</div>
+<div class="slot"><strong>10 min</strong>&lt;p&gt;</div>
+<div class="slot"><strong>7 min</strong>&lt;hr&gt;</div>
+<div class="slot"><strong>15 min</strong>Prática no VS Code</div>
+<div class="slot"><strong>5 min</strong>Quiz/relatório</div>
+</div>
+</section>
+
+<section>
+<h2>2. O que você vai aprender</h2>
+<div class="grid">
+<div class="card goal"><h3>📄 index.html</h3><p>Criar o primeiro arquivo da página.</p></div>
+<div class="card goal"><h3>🏷️ &lt;h1&gt;</h3><p>Criar o título principal.</p></div>
+<div class="card goal"><h3>📝 &lt;p&gt;</h3><p>Escrever parágrafos.</p></div>
+<div class="card goal"><h3>➖ &lt;hr&gt;</h3><p>Separar assuntos de forma temática.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. Por que o nome index.html?</h2>
+<p><strong>index.html</strong> é um nome muito usado para a página inicial de um site ou pasta Web.</p>
+<div class="card warning">
+<h3>Não é uma palavra mágica</h3>
+<p>O navegador consegue abrir outros arquivos HTML também, como <strong>contato.html</strong> ou <strong>sobre.html</strong>. Mas <strong>index.html</strong> é uma convenção muito comum para a página principal.</p>
+</div>
+</section>
+
+<section>
+<h2>4. Nossa primeira peça: &lt;h1&gt;</h2>
+<p>O elemento <span class="tag">&lt;h1&gt;</span> representa o título de nível mais alto de uma seção ou página.</p>
+<div class="code">&lt;h1&gt;Minha Região&lt;/h1&gt;</div>
+<div class="browser">
+<h1>Minha Região</h1>
+</div>
+<div class="card warning">
+<h3>&lt;h1&gt; não significa apenas “letra grande”</h3>
+<p>O navegador normalmente mostra o <strong>h1</strong> em tamanho maior, mas a função principal dele é indicar um título importante na estrutura do documento.</p>
+</div>
+</section>
+
+<section>
+<h2>5. Nossa segunda peça: &lt;p&gt;</h2>
+<p>O elemento <span class="tag">&lt;p&gt;</span> representa um parágrafo.</p>
+<div class="code">&lt;p&gt;Minha cidade tem histórias, pessoas e lugares importantes.&lt;/p&gt;</div>
+<div class="browser">
+<p>Minha cidade tem histórias, pessoas e lugares importantes.</p>
+</div>
+</section>
+
+<section>
+<h2>6. Dois parágrafos diferentes</h2>
+<div class="code">&lt;p&gt;Aqui existem comunidades urbanas e rurais.&lt;/p&gt;
+
+&lt;p&gt;Cada comunidade possui sua própria história.&lt;/p&gt;</div>
+<div class="browser">
+<p>Aqui existem comunidades urbanas e rurais.</p>
+<p>Cada comunidade possui sua própria história.</p>
+</div>
+<p>O navegador organiza cada <span class="tag">&lt;p&gt;</span> como um parágrafo separado.</p>
+</section>
+
+<section>
+<h2>7. Nossa terceira peça: &lt;hr&gt;</h2>
+<p>O elemento <span class="tag">&lt;hr&gt;</span> representa uma <strong>mudança temática</strong> ou separação de assunto entre blocos do conteúdo.</p>
+<div class="code">&lt;h1&gt;Minha Região&lt;/h1&gt;
+&lt;p&gt;Um pouco sobre onde vivo.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;Agora vou falar sobre nossa cultura.&lt;/p&gt;</div>
+<div class="browser">
+<h1>Minha Região</h1>
+<p>Um pouco sobre onde vivo.</p>
+<hr>
+<p>Agora vou falar sobre nossa cultura.</p>
+</div>
+<div class="card warning">
+<h3>&lt;hr&gt; não é apenas decoração</h3>
+<p>Visualmente ele costuma aparecer como uma linha horizontal, mas seu significado em HTML é indicar uma mudança ou divisão temática.</p>
+</div>
+</section>
+
+<section>
+<h2>8. &lt;hr&gt; não precisa de fechamento</h2>
+<div class="compare">
+<div class="card good">
+<h3>✅ Correto</h3>
+<div class="code">&lt;hr&gt;</div>
+</div>
+<div class="card bad">
+<h3>Não precisamos escrever</h3>
+<div class="code">&lt;hr&gt;&lt;/hr&gt;</div>
+</div>
+</div>
+<p><span class="tag">&lt;hr&gt;</span> é um elemento vazio: não envolve conteúdo entre uma abertura e um fechamento.</p>
+</section>
+
+<section>
+<h2>9. A estrutura completa que vamos usar hoje</h2>
+<div class="code">&lt;!doctype html&gt;
+&lt;html lang="pt-BR"&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;Minha Primeira Página&lt;/title&gt;
+  &lt;/head&gt;
+
+  &lt;body&gt;
+    &lt;h1&gt;Minha Região&lt;/h1&gt;
+
+    &lt;p&gt;Esta é minha primeira página criada em HTML.&lt;/p&gt;
+
+    &lt;hr&gt;
+
+    &lt;p&gt;Estou aprendendo a criar sites na SEMAS.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</div>
+</section>
+
+<section>
+<h2>10. O que vai aparecer?</h2>
+<div class="browser">
+<h1>Minha Região</h1>
+<p>Esta é minha primeira página criada em HTML.</p>
+<hr>
+<p>Estou aprendendo a criar sites na SEMAS.</p>
+</div>
+<p>Observe que <span class="tag">&lt;head&gt;</span>, <span class="tag">&lt;meta&gt;</span> e outras partes da estrutura não aparecem como texto principal na página. O conteúdo visível está principalmente dentro de <span class="tag">&lt;body&gt;</span>.</p>
+</section>
+
+<section>
+<h2>11. 🧪 Prática guiada — criando index.html</h2>
+<p>Agora vamos alternar entre esta aula e o VS Code. Faça <strong>um passo por vez</strong>.</p>
+<div class="practice-shell">
+<div id="practiceStepLabel" class="stepnum"></div>
+<div class="progress"><div id="practiceProgress"></div></div>
+<div class="practice-card">
+<div id="practiceCommand" class="command"></div>
+<div id="practiceMemory" class="memory"></div>
+<div id="practiceVisual"></div>
+<div class="practice-actions">
+<button id="prevPractice" class="secondary" onclick="practicePrev()">← Voltar um passo</button>
+<button id="nextPractice" onclick="practiceNext()">Consegui — próximo passo →</button>
+</div>
+</div>
+</div>
+</section>
+
+<section>
+<h2>12. Dica para alternar entre aula e VS Code</h2>
+<div class="grid">
+<div class="card"><h3>🖱️ Barra de tarefas</h3><p>Primeiro método: clique no navegador ou no VS Code.</p></div>
+<div class="card"><h3>⌨️ Alt + Tab</h3><p>Troca rapidamente entre janelas abertas.</p></div>
+<div class="card"><h3>🪟 Windows + ← / →</h3><p>Se o monitor permitir, coloque aula e VS Code lado a lado.</p></div>
+</div>
+<p class="notice">O objetivo da prática é aprender HTML, não memorizar uma sequência enorme de cliques.</p>
+</section>
+
+<section>
+<h2>13. Salvando corretamente</h2>
+<div class="card">
+<p>O arquivo deve se chamar exatamente:</p>
+<div class="code">index.html</div>
+<p>Evite nomes como:</p>
+<div class="code">index.html.txt
+index
+meu site.html.txt</div>
+</div>
+</section>
+
+<section>
+<h2>14. Como abrir no navegador</h2>
+<div class="steps">
+<div class="step"><h3>Salve</h3><p>Use <strong>Ctrl + S</strong>.</p></div>
+<div class="step"><h3>Localize</h3><p>Abra a pasta do projeto.</p></div>
+<div class="step"><h3>Abra index.html</h3><p>Dê duplo clique ou use a opção orientada pelo professor.</p></div>
+<div class="step"><h3>Veja o resultado</h3><p>O navegador interpreta o arquivo.</p></div>
+</div>
+</section>
+
+<section>
+<h2>15. Mudou o código? Salve e atualize</h2>
+<div class="code">VS Code:
+&lt;p&gt;Texto novo&lt;/p&gt;
+
+1. Ctrl + S
+2. Volte ao navegador
+3. Atualize a página</div>
+<div class="card warning">
+<h3>Se a página não mudou</h3>
+<p>Antes de achar que “o código não funciona”, confira se o arquivo foi salvo e se você atualizou o navegador.</p>
+</div>
+</section>
+
+<section>
+<h2>16. Erros fazem parte</h2>
+<div class="compare">
+<div class="card good">
+<h3>✅ Correto</h3>
+<div class="code">&lt;h1&gt;Minha Página&lt;/h1&gt;</div>
+</div>
+<div class="card bad">
+<h3>⚠️ Algo para investigar</h3>
+<div class="code">&lt;h1&gt;Minha Página&lt;h1&gt;</div>
+<p>A tag final deveria ter a barra: <span class="tag">&lt;/h1&gt;</span>.</p>
+</div>
+</div>
+</section>
+
+<section>
+<h2>17. Atividade principal — Minha primeira página</h2>
+<p>Sua página deve conter:</p>
+<div class="grid">
+<div class="card"><h3>1 título</h3><p>Use <span class="tag">&lt;h1&gt;</span> para o nome da página.</p></div>
+<div class="card"><h3>2 parágrafos</h3><p>Use dois elementos <span class="tag">&lt;p&gt;</span>.</p></div>
+<div class="card"><h3>1 separação</h3><p>Use <span class="tag">&lt;hr&gt;</span> entre dois assuntos.</p></div>
+</div>
+<div class="code">&lt;h1&gt;Sobre Minha Região&lt;/h1&gt;
+
+&lt;p&gt;Escreva uma frase sobre sua cidade ou comunidade.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;Escreva uma frase sobre algo que você gosta nela.&lt;/p&gt;</div>
+</section>
+
+<section>
+<h2>18. Não copie exatamente o exemplo</h2>
+<div class="card warning">
+<p>O código pode ter a mesma estrutura, mas o <strong>conteúdo deve ser escrito por você</strong>. A ideia é perceber que HTML separa a estrutura do texto que cada pessoa deseja publicar.</p>
+</div>
+</section>
+
+<section>
+<h2>19. Checklist antes de terminar</h2>
+<div class="grid">
+<div class="card"><h3>☑ Arquivo</h3><p>Chama-se <strong>index.html</strong>?</p></div>
+<div class="card"><h3>☑ h1</h3><p>Existe um título principal?</p></div>
+<div class="card"><h3>☑ p</h3><p>Existem pelo menos dois parágrafos?</p></div>
+<div class="card"><h3>☑ hr</h3><p>Existe uma separação temática?</p></div>
+<div class="card"><h3>☑ Salvo</h3><p>Usou Ctrl + S?</p></div>
+<div class="card"><h3>☑ Navegador</h3><p>A página abriu corretamente?</p></div>
+</div>
+</section>
+
+<section>
+<h2>20. 🏠 Para rever em casa — 10 minutos</h2>
+<div class="card">
+<p>Reveja esta aula pelo celular e explique para alguém:</p>
+<ol>
+<li>para que serve <span class="tag">&lt;h1&gt;</span>;</li>
+<li>para que serve <span class="tag">&lt;p&gt;</span>;</li>
+<li>o que significa <span class="tag">&lt;hr&gt;</span>;</li>
+<li>por que criamos um arquivo chamado <strong>index.html</strong>.</li>
+</ol>
+<p>Não é necessário editar HTML em casa.</p>
+</div>
+</section>
+
+<section>
+<h2>21. Pesquise depois — documentação oficial</h2>
+<div class="links">
+<a href="https://developer.mozilla.org/pt-BR/docs/Web/HTML/Reference/Elements/Heading_Elements" target="_blank" rel="noopener">🔎 MDN — Títulos h1 até h6</a>
+<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/p" target="_blank" rel="noopener">🔎 MDN — Elemento p</a>
+<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/hr" target="_blank" rel="noopener">🔎 MDN — Elemento hr</a>
+<a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Basic_HTML_syntax" target="_blank" rel="noopener">🔎 MDN — Sintaxe básica de HTML</a>
+</div>
+</section>
+
+<section>
+<h2>22. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é compreender as primeiras peças que você acabou de usar em uma página real.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+
+<div class="savebox">
+<h3>Salvar meu registro da aula</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<textarea id="codeNote" rows="6" placeholder="Opcional: cole aqui o trecho principal do seu index.html."></textarea>
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+<p class="notice">Na SEMAS: envie conforme orientação, salve no Drive quando necessário, apague arquivos locais e saia das contas.</p>
+</div>
+</section>
+
+<section>
+<h2>23. Missão final</h2>
+<div class="card">
+<ol>
+<li>Mostre seu arquivo <strong>index.html</strong>.</li>
+<li>Aponte a tag <span class="tag">&lt;h1&gt;</span>.</li>
+<li>Aponte dois parágrafos.</li>
+<li>Explique o significado do <span class="tag">&lt;hr&gt;</span>.</li>
+<li>Altere uma frase, salve e atualize o navegador.</li>
+</ol>
+<p><strong>Regra da turma:</strong> hoje você deixou de apenas olhar uma página pronta e começou a construir a sua.</p>
+</div>
+</section>
+
+<footer>
+<p>SEMAS • Curso de Informática • Módulo 4 — Aula 04</p>
+<p>As Primeiras Peças do Nosso Site (Tags Básicas)</p>
+</footer>
+
+</main>
+
+<script>
+const lessonKey="semas_mod4_aula04_attempt";
+const practiceKey="semas_mod4_aula04_practice";
+const practiceSteps=[
+ {c:"Abra o VS Code e a pasta Curso_SEMAS_HTML criada na aula anterior.",m:"Confirme que o nome da pasta aparece no Explorer.",v:"📁 Curso_SEMAS_HTML"},
+ {c:"Crie uma nova pasta para esta atividade, se o professor estiver usando pastas por aula.",m:"Exemplo: aula_04. Siga o padrão definido pelo professor.",v:"📁 aula_04"},
+ {c:"No Explorer, crie um novo arquivo chamado index.html.",m:"Confira a extensão: deve terminar em .html.",v:"📄 index.html"},
+ {c:"Digite <!doctype html> na primeira linha.",m:"Estamos identificando o documento como HTML moderno.",v:"&lt;!doctype html&gt;"},
+ {c:"Crie as tags <html>, <head> e <body> conforme o modelo da aula.",m:"Não precisa decorar: consulte o exemplo.",v:"&lt;html&gt; ... &lt;/html&gt;"},
+ {c:"Dentro de <head>, coloque <meta charset=\"utf-8\"> e um <title>.",m:"O title pode ser: Minha Primeira Página.",v:"&lt;title&gt;Minha Primeira Página&lt;/title&gt;"},
+ {c:"Dentro de <body>, crie um <h1> com o título Sobre Minha Região.",m:"Lembre da tag de fechamento </h1>.",v:"&lt;h1&gt;Sobre Minha Região&lt;/h1&gt;"},
+ {c:"Abaixo do h1, crie um primeiro <p> com uma frase escrita por você.",m:"Não copie o exemplo exatamente.",v:"&lt;p&gt;Minha frase...&lt;/p&gt;"},
+ {c:"Abaixo do primeiro parágrafo, digite <hr>.",m:"O hr não precisa de tag de fechamento.",v:"&lt;hr&gt;"},
+ {c:"Crie um segundo <p> com outra frase sobre sua região ou comunidade.",m:"Agora temos dois assuntos separados.",v:"&lt;p&gt;Outra frase...&lt;/p&gt;"},
+ {c:"Salve o arquivo com Ctrl + S.",m:"Salvar antes de testar evita muita confusão.",v:"Ctrl + S"},
+ {c:"Abra o index.html no navegador.",m:"Use o método orientado pelo professor.",v:"🌐 index.html"},
+ {c:"Confira se aparecem o título, dois parágrafos e a linha/separação.",m:"Se algo estiver diferente, volte ao VS Code e investigue.",v:"h1 ✓  p ✓  hr ✓"},
+ {c:"Volte ao VS Code e altere uma das frases.",m:"Estamos provando que você controla o conteúdo.",v:"Editar texto"},
+ {c:"Salve novamente com Ctrl + S e atualize o navegador.",m:"A nova frase deve aparecer na página.",v:"Salvar → Atualizar"},
+ {c:"Prática concluída.",m:"Você criou seu primeiro index.html com conteúdo próprio.",v:"🎉 Primeira página criada"}
+];
+let practiceIndex=Number(sessionStorage.getItem(practiceKey)||0);
+if(practiceIndex<0||practiceIndex>=practiceSteps.length)practiceIndex=0;
+
+function renderPractice(){
+ const s=practiceSteps[practiceIndex];
+ document.getElementById("practiceStepLabel").textContent=`Passo ${practiceIndex+1} de ${practiceSteps.length}`;
+ document.getElementById("practiceCommand").textContent=s.c;
+ document.getElementById("practiceMemory").textContent=s.m;
+ document.getElementById("practiceVisual").innerHTML=`<div class="card"><strong>${s.v}</strong></div>`;
+ document.getElementById("practiceProgress").style.width=`${((practiceIndex+1)/practiceSteps.length)*100}%`;
+ document.getElementById("prevPractice").disabled=practiceIndex===0;
+ document.getElementById("nextPractice").textContent=practiceIndex===practiceSteps.length-1?"Concluí minha primeira página ✓":"Consegui — próximo passo →";
+}
+function practiceNext(){
+ if(practiceIndex<practiceSteps.length-1){
+  practiceIndex++;sessionStorage.setItem(practiceKey,practiceIndex);renderPractice();
+ }else alert("Parabéns: sua primeira página HTML foi criada.");
+}
+function practicePrev(){
+ if(practiceIndex>0){
+  practiceIndex--;sessionStorage.setItem(practiceKey,practiceIndex);renderPractice();
+ }
+}
+renderPractice();
+
+const questions=[
+["Para que serve o elemento <h1>?","Representar um título de nível mais alto","Criar um parágrafo","Desenhar uma linha","Salvar o arquivo","h1 indica um título importante na estrutura do documento."],
+["Para que serve o elemento <p>?","Representar um parágrafo","Criar uma imagem","Abrir o navegador","Criar uma pasta","p representa um parágrafo de conteúdo."],
+["O que <hr> representa em HTML?","Uma mudança ou separação temática","Um título","Uma senha","Um link","hr representa uma quebra temática entre partes do conteúdo."],
+["O elemento <hr> precisa de </hr>?","Não","Sim, sempre","Somente no celular","Somente no VS Code","hr é um elemento vazio e não envolve conteúdo."],
+["Por que usamos o nome index.html nesta aula?","Porque é uma convenção muito comum para a página principal","Porque outros nomes são proibidos","Porque o Windows exige","Porque HTML só funciona com esse nome","index.html é uma convenção comum, não uma regra absoluta para todo arquivo HTML."],
+["Depois de mudar o código, o que devemos fazer para ver a mudança?","Salvar e atualizar a página no navegador","Desligar o computador","Renomear o navegador","Apagar a pasta","O navegador precisa receber a versão salva do arquivo."],
+["Onde fica o conteúdo principal visível da página?","Dentro de <body>","Somente em <head>","Somente em <title>","Fora de <html>","O body contém o conteúdo principal apresentado no documento."],
+["Qual é o principal resultado desta aula?","Criar um index.html com título, parágrafos e separação","Decorar todas as tags HTML","Publicar um site mundial","Instalar várias extensões","O foco é criar e testar uma primeira página simples."]
+];
+
+let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{
+ const d=document.createElement("div");d.className="quiz-item";
+ d.innerHTML=`<h3>${i+1}. ${q[0].replace(/</g,"&lt;").replace(/>/g,"&gt;")}</h3>`+
+ q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</label>`).join("")+
+ `<div class="answer" id="a${i}"></div>`;
+ quiz.appendChild(d);
+});
+function updateUI(){
+ document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;
+ if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true}
+}
+updateUI();
+function checkQuiz(){
+ if(attempt>=2)return;
+ let score=0,all=true,wrong=[];
+ questions.forEach((q,i)=>{
+  const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);
+  if(!s){all=false;a.textContent="Responda esta questão.";return}
+  if(+s.value===0){score++;a.textContent="Correta! "+q[5]}
+  else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}
+ });
+ if(!all)return;
+ attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;
+ document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;
+ document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;
+ document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true);
+}
+function retryQuiz(){
+ if(attempt>=2||!completed)return;
+ document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});
+ questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");
+ completed=false;lastScore=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;updateUI();
+}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function saveResult(){
+ if(!completed)return;
+ const name=document.getElementById("studentName").value.trim();
+ if(!name){alert("Digite seu nome completo.");return}
+ const note=document.getElementById("codeNote").value.trim();
+ let rows="";
+ questions.forEach((q,i)=>{
+  const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;
+  rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;
+ });
+ const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}.note{padding:12px;background:#f2f5f8;border-radius:8px;white-space:pre-wrap;font-family:monospace}</style></head><body><h1>SEMAS — Módulo 4 — Aula 04</h1><h2>As Primeiras Peças do Nosso Site</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Prática guiada:</strong> passo ${practiceIndex+1}/${practiceSteps.length}</p>${note?`<p><strong>Meu código:</strong></p><div class="note">${esc(note)}</div>`:""}<table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. O objetivo é criar e compreender uma primeira página HTML.</p></body></html>`;
+ const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
+ a.href=url;a.download=`SEMAS_Modulo_4_Aula_04_${safe}.html`;a.click();URL.revokeObjectURL(url);
+}
+function finishSession(){
+ if(!confirm("Encerrar a sessão e limpar esta aula neste navegador?"))return;
+ sessionStorage.removeItem(lessonKey);sessionStorage.removeItem(practiceKey);location.reload();
+}
+</script>
+</body>
+</html>

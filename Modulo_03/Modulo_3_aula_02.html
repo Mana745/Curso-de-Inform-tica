@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 3 — Aula 02 — Como Conversar com a IA</title>
+<style>
+:root{
+  --bg:#07101c;--card:#101b2d;--card2:#0b1525;--ink:#eff7ff;--muted:#afbed3;
+  --accent:#74dcff;--accent2:#a5ffb7;--warn:#ffd37b;--danger:#ff9e9e;--line:#2a3a54;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 15% 0%,#18345a 0,transparent 30%),linear-gradient(135deg,#070c15,#0c1628 55%,#102039);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1040px;margin:auto;padding:24px 18px 70px}
+.hero{padding:42px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#245684,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)}h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)}.warning{border-left:4px solid var(--warn);background:#251f12}.danger{border-left:4px solid var(--danger);background:#29171b}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.prompt{font-family:Consolas,monospace;background:#07101e;color:#ffd479;padding:14px;border-radius:10px;white-space:pre-wrap}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.bad{border-left:4px solid var(--danger)}.good{border-left:4px solid var(--accent2)}
+.recipe{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.recipe .card{text-align:center}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.step{counter-increment:s;padding:16px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.step:before{content:counter(s);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#07101e;font-weight:900}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}button:disabled{opacity:.5}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.answer{margin-top:10px;color:var(--muted)}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input,.savebox textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}
+details{margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425}
+summary{cursor:pointer;font-weight:850;color:var(--accent2)}
+footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:760px){main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.compare,.recipe{grid-template-columns:1fr}button{width:100%;min-height:48px}}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 3 • Aula 02</div>
+<h1>Como Conversar com a IA</h1>
+<p class="lead">Uma IA não adivinha exatamente o que você quer. Quanto mais claro for o pedido, maior a chance de receber uma resposta útil. Esse pedido recebe um nome: <strong>prompt</strong>.</p>
+<p><strong>Desafio da aula:</strong> transformar uma pergunta vaga em um pedido claro e depois verificar se a resposta merece confiança.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>7 min</strong>O que é prompt</div>
+<div class="slot"><strong>12 min</strong>Pedido ruim × bom</div>
+<div class="slot"><strong>12 min</strong>Contexto</div>
+<div class="slot"><strong>10 min</strong>Limites e formato</div>
+<div class="slot"><strong>10 min</strong>Verificação</div>
+<div class="slot"><strong>5 min</strong>Atividade</div>
+<div class="slot"><strong>4 min</strong>Quiz/relatório</div>
+</div>
+</section>
+
+<section>
+<h2>2. O que você vai aprender</h2>
+<div class="grid">
+<div class="card goal"><h3>💬 Prompt</h3><p>Entender que prompt é o pedido, pergunta ou instrução dada à IA.</p></div>
+<div class="card goal"><h3>🎯 Clareza</h3><p>Aprender a dizer exatamente o que precisa.</p></div>
+<div class="card goal"><h3>🧩 Contexto</h3><p>Dar informações que ajudam a IA a responder melhor.</p></div>
+<div class="card goal"><h3>🔎 Verificação</h3><p>Conferir respostas importantes em fontes confiáveis.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. O que é um prompt?</h2>
+<p><strong>Prompt</strong> é a mensagem que enviamos para uma IA: pergunta, pedido, instrução ou combinação dessas coisas.</p>
+<div class="prompt">Explique o que é fotossíntese.</div>
+<p>Isso já é um prompt. Mas podemos melhorar.</p>
+</section>
+
+<section>
+<h2>4. Pedido vago × pedido claro</h2>
+<div class="compare">
+<div class="card bad">
+<h3>❌ Muito vago</h3>
+<div class="prompt">Fale sobre água.</div>
+<p>A IA não sabe se você quer falar de chuva, rios, consumo, ciclo da água, química ou outra coisa.</p>
+</div>
+<div class="card good">
+<h3>✅ Mais claro</h3>
+<div class="prompt">Explique o ciclo da água para um aluno de 10 anos em 5 frases.</div>
+<p>Agora a IA sabe o tema, para quem explica e o tamanho desejado.</p>
+</div>
+</div>
+</section>
+
+<section>
+<h2>5. A receita de um bom pedido</h2>
+<div class="recipe">
+<div class="card"><h3>1. Tarefa</h3><p>O que você quer?</p></div>
+<div class="card"><h3>2. Contexto</h3><p>Para quem ou em que situação?</p></div>
+<div class="card"><h3>3. Formato</h3><p>Lista, resumo, tabela, frases?</p></div>
+<div class="card"><h3>4. Limite</h3><p>Quantas linhas? Qual nível?</p></div>
+</div>
+<div class="prompt">Explique a dengue para um aluno de 10 anos, em uma lista com 5 itens, usando palavras simples e sem assustar.</div>
+</section>
+
+<section>
+<h2>6. Dar contexto ajuda muito</h2>
+<div class="grid">
+<div class="card"><h3>👶 Idade</h3><p>“Explique como se eu tivesse 10 anos.”</p></div>
+<div class="card"><h3>🏫 Objetivo</h3><p>“Estou estudando para uma atividade de Ciências.”</p></div>
+<div class="card"><h3>📚 Nível</h3><p>“Use palavras simples e exemplos do cotidiano.”</p></div>
+<div class="card"><h3>📏 Tamanho</h3><p>“Responda em até 5 frases.”</p></div>
+</div>
+</section>
+
+<section>
+<h2>7. Você também pode pedir o formato</h2>
+<div class="grid">
+<div class="card"><h3>Lista</h3><div class="prompt">Explique em 5 tópicos.</div></div>
+<div class="card"><h3>Tabela</h3><div class="prompt">Compare em uma tabela simples.</div></div>
+<div class="card"><h3>Exemplo</h3><div class="prompt">Dê 2 exemplos do cotidiano.</div></div>
+<div class="card"><h3>Perguntas</h3><div class="prompt">Crie 3 perguntas para eu treinar.</div></div>
+</div>
+</section>
+
+<section>
+<h2>8. A IA não sabe automaticamente o que é verdade</h2>
+<div class="card danger">
+<h3>⚠️ Resposta bonita pode estar errada</h3>
+<p>Uma IA pode inventar nomes, datas, números, fontes ou explicações. Ela pode escrever de forma muito convincente e ainda assim cometer um erro.</p>
+</div>
+<p>Por isso, em informação importante, devemos fazer uma segunda etapa: <strong>verificar</strong>.</p>
+</section>
+
+<section>
+<h2>9. Regra dos 3 passos: Perguntar → Pensar → Conferir</h2>
+<div class="steps">
+<div class="step"><h3>Perguntar</h3><p>Faça um prompt claro.</p></div>
+<div class="step"><h3>Pensar</h3><p>A resposta faz sentido? Há algo estranho?</p></div>
+<div class="step"><h3>Conferir</h3><p>Compare com professor, livro, site oficial ou outra fonte confiável.</p></div>
+</div>
+</section>
+
+<section>
+<h2>10. Quando devemos conferir com mais cuidado?</h2>
+<div class="grid">
+<div class="card"><h3>📅 Datas</h3><p>Eventos históricos, prazos, notícias.</p></div>
+<div class="card"><h3>👤 Pessoas</h3><p>Cargos, nomes, biografias.</p></div>
+<div class="card"><h3>🩺 Saúde</h3><p>Não tomar decisões médicas apenas com resposta de IA.</p></div>
+<div class="card"><h3>💰 Dinheiro</h3><p>Preços, juros, investimentos e compras importantes.</p></div>
+<div class="card"><h3>⚖️ Regras e leis</h3><p>Podem mudar e precisam de fonte atualizada.</p></div>
+<div class="card"><h3>📰 Notícias</h3><p>Checar data, fonte e contexto.</p></div>
+</div>
+</section>
+
+<section>
+<h2>11. Um truque útil: pedir para a IA reconhecer limites</h2>
+<p>Você pode melhorar o prompt pedindo que ela seja cuidadosa:</p>
+<div class="prompt">Explique o assunto. Se você não tiver certeza de algum fato, diga claramente que não tem certeza em vez de inventar.</div>
+<div class="card warning">
+<h3>Isso ajuda, mas não garante</h3>
+<p>Mesmo quando pedimos cautela, a IA ainda pode errar. O pedido melhora o comportamento, mas não substitui verificação.</p>
+</div>
+</section>
+
+<section>
+<h2>12. Atividade: conserte o prompt</h2>
+<p>Transforme cada pedido ruim em um pedido melhor.</p>
+
+<details>
+<summary>1. “Me ensina matemática.”</summary>
+<p>Exemplo melhor:</p>
+<div class="prompt">Explique multiplicação para um aluno de 10 anos usando 3 exemplos fáceis e depois faça 2 perguntas para eu praticar.</div>
+</details>
+
+<details>
+<summary>2. “Fala de internet.”</summary>
+<p>Exemplo melhor:</p>
+<div class="prompt">Explique como a internet chega até uma casa em uma comunidade rural, usando palavras simples e no máximo 6 frases.</div>
+</details>
+
+<details>
+<summary>3. “Faça meu trabalho.”</summary>
+<p>Exemplo melhor:</p>
+<div class="prompt">Estou estudando o ciclo da água. Explique o tema em 5 tópicos e depois faça 3 perguntas para eu responder sozinho.</div>
+</details>
+</section>
+
+<section>
+<h2>13. Atividade prática com o professor</h2>
+<p>O professor pode mostrar a mesma pergunta em três níveis:</p>
+<div class="grid">
+<div class="card"><h3>Nível 1</h3><div class="prompt">O que é energia?</div></div>
+<div class="card"><h3>Nível 2</h3><div class="prompt">Explique energia para uma criança de 10 anos.</div></div>
+<div class="card"><h3>Nível 3</h3><div class="prompt">Explique energia para uma criança de 10 anos em 5 frases, usando um exemplo de casa e um exemplo do campo.</div></div>
+</div>
+<p>Depois compare as respostas. Qual ficou mais útil? Por quê?</p>
+</section>
+
+<section>
+<h2>14. Atividade individual: Meu primeiro prompt bem feito</h2>
+<p>Escolha um assunto que você esteja estudando e monte seu pedido usando esta estrutura:</p>
+<div class="prompt">Quero aprender sobre: ____________
+
+Explique para: ____________
+
+Use este formato: ____________
+
+Limite a resposta a: ____________
+
+Dê também: ____________</div>
+<div class="card warning">
+<p>Não inclua endereço, telefone, senha, CPF, nome completo de terceiros ou outras informações pessoais desnecessárias.</p>
+</div>
+</section>
+
+<section>
+<h2>15. 🏠 Para rever em casa — 10 minutos</h2>
+<div class="card">
+<p>Sem precisar abrir nenhuma IA, explique para alguém da casa:</p>
+<ol>
+<li>o que significa prompt;</li>
+<li>por que “fale sobre água” é menos útil que um pedido com contexto;</li>
+<li>por que não devemos confiar 100% em uma resposta de IA.</li>
+</ol>
+<p>Depois tente inventar um bom prompt para explicar algo que essa pessoa gostaria de aprender.</p>
+</div>
+</section>
+
+<section>
+<h2>16. Pesquise depois — fontes oficiais</h2>
+<div class="links">
+<a href="https://help.openai.com/en/articles/10032626-prompt-engineering-best-practices-for-chatgpt" target="_blank" rel="noopener">🔎 OpenAI — Boas práticas para criar prompts</a>
+<a href="https://support.microsoft.com/en-us/topic/learn-about-copilot-prompts" target="_blank" rel="noopener">🔎 Microsoft — Como escrever prompts para o Copilot</a>
+<a href="https://support.google.com/gemini/answer/14200040" target="_blank" rel="noopener">🔎 Google — Dicas para conversar com o Gemini</a>
+</div>
+</section>
+
+<section>
+<h2>17. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é aprender a pedir melhor e verificar melhor.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+
+<div class="savebox">
+<h3>Salvar meu registro da aula</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<textarea id="myPrompt" rows="4" placeholder="Opcional: escreva aqui o seu primeiro prompt bem feito."></textarea>
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+<p class="notice">Na SEMAS: envie o relatório conforme orientação, salve no Drive quando necessário, apague arquivos locais e saia das contas.</p>
+</div>
+</section>
+
+<section>
+<h2>18. Missão final</h2>
+<div class="card">
+<ol>
+<li>Explique o que é um prompt.</li>
+<li>Transforme uma pergunta vaga em uma pergunta clara.</li>
+<li>Diga por que contexto ajuda.</li>
+<li>Explique por que toda resposta importante precisa ser conferida.</li>
+</ol>
+<p><strong>Regra da turma:</strong> conversar bem com uma IA começa por saber o que você quer perguntar — e termina verificando se a resposta merece confiança.</p>
+</div>
+</section>
+
+<footer>
+<p>SEMAS • Curso de Informática • Módulo 3 — Aula 02</p>
+<p>Como Conversar com a IA (O Jeito Certo de Pedir)</p>
+</footer>
+
+</main>
+
+<script>
+const lessonKey="semas_mod3_aula02_attempt";
+const questions=[
+["O que é um prompt?","A pergunta, pedido ou instrução enviada à IA","A resposta final da IA","Um antivírus","Um tipo de planilha","Prompt é aquilo que enviamos à IA para orientar a resposta."],
+["Qual pedido tende a ser mais claro?","Explique o ciclo da água para um aluno de 10 anos em 5 frases","Fale de água","Me diga coisas","Responda qualquer coisa","Contexto, público e formato ajudam a IA a entender melhor o objetivo."],
+["Para que serve dar contexto?","Para ajudar a IA a adaptar a resposta ao objetivo","Para aumentar a internet","Para evitar abrir o navegador","Para substituir a pergunta","Contexto ajuda a ajustar linguagem, nível e conteúdo."],
+["Podemos pedir um formato específico?","Sim","Não","Somente em inglês","Somente no celular","Podemos pedir lista, tabela, resumo, exemplos e outros formatos."],
+["Se pedirmos para a IA não inventar, ela nunca mais erra?","Não","Sim","Somente no ChatGPT","Somente se a resposta for curta","Pedir cautela ajuda, mas não elimina erros."],
+["Qual é a regra dos três passos desta aula?","Perguntar, pensar e conferir","Perguntar, copiar e entregar","Digitar, salvar e desligar","Buscar, imprimir e apagar","Depois de perguntar, precisamos avaliar e verificar a resposta."],
+["Qual tipo de informação merece verificação extra?","Datas, saúde, dinheiro, leis e notícias","Somente piadas","Somente cores","Somente nomes de arquivos","Informações sensíveis ou mutáveis exigem fontes confiáveis."],
+["Qual é o melhor uso da IA para estudar?","Pedir explicações e exercícios, pensar sobre a resposta e conferir fatos importantes","Mandar fazer tudo e copiar","Nunca questionar","Usar a resposta como única fonte","IA pode ajudar no estudo, mas não deve substituir raciocínio e verificação."]
+];
+let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{
+ const d=document.createElement("div");d.className="quiz-item";
+ d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;
+ quiz.appendChild(d);
+});
+function updateUI(){document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true}}
+updateUI();
+function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===0){score++;a.textContent="Correta! "+q[5]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}});if(!all)return;attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
+function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;updateUI()}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function saveResult(){if(!completed)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return}const prompt=document.getElementById("myPrompt").value.trim();let rows="";questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`});const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}.prompt{padding:12px;background:#f2f5f8;border-radius:8px}</style></head><body><h1>SEMAS — Módulo 3 — Aula 02</h1><h2>Como Conversar com a IA</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}</p>${prompt?`<p><strong>Meu prompt:</strong></p><div class="prompt">${esc(prompt)}</div>`:""}<table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. O objetivo é aprender a pedir melhor e verificar melhor.</p></body></html>`;const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");a.href=url;a.download=`SEMAS_Modulo_3_Aula_02_${safe}.html`;a.click();URL.revokeObjectURL(url)}
+function finishSession(){if(!confirm("Encerrar a sessão e limpar esta aula neste navegador?"))return;sessionStorage.removeItem(lessonKey);location.reload()}
+</script>
+</body>
+</html>

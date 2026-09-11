@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 1 — Aula 04 — Os Cabos de Internet e Suas Cores</title>
+<style>
+:root{
+  --bg:#08101d;--card:#111b2e;--card2:#0d1728;--ink:#eef5ff;--muted:#afbdd4;
+  --accent:#69ddff;--accent2:#9dffb7;--warn:#ffd479;--danger:#ff9d9d;--line:#293955;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 15% 0%,#173053 0,transparent 28%),linear-gradient(135deg,#070c16,#0c1628 55%,#0e1d34);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1000px;margin:auto;padding:24px 18px 70px}
+.hero{padding:40px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#23517a,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}
+.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)} h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)} .warning{border-left:4px solid var(--warn);background:#251f12}
+.pc{border-left:4px solid var(--accent)} .phone{border-left:4px solid #bd9cff}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.diagram{border:1px solid var(--line);border-radius:18px;padding:14px;background:#081321}
+.wires{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-top:12px}
+.wire{min-height:72px;border-radius:10px;border:1px solid #ffffff33;display:flex;align-items:end;justify-content:center;padding:6px;font-size:.78rem;font-weight:800;text-align:center;color:#06111a}
+.w1{background:linear-gradient(90deg,#fff 50%,#ff8c24 50%)} .w2{background:#ff8c24}
+.w3{background:linear-gradient(90deg,#fff 50%,#3bb95f 50%)} .w4{background:#4e79d9}
+.w5{background:linear-gradient(90deg,#fff 50%,#4e79d9 50%)} .w6{background:#3bb95f}
+.w7{background:linear-gradient(90deg,#fff 50%,#8b5a2b 50%)} .w8{background:#8b5a2b;color:#fff}
+.b1{background:linear-gradient(90deg,#fff 50%,#3bb95f 50%)} .b2{background:#3bb95f}
+.b3{background:linear-gradient(90deg,#fff 50%,#ff8c24 50%)} .b4{background:#4e79d9}
+.b5{background:linear-gradient(90deg,#fff 50%,#4e79d9 50%)} .b6{background:#ff8c24}
+.b7{background:linear-gradient(90deg,#fff 50%,#8b5a2b 50%)} .b8{background:#8b5a2b;color:#fff}
+.big{font-size:clamp(2rem,7vw,4rem);font-weight:1000;color:var(--accent)}
+.command{font-family:Consolas,monospace;padding:4px 8px;border-radius:8px;background:#07101e;color:#ffd479}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+.links a:hover{text-decoration:underline;background:#13233a}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.mode-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.mode-panel{display:none;margin-top:14px}.mode-panel.active{display:block}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px 11px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.quiz-item label:hover{background:#16243b}
+.answer{margin-top:10px;color:var(--muted)}#result{font-size:1.1rem;font-weight:800;margin-top:18px}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:720px){main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.wires{grid-template-columns:repeat(4,1fr)}.mode-buttons{display:grid;grid-template-columns:1fr}button{width:100%;min-height:48px}.quiz-item label{padding:13px 12px}}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 1 • Aula 04</div>
+<h1>Os Cabos de Internet e Suas Cores</h1>
+<p class="lead">Hoje vamos olhar de perto o cabo de rede usado em computadores, switches e roteadores. Por fora ele parece simples; por dentro existem <strong>quatro pares de fios trançados</strong> organizados em cores.</p>
+<p><strong>Desafio da aula:</strong> reconhecer um cabo UTP, identificar o conector usado em Ethernet e entender por que a ordem dos fios importa.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>5 min</strong>Pergunta inicial</div>
+<div class="slot"><strong>12 min</strong>Cabo UTP</div>
+<div class="slot"><strong>10 min</strong>Conector</div>
+<div class="slot"><strong>15 min</strong>Cores e pares</div>
+<div class="slot"><strong>8 min</strong>Limite de 100 m</div>
+<div class="slot"><strong>7 min</strong>Atividade</div>
+<div class="slot"><strong>3 min</strong>Quiz/relatório</div>
+</div>
+</section>
+
+<section>
+<h2>2. O que você vai aprender</h2>
+<div class="grid">
+<div class="card goal"><h3>🧵 UTP</h3><p>Reconhecer o cabo de pares trançados usado em muitas redes Ethernet.</p></div>
+<div class="card goal"><h3>🔌 RJ45</h3><p>Identificar o conector transparente usado popularmente com cabos de rede Ethernet.</p></div>
+<div class="card goal"><h3>🎨 Cores</h3><p>Entender por que os oito fios seguem uma ordem padronizada.</p></div>
+<div class="card goal"><h3>📏 Distância</h3><p>Aprender por que 100 metros é uma referência importante para Ethernet em cobre.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. A pergunta que abre a aula</h2>
+<div class="card">
+<p>Se o cabo de rede tem oito fios coloridos, <strong>por que não podemos colocá-los em qualquer ordem?</strong></p>
+<p>E por que eles aparecem enrolados em pares dentro do cabo?</p>
+</div>
+</section>
+
+<section>
+<h2>4. O que é um cabo UTP?</h2>
+<div class="grid">
+<div class="card">
+<div class="big">UTP</div>
+<h3>Unshielded Twisted Pair</h3>
+<p>É um cabo de <strong>pares trançados sem blindagem metálica geral</strong>. Ele é muito usado em redes Ethernet.</p>
+</div>
+<div class="card">
+<h3>🎨 Azul ou cinza?</h3>
+<p>A capa externa pode ser azul, cinza, preta, branca ou de outras cores. <strong>A cor da capa não define a função elétrica do cabo.</strong></p>
+</div>
+</div>
+
+<div class="card warning" style="margin-top:14px">
+<h3>O importante está por dentro</h3>
+<p>Dentro do cabo existem quatro pares: azul, laranja, verde e marrom, cada um formado por um fio de cor sólida e outro branco com a cor correspondente.</p>
+</div>
+</section>
+
+<section>
+<h2>5. Por que os fios são trançados?</h2>
+<div class="grid">
+<div class="card"><h3>🌀 Pares trançados</h3><p>Os fios de cada par são enrolados um no outro.</p></div>
+<div class="card"><h3>📉 Menos interferência</h3><p>O trançamento ajuda a reduzir interferências elétricas e a interferência entre os próprios pares.</p></div>
+<div class="card"><h3>📡 Sinal mais confiável</h3><p>A organização dos pares ajuda o sistema a transportar dados com mais confiabilidade.</p></div>
+</div>
+</section>
+
+<section>
+<h2>6. O conector “RJ45”</h2>
+<p>No uso cotidiano, chamamos de <strong>RJ45</strong> o conector transparente de oito posições usado em cabos Ethernet de cobre.</p>
+
+<div class="diagram">
+<svg viewBox="0 0 800 320" role="img" aria-label="Ilustração didática de um conector de rede de oito posições">
+  <rect x="180" y="70" width="440" height="160" rx="28" fill="#d8ecff22" stroke="#69ddff" stroke-width="5"/>
+  <rect x="245" y="30" width="310" height="55" rx="14" fill="#d8ecff18" stroke="#69ddff" stroke-width="4"/>
+  <text x="400" y="62" fill="#afbdd4" text-anchor="middle" font-size="20">trava plástica</text>
+  <g fill="#ffd479">
+    <rect x="225" y="170" width="35" height="45"/><rect x="270" y="170" width="35" height="45"/>
+    <rect x="315" y="170" width="35" height="45"/><rect x="360" y="170" width="35" height="45"/>
+    <rect x="405" y="170" width="35" height="45"/><rect x="450" y="170" width="35" height="45"/>
+    <rect x="495" y="170" width="35" height="45"/><rect x="540" y="170" width="35" height="45"/>
+  </g>
+  <text x="400" y="275" fill="#9dffb7" text-anchor="middle" font-size="24">8 contatos • 8 fios</text>
+</svg>
+</div>
+
+<div class="card warning" style="margin-top:14px">
+<h3>Nome popular</h3>
+<p>Em redes, “RJ45” é o nome popular mais usado. Tecnicamente, muitos desses conectores Ethernet são do formato <strong>8P8C</strong>. Para esta turma, reconhecer a função é mais importante que decorar essa nomenclatura.</p>
+</div>
+</section>
+
+<section>
+<h2>7. Por que a ordem das cores importa?</h2>
+<p>Os oito fios precisam chegar aos contatos certos. Para isso existem padrões de organização. Dois muito conhecidos são <strong>T568A</strong> e <strong>T568B</strong>.</p>
+
+<div class="card">
+<h3>T568B — exemplo muito comum</h3>
+<div class="wires">
+<div class="wire w1">1<br>Branco/Laranja</div><div class="wire w2">2<br>Laranja</div>
+<div class="wire w3">3<br>Branco/Verde</div><div class="wire w4">4<br>Azul</div>
+<div class="wire w5">5<br>Branco/Azul</div><div class="wire w6">6<br>Verde</div>
+<div class="wire w7">7<br>Branco/Marrom</div><div class="wire w8">8<br>Marrom</div>
+</div>
+</div>
+
+<div class="card" style="margin-top:14px">
+<h3>T568A</h3>
+<div class="wires">
+<div class="wire b1">1<br>Branco/Verde</div><div class="wire b2">2<br>Verde</div>
+<div class="wire b3">3<br>Branco/Laranja</div><div class="wire b4">4<br>Azul</div>
+<div class="wire b5">5<br>Branco/Azul</div><div class="wire b6">6<br>Laranja</div>
+<div class="wire b7">7<br>Branco/Marrom</div><div class="wire b8">8<br>Marrom</div>
+</div>
+</div>
+
+<div class="card warning" style="margin-top:14px">
+<h3>Não é “qualquer sequência bonita”</h3>
+<p>A ordem mantém os pares nos contatos previstos pelo padrão. Um cabo montado incorretamente pode não funcionar ou apresentar problemas de comunicação.</p>
+</div>
+</section>
+
+<section>
+<h2>8. E o limite de 100 metros?</h2>
+<div class="grid">
+<div class="card">
+<div class="big">100 m</div>
+<h3>Referência Ethernet em cobre</h3>
+<p>Para Ethernet convencional em cabos de cobre de pares trançados, <strong>100 metros</strong> é uma referência clássica de comprimento máximo de segmento/canal conforme a tecnologia e o padrão.</p>
+</div>
+<div class="card">
+<h3>Não é um penhasco</h3>
+<p>Isso não significa que no centímetro 100,01 m o sinal “desaparece”. Significa que, além do limite especificado, o desempenho já não é garantido pelo padrão.</p>
+</div>
+</div>
+
+<div class="card warning" style="margin-top:14px">
+<h3>Canal completo</h3>
+<p>Em cabeamento estruturado, costuma-se considerar o conjunto do enlace, incluindo cabos de conexão. Por isso um projeto profissional não simplesmente mede “100 m de cabo solto” e pronto.</p>
+</div>
+</section>
+
+<section>
+<h2>9. Atividade prática: olhando sem crimpagem</h2>
+<div class="mode-buttons">
+<button onclick="showMode('pc')">🏫 Estou na SEMAS</button>
+<button class="secondary" onclick="showMode('phone')">📱 Estou acompanhando pelo celular</button>
+</div>
+
+<div id="pcMode" class="mode-panel">
+<div class="card pc">
+<h3>🏫 No laboratório</h3>
+<ol>
+<li>Observe um cabo de rede pronto fornecido pelo professor.</li>
+<li>Identifique o conector transparente e a trava plástica.</li>
+<li>Olhe através do conector e tente contar os oito contatos.</li>
+<li>Se houver um pequeno pedaço de cabo preparado para demonstração, observe os quatro pares coloridos.</li>
+<li>Compare visualmente a ordem com T568A ou T568B.</li>
+<li><strong>Não corte nem crimpe cabos instalados no laboratório.</strong></li>
+</ol>
+</div>
+</div>
+
+<div id="phoneMode" class="mode-panel">
+<div class="card phone">
+<h3>📱 Pelo celular</h3>
+<ol>
+<li>Observe as duas sequências de cores desta aula.</li>
+<li>Conte quantos fios existem e quantos pares eles formam.</li>
+<li>Explique por que o trançamento é importante.</li>
+<li>Procure em casa apenas por um cabo Ethernet desconectado, se houver. Não retire cabos de equipamentos em uso.</li>
+</ol>
+</div>
+</div>
+</section>
+
+<section>
+<h2>10. Você sabia?</h2>
+<div class="grid">
+<div class="card"><h3>🧰 Crimpagem</h3><p>Montar conectores corretamente exige ferramenta, cuidado e teste. Podemos estudar isso em uma oficina prática futura.</p></div>
+<div class="card"><h3>📊 Categorias</h3><p>Existem Cat5e, Cat6, Cat6A e outras categorias com características diferentes. Hoje o foco é entender o princípio.</p></div>
+<div class="card"><h3>🧪 Profissionais testam</h3><p>Técnicos usam testadores de cabo para verificar continuidade, mapa dos fios, distância até falhas e desempenho.</p></div>
+</div>
+</section>
+
+<section>
+<h2>11. Pesquise depois — links em português</h2>
+<div class="links">
+<a href="https://www.cisco.com/c/pt_br/support/docs/routers/10000-series-routers/46792-ethbase.html" target="_blank" rel="noopener">🔎 Cisco — Especificações Ethernet e limite de 100 metros</a>
+<a href="https://www.cisco.com/c/pt_br/support/docs/lan-switching/ethernet/12006-chapter22.html" target="_blank" rel="noopener">🔎 Cisco — Cabos UTP e solução de problemas em Ethernet</a>
+<a href="https://pt.flukenetworks.com/content/copper-cable-testers-selection-guide" target="_blank" rel="noopener">🔎 Fluke Networks — Testes de cabeamento de cobre</a>
+</div>
+</section>
+
+<section>
+<h2>12. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é reconhecer os elementos básicos do cabeamento.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+
+<div class="savebox">
+<h3>Salvar meu registro da aula</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+<p class="notice">Na SEMAS: envie por e-mail, salve no Drive, apague o arquivo local e encerre a sessão.</p>
+</div>
+</section>
+
+<section>
+<h2>13. Missão final</h2>
+<div class="card">
+<ol>
+<li>Explique por que existem pares trançados.</li>
+<li>Diga por que a ordem das cores importa.</li>
+<li>Explique o que significa o limite de 100 metros.</li>
+</ol>
+<p><strong>Regra da turma:</strong> um cabo parece simples por fora, mas sua organização interna é parte da tecnologia da rede.</p>
+</div>
+</section>
+
+<footer>
+<p>SEMAS • Curso de Informática • Módulo 1 — Aula 04</p>
+<p>Os Cabos de Internet e Suas Cores</p>
+</footer>
+
+</main>
+
+<script>
+const lessonKey="semas_mod1_aula04_attempt";
+const questions=[
+["O que significa UTP?","Cabo de pares trançados sem blindagem geral","Um tipo de roteador","Uma memória externa","Um protocolo de e-mail","UTP significa Unshielded Twisted Pair: pares trançados sem blindagem geral."],
+["Quantos fios existem num cabo Ethernet comum de quatro pares?","8","2","4","16","Quatro pares correspondem a oito fios."],
+["Por que os fios são trançados em pares?","Para ajudar a reduzir interferências","Para deixar o cabo mais bonito","Para aumentar o peso","Para guardar energia","O trançamento ajuda a reduzir interferência e diafonia entre sinais."],
+["O que chamamos popularmente de RJ45?","O conector transparente de oito posições usado em muitos cabos Ethernet","Uma antena Wi-Fi","Um switch","Um endereço IP","RJ45 é o nome popular usado para o conector 8P8C de Ethernet."],
+["Por que a ordem das cores importa?","Porque os fios precisam chegar aos contatos corretos conforme o padrão","Porque a cor muda a velocidade sozinha","Porque azul sempre significa internet","Porque o cabo funciona igual em qualquer ordem","Padrões como T568A e T568B definem a posição dos pares e contatos."],
+["Qual destes é um padrão de organização de cores?","T568B","IPv4","DNS","CMD","T568A e T568B são padrões de terminação de cabeamento."],
+["O que significa a referência de 100 metros em Ethernet de cobre?","É um limite especificado para o segmento/canal em tecnologias padronizadas, além do qual o desempenho não é garantido","O sinal desliga exatamente em 100,01 m","Todo cabo de 101 m é proibido por lei","É o comprimento do conector","100 m é uma referência técnica de alcance máximo especificado, não um corte mágico de sinal."],
+["Qual atitude é correta no laboratório?","Observar cabos e conectores sem cortar ou desmontar a rede instalada","Puxar qualquer cabo para ver onde vai","Cortar um cabo ativo","Trocar a ordem dos fios sem autorização","A atividade deve ser de observação segura e controlada."]
+];
+
+let attempt=Number(sessionStorage.getItem(lessonKey)||0);
+let completed=false,lastScore=null,startedAt=Date.now(),finishedAt=null,currentMode="não informado";
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{const d=document.createElement("div");d.className="quiz-item";d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;quiz.appendChild(d);});
+function formatTime(ms){const s=Math.max(0,Math.round(ms/1000)),m=Math.floor(s/60),sec=s%60;return `${m}min ${String(sec).padStart(2,"0")}s`;}
+function showMode(mode){currentMode=mode==="pc"?"SEMAS — computador":"Casa/fora da SEMAS — celular";document.getElementById("pcMode").classList.toggle("active",mode==="pc");document.getElementById("phoneMode").classList.toggle("active",mode==="phone");}
+function updateUI(){const r=document.getElementById("result");if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true;if(!completed)r.innerHTML="<strong>Duas tentativas foram usadas nesta sessão.</strong><br>Em uma nova sessão, o quiz começa novamente.";}else if(!completed){r.innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;}}
+updateUI();
+function checkQuiz(){
+ if(attempt>=2)return;let score=0,all=true,wrong=[];
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return;}if(+s.value===0){score++;a.textContent="Correta! "+q[5];}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5];}});
+ if(!all){document.getElementById("result").innerHTML="<strong>Responda todas as perguntas antes de finalizar.</strong>";return;}
+ attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;finishedAt=Date.now();
+ document.getElementById("result").innerHTML=`<strong>Resultado da tentativa ${attempt}: ${score} de ${questions.length}.</strong><br>Tempo: ${formatTime(finishedAt-startedAt)}.<br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas as questões foram respondidas corretamente."}<br><span style="color:var(--muted)">Não existe nota mínima: o objetivo é entender a organização do cabo.</span>`;
+ document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true);updateUI();
+}
+function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false;});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;startedAt=Date.now();finishedAt=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;document.getElementById("result").innerHTML=`Tentativa ${attempt+1} disponível.`;}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+function saveResult(){
+ if(!completed||lastScore===null)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return;}
+ const now=new Date();let rows="",wrong=[];
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;if(n!==0)wrong.push(i+1);rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;});
+ const report=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SEMAS - Módulo 1 Aula 04 - ${esc(name)}</title><style>body{font-family:Arial,sans-serif;max-width:950px;margin:30px auto;padding:18px;color:#172033;line-height:1.5}h1{color:#123b55}.meta{padding:18px;background:#f1f5f8;border-radius:10px}table{border-collapse:collapse;width:100%;margin-top:15px}th,td{border:1px solid #ccd3dc;padding:8px;text-align:left;vertical-align:top}th{background:#eaf2f7}.note{padding:14px;background:#fff8df;border-radius:8px}</style></head><body><h1>SEMAS — Módulo 1 — Aula 04</h1><h2>Os Cabos de Internet e Suas Cores</h2><div class="meta"><strong>Aluno:</strong> ${esc(name)}<br><strong>Data e hora:</strong> ${now.toLocaleString("pt-BR")}<br><strong>Modo:</strong> ${esc(currentMode)}<br><strong>Tentativa:</strong> ${attempt} de 2<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Tempo:</strong> ${formatTime(finishedAt-startedAt)}</div><p class="note"><strong>Não existe nota mínima.</strong> Este relatório registra uma atividade de aprendizagem.</p><p><strong>Questões para revisar:</strong> ${wrong.length?wrong.join(", "):"nenhuma"}.</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Envie por e-mail ao professor, salve no Drive e apague o arquivo local do computador compartilhado.</p></body></html>`;
+ const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
+ a.href=url;a.download=`SEMAS_Modulo_1_Aula_04_${safe}_Tentativa_${attempt}.html`;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+}
+function finishSession(){
+ if(!confirm("Encerrar a sessão e limpar respostas desta aula neste navegador?"))return;
+ sessionStorage.removeItem(lessonKey);document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false;});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");document.getElementById("studentName").value="";document.getElementById("saveBtn").disabled=true;document.getElementById("checkBtn").disabled=false;attempt=0;completed=false;lastScore=null;startedAt=Date.now();finishedAt=null;currentMode="não informado";document.getElementById("pcMode").classList.remove("active");document.getElementById("phoneMode").classList.remove("active");document.getElementById("result").innerHTML="Sessão encerrada. Este navegador está pronto para o próximo aluno.";window.scrollTo({top:0,behavior:"smooth"});
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 3 — Aula 07 — Fake News e os Perigos da IA</title>
+<style>
+:root{
+  --bg:#07101c;--card:#101b2d;--card2:#0b1525;--ink:#eff7ff;--muted:#afbed3;
+  --accent:#74dcff;--accent2:#a5ffb7;--warn:#ffd37b;--danger:#ff9e9e;--line:#2a3a54;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 15% 0%,#18345a 0,transparent 30%),linear-gradient(135deg,#070c15,#0c1628 55%,#102039);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1040px;margin:auto;padding:24px 18px 70px}
+.hero{padding:42px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#245684,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)}h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)}.warning{border-left:4px solid var(--warn);background:#251f12}.danger{border-left:4px solid var(--danger);background:#29171b}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.prompt{font-family:Consolas,monospace;background:#07101e;color:#ffd479;padding:14px;border-radius:10px;white-space:pre-wrap}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.step{counter-increment:s;padding:16px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.step:before{content:counter(s);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#07101e;font-weight:900}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}.good{border-left:4px solid var(--accent2)}.bad{border-left:4px solid var(--danger)}
+.checkline{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.checkline .card{text-align:center}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}button:disabled{opacity:.5}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.answer{margin-top:10px;color:var(--muted)}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input,.savebox textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}
+details{margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425}
+summary{cursor:pointer;font-weight:850;color:var(--accent2)}
+footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:760px){main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.compare,.checkline{grid-template-columns:1fr}button{width:100%;min-height:48px}}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 3 • Aula 07</div>
+<h1>Fake News e os Perigos da IA</h1>
+<p class="lead">Na internet, uma notícia falsa pode viajar mais rápido do que a correção. A IA também pode criar imagens, vídeos e vozes muito convincentes. Por isso, uma habilidade importante hoje é <strong>saber parar, verificar e pensar antes de compartilhar</strong>.</p>
+<p><strong>Desafio da aula:</strong> aprender a identificar sinais de conteúdo duvidoso, entender o que é deepfake e praticar uma rotina simples de checagem.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>7 min</strong>Fake news</div>
+<div class="slot"><strong>10 min</strong>Deepfakes</div>
+<div class="slot"><strong>12 min</strong>Como verificar</div>
+<div class="slot"><strong>10 min</strong>Exercício de checagem</div>
+<div class="slot"><strong>10 min</strong>Ética e bullying</div>
+<div class="slot"><strong>6 min</strong>Atividade</div>
+<div class="slot"><strong>5 min</strong>Quiz/relatório</div>
+</div>
+</section>
+
+<section>
+<h2>2. O que você vai aprender</h2>
+<div class="grid">
+<div class="card goal"><h3>📰 Fake news</h3><p>Entender o que é conteúdo falso ou enganoso.</p></div>
+<div class="card goal"><h3>🎭 Deepfake</h3><p>Entender como IA pode criar ou manipular imagem, vídeo e voz.</p></div>
+<div class="card goal"><h3>🔎 Checagem</h3><p>Verificar fonte, data e confirmação antes de compartilhar.</p></div>
+<div class="card goal"><h3>🤝 Ética</h3><p>Usar IA sem prejudicar colegas, professores ou familiares.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. O que são fake news?</h2>
+<p>“Fake news” é uma expressão usada para falar de conteúdos falsos ou enganosos apresentados como se fossem notícia verdadeira.</p>
+<div class="card warning">
+<h3>Nem todo erro é a mesma coisa</h3>
+<p>Uma pessoa pode compartilhar algo errado sem intenção. Outra pode criar um conteúdo falso de propósito para enganar. Para nossa aula, o importante é aprender a <strong>não espalhar antes de verificar</strong>.</p>
+</div>
+</section>
+
+<section>
+<h2>4. Por que elas funcionam?</h2>
+<div class="grid">
+<div class="card"><h3>😱 Choque</h3><p>Mensagens assustadoras fazem a pessoa querer compartilhar rápido.</p></div>
+<div class="card"><h3>😡 Raiva</h3><p>Conteúdo que provoca emoção forte pode diminuir nossa atenção.</p></div>
+<div class="card"><h3>👥 Grupo</h3><p>Receber de alguém conhecido não transforma a informação em verdadeira.</p></div>
+<div class="card"><h3>⚡ Pressa</h3><p>“Compartilhe antes que apaguem!” é um sinal para diminuir a velocidade, não acelerar.</p></div>
+</div>
+</section>
+
+<section>
+<h2>5. O que é deepfake?</h2>
+<p>Deepfake é um tipo de conteúdo sintético ou manipulado que pode usar inteligência artificial para criar ou alterar <strong>imagem, vídeo ou áudio</strong> de forma muito convincente.</p>
+<div class="grid">
+<div class="card"><h3>🖼️ Foto falsa</h3><p>Pode mostrar alguém em uma situação que nunca existiu.</p></div>
+<div class="card"><h3>🎥 Vídeo falso</h3><p>Pode fazer parecer que uma pessoa fez ou disse algo.</p></div>
+<div class="card"><h3>🎙️ Voz falsa</h3><p>Pode imitar características de uma voz para parecer real.</p></div>
+</div>
+<div class="card danger">
+<h3>Ver ou ouvir não é mais prova suficiente</h3>
+<p>Conteúdos gerados por IA podem parecer realistas. Isso torna a checagem ainda mais importante.</p>
+</div>
+</section>
+
+<section>
+<h2>6. Não existe “detector pelos olhos” perfeito</h2>
+<p>Às vezes aparecem sinais estranhos — boca, sombra, movimento, voz, mãos, texto — mas imagens e vídeos estão ficando cada vez melhores.</p>
+<div class="card warning">
+<h3>Não dependa apenas de “parece falso”</h3>
+<p>Uma imagem verdadeira pode parecer estranha e uma imagem falsa pode parecer perfeita. A checagem deve olhar também para <strong>origem, contexto, data e outras fontes</strong>.</p>
+</div>
+</section>
+
+<section>
+<h2>7. Regra dos 5 passos antes de compartilhar</h2>
+<div class="checkline">
+<div class="card"><h3>1. PARE</h3><p>Não encaminhe no impulso.</p></div>
+<div class="card"><h3>2. FONTE</h3><p>Quem publicou?</p></div>
+<div class="card"><h3>3. DATA</h3><p>É de hoje ou antiga?</p></div>
+<div class="card"><h3>4. CONFIRME</h3><p>Outra fonte confiável publicou?</p></div>
+<div class="card"><h3>5. COMPARTILHE?</h3><p>Só depois de verificar.</p></div>
+</div>
+</section>
+
+<section>
+<h2>8. Veja o endereço e a origem</h2>
+<div class="grid">
+<div class="card"><h3>Site conhecido?</h3><p>Confira o domínio e quem é responsável pela publicação.</p></div>
+<div class="card"><h3>Perfil oficial?</h3><p>Nome e foto parecidos podem enganar.</p></div>
+<div class="card"><h3>Link estranho?</h3><p>Erros no endereço podem indicar imitação de um site conhecido.</p></div>
+<div class="card"><h3>Sem autor/fonte?</h3><p>Quanto menos origem verificável, mais cuidado.</p></div>
+</div>
+</section>
+
+<section>
+<h2>9. Veja a data</h2>
+<p>Uma notícia verdadeira de anos atrás pode ser compartilhada como se tivesse acontecido hoje.</p>
+<div class="compare">
+<div class="card bad"><h3>❌ Compartilhamento enganoso</h3><p>“Olha o que aconteceu hoje!” — mas a notícia é de 2019.</p></div>
+<div class="card good"><h3>✅ Checagem</h3><p>Abra a matéria e confirme a data original antes de acreditar no texto da mensagem.</p></div>
+</div>
+</section>
+
+<section>
+<h2>10. Procure confirmação</h2>
+<p>Se uma notícia importante é verdadeira, é comum que existam outras fontes confiáveis falando do mesmo fato.</p>
+<div class="prompt">Pesquise o assunto em outra fonte confiável.
+Compare:
+- data;
+- local;
+- pessoas envolvidas;
+- números;
+- contexto.</div>
+<div class="card warning">
+<h3>Não pergunte apenas à IA “isso é verdade?”</h3>
+<p>A IA também pode errar. Para checagem, prefira encontrar a <strong>fonte original e outras fontes confiáveis</strong>.</p>
+</div>
+</section>
+
+<section>
+<h2>11. Antes de mandar no grupo da família</h2>
+<div class="steps">
+<div class="step"><h3>Respire a pressa</h3><p>Mensagem urgente merece mais cuidado.</p></div>
+<div class="step"><h3>Abra o conteúdo</h3><p>Não compartilhe só pelo título ou imagem.</p></div>
+<div class="step"><h3>Confira fonte e data</h3><p>Veja quem publicou e quando.</p></div>
+<div class="step"><h3>Pesquise</h3><p>Procure confirmação independente.</p></div>
+<div class="step"><h3>Se não souber</h3><p>Não encaminhe.</p></div>
+</div>
+</section>
+
+<section>
+<h2>12. Exercício: qual mensagem merece desconfiança?</h2>
+
+<details>
+<summary>Mensagem A</summary>
+<div class="prompt">URGENTE!!! O governo vai bloquear todos os celulares hoje à noite. Compartilhe com todo mundo antes que apaguem esta mensagem!</div>
+<p><strong>Sinais:</strong> urgência extrema, pedido para compartilhar, ausência de fonte e afirmação muito grande sem prova.</p>
+</details>
+
+<details>
+<summary>Mensagem B</summary>
+<div class="prompt">Aviso publicado no site oficial da prefeitura, com data, número do comunicado e contato do órgão responsável.</div>
+<p><strong>Ainda deve ser conferida</strong>, mas possui elementos de origem que podem ser verificados.</p>
+</details>
+</section>
+
+<section>
+<h2>13. IA e bullying: uma linha que não devemos cruzar</h2>
+<div class="grid">
+<div class="card danger"><h3>📷 Foto de colega</h3><p>Não transformar a foto de alguém para ridicularizá-lo ou colocá-lo em situação falsa.</p></div>
+<div class="card danger"><h3>🎙️ Voz de professor</h3><p>Não criar áudio fingindo que uma pessoa disse algo que nunca disse.</p></div>
+<div class="card danger"><h3>💬 Boato</h3><p>Não usar IA para inventar mensagens, histórias ou acusações sobre alguém.</p></div>
+<div class="card danger"><h3>🔁 Compartilhar também machuca</h3><p>Mesmo quem não criou pode ampliar o dano ao encaminhar.</p></div>
+</div>
+</section>
+
+<section>
+<h2>14. E usar IA para fazer dever?</h2>
+<div class="compare">
+<div class="card bad">
+<h3>❌ Colar</h3>
+<div class="prompt">Faça meu trabalho completo para eu entregar como se fosse meu.</div>
+<p>Você entrega algo que não demonstra o que aprendeu.</p>
+</div>
+<div class="card good">
+<h3>✅ Aprender</h3>
+<div class="prompt">Explique o assunto, faça 3 perguntas para eu treinar e depois revise a resposta que eu escrever.</div>
+<p>A IA ajuda no processo, mas o pensamento e a autoria continuam com o aluno.</p>
+</div>
+</div>
+</section>
+
+<section>
+<h2>15. Regras éticas da turma</h2>
+<div class="steps">
+<div class="step"><h3>Não enganar</h3><p>Não usar IA para fingir que algo falso é real.</p></div>
+<div class="step"><h3>Não humilhar</h3><p>Não transformar fotos ou vozes para atacar alguém.</p></div>
+<div class="step"><h3>Não copiar</h3><p>Não apresentar como seu um trabalho que você não fez.</p></div>
+<div class="step"><h3>Não expor</h3><p>Não colocar dados pessoais de terceiros em ferramentas.</p></div>
+<div class="step"><h3>Corrigir</h3><p>Se perceber que compartilhou algo falso, avise quem recebeu.</p></div>
+</div>
+</section>
+
+<section>
+<h2>16. Atividade prática: Detetive Digital</h2>
+<p>O professor apresentará 3 exemplos de mensagens, notícias ou imagens educativas. Para cada uma, o aluno deverá preencher:</p>
+<div class="prompt">1. Quem publicou?
+2. Qual é a data?
+3. Existe fonte original?
+4. Outra fonte confiável confirma?
+5. A mensagem tenta provocar medo, raiva ou pressa?
+6. Eu compartilharia? Por quê?</div>
+<div class="card warning">
+<h3>A atividade não é “adivinhar pela aparência”</h3>
+<p>A resposta deve mostrar o caminho de verificação.</p>
+</div>
+</section>
+
+<section>
+<h2>17. Se você for alvo de uma montagem</h2>
+<div class="card danger">
+<p>Não responda criando outra montagem. Guarde evidências, não espalhe mais o conteúdo e procure um adulto responsável, professor ou responsável pela instituição para pedir ajuda.</p>
+</div>
+</section>
+
+<section>
+<h2>18. 🏠 Para rever em casa — 10 minutos</h2>
+<div class="card">
+<p>Ensine para alguém da sua casa a regra:</p>
+<p><strong>PARE → FONTE → DATA → CONFIRME → COMPARTILHE?</strong></p>
+<p>Depois peça para essa pessoa escolher uma mensagem antiga recebida em algum grupo e verificar apenas duas coisas: <strong>quem publicou originalmente e qual é a data</strong>.</p>
+</div>
+</section>
+
+<section>
+<h2>19. Pesquise depois — fontes confiáveis</h2>
+<div class="links">
+<a href="https://cartilha.cert.br/" target="_blank" rel="noopener">🔎 CERT.br — Cartilha de Segurança para Internet</a>
+<a href="https://www.gov.br/secom/pt-br/assuntos/educacao-midiatica" target="_blank" rel="noopener">🔎 Governo Federal — Educação Midiática</a>
+<a href="https://www.unesco.org/en/articles/ai-can-make-mistakes-why-media-literacy-matters-more-ever" target="_blank" rel="noopener">🔎 UNESCO — IA, erros e educação midiática</a>
+<a href="https://www.unesco.org/en/articles/deepfakes-and-crisis-knowing" target="_blank" rel="noopener">🔎 UNESCO — Deepfakes e confiança na informação</a>
+</div>
+</section>
+
+<section>
+<h2>20. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é formar o hábito de verificar antes de acreditar ou compartilhar.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+
+<div class="savebox">
+<h3>Salvar meu registro da aula</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<textarea id="checkNote" rows="5" placeholder="Opcional: escreva aqui uma regra de checagem que você quer lembrar."></textarea>
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+<p class="notice">Na SEMAS: envie conforme orientação, salve no Drive quando necessário, apague arquivos locais e saia das contas.</p>
+</div>
+</section>
+
+<section>
+<h2>21. Missão final</h2>
+<div class="card">
+<ol>
+<li>Explique o que é fake news.</li>
+<li>Explique o que é um deepfake.</li>
+<li>Repita os 5 passos antes de compartilhar.</li>
+<li>Diga por que uma foto ou voz não é mais prova suficiente sozinha.</li>
+<li>Explique por que usar IA para humilhar alguém é errado.</li>
+</ol>
+<p><strong>Regra da turma:</strong> na internet, compartilhar também é uma decisão. Se você não conseguiu verificar, não precisa encaminhar.</p>
+</div>
+</section>
+
+<footer>
+<p>SEMAS • Curso de Informática • Módulo 3 — Aula 07</p>
+<p>Fake News e os Perigos da IA</p>
+</footer>
+
+</main>
+
+<script>
+const lessonKey="semas_mod3_aula07_attempt";
+const questions=[
+["O que devemos fazer antes de compartilhar uma notícia duvidosa?","Verificar fonte, data e confirmação","Compartilhar primeiro","Perguntar apenas para uma IA","Acreditar se veio da família","A origem, a data e outras fontes ajudam a verificar a informação."],
+["O que é deepfake?","Conteúdo sintético ou manipulado que pode alterar imagem, vídeo ou voz de forma convincente","Um antivírus","Um tipo de planilha","Uma senha forte","Deepfakes podem criar mídia falsa com aparência ou som realista."],
+["Uma imagem que parece perfeita é prova de que é verdadeira?","Não","Sim","Somente se estiver em alta resolução","Somente no WhatsApp","Conteúdo falso pode parecer muito realista."],
+["Qual frase deve aumentar nossa desconfiança?","Compartilhe agora antes que apaguem!","Veja a fonte oficial","Confira a data","Procure outra fonte","Pressa e apelo ao compartilhamento podem ser sinais de manipulação."],
+["Receber uma notícia de alguém conhecido significa que ela é verdadeira?","Não","Sim","Somente se for parente","Somente em áudio","Pessoas conhecidas também podem compartilhar algo errado sem perceber."],
+["É correto usar IA para colocar um colega em uma foto falsa para ridicularizá-lo?","Não","Sim","Se for brincadeira","Se ninguém contar","Isso pode humilhar, enganar e causar dano real."],
+["Qual é um uso ético da IA nos deveres?","Pedir explicações e exercícios para aprender","Entregar texto da IA como se fosse seu","Pedir resposta da prova","Copiar sem ler","A IA deve apoiar o aprendizado, não substituir a autoria do aluno."],
+["Se você não conseguiu verificar uma mensagem, o que fazer?","Não compartilhar","Compartilhar com aviso","Mandar só para a família","Trocar o título","Não encaminhar é a opção mais segura quando a informação não foi verificada."]
+];
+let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{
+ const d=document.createElement("div");d.className="quiz-item";
+ d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;
+ quiz.appendChild(d);
+});
+function updateUI(){document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true}}
+updateUI();
+function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===0){score++;a.textContent="Correta! "+q[5]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}});if(!all)return;attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
+function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;updateUI()}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function saveResult(){
+ if(!completed)return;
+ const name=document.getElementById("studentName").value.trim();
+ if(!name){alert("Digite seu nome completo.");return}
+ const note=document.getElementById("checkNote").value.trim();
+ let rows="";
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`});
+ const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}.note{padding:12px;background:#f2f5f8;border-radius:8px;white-space:pre-wrap}</style></head><body><h1>SEMAS — Módulo 3 — Aula 07</h1><h2>Fake News e os Perigos da IA</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}</p>${note?`<p><strong>Minha regra de checagem:</strong></p><div class="note">${esc(note)}</div>`:""}<table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. O objetivo é verificar antes de acreditar ou compartilhar.</p></body></html>`;
+ const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
+ a.href=url;a.download=`SEMAS_Modulo_3_Aula_07_${safe}.html`;a.click();URL.revokeObjectURL(url);
+}
+function finishSession(){if(!confirm("Encerrar a sessão e limpar esta aula neste navegador?"))return;sessionStorage.removeItem(lessonKey);location.reload()}
+</script>
+</body>
+</html>

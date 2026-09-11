@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 2 — Aula 07 — Planejando uma Mini Empresa da Região</title>
+<style>
+:root{
+  --bg:#08101d;--card:#111b2e;--card2:#0d1728;--ink:#eef5ff;--muted:#afbdd4;
+  --accent:#69ddff;--accent2:#9dffb7;--warn:#ffd479;--danger:#ff9d9d;--line:#293955;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 15% 0%,#173053 0,transparent 28%),linear-gradient(135deg,#070c16,#0c1628 55%,#0e1d34);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1050px;margin:auto;padding:24px 18px 70px}
+.hero{padding:40px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#23517a,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)}h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)}.warning{border-left:4px solid var(--warn);background:#251f12}.pc{border-left:4px solid var(--accent)}.phone{border-left:4px solid #bd9cff}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.excel{overflow:auto;border:1px solid var(--line);border-radius:14px;background:#0a1425}
+.sheet{border-collapse:collapse;min-width:720px;width:100%;background:#fff;color:#222}
+.sheet th,.sheet td{border:1px solid #c7ccd4;padding:10px;text-align:left}
+.sheet .colhead,.sheet .rowhead{background:#e8edf2;font-weight:800;text-align:center}
+.sheet .active{outline:3px solid #2e8b57;outline-offset:-3px;background:#f2fff6}
+.formula{font-family:Consolas,monospace;background:#07101e;color:#ffd479;padding:5px 9px;border-radius:8px}
+.modebar{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}button:disabled{opacity:.5}
+.learn-panel{display:none}.learn-panel.active{display:block}
+.practice-shell{border:1px solid #3b5577;background:#091526;border-radius:18px;padding:18px;position:relative}
+.progress{height:10px;border-radius:999px;background:#1a2940;overflow:hidden;margin:10px 0 20px}
+.progress > div{height:100%;background:linear-gradient(90deg,#69ddff,#9dffb7);width:0;transition:.25s}
+.practice-card{padding:22px;border:1px solid var(--line);border-radius:16px;background:#0d1728}
+.stepnum{font-size:.92rem;color:var(--muted);text-transform:uppercase;font-weight:800}
+.command{font-size:1.45rem;line-height:1.35;font-weight:900;margin:12px 0;color:#fff}
+.memory{padding:12px 14px;border-left:4px solid var(--accent);background:#0a1425;border-radius:8px;margin:14px 0}
+.practice-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.tips{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tip{padding:13px;border:1px solid var(--line);border-radius:12px;background:#091322}
+.kbd{font-family:Consolas,monospace;background:#07101e;color:#ffd479;padding:4px 8px;border-radius:8px;font-weight:900}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.step{counter-increment:s;padding:16px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.step:before{content:counter(s);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#07101e;font-weight:900}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+.mode-buttons{display:flex;flex-wrap:wrap;gap:10px}.mode-panel{display:none;margin-top:14px}.mode-panel.active{display:block}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.answer{margin-top:10px;color:var(--muted)}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:760px){
+ main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}
+ .modebar,.tips{grid-template-columns:1fr}.mode-buttons{display:grid;grid-template-columns:1fr}
+ button{width:100%;min-height:48px}.practice-actions{display:grid}
+}
+</style>
+</head>
+<body>
+<main>
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 2 • Aula 07</div>
+<h1>Planejando uma Mini Empresa da Região</h1>
+<p class="lead">Hoje o Excel vai ajudar a responder perguntas de verdade: <strong>quanto custa produzir, por quanto vender e quanto sobra</strong>. Depois vamos calcular uma compra parcelada simples para uma ferramenta de trabalho.</p>
+<p><strong>Desafio da aula:</strong> montar uma pequena planilha de negócio regional e fazer fórmulas no Excel sem precisar decorar vários passos de uma vez.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>5 min</strong>Ideia de negócio</div>
+<div class="slot"><strong>10 min</strong>Custo, venda e lucro</div>
+<div class="slot"><strong>20 min</strong>Prática guiada no Excel</div>
+<div class="slot"><strong>10 min</strong>Compra em 10 vezes</div>
+<div class="slot"><strong>7 min</strong>Desafio próprio</div>
+<div class="slot"><strong>5 min</strong>Quiz</div>
+<div class="slot"><strong>3 min</strong>Relatório</div>
+</div>
+</section>
+
+<section>
+<h2>2. Escolha como quer usar esta aula</h2>
+<p>Nas aulas de Excel, você pode alternar entre explicação e prática sem tentar memorizar tudo.</p>
+<div class="modebar">
+<button onclick="switchLearn('understand')">📖 Quero entender</button>
+<button class="secondary" onclick="switchLearn('practice')">🧪 Prática guiada</button>
+<button class="secondary" onclick="switchLearn('home')">📱 Rever em casa</button>
+</div>
+</section>
+
+<div id="understand" class="learn-panel active">
+
+<section>
+<h2>3. Pensando como um jovem empreendedor</h2>
+<div class="grid">
+<div class="card goal"><h3>🍬 Doces</h3><p>Ingredientes, embalagem, preço de venda.</p></div>
+<div class="card goal"><h3>🍓 Polpas de frutas</h3><p>Fruta, embalagem, energia/gelo, transporte.</p></div>
+<div class="card goal"><h3>🧺 Artesanato</h3><p>Material, tempo de produção, embalagem.</p></div>
+<div class="card goal"><h3>🌱 Produtos da região</h3><p>Alimentos, plantas, pequenos produtos ou serviços locais.</p></div>
+</div>
+<div class="card warning" style="margin-top:14px">
+<h3>Empreender não é só “vender caro”</h3>
+<p>Primeiro precisamos saber quanto custa produzir. Se o preço de venda for menor que o custo, há prejuízo nessa conta simples.</p>
+</div>
+</section>
+
+<section>
+<h2>4. Três palavras fundamentais</h2>
+<div class="grid">
+<div class="card"><h3>💸 Custo</h3><p>Quanto gastamos para produzir ou comprar aquilo que será vendido.</p></div>
+<div class="card"><h3>🏷️ Preço de venda</h3><p>Quanto o cliente paga pelo produto.</p></div>
+<div class="card"><h3>📈 Lucro simples</h3><p>Nesta atividade: preço de venda menos custo.</p></div>
+</div>
+<p><span class="formula">Lucro = Preço de venda - Custo</span></p>
+<div class="card warning">
+<h3>É uma conta introdutória</h3>
+<p>Um negócio real pode ter outros gastos: transporte, energia, taxas, perdas, aluguel e muitos outros. Hoje estamos aprendendo a lógica básica da planilha.</p>
+</div>
+</section>
+
+<section>
+<h2>5. Veja a planilha antes de abrir o Excel</h2>
+<div class="excel">
+<table class="sheet">
+<tr><th class="colhead"></th><th class="colhead">A</th><th class="colhead">B</th><th class="colhead">C</th><th class="colhead">D</th></tr>
+<tr><th class="rowhead">1</th><td>Produto</td><td>Custo</td><td>Venda</td><td>Lucro</td></tr>
+<tr><th class="rowhead">2</th><td>Polpa de cupuaçu</td><td>4,00</td><td>6,50</td><td class="active">2,50</td></tr>
+<tr><th class="rowhead">3</th><td>Doce</td><td>2,00</td><td>3,50</td><td>1,50</td></tr>
+</table>
+</div>
+<p>Na célula <strong>D2</strong>, podemos escrever <span class="formula">=C2-B2</span>. O Excel calcula o valor da venda menos o custo.</p>
+<p>Fórmulas simples no Excel começam com <strong>=</strong> e podem usar referências de células e operadores matemáticos.</p>
+</section>
+
+<section>
+<h2>6. Dividindo uma compra em 10 partes iguais</h2>
+<p>Imagine uma bicicleta de trabalho que custa <strong>R$ 1.500,00</strong>. Para estudar uma divisão simples, sem juros:</p>
+<p><span class="formula">1500 ÷ 10 = 150</span></p>
+<p>No Excel:</p>
+<p><span class="formula">=B2/10</span></p>
+<div class="excel">
+<table class="sheet">
+<tr><th class="colhead"></th><th class="colhead">A</th><th class="colhead">B</th><th class="colhead">C</th></tr>
+<tr><th class="rowhead">1</th><td>Item</td><td>Valor total</td><td>Parcela em 10x</td></tr>
+<tr><th class="rowhead">2</th><td>Bicicleta</td><td>1500</td><td class="active">150</td></tr>
+</table>
+</div>
+<div class="card warning">
+<h3>Compra real pode ser diferente</h3>
+<p>Esta é uma divisão matemática <strong>sem juros e sem taxas</strong>. Em compras reais, confira o preço total, os juros, as taxas e o valor final antes de decidir.</p>
+</div>
+</section>
+
+<section>
+<h2>7. Como trocar entre a aula e o Excel</h2>
+<div class="tips">
+<div class="tip"><h3>🖱️ Barra de tarefas</h3><p>Clique no navegador e depois no Excel.</p></div>
+<div class="tip"><h3><span class="kbd">Alt + Tab</span></h3><p>Troca rapidamente entre janelas abertas.</p></div>
+<div class="tip"><h3><span class="kbd">Windows + ← / →</span></h3><p>Pode organizar duas janelas lado a lado, se a tela permitir.</p></div>
+</div>
+<div class="card warning">
+<p>Você não precisa usar atalhos se ainda não estiver confortável. O importante é conseguir voltar para o ponto certo da aula.</p>
+</div>
+</section>
+
+</div>
+
+<div id="practice" class="learn-panel">
+<section>
+<h2>8. 🧪 Prática guiada — uma ação por vez</h2>
+<p>Leia apenas o passo atual. Faça no Excel. Volte e clique em <strong>Consegui — próximo passo</strong>.</p>
+<div class="practice-shell">
+<div id="practiceStepLabel" class="stepnum"></div>
+<div class="progress"><div id="practiceProgress"></div></div>
+<div class="practice-card">
+<div id="practiceCommand" class="command"></div>
+<div id="practiceMemory" class="memory"></div>
+<div id="practiceVisual"></div>
+<div class="practice-actions">
+<button id="prevPractice" class="secondary" onclick="practicePrev()">← Voltar um passo</button>
+<button id="nextPractice" onclick="practiceNext()">Consegui — próximo passo →</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+<div id="home" class="learn-panel">
+<section>
+<h2>9. 📱 Rever em casa</h2>
+<p>No celular você não precisa reproduzir toda a prática do Excel. Use este modo para lembrar a lógica.</p>
+<div class="grid">
+<div class="card"><h3>Lucro simples</h3><p><span class="formula">Venda - Custo</span></p></div>
+<div class="card"><h3>Parcela simples</h3><p><span class="formula">Valor total / 10</span></p></div>
+<div class="card"><h3>Fórmula</h3><p>No Excel começa com <span class="formula">=</span>.</p></div>
+</div>
+<div class="card">
+<h3>Teste mental</h3>
+<p>Um produto custa R$ 5 e é vendido por R$ 8. Quanto sobra nessa conta simples?</p>
+<details><summary>Ver resposta</summary><p>R$ 3, porque 8 − 5 = 3.</p></details>
+<p>Um celular de R$ 2.000 dividido em 10 partes iguais, sem juros, dá quanto?</p>
+<details><summary>Ver resposta</summary><p>R$ 200 por parcela.</p></details>
+</div>
+</section>
+</div>
+
+<section>
+<h2>10. Seu próprio mini negócio</h2>
+<p>Depois da prática guiada, escolha um produto da sua realidade e monte uma linha própria:</p>
+<div class="excel">
+<table class="sheet">
+<tr><th>Produto</th><th>Custo</th><th>Venda</th><th>Lucro</th></tr>
+<tr><td>________________</td><td>R$ ______</td><td>R$ ______</td><td>=C2-B2</td></tr>
+</table>
+</div>
+<div class="card warning">
+<h3>Não existe “preço mágico”</h3>
+<p>A atividade serve para entender custo, venda e diferença. Num negócio real, preço também depende de outros custos, mercado, quantidade, perdas e condições locais.</p>
+</div>
+</section>
+
+<section>
+<h2>11. Atividade: bicicleta ou celular para o trabalho</h2>
+<p>Escolha um valor hipotético ou um preço pesquisado com orientação do professor.</p>
+<div class="steps">
+<div class="step"><h3>Escolha o item</h3><p>Bicicleta ou celular.</p></div>
+<div class="step"><h3>Digite o valor</h3><p>Exemplo: 1500.</p></div>
+<div class="step"><h3>Crie a fórmula</h3><p>Na parcela, use <span class="formula">=B2/10</span>.</p></div>
+<div class="step"><h3>Pressione Enter</h3><p>O Excel exibe o resultado.</p></div>
+<div class="step"><h3>Explique</h3><p>Diga com suas palavras o que a fórmula fez.</p></div>
+</div>
+</section>
+
+<section>
+<h2>12. Atividade prática na SEMAS</h2>
+<div class="mode-buttons">
+<button onclick="showMode('pc')">🏫 Estou na SEMAS</button>
+<button class="secondary" onclick="showMode('phone')">📱 Estou acompanhando pelo celular</button>
+</div>
+<div id="pcMode" class="mode-panel">
+<div class="card pc">
+<ol>
+<li>Abra o Excel e esta aula.</li>
+<li>Use o botão <strong>🧪 Prática guiada</strong>.</li>
+<li>Faça apenas uma ação por vez.</li>
+<li>Monte a tabela Produto / Custo / Venda / Lucro.</li>
+<li>Use a fórmula de lucro.</li>
+<li>Monte a pequena tabela de parcelamento.</li>
+<li>Use a fórmula de divisão por 10.</li>
+<li>Salve como <strong>Modulo_2_Aula_07_MiniEmpresa_SeuNome.xlsx</strong>.</li>
+<li>Envie ao professor, salve no Drive, apague a cópia local e saia das contas.</li>
+</ol>
+</div>
+</div>
+<div id="phoneMode" class="mode-panel">
+<div class="card phone">
+<p>Use o modo <strong>📱 Rever em casa</strong>. O celular ajuda a revisar a lógica; a prática de fórmula continua no computador da SEMAS.</p>
+</div>
+</div>
+</section>
+
+<section>
+<h2>13. 🏠 Para rever em casa — 10 minutos</h2>
+<div class="card">
+<p>Se puder, explique para alguém da casa:</p>
+<ol>
+<li>o que é custo;</li>
+<li>o que é preço de venda;</li>
+<li>como calculamos o lucro simples;</li>
+<li>por que dividir R$ 1.500 por 10 resulta em R$ 150;</li>
+<li>por que uma compra real pode ter juros mesmo que nossa atividade não tenha.</li>
+</ol>
+</div>
+</section>
+
+<section>
+<h2>14. Pesquise depois — fontes oficiais</h2>
+<div class="links">
+<a href="https://support.microsoft.com/pt-br/office/criar-uma-f%C3%B3rmula-simples-no-excel-11a5f0e5-38a3-4115-85bc-f4a465f64a8a" target="_blank" rel="noopener">🔎 Microsoft — Criar uma fórmula simples no Excel</a>
+<a href="https://support.microsoft.com/pt-br/office/usar-o-excel-como-calculadora-a1abc057-ed11-443a-a635-68216555ad0a" target="_blank" rel="noopener">🔎 Microsoft — Usar o Excel como calculadora</a>
+<a href="https://support.microsoft.com/pt-br/office/multiplicar-e-dividir-n%C3%BAmeros-no-excel-4585b0ea-0ea0-4faf-84e4-3db5d4b2dc5d" target="_blank" rel="noopener">🔎 Microsoft — Multiplicar e dividir números no Excel</a>
+</div>
+</section>
+
+<section>
+<h2>15. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é entender a lógica, não decorar fórmulas sem saber o que elas fazem.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+<div class="savebox">
+<h3>Salvar meu registro da aula</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+<p class="notice">Na SEMAS: envie por e-mail, salve no Drive, apague os arquivos locais e saia das contas.</p>
+</div>
+</section>
+
+<section>
+<h2>16. Missão final</h2>
+<div class="card">
+<ol>
+<li>Explique a diferença entre custo e preço de venda.</li>
+<li>Digite uma fórmula de lucro usando células.</li>
+<li>Divida um valor em 10 partes usando uma fórmula.</li>
+<li>Explique por que uma parcela real pode não ser apenas “preço ÷ 10”.</li>
+</ol>
+<p><strong>Regra da turma:</strong> planilha boa não é aquela cheia de números — é aquela em que você entende de onde cada número veio.</p>
+</div>
+</section>
+
+<footer><p>SEMAS • Curso de Informática • Módulo 2 — Aula 07</p><p>Planejando uma Mini Empresa da Região</p></footer>
+</main>
+
+<script>
+const lessonKey="semas_mod2_aula07_attempt";
+const practiceKey="semas_mod2_aula07_practice";
+const practiceSteps=[
+ {c:"Abra o Excel e crie uma pasta de trabalho em branco.",m:"Faça somente isso. Depois volte para esta página.",v:""},
+ {c:"Na célula A1, digite: Produto",m:"A = coluna. 1 = linha. Portanto, A1 é a primeira célula da coluna A.",v:"A1 → Produto"},
+ {c:"Na célula B1, digite: Custo",m:"Não precisa formatar ainda.",v:"B1 → Custo"},
+ {c:"Na célula C1, digite: Venda",m:"Continue na mesma linha de cabeçalhos.",v:"C1 → Venda"},
+ {c:"Na célula D1, digite: Lucro",m:"Agora temos quatro colunas.",v:"D1 → Lucro"},
+ {c:"Na célula A2, digite: Polpa de cupuaçu",m:"Pode usar outro produto regional se o professor autorizar.",v:"A2 → Polpa de cupuaçu"},
+ {c:"Na célula B2, digite: 4",m:"Este será o custo do exemplo.",v:"B2 → 4"},
+ {c:"Na célula C2, digite: 6,5",m:"Este será o preço de venda do exemplo.",v:"C2 → 6,5"},
+ {c:"Clique na célula D2 e digite exatamente: =C2-B2",m:"O sinal = avisa ao Excel que você está criando uma fórmula.",v:"D2 → =C2-B2"},
+ {c:"Pressione Enter e confira se apareceu 2,5.",m:"6,5 − 4 = 2,5. Se não apareceu, volte e confira a fórmula.",v:"Resultado esperado: 2,5"},
+ {c:"Agora digite A4: Item | B4: Valor total | C4: Parcela em 10x",m:"Estamos criando uma segunda pequena tabela na mesma planilha.",v:"Linha 4 → Item | Valor total | Parcela em 10x"},
+ {c:"Digite A5: Bicicleta e B5: 1500",m:"Use somente o número 1500 em B5.",v:"A5 → Bicicleta | B5 → 1500"},
+ {c:"Clique em C5 e digite: =B5/10",m:"No Excel, / é o operador de divisão.",v:"C5 → =B5/10"},
+ {c:"Pressione Enter e confira se apareceu 150.",m:"Esta é uma divisão simples, sem juros.",v:"Resultado esperado: 150"},
+ {c:"Pronto. Agora crie uma nova linha com um produto escolhido por você.",m:"Você já fez a sequência completa. Agora tente aplicar a lógica.",v:"Desafio: Produto | Custo | Venda | Lucro"}
+];
+let practiceIndex=Number(sessionStorage.getItem(practiceKey)||0);
+if(practiceIndex<0||practiceIndex>=practiceSteps.length) practiceIndex=0;
+
+function switchLearn(id){
+ document.querySelectorAll(".learn-panel").forEach(x=>x.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ if(id==="practice") renderPractice();
+ document.getElementById(id).scrollIntoView({behavior:"smooth",block:"start"});
+}
+function renderPractice(){
+ const s=practiceSteps[practiceIndex];
+ document.getElementById("practiceStepLabel").textContent=`Passo ${practiceIndex+1} de ${practiceSteps.length}`;
+ document.getElementById("practiceCommand").textContent=s.c;
+ document.getElementById("practiceMemory").textContent=s.m;
+ document.getElementById("practiceVisual").innerHTML=s.v?`<div class="card"><span class="formula">${s.v}</span></div>`:"";
+ document.getElementById("practiceProgress").style.width=`${((practiceIndex+1)/practiceSteps.length)*100}%`;
+ document.getElementById("prevPractice").disabled=practiceIndex===0;
+ document.getElementById("nextPractice").textContent=practiceIndex===practiceSteps.length-1?"Concluí a prática ✓":"Consegui — próximo passo →";
+}
+function practiceNext(){
+ if(practiceIndex<practiceSteps.length-1){practiceIndex++;sessionStorage.setItem(practiceKey,practiceIndex);renderPractice();}
+ else{alert("Prática guiada concluída. Agora faça o desafio com seu próprio produto.");}
+}
+function practicePrev(){if(practiceIndex>0){practiceIndex--;sessionStorage.setItem(practiceKey,practiceIndex);renderPractice();}}
+
+const questions=[
+["Nesta atividade, como calculamos o lucro simples?","Preço de venda menos custo","Custo mais preço de venda","Preço de venda dividido por 10","Idade mais custo","A atividade usa lucro simples = venda − custo."],
+["Se C2 é o preço de venda e B2 é o custo, qual fórmula calcula o lucro?","=C2-B2","=B2-C2","=C2/B2","C2-B2 sem sinal de igual","Fórmulas do Excel começam com =."],
+["Qual símbolo o Excel usa para divisão?","/","÷","x",":","Em fórmulas do Excel, a barra / representa divisão."],
+["Uma bicicleta de R$ 1.500 dividida em 10 partes iguais, sem juros, resulta em quanto?","R$ 150","R$ 15","R$ 1.490","R$ 1.510","1500 ÷ 10 = 150."],
+["A conta valor/10 representa necessariamente uma compra real parcelada?","Não","Sim, sempre","Somente para celulares","Somente para bicicletas","Compras reais podem incluir juros, taxas e preço total diferente."],
+["O que faz Alt+Tab no Windows?","Troca entre janelas abertas","Apaga uma célula","Cria uma fórmula","Fecha o Excel","Alt+Tab facilita a alternância entre a aula e o Excel."],
+["Qual é a vantagem da prática guiada desta aula?","Fazer uma ação por vez sem precisar memorizar muitos passos","Fazer tudo sem abrir o Excel","Evitar qualquer cálculo","Pular a explicação","Microtarefas reduzem a quantidade de instruções que o aluno precisa guardar de uma vez."],
+["Depois de terminar no PC da SEMAS, qual rotina está correta?","Enviar, salvar no Drive, apagar a cópia local e sair das contas","Deixar tudo aberto","Salvar a senha no navegador","Deixar a planilha na Área de Trabalho","A rotina protege a privacidade e prepara o computador para a próxima turma."]
+];
+let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{const d=document.createElement("div");d.className="quiz-item";d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;quiz.appendChild(d)});
+function updateUI(){document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true}}
+updateUI();
+function showMode(mode){document.getElementById("pcMode").classList.toggle("active",mode==="pc");document.getElementById("phoneMode").classList.toggle("active",mode==="phone")}
+function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===0){score++;a.textContent="Correta! "+q[5]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}});if(!all)return;attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
+function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;updateUI()}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function saveResult(){if(!completed)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return}let rows="";questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`});const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}</style></head><body><h1>SEMAS — Módulo 2 — Aula 07</h1><h2>Planejando uma Mini Empresa da Região</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Prática guiada alcançada:</strong> passo ${practiceIndex+1}/${practiceSteps.length}</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. Envie por e-mail, salve no Drive, apague a cópia local e saia das contas.</p></body></html>`;const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");a.href=url;a.download=`SEMAS_Modulo_2_Aula_07_${safe}.html`;a.click();URL.revokeObjectURL(url)}
+function finishSession(){if(!confirm("Encerrar a sessão e limpar esta aula neste navegador?"))return;sessionStorage.removeItem(lessonKey);sessionStorage.removeItem(practiceKey);location.reload()}
+</script>
+</body>
+</html>

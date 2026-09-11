@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 4 — Aula 07 — Criando um Catálogo de Produtos Regionais</title>
+<style>
+:root{
+  --bg:#08101c;--card:#101a2c;--card2:#0c1524;--ink:#eef6ff;--muted:#afbdd2;
+  --accent:#73ddff;--accent2:#a8ffb9;--warn:#ffd47d;--danger:#ff9e9e;--line:#2b3b55;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 16% 0%,#1a355c 0,transparent 30%),linear-gradient(135deg,#070c15,#0d1729 55%,#10203a);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1080px;margin:auto;padding:24px 18px 70px}
+.hero{padding:42px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#265984,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)}h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)}.warning{border-left:4px solid var(--warn);background:#251f12}.danger{border-left:4px solid var(--danger);background:#29171b}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.code{font-family:Consolas,monospace;background:#07101e;color:#ffd479;padding:14px;border-radius:10px;white-space:pre-wrap;overflow:auto}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.good{border-left:4px solid var(--accent2)}.bad{border-left:4px solid var(--danger)}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.step{counter-increment:s;padding:16px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.step:before{content:counter(s);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#07101e;font-weight:900}
+.tag{font-family:Consolas,monospace;background:#07101e;color:#ffd479;padding:3px 7px;border-radius:7px}
+.catalog-demo{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.product-demo{background:#fff;color:#1f2a36;border-radius:16px;padding:14px;box-shadow:0 8px 18px rgba(0,0,0,.12)}
+.product-demo .pic{height:110px;border-radius:12px;background:linear-gradient(135deg,#ffd36c,#8fcf7d);display:grid;place-items:center;font-size:3rem}
+.product-demo h3{color:#224c6b;margin:.65em 0 .2em}.product-demo p{margin:.2em 0;color:#444}.product-demo button{margin-top:10px}
+.practice-shell{border:1px solid #3b5577;background:#091526;border-radius:18px;padding:18px}
+.progress{height:10px;border-radius:999px;background:#1a2940;overflow:hidden;margin:10px 0 20px}
+.progress>div{height:100%;background:linear-gradient(90deg,#69ddff,#9dffb7);width:0;transition:.25s}
+.practice-card{padding:22px;border:1px solid var(--line);border-radius:16px;background:#0d1728}
+.stepnum{font-size:.92rem;color:var(--muted);text-transform:uppercase;font-weight:800}
+.command{font-size:1.3rem;line-height:1.35;font-weight:900;margin:12px 0}
+.memory{padding:12px 14px;border-left:4px solid var(--accent);background:#0a1425;border-radius:8px;margin:14px 0}
+.practice-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}button:disabled{opacity:.5}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.answer{margin-top:10px;color:var(--muted)}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input,.savebox textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}
+footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:820px){.catalog-demo{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.compare,.catalog-demo{grid-template-columns:1fr}.practice-actions{display:grid}button{width:100%;min-height:48px}}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 4 • Aula 07</div>
+<h1>Criando um Catálogo de Produtos Regionais</h1>
+<p class="lead">Hoje nossa página vai começar a parecer um pequeno projeto real: uma <strong>feira digital</strong> com produtos da cidade, da comunidade ou da roça.</p>
+<p><strong>Desafio da aula:</strong> montar 12 cards de produtos com nome, imagem, descrição e um botão de <strong>“Confirmar Pedido”</strong>.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>5 min</strong>Planejar catálogo</div>
+<div class="slot"><strong>8 min</strong>Card de produto</div>
+<div class="slot"><strong>7 min</strong>&lt;article&gt;</div>
+<div class="slot"><strong>8 min</strong>&lt;button&gt;</div>
+<div class="slot"><strong>10 min</strong>CSS em grade</div>
+<div class="slot"><strong>17 min</strong>Montar 12 produtos</div>
+<div class="slot"><strong>5 min</strong>Quiz/relatório</div>
+</div>
+</section>
+
+<section>
+<h2>2. O que você vai aprender</h2>
+<div class="grid">
+<div class="card goal"><h3>🛍️ Catálogo</h3><p>Organizar vários produtos em uma mesma página.</p></div>
+<div class="card goal"><h3>🧱 Card</h3><p>Repetir uma estrutura consistente para cada item.</p></div>
+<div class="card goal"><h3>🖱️ button</h3><p>Adicionar um elemento interativo clicável.</p></div>
+<div class="card goal"><h3>📐 Grid</h3><p>Distribuir os produtos em colunas que se adaptam à tela.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. Primeiro: o que é um catálogo?</h2>
+<p>Um catálogo organiza produtos ou serviços para que uma pessoa consiga comparar opções e encontrar informações importantes.</p>
+<div class="grid">
+<div class="card"><h3>Nome</h3><p>O que é o produto?</p></div>
+<div class="card"><h3>Imagem</h3><p>Como ele é visualmente?</p></div>
+<div class="card"><h3>Descrição</h3><p>O que precisamos saber?</p></div>
+<div class="card"><h3>Ação</h3><p>O que o usuário pode fazer?</p></div>
+</div>
+</section>
+
+<section>
+<h2>4. Nossa feira digital terá 12 produtos</h2>
+<p>Os produtos devem representar a realidade da região da turma. Exemplos possíveis:</p>
+<div class="grid">
+<div class="card"><h3>🍌 Frutas</h3><p>Banana, açaí, cupuaçu, manga ou outras realmente presentes na região.</p></div>
+<div class="card"><h3>🌾 Farinhas</h3><p>Farinha de mandioca e outros produtos locais.</p></div>
+<div class="card"><h3>🍬 Doces</h3><p>Doces e preparações regionais.</p></div>
+<div class="card"><h3>🧀 Produção artesanal</h3><p>Queijos ou outros produtos quando fizerem sentido para a comunidade.</p></div>
+</div>
+<div class="card warning">
+<h3>Não é obrigatório usar exatamente esses produtos</h3>
+<p>A turma deve escolher itens que façam sentido para sua cidade ou comunidade. O catálogo é regional, não uma lista inventada pelo computador.</p>
+</div>
+</section>
+
+<section>
+<h2>5. Um produto pode ser um &lt;article&gt;</h2>
+<p>O elemento <span class="tag">&lt;article&gt;</span> representa um conteúdo independente dentro de uma página. Um card de produto é um exemplo possível desse tipo de conteúdo.</p>
+<div class="code">&lt;article class="produto"&gt;
+  ...
+&lt;/article&gt;</div>
+</section>
+
+<section>
+<h2>6. Estrutura de um card</h2>
+<div class="code">&lt;article class="produto"&gt;
+  &lt;img src="imagens/banana.jpg" alt="Cacho de bananas"&gt;
+
+  &lt;h2&gt;Banana&lt;/h2&gt;
+
+  &lt;p&gt;Produto disponível na feira local.&lt;/p&gt;
+
+  &lt;button type="button"&gt;Confirmar Pedido&lt;/button&gt;
+&lt;/article&gt;</div>
+</section>
+
+<section>
+<h2>7. O botão &lt;button&gt;</h2>
+<p><span class="tag">&lt;button&gt;</span> é um elemento interativo que pode ser ativado com mouse, teclado, toque ou outras tecnologias de interação.</p>
+<div class="code">&lt;button type="button"&gt;Confirmar Pedido&lt;/button&gt;</div>
+<div class="card warning">
+<h3>O botão sozinho não faz um pedido real</h3>
+<p>HTML cria o botão, mas para registrar pedidos de verdade seria necessário adicionar lógica — por exemplo JavaScript e, em muitos casos, um sistema no servidor. Nesta aula o botão será apenas uma <strong>simulação local de interação</strong>.</p>
+</div>
+</section>
+
+<section>
+<h2>8. Por que usar type="button"?</h2>
+<div class="code">&lt;button type="button"&gt;Confirmar Pedido&lt;/button&gt;</div>
+<p>Como nosso botão não está enviando um formulário real, usamos <strong>type="button"</strong> para deixar clara sua função simples.</p>
+</section>
+
+<section>
+<h2>9. Fazendo o botão responder ao clique</h2>
+<p>Para o aluno perceber a interação, usaremos uma pequena instrução JavaScript já pronta:</p>
+<div class="code">&lt;button
+  type="button"
+  onclick="confirmarPedido('Banana', this)"
+&gt;
+  Confirmar Pedido
+&lt;/button&gt;</div>
+<p>O aluno não precisa dominar JavaScript hoje. A função será fornecida pronta e apenas demonstrará que o clique aconteceu.</p>
+</section>
+
+<section>
+<h2>10. A função pronta</h2>
+<div class="code">&lt;script&gt;
+function confirmarPedido(produto, botao) {
+  botao.textContent = "Pedido selecionado ✓";
+  alert(produto + " foi selecionado nesta demonstração.");
+}
+&lt;/script&gt;</div>
+<div class="card warning">
+<h3>Simulação, não comércio eletrônico</h3>
+<p>Nenhuma informação é enviada para loja, produtor, banco ou servidor. Ao atualizar ou fechar a página, a demonstração pode desaparecer.</p>
+</div>
+</section>
+
+<section>
+<h2>11. Visualizando alguns cards</h2>
+<div class="catalog-demo">
+<article class="product-demo">
+<div class="pic">🍌</div><h3>Banana</h3><p>Produto regional.</p><button type="button" onclick="this.textContent='Selecionado ✓'">Confirmar Pedido</button>
+</article>
+<article class="product-demo">
+<div class="pic">🌾</div><h3>Farinha</h3><p>Produto regional.</p><button type="button" onclick="this.textContent='Selecionado ✓'">Confirmar Pedido</button>
+</article>
+<article class="product-demo">
+<div class="pic">🍬</div><h3>Doce artesanal</h3><p>Produto regional.</p><button type="button" onclick="this.textContent='Selecionado ✓'">Confirmar Pedido</button>
+</article>
+</div>
+</section>
+
+<section>
+<h2>12. Repetição com organização</h2>
+<p>Os 12 produtos terão praticamente a mesma estrutura:</p>
+<div class="code">&lt;article class="produto"&gt;
+  imagem
+  nome
+  descrição
+  botão
+&lt;/article&gt;</div>
+<p>O conteúdo muda, mas a estrutura permanece consistente.</p>
+<div class="card good">
+<h3>Isso já é pensamento de desenvolvimento</h3>
+<p>Quando reconhecemos um padrão repetido, conseguimos organizar o código e reduzir confusão.</p>
+</div>
+</section>
+
+<section>
+<h2>13. Criando uma área para todos os produtos</h2>
+<div class="code">&lt;section class="catalogo"&gt;
+
+  &lt;article class="produto"&gt;...&lt;/article&gt;
+
+  &lt;article class="produto"&gt;...&lt;/article&gt;
+
+  &lt;article class="produto"&gt;...&lt;/article&gt;
+
+&lt;/section&gt;</div>
+</section>
+
+<section>
+<h2>14. CSS para organizar em colunas</h2>
+<div class="code">.catalogo {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}</div>
+<p>Essa regra cria uma grade que consegue reorganizar os cards conforme o espaço disponível.</p>
+</section>
+
+<section>
+<h2>15. CSS para cada produto</h2>
+<div class="code">.produto {
+  background-color: white;
+  color: #222;
+  padding: 16px;
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.produto img {
+  width: 100%;
+  border-radius: 10px;
+}</div>
+</section>
+
+<section>
+<h2>16. Estilizando o botão</h2>
+<div class="code">button {
+  background-color: darkgreen;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}</div>
+<p>O botão continua sendo um elemento HTML interativo; o CSS apenas muda sua aparência.</p>
+</section>
+
+<section>
+<h2>17. Um catálogo precisa de informações verdadeiras</h2>
+<div class="card danger">
+<h3>Não invente preço, origem ou qualidade</h3>
+<p>Se a atividade usar produtos reais, coloque somente informações fornecidas pelo professor, produtor ou pesquisa confiável. Para fins de aula, também podemos simplesmente omitir preços.</p>
+</div>
+</section>
+
+<section>
+<h2>18. Imagens também precisam de cuidado</h2>
+<div class="grid">
+<div class="card"><h3>📷 Imagem própria</h3><p>Boa opção quando não expõe pessoas sem autorização.</p></div>
+<div class="card"><h3>🖼️ Imagem fornecida</h3><p>O professor pode distribuir imagens apropriadas.</p></div>
+<div class="card"><h3>♿ alt</h3><p>Cada imagem precisa de texto alternativo adequado.</p></div>
+<div class="card"><h3>© Direitos</h3><p>Não copiar qualquer foto da internet como se fosse livre.</p></div>
+</div>
+</section>
+
+<section>
+<h2>19. 🧪 Prática guiada — montando a feira digital</h2>
+<div class="practice-shell">
+<div id="practiceStepLabel" class="stepnum"></div>
+<div class="progress"><div id="practiceProgress"></div></div>
+<div class="practice-card">
+<div id="practiceCommand" class="command"></div>
+<div id="practiceMemory" class="memory"></div>
+<div id="practiceVisual"></div>
+<div class="practice-actions">
+<button id="prevPractice" class="secondary" onclick="practicePrev()">← Voltar um passo</button>
+<button id="nextPractice" onclick="practiceNext()">Consegui — próximo passo →</button>
+</div>
+</div>
+</div>
+</section>
+
+<section>
+<h2>20. Como chegar aos 12 sem se perder</h2>
+<div class="steps">
+<div class="step"><h3>Faça 1 perfeito</h3><p>Primeiro card completo.</p></div>
+<div class="step"><h3>Teste</h3><p>Imagem, texto e botão.</p></div>
+<div class="step"><h3>Copie a estrutura</h3><p>Duplique o bloco <span class="tag">&lt;article&gt;</span>.</p></div>
+<div class="step"><h3>Troque o conteúdo</h3><p>Nome, imagem, descrição e produto do botão.</p></div>
+<div class="step"><h3>Repita</h3><p>Até chegar aos 12.</p></div>
+</div>
+</section>
+
+<section>
+<h2>21. Lista de planejamento</h2>
+<div class="code">01. ______________________________
+02. ______________________________
+03. ______________________________
+04. ______________________________
+05. ______________________________
+06. ______________________________
+07. ______________________________
+08. ______________________________
+09. ______________________________
+10. ______________________________
+11. ______________________________
+12. ______________________________</div>
+<p>Escreva os 12 produtos antes de começar a duplicar os cards.</p>
+</section>
+
+<section>
+<h2>22. Checklist de cada card</h2>
+<div class="grid">
+<div class="card"><h3>☑ Imagem</h3><p>src correto?</p></div>
+<div class="card"><h3>☑ alt</h3><p>Descrição útil?</p></div>
+<div class="card"><h3>☑ Nome</h3><p>Produto identificado?</p></div>
+<div class="card"><h3>☑ Texto</h3><p>Descrição curta e verdadeira?</p></div>
+<div class="card"><h3>☑ Botão</h3><p>“Confirmar Pedido” presente?</p></div>
+<div class="card"><h3>☑ Teste</h3><p>Clique funciona na demonstração?</p></div>
+</div>
+</section>
+
+<section>
+<h2>23. O desafio dos 12 produtos</h2>
+<div class="card goal">
+<h3>Entrega da Aula 07</h3>
+<p>O catálogo deve conter <strong>12 produtos regionais</strong> organizados em cards. Cada card deve possuir imagem, nome, descrição e botão de confirmação demonstrativo.</p>
+<p>O catálogo precisa abrir diretamente no navegador do laboratório.</p>
+</div>
+</section>
+
+<section>
+<h2>24. 🏠 Para rever em casa — 10 minutos</h2>
+<div class="card">
+<p>Mostre esta aula para alguém da família e pergunte:</p>
+<ol>
+<li>Quais produtos da nossa região você colocaria nessa feira digital?</li>
+<li>Quais 3 deveriam aparecer primeiro?</li>
+<li>Que informação seria importante para quem deseja comprar?</li>
+</ol>
+<p>Você pode anotar as ideias para melhorar o projeto na próxima aula.</p>
+</div>
+</section>
+
+<section>
+<h2>25. Pesquise depois — documentação oficial</h2>
+<div class="links">
+<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button" target="_blank" rel="noopener">🔎 MDN — Elemento button</a>
+<a href="https://developer.mozilla.org/pt-BR/docs/Web/HTML/Reference/Elements/article" target="_blank" rel="noopener">🔎 MDN — Elemento article</a>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout" target="_blank" rel="noopener">🔎 MDN — CSS Grid Layout</a>
+<a href="https://developer.mozilla.org/pt-BR/docs/Web/HTML/Reference/Elements/img" target="_blank" rel="noopener">🔎 MDN — Elemento img</a>
+</div>
+</section>
+
+<section>
+<h2>26. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é aprender a construir uma página maior usando padrões repetidos e interação simples.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+
+<div class="savebox">
+<h3>Salvar meu registro da aula</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<textarea id="productsNote" rows="7" placeholder="Opcional: escreva os nomes dos 12 produtos escolhidos para o catálogo."></textarea>
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+<p class="notice">Na SEMAS: envie conforme orientação, salve no Drive quando necessário, apague arquivos locais e saia das contas.</p>
+</div>
+</section>
+
+<section>
+<h2>27. Missão final</h2>
+<div class="card">
+<ol>
+<li>Mostre os 12 produtos no navegador.</li>
+<li>Explique por que cada produto repete a mesma estrutura.</li>
+<li>Aponte um <span class="tag">&lt;article&gt;</span>.</li>
+<li>Aponte um <span class="tag">&lt;button&gt;</span>.</li>
+<li>Clique em “Confirmar Pedido” e explique por que ainda não é um pedido real.</li>
+</ol>
+<p><strong>Regra da turma:</strong> um catálogo digital bem feito não é apenas bonito — ele organiza informações para que outra pessoa consiga entender, comparar e interagir.</p>
+</div>
+</section>
+
+<footer>
+<p>SEMAS • Curso de Informática • Módulo 4 — Aula 07</p>
+<p>Criando um Catálogo de Produtos Regionais</p>
+</footer>
+
+</main>
+
+<script>
+const lessonKey="semas_mod4_aula07_attempt";
+const practiceKey="semas_mod4_aula07_practice";
+
+const practiceSteps=[
+ {c:"Abra seu index.html no VS Code.",m:"Continue usando o projeto das aulas anteriores.",v:"📄 index.html"},
+ {c:"Antes de codificar, escreva os nomes dos 12 produtos em uma lista.",m:"Planejar evita editar os cards sem saber o conteúdo.",v:"1 → 12 produtos"},
+ {c:"Dentro do body, crie uma <section class=\"catalogo\">.",m:"Todos os produtos ficarão dentro desta área.",v:'&lt;section class="catalogo"&gt;'},
+ {c:"Crie o primeiro <article class=\"produto\">.",m:"Primeiro vamos fazer apenas um card completo.",v:'&lt;article class="produto"&gt;'},
+ {c:"Adicione a imagem do primeiro produto com src e alt.",m:"Use a pasta imagens organizada nas aulas anteriores.",v:"&lt;img src=... alt=...&gt;"},
+ {c:"Adicione um <h2> com o nome do produto.",m:"Ex.: Banana, Farinha, Doce artesanal.",v:"&lt;h2&gt;Produto&lt;/h2&gt;"},
+ {c:"Adicione um <p> com uma descrição curta.",m:"Não invente características ou benefícios.",v:"&lt;p&gt;Descrição&lt;/p&gt;"},
+ {c:"Adicione <button type=\"button\">Confirmar Pedido</button>.",m:"Primeiro observe apenas o botão HTML.",v:"Confirmar Pedido"},
+ {c:"Salve e abra no navegador.",m:"Confira se o primeiro card aparece.",v:"Ctrl + S → navegador"},
+ {c:"No CSS, crie a regra .catalogo usando display: grid.",m:"Vamos organizar os cards em colunas.",v:".catalogo { display: grid; }"},
+ {c:"Adicione grid-template-columns e gap conforme o exemplo.",m:"Isso permite adaptar o número de colunas à largura da tela.",v:"repeat(auto-fit, minmax(...))"},
+ {c:"Crie a regra .produto com fundo, padding, border-radius e sombra.",m:"Reaproveite conceitos da Aula 06.",v:".produto { ... }"},
+ {c:"Teste novamente o primeiro card.",m:"Só multiplique depois que um card estiver funcionando.",v:"1 card ✓"},
+ {c:"Adicione a função confirmarPedido pronta no final do HTML.",m:"Você não precisa dominar JavaScript hoje.",v:"function confirmarPedido(...)"},
+ {c:"Altere o botão do primeiro produto para chamar confirmarPedido.",m:"Passe o nome correto do produto.",v:"onclick=\"confirmarPedido(...)\""},
+ {c:"Teste o clique.",m:"Ele deve apenas confirmar localmente a seleção.",v:"Clique ✓"},
+ {c:"Duplique o article para criar o segundo produto.",m:"Troque imagem, alt, nome, descrição e nome passado ao botão.",v:"Produto 02"},
+ {c:"Repita o padrão até chegar aos 12 produtos.",m:"Trabalhe com atenção para não deixar nomes ou imagens repetidos por engano.",v:"Produtos 01 → 12"},
+ {c:"Salve e teste todos os cards no navegador.",m:"Role a página e clique em vários botões.",v:"12 cards ✓"},
+ {c:"Reduza a largura da janela do navegador.",m:"Observe se a grade reorganiza os cards.",v:"💻 → 📱"},
+ {c:"Prática concluída.",m:"Você criou sua primeira feira digital.",v:"🎉 12 produtos"}
+];
+
+let practiceIndex=Number(sessionStorage.getItem(practiceKey)||0);
+if(practiceIndex<0||practiceIndex>=practiceSteps.length)practiceIndex=0;
+
+function renderPractice(){
+ const s=practiceSteps[practiceIndex];
+ document.getElementById("practiceStepLabel").textContent=`Passo ${practiceIndex+1} de ${practiceSteps.length}`;
+ document.getElementById("practiceCommand").textContent=s.c;
+ document.getElementById("practiceMemory").textContent=s.m;
+ document.getElementById("practiceVisual").innerHTML=`<div class="card"><strong>${s.v}</strong></div>`;
+ document.getElementById("practiceProgress").style.width=`${((practiceIndex+1)/practiceSteps.length)*100}%`;
+ document.getElementById("prevPractice").disabled=practiceIndex===0;
+ document.getElementById("nextPractice").textContent=practiceIndex===practiceSteps.length-1?"Concluí minha feira digital ✓":"Consegui — próximo passo →";
+}
+function practiceNext(){
+ if(practiceIndex<practiceSteps.length-1){
+  practiceIndex++;
+  sessionStorage.setItem(practiceKey,practiceIndex);
+  renderPractice();
+ } else alert("Parabéns: o catálogo com 12 produtos foi concluído.");
+}
+function practicePrev(){
+ if(practiceIndex>0){
+  practiceIndex--;
+  sessionStorage.setItem(practiceKey,practiceIndex);
+  renderPractice();
+ }
+}
+renderPractice();
+
+const questions=[
+["Qual é a função do catálogo nesta aula?","Organizar produtos e suas informações em uma página","Criar uma rede social","Substituir uma loja real automaticamente","Instalar programas","Um catálogo organiza itens para visualização e comparação."],
+["Por que podemos usar <article> para cada produto?","Porque cada card pode representar um conteúdo independente","Porque article cria internet","Porque article é obrigatório em toda imagem","Porque article substitui CSS","article pode representar uma unidade independente de conteúdo, como um card de produto."],
+["O que <button> representa?","Um elemento interativo ativável pelo usuário","Uma imagem","Uma pasta","Um título","button representa um controle interativo."],
+["O botão sozinho registra um pedido real?","Não","Sim","Sempre","Somente no celular","Um botão precisa estar ligado a lógica e, em pedidos reais, normalmente a outros sistemas."],
+["Para que usamos CSS Grid no catálogo?","Organizar os cards em uma grade","Criar as imagens","Enviar pedidos","Salvar arquivos","Grid ajuda a distribuir os produtos em linhas e colunas."],
+["Qual é a melhor estratégia para criar 12 cards?","Fazer e testar um primeiro card, depois repetir a estrutura","Criar 12 de uma vez sem testar","Usar estruturas diferentes para todos","Não organizar as imagens","Testar um padrão primeiro reduz erros na repetição."],
+["O que devemos fazer com informações de produtos reais?","Usar dados verdadeiros e verificáveis","Inventar preços","Prometer benefícios sem prova","Copiar qualquer propaganda","Catálogos devem evitar informações inventadas ou enganosas."],
+["Qual é o resultado esperado desta aula?","Uma feira digital com 12 produtos, cards e interação demonstrativa","Um sistema bancário completo","Um marketplace publicado mundialmente","Um aplicativo de celular","O projeto é um catálogo front-end educativo, não um e-commerce completo."]
+];
+
+let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{
+ const d=document.createElement("div");
+ d.className="quiz-item";
+ d.innerHTML=`<h3>${i+1}. ${q[0].replace(/</g,"&lt;").replace(/>/g,"&gt;")}</h3>`+
+ q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</label>`).join("")+
+ `<div class="answer" id="a${i}"></div>`;
+ quiz.appendChild(d);
+});
+
+function updateUI(){
+ document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;
+ if(attempt>=2){
+  document.getElementById("checkBtn").disabled=true;
+  document.getElementById("retryBtn").disabled=true;
+ }
+}
+updateUI();
+
+function checkQuiz(){
+ if(attempt>=2)return;
+ let score=0,all=true,wrong=[];
+ questions.forEach((q,i)=>{
+  const s=document.querySelector(`input[name="q${i}"]:checked`);
+  const a=document.getElementById("a"+i);
+  if(!s){all=false;a.textContent="Responda esta questão.";return}
+  if(+s.value===0){score++;a.textContent="Correta! "+q[5]}
+  else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}
+ });
+ if(!all)return;
+ attempt++;
+ sessionStorage.setItem(lessonKey,attempt);
+ completed=true;
+ lastScore=score;
+ document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;
+ document.getElementById("saveBtn").disabled=false;
+ document.getElementById("checkBtn").disabled=true;
+ document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true);
+}
+
+function retryQuiz(){
+ if(attempt>=2||!completed)return;
+ document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});
+ questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");
+ completed=false;
+ lastScore=null;
+ document.getElementById("checkBtn").disabled=false;
+ document.getElementById("saveBtn").disabled=true;
+ updateUI();
+}
+
+function esc(s){
+ return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+}
+
+function saveResult(){
+ if(!completed)return;
+ const name=document.getElementById("studentName").value.trim();
+ if(!name){alert("Digite seu nome completo.");return}
+ const note=document.getElementById("productsNote").value.trim();
+ let rows="";
+ questions.forEach((q,i)=>{
+  const s=document.querySelector(`input[name="q${i}"]:checked`);
+  const n=s?+s.value:-1;
+  rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;
+ });
+ const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}.note{padding:12px;background:#f2f5f8;border-radius:8px;white-space:pre-wrap}</style></head><body><h1>SEMAS — Módulo 4 — Aula 07</h1><h2>Criando um Catálogo de Produtos Regionais</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Prática guiada:</strong> passo ${practiceIndex+1}/${practiceSteps.length}</p>${note?`<p><strong>Meus produtos:</strong></p><div class="note">${esc(note)}</div>`:""}<table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. O objetivo é construir um catálogo organizado e interativo.</p></body></html>`;
+ const blob=new Blob([report],{type:"text/html;charset=utf-8"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ const safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
+ a.href=url;
+ a.download=`SEMAS_Modulo_4_Aula_07_${safe}.html`;
+ a.click();
+ URL.revokeObjectURL(url);
+}
+
+function finishSession(){
+ if(!confirm("Encerrar a sessão e limpar esta aula neste navegador?"))return;
+ sessionStorage.removeItem(lessonKey);
+ sessionStorage.removeItem(practiceKey);
+ location.reload();
+}
+</script>
+</body>
+</html>

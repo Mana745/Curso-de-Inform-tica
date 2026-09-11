@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 3 — Aula 03 — Usando a IA para Estudar e Fazer Resumos</title>
+<style>
+:root{
+  --bg:#07101c;--card:#101b2d;--card2:#0b1525;--ink:#eff7ff;--muted:#afbed3;
+  --accent:#74dcff;--accent2:#a5ffb7;--warn:#ffd37b;--danger:#ff9e9e;--line:#2a3a54;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 15% 0%,#18345a 0,transparent 30%),linear-gradient(135deg,#070c15,#0c1628 55%,#102039);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1040px;margin:auto;padding:24px 18px 70px}
+.hero{padding:42px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#245684,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)}h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)}.warning{border-left:4px solid var(--warn);background:#251f12}.danger{border-left:4px solid var(--danger);background:#29171b}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.prompt{font-family:Consolas,monospace;background:#07101e;color:#ffd479;padding:14px;border-radius:10px;white-space:pre-wrap}
+.studyflow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.studyflow .card{text-align:center}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.good{border-left:4px solid var(--accent2)}.bad{border-left:4px solid var(--danger)}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.step{counter-increment:s;padding:16px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.step:before{content:counter(s);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#07101e;font-weight:900}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}button:disabled{opacity:.5}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.answer{margin-top:10px;color:var(--muted)}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input,.savebox textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}
+details{margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425}
+summary{cursor:pointer;font-weight:850;color:var(--accent2)}
+footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:760px){main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.compare,.studyflow{grid-template-columns:1fr}button{width:100%;min-height:48px}}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 3 • Aula 03</div>
+<h1>Usando a IA para Estudar e Fazer Resumos</h1>
+<p class="lead">A IA pode ajudar a explicar matérias difíceis, criar perguntas para treino e organizar um plano de estudo. Mas o objetivo não é deixar a IA estudar no seu lugar: <strong>é usar a ferramenta para você entender melhor</strong>.</p>
+<p><strong>Desafio da aula:</strong> pegar um assunto da escola, pedir uma explicação simples, transformar o conteúdo em perguntas e montar um pequeno roteiro de estudo.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>7 min</strong>IA como tutora</div>
+<div class="slot"><strong>12 min</strong>Explicações simples</div>
+<div class="slot"><strong>10 min</strong>Resumos</div>
+<div class="slot"><strong>12 min</strong>Perguntas e simulados</div>
+<div class="slot"><strong>10 min</strong>Plano de estudo</div>
+<div class="slot"><strong>5 min</strong>Atividade</div>
+<div class="slot"><strong>4 min</strong>Quiz/relatório</div>
+</div>
+</section>
+
+<section>
+<h2>2. O que você vai aprender</h2>
+<div class="grid">
+<div class="card goal"><h3>🧠 Explicar</h3><p>Pedir uma explicação adaptada ao seu nível.</p></div>
+<div class="card goal"><h3>📝 Resumir</h3><p>Usar a IA para reduzir um conteúdo sem perder as ideias principais.</p></div>
+<div class="card goal"><h3>❓ Treinar</h3><p>Criar perguntas, quizzes e pequenos simulados.</p></div>
+<div class="card goal"><h3>🗂️ Organizar</h3><p>Montar um roteiro de estudo em etapas.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. A IA pode ser tutora — mas você continua sendo o estudante</h2>
+<div class="studyflow">
+<div class="card"><h3>1. Perguntar</h3><p>Peça uma explicação.</p></div>
+<div class="card"><h3>2. Entender</h3><p>Leia e faça perguntas sobre o que não entendeu.</p></div>
+<div class="card"><h3>3. Praticar</h3><p>Peça exercícios e responda sozinho.</p></div>
+<div class="card"><h3>4. Conferir</h3><p>Compare com a matéria da escola e fontes confiáveis.</p></div>
+</div>
+<div class="card warning" style="margin-top:14px">
+<h3>Copiar não é estudar</h3>
+<p>Se a IA responde e você apenas cola no trabalho, quase nada foi aprendido. O melhor uso é pedir explicações, exemplos, pistas e perguntas que obriguem você a pensar.</p>
+</div>
+</section>
+
+<section>
+<h2>4. Quando uma matéria parece difícil</h2>
+<div class="compare">
+<div class="card bad">
+<h3>❌ Pedido pouco útil</h3>
+<div class="prompt">Me ensina fração.</div>
+</div>
+<div class="card good">
+<h3>✅ Pedido melhor</h3>
+<div class="prompt">Explique frações para um aluno de 10 anos usando uma pizza como exemplo. Depois faça 2 perguntas fáceis para eu responder sozinho.</div>
+</div>
+</div>
+</section>
+
+<section>
+<h2>5. Você pode pedir outra explicação</h2>
+<p>Se não entendeu a primeira resposta, não precisa desistir.</p>
+<div class="grid">
+<div class="card"><h3>Mais simples</h3><div class="prompt">Explique de um jeito ainda mais simples.</div></div>
+<div class="card"><h3>Outro exemplo</h3><div class="prompt">Dê um exemplo usando algo do cotidiano.</div></div>
+<div class="card"><h3>Passo a passo</h3><div class="prompt">Explique em etapas, uma de cada vez.</div></div>
+<div class="card"><h3>Teste de compreensão</h3><div class="prompt">Faça uma pergunta para descobrir se eu entendi.</div></div>
+</div>
+</section>
+
+<section>
+<h2>6. O que é um bom resumo?</h2>
+<p>Resumo não é simplesmente “cortar palavras”. É manter as ideias principais e retirar detalhes menos importantes.</p>
+<div class="compare">
+<div class="card bad">
+<h3>❌ Resumo ruim</h3>
+<p>Tão curto que perde a explicação principal ou muda o sentido.</p>
+</div>
+<div class="card good">
+<h3>✅ Resumo útil</h3>
+<p>Conserva o tema, as ideias centrais e os conceitos essenciais em menos palavras.</p>
+</div>
+</div>
+</section>
+
+<section>
+<h2>7. Um prompt para resumir melhor</h2>
+<div class="prompt">Resuma este conteúdo em 5 tópicos.
+Mantenha apenas as ideias principais.
+Use palavras simples.
+No final, diga quais 3 palavras eu preciso lembrar.</div>
+<div class="card warning">
+<h3>Resumir não torna um conteúdo verdadeiro</h3>
+<p>Se o texto original estiver errado, incompleto ou for uma fonte ruim, o resumo também pode carregar esses problemas.</p>
+</div>
+</section>
+
+<section>
+<h2>8. Melhor ainda: use o material da escola como base</h2>
+<p>Quando possível, em vez de pedir “fale sobre qualquer assunto”, use o conteúdo que o professor realmente passou.</p>
+<div class="prompt">Vou colar abaixo um trecho da minha matéria de Ciências.
+
+Quero que você:
+1. explique em palavras simples;
+2. faça um resumo em 5 tópicos;
+3. crie 3 perguntas para eu responder;
+4. use somente as informações do texto que eu enviar.</div>
+<div class="card danger">
+<h3>Não envie dados pessoais ou material proibido</h3>
+<p>Não compartilhe documentos com dados pessoais, avaliações sigilosas, informações de colegas ou conteúdos que você não tenha autorização para enviar.</p>
+</div>
+</section>
+
+<section>
+<h2>9. A IA pode criar perguntas para você treinar</h2>
+<div class="grid">
+<div class="card"><h3>✅ Múltipla escolha</h3><div class="prompt">Crie 5 questões de múltipla escolha.</div></div>
+<div class="card"><h3>✍️ Resposta aberta</h3><div class="prompt">Faça 3 perguntas para eu responder com minhas palavras.</div></div>
+<div class="card"><h3>💡 Com pistas</h3><div class="prompt">Se eu errar, dê uma pista antes de mostrar a resposta.</div></div>
+<div class="card"><h3>📈 Por dificuldade</h3><div class="prompt">Faça 2 fáceis, 2 médias e 1 difícil.</div></div>
+</div>
+</section>
+
+<section>
+<h2>10. O jeito que mais faz aprender</h2>
+<div class="steps">
+<div class="step"><h3>IA pergunta</h3><p>Ela não mostra a resposta imediatamente.</p></div>
+<div class="step"><h3>Você responde</h3><p>Tente de verdade, mesmo se não tiver certeza.</p></div>
+<div class="step"><h3>IA dá feedback</h3><p>Peça explicação sobre onde errou.</p></div>
+<div class="step"><h3>Você tenta outra</h3><p>Prática repetida fortalece a compreensão.</p></div>
+</div>
+<div class="prompt">Faça uma pergunta por vez sobre fotossíntese.
+Espere minha resposta.
+Se eu errar, não diga a resposta imediatamente: dê uma pista.
+Depois explique.</div>
+</section>
+
+<section>
+<h2>11. Criando um mini simulado</h2>
+<p>Um simulado pode ajudar antes de uma prova, mas deve usar a matéria correta.</p>
+<div class="prompt">Crie um mini simulado com 6 perguntas sobre o conteúdo que vou fornecer:
+- 3 de múltipla escolha;
+- 2 de resposta curta;
+- 1 questão para explicar com minhas palavras.
+
+Não mostre o gabarito até eu terminar.</div>
+</section>
+
+<section>
+<h2>12. Montando um esquema de estudo passo a passo</h2>
+<p>A IA também pode ajudar a dividir uma matéria grande em pedaços menores.</p>
+<div class="prompt">Tenho 30 minutos para estudar o ciclo da água.
+Monte um plano simples:
+- 10 minutos para entender;
+- 10 minutos para revisar;
+- 10 minutos para responder perguntas.
+Use apenas 3 etapas.</div>
+<div class="grid">
+<div class="card"><h3>⏱️ Tempo</h3><p>Quanto tempo você realmente tem?</p></div>
+<div class="card"><h3>🎯 Objetivo</h3><p>O que precisa entender ou praticar?</p></div>
+<div class="card"><h3>📚 Conteúdo</h3><p>Qual matéria ou capítulo?</p></div>
+<div class="card"><h3>✅ Checagem</h3><p>Como vai saber se aprendeu?</p></div>
+</div>
+</section>
+
+<section>
+<h2>13. Exemplo completo: estudar sem entregar o pensamento para a IA</h2>
+<div class="prompt">Estou estudando a Independência do Brasil.
+
+1. Explique para um aluno de 11 anos em até 6 frases.
+2. Liste 4 ideias principais.
+3. Faça uma pergunta por vez para eu responder.
+4. Não faça minha tarefa por mim.
+5. Se eu errar, dê uma pista antes da resposta.
+6. Avise quando alguma informação precisar ser conferida em fonte histórica.</div>
+</section>
+
+<section>
+<h2>14. Atividade prática da aula</h2>
+<p>Escolha uma matéria real da escola: Matemática, Ciências, História, Geografia, Português ou outra.</p>
+<div class="steps">
+<div class="step"><h3>Escolha o assunto</h3><p>Algo que você quer entender melhor.</p></div>
+<div class="step"><h3>Peça uma explicação</h3><p>Informe sua idade ou nível e peça exemplo.</p></div>
+<div class="step"><h3>Peça um resumo</h3><p>Em até 5 tópicos.</p></div>
+<div class="step"><h3>Peça 3 perguntas</h3><p>Responda sem olhar a solução.</p></div>
+<div class="step"><h3>Monte um plano</h3><p>10 ou 20 minutos de revisão.</p></div>
+<div class="step"><h3>Confira</h3><p>Compare com a matéria da escola.</p></div>
+</div>
+</section>
+
+<section>
+<h2>15. Ferramentas atuais já possuem recursos de estudo</h2>
+<div class="grid">
+<div class="card"><h3>ChatGPT</h3><p>Possui Modo de Estudo, pensado para conduzir a compreensão com perguntas e etapas, em vez de apenas entregar respostas finais.</p></div>
+<div class="card"><h3>Gemini</h3><p>Pode criar perguntas de prática, quizzes e outros materiais de estudo em recursos disponíveis para determinadas contas e idades.</p></div>
+<div class="card"><h3>Copilot</h3><p>Possui modo Study and learn, voltado a explicações progressivas, perguntas e prática.</p></div>
+</div>
+<div class="card warning">
+<h3>Os recursos podem mudar</h3>
+<p>Ferramentas de IA são atualizadas com frequência e algumas funções dependem de idade, conta, região ou plano. O mais importante é aprender o método de estudo, não decorar onde fica um botão.</p>
+</div>
+</section>
+
+<section>
+<h2>16. 🏠 Para rever em casa — 10 minutos</h2>
+<div class="card">
+<p>Escolha uma coisa que alguém da casa sabe fazer bem — cozinhar, plantar, consertar algo, trabalhar com animais, vender, costurar ou outra habilidade.</p>
+<p>Pergunte:</p>
+<ol>
+<li>“Como você me ensinaria isso em 3 passos?”</li>
+<li>“Que pergunta faria para saber se eu entendi?”</li>
+</ol>
+<p>Depois compare com o que aprendemos sobre usar a IA como tutora. Ensinar bem também envolve explicar, perguntar e dar feedback.</p>
+</div>
+</section>
+
+<section>
+<h2>17. Referência complementar fornecida</h2>
+<div class="card">
+<p>O link de Instagram fornecido para esta aula pode ser usado como material complementar pelo professor. Como conteúdos de redes sociais podem mudar, desaparecer ou não ficar acessíveis sem login, ele não é usado como fonte principal dos conceitos da aula.</p>
+<a href="https://www.instagram.com/reel/DOZcUQriTZ9/" target="_blank" rel="noopener" style="color:var(--accent)">Abrir o Reel fornecido →</a>
+</div>
+</section>
+
+<section>
+<h2>18. Pesquise depois — fontes oficiais</h2>
+<div class="links">
+<a href="https://help.openai.com/pt-br/articles/11780217-como-usar-o-modo-de-estudo-no-chatgpt" target="_blank" rel="noopener">🔎 OpenAI — Modo de Estudo no ChatGPT</a>
+<a href="https://support.google.com/gemini/answer/16448384" target="_blank" rel="noopener">🔎 Google — Ferramentas de aprendizagem no Gemini</a>
+<a href="https://support.microsoft.com/en-us/microsoft-copilot/conversation-modes-in-microsoft-copilot" target="_blank" rel="noopener">🔎 Microsoft — Study and learn no Copilot</a>
+<a href="https://support.microsoft.com/en-gb/topic/learn-more-think-deeper-using-ai-as-your-learning-partner-450822d4-dfff-45f5-a407-17fb8c3caea4" target="_blank" rel="noopener">🔎 Microsoft — IA como parceira de aprendizagem</a>
+</div>
+</section>
+
+<section>
+<h2>19. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é aprender a usar IA para compreender e praticar, não para copiar.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+
+<div class="savebox">
+<h3>Salvar meu registro da aula</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<textarea id="studyPrompt" rows="5" placeholder="Opcional: escreva aqui um prompt que você usaria para estudar uma matéria difícil."></textarea>
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+<p class="notice">Na SEMAS: envie conforme orientação, salve no Drive quando necessário, apague arquivos locais e saia das contas.</p>
+</div>
+</section>
+
+<section>
+<h2>20. Missão final</h2>
+<div class="card">
+<ol>
+<li>Peça uma explicação adaptada à sua idade.</li>
+<li>Peça um resumo sem perder as ideias principais.</li>
+<li>Peça perguntas e responda antes de ver o gabarito.</li>
+<li>Monte um pequeno plano de estudo.</li>
+<li>Confira fatos importantes na matéria da escola ou em fonte confiável.</li>
+</ol>
+<p><strong>Regra da turma:</strong> a melhor IA para estudar não é a que faz a tarefa por você — é a que ajuda você a conseguir fazer sozinho.</p>
+</div>
+</section>
+
+<footer>
+<p>SEMAS • Curso de Informática • Módulo 3 — Aula 03</p>
+<p>Usando a IA para Estudar e Fazer Resumos</p>
+</footer>
+
+</main>
+
+<script>
+const lessonKey="semas_mod3_aula03_attempt";
+const questions=[
+["Qual é o melhor uso da IA para estudar?","Pedir explicações, praticar e verificar o que aprendeu","Copiar todas as respostas","Pedir que faça a prova","Usar sem ler a resposta","A IA pode apoiar o aprendizado, mas o estudante precisa pensar e praticar."],
+["Se você não entendeu a primeira explicação, o que pode fazer?","Pedir outra explicação, outro exemplo ou passo a passo","Desistir imediatamente","Copiar sem entender","Trocar o nome do assunto","Você pode pedir à IA que adapte a explicação."],
+["O que caracteriza um bom resumo?","Mantém as ideias principais em menos palavras","Apaga todas as explicações","Muda o sentido do texto","Inclui informações inventadas","Um resumo deve preservar os pontos centrais."],
+["Qual é um bom jeito de usar perguntas criadas pela IA?","Responder primeiro e só depois receber feedback","Pedir o gabarito antes","Copiar as respostas","Ignorar os erros","Tentar responder antes do gabarito promove prática ativa."],
+["O que pedir quando erramos uma pergunta?","Uma pista e depois uma explicação","Apenas a resposta final","Que a IA apague a pergunta","Nada","Pistas e explicações ajudam a entender o erro."],
+["Um resumo feito pela IA é automaticamente verdadeiro?","Não","Sim","Somente se for curto","Somente se tiver tópicos","A qualidade do resumo depende também da fonte e a IA pode cometer erros."],
+["Por que usar o material da escola como base pode ser melhor?","Porque mantém o estudo alinhado ao conteúdo realmente trabalhado","Porque a IA fica infalível","Porque elimina a necessidade de estudar","Porque substitui o professor","O material da escola ajuda a manter o foco no conteúdo correto."],
+["Qual frase resume melhor a aula?","Use a IA para conseguir aprender e fazer sozinho","Use a IA para evitar pensar","Use a IA como única fonte","Use a IA para copiar mais rápido","O objetivo é aumentar a autonomia do estudante."]
+];
+let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{
+ const d=document.createElement("div");d.className="quiz-item";
+ d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;
+ quiz.appendChild(d);
+});
+function updateUI(){document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true}}
+updateUI();
+function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===0){score++;a.textContent="Correta! "+q[5]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}});if(!all)return;attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
+function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;updateUI()}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function saveResult(){if(!completed)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return}const prompt=document.getElementById("studyPrompt").value.trim();let rows="";questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`});const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}.prompt{padding:12px;background:#f2f5f8;border-radius:8px}</style></head><body><h1>SEMAS — Módulo 3 — Aula 03</h1><h2>Usando a IA para Estudar e Fazer Resumos</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}</p>${prompt?`<p><strong>Meu prompt de estudo:</strong></p><div class="prompt">${esc(prompt)}</div>`:""}<table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. O objetivo é usar a IA para aprender com mais autonomia.</p></body></html>`;const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");a.href=url;a.download=`SEMAS_Modulo_3_Aula_03_${safe}.html`;a.click();URL.revokeObjectURL(url)}
+function finishSession(){if(!confirm("Encerrar a sessão e limpar esta aula neste navegador?"))return;sessionStorage.removeItem(lessonKey);location.reload()}
+</script>
+</body>
+</html>

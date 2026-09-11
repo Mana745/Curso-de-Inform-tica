@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 3 — Aula 01 — O Que é a Inteligência Artificial?</title>
+<style>
+:root{
+  --bg:#07101c;--card:#101b2d;--card2:#0b1525;--ink:#eff7ff;--muted:#afbed3;
+  --accent:#74dcff;--accent2:#a5ffb7;--warn:#ffd37b;--danger:#ff9e9e;--line:#2a3a54;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 15% 0%,#18345a 0,transparent 30%),linear-gradient(135deg,#070c15,#0c1628 55%,#102039);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1040px;margin:auto;padding:24px 18px 70px}
+.hero{padding:42px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#245684,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)}h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)}.warning{border-left:4px solid var(--warn);background:#251f12}.danger{border-left:4px solid var(--danger);background:#29171b}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.big{font-size:2.4rem}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;align-items:center}
+.flowbox{padding:15px;border:1px solid var(--line);border-radius:14px;background:#091422;text-align:center;min-height:132px;display:flex;flex-direction:column;justify-content:center}
+.arrow{text-align:center;font-size:1.7rem;color:var(--accent);font-weight:900}
+.compare{overflow:auto}
+.compare table{border-collapse:collapse;width:100%;min-width:720px;background:#0b1525}
+.compare th,.compare td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}
+.compare th{background:#14233a;color:var(--accent2)}
+.ai-card{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
+.badge{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;background:#173253;font-size:1.6rem}
+.prompt{font-family:Consolas,monospace;background:#07101e;color:#ffd479;padding:12px;border-radius:10px}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}button:disabled{opacity:.5}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.answer{margin-top:10px;color:var(--muted)}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}
+details{margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425}
+summary{cursor:pointer;font-weight:850;color:var(--accent2)}
+footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:760px){main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.flow{grid-template-columns:1fr}.arrow{transform:rotate(90deg);height:26px}button{width:100%;min-height:48px}}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 3 • Aula 01</div>
+<h1>O Que é a Inteligência Artificial?</h1>
+<p class="lead">A inteligência artificial não é um robô vivo escondido dentro do computador. É tecnologia criada por pessoas para reconhecer padrões, fazer previsões, classificar informações e, em alguns casos, gerar texto, imagem, áudio ou outras respostas.</p>
+<p><strong>Desafio da aula:</strong> terminar sabendo distinguir uma pessoa de uma IA, reconhecer alguns usos de IA no cotidiano e entender por que uma resposta de IA pode parecer convincente e ainda estar errada.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>7 min</strong>O que é IA</div>
+<div class="slot"><strong>10 min</strong>Como aprende padrões</div>
+<div class="slot"><strong>12 min</strong>IA no cotidiano</div>
+<div class="slot"><strong>10 min</strong>IA de conversa</div>
+<div class="slot"><strong>8 min</strong>Demonstração</div>
+<div class="slot"><strong>8 min</strong>Caça à IA</div>
+<div class="slot"><strong>5 min</strong>Quiz/relatório</div>
+</div>
+</section>
+
+<section>
+<h2>2. O que você vai aprender</h2>
+<div class="grid">
+<div class="card goal"><h3>🧠 Conceito</h3><p>Entender IA sem imaginar que ela é uma pessoa ou um ser vivo.</p></div>
+<div class="card goal"><h3>🔎 Padrões</h3><p>Perceber que sistemas de IA aprendem relações estatísticas em dados.</p></div>
+<div class="card goal"><h3>📱 Cotidiano</h3><p>Reconhecer usos de IA e algoritmos inteligentes em ferramentas que já conhece.</p></div>
+<div class="card goal"><h3>💬 Conversação</h3><p>Conhecer algumas ferramentas capazes de conversar por texto ou voz.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. Primeiro: IA não está viva</h2>
+<div class="grid">
+<div class="card"><div class="big">👦</div><h3>Pessoa</h3><p>Tem corpo, experiências, relações, necessidades e consciência humana.</p></div>
+<div class="card"><div class="big">💻</div><h3>Programa de IA</h3><p>Executa cálculos e modelos construídos e treinados por pessoas em computadores.</p></div>
+</div>
+<div class="card warning" style="margin-top:14px">
+<h3>Ela pode escrever “eu”, mas isso não a transforma em pessoa</h3>
+<p>Programas de conversa usam linguagem natural porque foram desenvolvidos para interagir conosco. Uma frase parecida com a de uma pessoa não prova que existe uma pessoa dentro da máquina.</p>
+</div>
+</section>
+
+<section>
+<h2>4. “A IA leu muitos livros” — uma analogia útil, mas incompleta</h2>
+<p>Podemos dizer, de forma bem simples, que uma IA de linguagem teve contato durante o treinamento com uma quantidade enorme de exemplos de linguagem e aprendeu padrões. Mas ela não “leu e entendeu livros” exatamente como uma criança ou um adulto.</p>
+<div class="flow">
+<div class="flowbox"><div class="big">📚</div><strong>Muitos dados</strong><span>textos e outros exemplos</span></div>
+<div class="arrow">→</div>
+<div class="flowbox"><div class="big">🔢</div><strong>Treinamento</strong><span>cálculos ajustam o modelo</span></div>
+<div class="arrow">→</div>
+<div class="flowbox"><div class="big">🧩</div><strong>Padrões</strong><span>relações entre informações</span></div>
+<div class="arrow">→</div>
+<div class="flowbox"><div class="big">💬</div><strong>Resposta</strong><span>gera uma continuação adequada ao pedido</span></div>
+<div class="arrow">→</div>
+<div class="flowbox"><div class="big">⚠️</div><strong>Pode errar</strong><span>resposta convincente não é prova</span></div>
+</div>
+</section>
+
+<section>
+<h2>5. Nem toda IA faz a mesma coisa</h2>
+<div class="grid">
+<div class="card"><h3>🎯 Recomendar</h3><p>Sugerir músicas, vídeos ou produtos com base em padrões.</p></div>
+<div class="card"><h3>🗣️ Reconhecer</h3><p>Transformar fala em texto, identificar objetos ou classificar informações.</p></div>
+<div class="card"><h3>✍️ Gerar</h3><p>Criar texto, imagem, áudio ou código a partir de instruções.</p></div>
+<div class="card"><h3>🔍 Prever</h3><p>Estimar qual resultado ou padrão é mais provável com base nos dados disponíveis.</p></div>
+</div>
+</section>
+
+<section>
+<h2>6. Onde encontramos IA no dia a dia?</h2>
+<div class="compare">
+<table>
+<tr><th>Exemplo</th><th>O que pode acontecer</th><th>Cuidado com a simplificação</th></tr>
+<tr><td>⌨️ Corretor e texto previsto</td><td>Pode sugerir palavras ou corrigir com base em padrões linguísticos.</td><td>Nem todo corretor usa exatamente o mesmo tipo de IA.</td></tr>
+<tr><td>▶️ Vídeos sugeridos</td><td>Sistemas de recomendação escolhem conteúdos que podem interessar ao usuário.</td><td>Uma recomendação não significa que o vídeo é verdadeiro ou bom para você.</td></tr>
+<tr><td>🗣️ Alexa</td><td>Usa tecnologia de voz e serviços de IA para interpretar pedidos e responder.</td><td>Alexa é o serviço/assistente; Echo é uma família de aparelhos.</td></tr>
+<tr><td>📷 Câmera do celular</td><td>Alguns celulares usam modelos para reconhecer cenas, melhorar fotos e organizar imagens.</td><td>Os recursos variam de aparelho para aparelho.</td></tr>
+<tr><td>💬 Chat de IA</td><td>Pode explicar, resumir, criar ideias e responder a perguntas.</td><td>Pode inventar informações ou interpretar errado o pedido.</td></tr>
+</table>
+</div>
+</section>
+
+<section>
+<h2>7. IA generativa: a que cria algo novo</h2>
+<p>Chamamos de <strong>IA generativa</strong> sistemas que produzem novos conteúdos a partir de instruções: texto, imagens, áudio, vídeo, código e outros formatos.</p>
+<div class="card">
+<h3>Exemplo de pedido</h3>
+<div class="prompt">Explique o ciclo da água para uma criança de 10 anos usando apenas 5 frases.</div>
+<p>A ferramenta tenta gerar uma resposta adequada a esse pedido. Nas próximas aulas aprenderemos a escrever pedidos melhores.</p>
+</div>
+</section>
+
+<section>
+<h2>8. Algumas ferramentas de conversação</h2>
+
+<div class="grid">
+<div class="card ai-card"><div class="badge">💬</div><div><h3>ChatGPT</h3><p>Ferramenta de conversa da OpenAI. Há plano gratuito, com limites de uso e recursos que podem mudar com o tempo.</p></div></div>
+<div class="card ai-card"><div class="badge">✨</div><div><h3>Gemini</h3><p>Assistente de IA do Google. Pode ajudar com ideias, explicações, resumos e outras tarefas; disponibilidade e recursos dependem da conta e da idade.</p></div></div>
+<div class="card ai-card"><div class="badge">🪟</div><div><h3>Microsoft Copilot</h3><p>Assistente de IA da Microsoft. A versão pessoal oferece conversa com IA e possui opção gratuita.</p></div></div>
+<div class="card ai-card"><div class="badge">🗣️</div><div><h3>Alexa</h3><p>Assistente de voz da Amazon. É um exemplo de interação com tecnologia por linguagem falada e serviços em nuvem.</p></div></div>
+</div>
+
+<div class="card warning" style="margin-top:14px">
+<h3>“Gratuito” não significa ilimitado</h3>
+<p>Planos gratuitos podem ter limites de mensagens, modelos, imagens ou outras funções. Empresas também podem alterar esses limites. Nesta aula queremos conhecer a tecnologia, não escolher “a melhor IA”.</p>
+</div>
+</section>
+
+<section>
+<h2>9. Regra especial para nossas turmas de 10+</h2>
+<div class="grid">
+<div class="card danger"><h3>👧 Menores de 13</h3><p>Não criarão conta falsa nem informarão idade diferente da real. A demonstração pode ser feita pelo professor. Serviços que permitam conta infantil supervisionada dependem da autorização do responsável e das regras do próprio serviço.</p></div>
+<div class="card warning"><h3>🧑 13 a 17 anos</h3><p>Também existem regras específicas. ChatGPT exige permissão do responsável para menores de 18; Copilot exige pelo menos 13 anos; outros serviços podem ter regras próprias.</p></div>
+</div>
+<p class="notice">As regras de idade são parte da própria educação digital: aprender tecnologia também significa respeitar os termos do serviço e proteger crianças e adolescentes.</p>
+</section>
+
+<section>
+<h2>10. Demonstração do professor: faça a mesma pergunta de três formas</h2>
+<p>O professor pode usar uma ferramenta de IA disponível e mostrar à turma como pequenas mudanças no pedido mudam a resposta.</p>
+<div class="grid">
+<div class="card"><h3>Pedido 1</h3><div class="prompt">O que é chuva?</div></div>
+<div class="card"><h3>Pedido 2</h3><div class="prompt">Explique como a chuva se forma para um aluno de 10 anos.</div></div>
+<div class="card"><h3>Pedido 3</h3><div class="prompt">Explique como a chuva se forma para um aluno de 10 anos em 5 frases e dê um exemplo do cotidiano.</div></div>
+</div>
+<p>Observe: a IA responde melhor quando recebe contexto e instruções mais claras. Isso será o assunto das próximas aulas.</p>
+</section>
+
+<section>
+<h2>11. Atividade: Caça à IA no cotidiano</h2>
+<p>Em dupla ou com orientação do professor, escolha três situações e discuta: <strong>há IA, pode haver IA ou não temos informação suficiente?</strong></p>
+<div class="grid">
+<div class="card"><h3>📱 Celular sugere a próxima palavra</h3><p>Que tipo de padrão o sistema pode estar usando?</p></div>
+<div class="card"><h3>🧮 Calculadora faz 8 × 7</h3><p>Isso precisa de inteligência artificial?</p></div>
+<div class="card"><h3>▶️ Aplicativo recomenda um vídeo</h3><p>O sistema pode usar histórico e padrões de interesse?</p></div>
+<div class="card"><h3>💡 Interruptor liga uma lâmpada</h3><p>Isso é IA ou apenas um mecanismo/comando?</p></div>
+<div class="card"><h3>📷 Câmera reconhece um rosto</h3><p>Que tipo de reconhecimento pode existir?</p></div>
+<div class="card"><h3>💬 Chat responde uma pergunta</h3><p>Responder bem significa que ele nunca erra?</p></div>
+</div>
+</section>
+
+<section>
+<h2>12. Um ponto que vamos repetir o módulo inteiro</h2>
+<div class="card danger">
+<h3>⚠️ IA pode responder com confiança e estar errada</h3>
+<p>Ela pode inventar datas, nomes, fatos, referências ou interpretar a pergunta de forma equivocada. Para trabalhos escolares e informações importantes, devemos conferir em fontes confiáveis.</p>
+</div>
+<div class="grid" style="margin-top:14px">
+<div class="card"><h3>IA ajuda</h3><p>Explicar, criar exemplos, organizar ideias, treinar perguntas.</p></div>
+<div class="card"><h3>Aluno pensa</h3><p>Decide, questiona, compara e verifica.</p></div>
+<div class="card"><h3>Fonte confirma</h3><p>Livro, professor, site oficial ou outra referência confiável sustenta a informação.</p></div>
+</div>
+</section>
+
+<section>
+<h2>13. 🏠 Para rever em casa — 10 minutos</h2>
+<div class="card">
+<p>Sem precisar criar conta em nenhuma IA, explique para alguém da casa:</p>
+<ol>
+<li>por que uma IA não é um robô vivo;</li>
+<li>um lugar onde você percebe tecnologia inteligente no dia a dia;</li>
+<li>por que uma resposta bonita de IA ainda precisa ser conferida.</li>
+</ol>
+<p>Se houver uma Alexa, assistente do celular ou outro recurso parecido em casa, você pode observar como ele recebe uma pergunta e responde — sem fornecer informações pessoais.</p>
+</div>
+</section>
+
+<section>
+<h2>14. Pesquise depois — fontes oficiais</h2>
+<div class="links">
+<a href="https://openai.com/chatgpt/pricing/" target="_blank" rel="noopener">🔎 OpenAI — Planos do ChatGPT</a>
+<a href="https://help.openai.com/en/articles/8313401-is-chatgpt-safe-for-all-ages" target="_blank" rel="noopener">🔎 OpenAI — ChatGPT e idade</a>
+<a href="https://support.google.com/gemini/" target="_blank" rel="noopener">🔎 Google — Central de Ajuda do Gemini</a>
+<a href="https://support.google.com/gemini/answer/16109150" target="_blank" rel="noopener">🔎 Google — Gemini para contas supervisionadas</a>
+<a href="https://support.microsoft.com/en-us/microsoft-copilot/microsoft-copilot-young-people" target="_blank" rel="noopener">🔎 Microsoft — Copilot para jovens</a>
+<a href="https://www.microsoft.com/en-us/microsoft-365-copilot/download-copilot-app" target="_blank" rel="noopener">🔎 Microsoft — Copilot pessoal</a>
+<a href="https://developer.amazon.com/en-US/alexa/devices/alexa-built-in" target="_blank" rel="noopener">🔎 Amazon — Alexa em dispositivos</a>
+</div>
+</section>
+
+<section>
+<h2>15. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é começar este módulo sem mistificar a tecnologia.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+
+<div class="savebox">
+<h3>Salvar meu registro da aula</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+<p class="notice">Na SEMAS: envie o relatório conforme orientação, salve no Drive quando necessário, apague arquivos locais e saia das contas.</p>
+</div>
+</section>
+
+<section>
+<h2>16. Missão final</h2>
+<div class="card">
+<ol>
+<li>Explique IA sem usar a frase “é um robô vivo”.</li>
+<li>Dê dois exemplos diferentes de uso de IA.</li>
+<li>Explique por que uma calculadora simples não precisa ser IA.</li>
+<li>Diga uma razão para conferir uma resposta de IA.</li>
+</ol>
+<p><strong>Regra da turma:</strong> IA não está aqui para pensar no seu lugar. Ela pode ser uma ferramenta para ajudar você a pensar melhor.</p>
+</div>
+</section>
+
+<footer>
+<p>SEMAS • Curso de Informática • Módulo 3 — Aula 01</p>
+<p>O Que é a Inteligência Artificial (IA)?</p>
+</footer>
+
+</main>
+
+<script>
+const lessonKey="semas_mod3_aula01_attempt";
+const questions=[
+["Qual frase descreve melhor uma IA?","Uma tecnologia criada por pessoas que usa modelos e dados para executar tarefas","Um robô vivo dentro do computador","Uma pessoa digital","Um ser que sabe tudo","IA é tecnologia construída por pessoas; não é um ser vivo."],
+["Dizer que uma IA 'leu muitos livros' é exatamente o que aconteceu?","Não, é apenas uma analogia simplificada","Sim, exatamente como uma pessoa","Sim, e ela lembra cada página","Somente se usar Alexa","Modelos são treinados com grandes quantidades de dados e aprendem padrões; isso não é leitura humana literal."],
+["Qual destas tarefas pode usar IA?","Recomendar vídeos com base em padrões","Acender uma lâmpada por um interruptor simples","Somar 2+2 numa calculadora básica obrigatoriamente","Abrir uma porta com uma chave comum","Sistemas de recomendação podem usar técnicas de IA ou aprendizado de máquina."],
+["Uma IA que escreve uma resposta convincente está sempre correta?","Não","Sim","Somente se a resposta for longa","Somente se usar palavras difíceis","IA pode gerar informação incorreta mesmo com aparência convincente."],
+["O que é IA generativa?","IA capaz de gerar novos conteúdos como texto ou imagem","Qualquer aparelho com eletricidade","Uma planilha do Excel","Um tipo de cabo","IA generativa produz conteúdos a partir de instruções e contexto."],
+["Um aluno menor de 13 deve criar conta usando idade falsa para acessar uma IA?","Não","Sim, se for para estudar","Sim, com nome diferente","Somente no laboratório","Nunca devemos falsificar idade ou burlar regras de acesso."],
+["Para que serve conferir uma resposta de IA em outra fonte?","Para verificar se a informação está correta","Para deixar a tela mais bonita","Para fazer a IA responder mais rápido","Para aumentar o Wi-Fi","IA pode errar; fontes confiáveis ajudam a confirmar fatos."],
+["Qual é a melhor relação entre aluno e IA neste curso?","A IA ajuda, mas o aluno continua pensando, decidindo e verificando","A IA faz tudo e o aluno copia","O aluno nunca questiona a IA","A IA substitui professor, livros e fontes","O objetivo é usar IA como ferramenta, preservando raciocínio e verificação."]
+];
+
+let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{
+ const d=document.createElement("div");
+ d.className="quiz-item";
+ d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
+ q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+
+ `<div class="answer" id="a${i}"></div>`;
+ quiz.appendChild(d);
+});
+function updateUI(){
+ document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;
+ if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true;}
+}
+updateUI();
+function checkQuiz(){
+ if(attempt>=2)return;
+ let score=0,all=true,wrong=[];
+ questions.forEach((q,i)=>{
+  const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);
+  if(!s){all=false;a.textContent="Responda esta questão.";return}
+  if(+s.value===0){score++;a.textContent="Correta! "+q[5]}
+  else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}
+ });
+ if(!all)return;
+ attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;
+ document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;
+ document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;
+ document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true);
+}
+function retryQuiz(){
+ if(attempt>=2||!completed)return;
+ document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});
+ questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");
+ completed=false;lastScore=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;updateUI();
+}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function saveResult(){
+ if(!completed)return;
+ const name=document.getElementById("studentName").value.trim();
+ if(!name){alert("Digite seu nome completo.");return}
+ let rows="";
+ questions.forEach((q,i)=>{
+  const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;
+  rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;
+ });
+ const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}</style></head><body><h1>SEMAS — Módulo 3 — Aula 01</h1><h2>O Que é a Inteligência Artificial?</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. O objetivo é compreender a tecnologia e usá-la com responsabilidade.</p></body></html>`;
+ const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
+ a.href=url;a.download=`SEMAS_Modulo_3_Aula_01_${safe}.html`;a.click();URL.revokeObjectURL(url);
+}
+function finishSession(){if(!confirm("Encerrar a sessão e limpar esta aula neste navegador?"))return;sessionStorage.removeItem(lessonKey);location.reload()}
+</script>
+</body>
+</html>

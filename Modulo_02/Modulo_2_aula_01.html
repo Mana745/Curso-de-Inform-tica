@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 2 — Aula 01 — Escrevendo no Word e a Postura das Mãos</title>
+<style>
+:root{
+  --bg:#08101d;--card:#111b2e;--card2:#0d1728;--ink:#eef5ff;--muted:#afbdd4;
+  --accent:#69ddff;--accent2:#9dffb7;--warn:#ffd479;--danger:#ff9d9d;--line:#293955;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 15% 0%,#173053 0,transparent 28%),linear-gradient(135deg,#070c16,#0c1628 55%,#0e1d34);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1000px;margin:auto;padding:24px 18px 70px}
+.hero{padding:40px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#23517a,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}
+.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)} h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)} .warning{border-left:4px solid var(--warn);background:#251f12}
+.pc{border-left:4px solid var(--accent)} .phone{border-left:4px solid #bd9cff}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.keyboard{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin:16px 0}
+.key{min-height:52px;border:1px solid #3b4a65;border-radius:9px;background:#0a1425;display:flex;align-items:center;justify-content:center;font-weight:900}
+.home{background:#1d4933;border-color:#7ff3a3}.index{outline:2px solid #ffd479}
+.finger-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sheet{background:#fff;color:#202633;border-radius:8px;padding:28px;min-height:260px;box-shadow:0 12px 32px #0006}
+.sheet h3{color:#1c3f67}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+.links a:hover{text-decoration:underline;background:#13233a}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.mode-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.mode-panel{display:none;margin-top:14px}.mode-panel.active{display:block}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px 11px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.quiz-item label:hover{background:#16243b}
+.answer{margin-top:10px;color:var(--muted)}#result{font-size:1.1rem;font-weight:800;margin-top:18px}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input,.savebox textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:720px){main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.keyboard{grid-template-columns:repeat(5,1fr)}.finger-row{grid-template-columns:1fr}.mode-buttons{display:grid;grid-template-columns:1fr}button{width:100%;min-height:48px}.quiz-item label{padding:13px 12px}}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 2 • Aula 01</div>
+<h1>Escrevendo no Word e a Postura das Mãos</h1>
+<p class="lead">Hoje começamos a usar o computador para criar algo nosso. Vamos abrir um documento em branco, aprender a posição inicial das mãos no teclado e escrever um pequeno texto sobre quem somos e o que sonhamos.</p>
+<p><strong>Desafio da aula:</strong> terminar um texto simples, legível e salvo corretamente, sem precisar digitar rápido.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>5 min</strong>Conhecendo o Word</div>
+<div class="slot"><strong>10 min</strong>Folha digital</div>
+<div class="slot"><strong>15 min</strong>Postura das mãos</div>
+<div class="slot"><strong>20 min</strong>Texto sobre você</div>
+<div class="slot"><strong>5 min</strong>Salvar</div>
+<div class="slot"><strong>3 min</strong>Quiz</div>
+<div class="slot"><strong>2 min</strong>Relatório</div>
+</div>
+</section>
+
+<section>
+<h2>2. O que você vai aprender</h2>
+<div class="grid">
+<div class="card goal"><h3>📄 Documento</h3><p>Abrir um documento em branco no Word ou editor semelhante.</p></div>
+<div class="card goal"><h3>⌨️ Digitação</h3><p>Conhecer as teclas-guia e a posição inicial dos dedos.</p></div>
+<div class="card goal"><h3>✍️ Escrita</h3><p>Produzir um texto curto sobre sua vida e seus sonhos.</p></div>
+<div class="card goal"><h3>💾 Salvar</h3><p>Guardar o arquivo com um nome claro e fácil de encontrar.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. A folha em branco digital</h2>
+<p>No Word, podemos começar por um <strong>Documento em branco</strong>. A Microsoft mantém essa opção como uma das formas básicas de criar um novo documento. </p>
+<div class="sheet">
+<h3>Meu primeiro texto no Word</h3>
+<p>O cursor piscando mostra onde a próxima letra será digitada.</p>
+<p>Quando você pressiona uma tecla, o caractere aparece na página.</p>
+<p>Enter inicia um novo parágrafo. Backspace apaga o caractere à esquerda.</p>
+</div>
+<div class="card warning" style="margin-top:14px">
+<h3>Word ou similar</h3>
+<p>Se o computador usar LibreOffice Writer, Word para Web ou outro editor de texto, os princípios são os mesmos: criar documento, digitar, revisar e salvar.</p>
+</div>
+</section>
+
+<section>
+<h2>4. Como abrir um documento</h2>
+<div class="grid">
+<div class="card"><h3>1. Abra o editor</h3><p>Microsoft Word ou o programa indicado pelo professor.</p></div>
+<div class="card"><h3>2. Novo</h3><p>Escolha <strong>Documento em branco</strong>.</p></div>
+<div class="card"><h3>3. Clique na página</h3><p>Veja o cursor piscando.</p></div>
+<div class="card"><h3>4. Digite devagar</h3><p>Nesta aula, precisão vale mais que velocidade.</p></div>
+</div>
+</section>
+
+<section>
+<h2>5. Teclas-guia: onde as mãos descansam</h2>
+<p>Na digitação tradicional, os dedos começam sobre as teclas:</p>
+<div class="keyboard">
+<div class="key home">A</div><div class="key home">S</div><div class="key home">D</div><div class="key home index">F</div><div class="key">G</div>
+<div class="key">H</div><div class="key home index">J</div><div class="key home">K</div><div class="key home">L</div><div class="key home">Ç</div>
+</div>
+<div class="finger-row">
+<div class="card"><h3>✋ Mão esquerda</h3><p>Mindinho em A, anelar em S, médio em D e indicador em F.</p></div>
+<div class="card"><h3>🤚 Mão direita</h3><p>Indicador em J, médio em K, anelar em L e mindinho em Ç.</p></div>
+</div>
+<div class="card warning" style="margin-top:14px">
+<h3>F e J ajudam você a se localizar</h3>
+<p>Muitos teclados possuem pequenas marcas em relevo nas teclas <strong>F</strong> e <strong>J</strong>. Elas ajudam a encontrar a posição sem precisar olhar o teclado o tempo todo.</p>
+</div>
+</section>
+
+<section>
+<h2>6. Postura: conforto antes de velocidade</h2>
+<div class="grid">
+<div class="card"><h3>🪑 Sente-se de forma confortável</h3><p>Evite ficar curvado sobre o teclado.</p></div>
+<div class="card"><h3>💪 Ombros relaxados</h3><p>Não mantenha braços e ombros tensionados.</p></div>
+<div class="card"><h3>⌨️ Punhos naturais</h3><p>Evite dobrar muito os punhos para cima ou para os lados.</p></div>
+<div class="card"><h3>🐢 Comece devagar</h3><p>Primeiro acerte as letras. A velocidade aparece com prática.</p></div>
+</div>
+</section>
+
+<section>
+<h2>7. Aquecimento de digitação</h2>
+<p>Digite cada linha duas vezes, sem correr:</p>
+<div class="sheet">
+<p><strong>asdf jklç</strong></p>
+<p><strong>asdf asdf jklç jklç</strong></p>
+<p><strong>f j f j f j</strong></p>
+<p><strong>casa escola sonho amigo</strong></p>
+</div>
+<p class="notice">O objetivo não é competir com o colega. Cada pessoa desenvolve coordenação no próprio ritmo.</p>
+</section>
+
+<section>
+<h2>8. Atividade principal: Quem sou eu?</h2>
+<p>Agora escreva um pequeno texto com suas próprias palavras. Você pode usar este roteiro:</p>
+<div class="sheet">
+<h3>Quem sou eu</h3>
+<p>Meu nome é __________________________.</p>
+<p>Tenho ______ anos.</p>
+<p>Eu moro em uma comunidade / bairro / região __________________.</p>
+<p>Eu gosto de ______________________________________________.</p>
+<p>No sítio, na cidade ou onde vivo, uma coisa de que gosto é __________________.</p>
+<p>Meu maior sonho hoje é ____________________________________.</p>
+</div>
+
+<div class="card warning" style="margin-top:14px">
+<h3>Privacidade também faz parte da escrita</h3>
+<p>Não coloque endereço completo, telefone, CPF, senha, dados bancários ou outras informações pessoais desnecessárias. Para esta atividade, basta contar o que você quiser sobre interesses, rotina e sonhos.</p>
+</div>
+</section>
+
+<section>
+<h2>9. Revisar antes de salvar</h2>
+<div class="grid">
+<div class="card"><h3>🔤 Nome começa com maiúscula?</h3><p>Confira seu nome e início das frases.</p></div>
+<div class="card"><h3>␣ Há espaços?</h3><p>Veja se as palavras não ficaram grudadas.</p></div>
+<div class="card"><h3>🔎 Faltou alguma letra?</h3><p>Leia devagar antes de terminar.</p></div>
+<div class="card"><h3>✏️ Está com suas palavras?</h3><p>O texto não precisa parecer um livro. Precisa representar você.</p></div>
+</div>
+</section>
+
+<section>
+<h2>10. Salvar o documento</h2>
+<p>Use um nome que permita reconhecer o arquivo depois, por exemplo:</p>
+<div class="card"><h3>📁 Exemplo</h3><p><strong>Modulo_2_Aula_01_Meu_Nome.docx</strong></p></div>
+<p>O Word possui comandos para salvar documentos e atalhos de teclado para várias ações. A Microsoft documenta atalhos de navegação, edição e salvamento no Word. </p>
+<div class="card warning" style="margin-top:14px">
+<h3>No computador compartilhado</h3>
+<p>Salve apenas pelo tempo necessário para enviar ao professor e guardar na sua conta. Depois, apague sua cópia local e saia das contas.</p>
+</div>
+</section>
+
+<section>
+<h2>11. Atividade prática</h2>
+<div class="mode-buttons">
+<button onclick="showMode('pc')">🏫 Estou na SEMAS</button>
+<button class="secondary" onclick="showMode('phone')">📱 Estou acompanhando pelo celular</button>
+</div>
+
+<div id="pcMode" class="mode-panel">
+<div class="card pc">
+<h3>🏫 No computador da SEMAS</h3>
+<ol>
+<li>Abra o Word ou editor indicado.</li>
+<li>Crie um documento em branco.</li>
+<li>Faça o aquecimento <strong>asdf jklç</strong>.</li>
+<li>Escreva o texto “Quem sou eu”.</li>
+<li>Revise com calma.</li>
+<li>Salve usando um nome de arquivo claro.</li>
+<li>Envie ao professor conforme orientação.</li>
+<li>Salve no seu Drive, apague a cópia local e saia das contas.</li>
+</ol>
+</div>
+</div>
+
+<div id="phoneMode" class="mode-panel">
+<div class="card phone">
+<h3>📱 Em casa pelo celular</h3>
+<p>O celular é para <strong>revisar a aula</strong>. A prática principal de digitação será feita no teclado físico da SEMAS.</p>
+<ol>
+<li>Leia novamente a posição das teclas A S D F / J K L Ç.</li>
+<li>Pense no texto que você escreveria sobre você.</li>
+<li>Leia o texto produzido na SEMAS, se estiver salvo no seu Drive.</li>
+<li>Mostre para alguém da sua casa, se quiser, e explique o que aprendeu sobre digitação.</li>
+</ol>
+</div>
+</div>
+</section>
+
+<section>
+<h2>12. 🏠 Para rever em casa — 10 minutos</h2>
+<div class="card">
+<p>Se puder, conte para alguém da sua casa:</p>
+<ol>
+<li>onde ficam as teclas-guia;</li>
+<li>por que F e J têm pequenas marcas;</li>
+<li>qual foi a parte do seu texto de que você mais gostou.</li>
+</ol>
+<p class="notice">Não é necessário que o responsável saiba informática. A ideia é você explicar com suas próprias palavras.</p>
+</div>
+</section>
+
+<section>
+<h2>13. Pesquise depois — links oficiais</h2>
+<div class="links">
+<a href="https://support.microsoft.com/pt-br/word/basic-tasks-in-word" target="_blank" rel="noopener">🔎 Microsoft — Tarefas básicas no Word</a>
+<a href="https://support.microsoft.com/pt-br/word/training/create-a-document-in-word" target="_blank" rel="noopener">🔎 Microsoft — Criar um documento no Word</a>
+<a href="https://support.microsoft.com/pt-br/accessibility/word/keyboard-shortcuts-in-word" target="_blank" rel="noopener">🔎 Microsoft — Atalhos de teclado do Word</a>
+</div>
+</section>
+
+<section>
+<h2>14. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é aprender a escrever com mais conforto e organização.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+
+<div class="savebox">
+<h3>Salvar meu registro da aula</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<textarea id="dream" rows="3" placeholder="Opcional: escreva aqui uma frase sobre seu maior sonho."></textarea>
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+<p class="notice">Na SEMAS: envie por e-mail, salve no Drive, apague seus arquivos locais e saia das contas.</p>
+</div>
+</section>
+
+<section>
+<h2>15. Missão final</h2>
+<div class="card">
+<ol>
+<li>Mostre onde ficam A, S, D, F / J, K, L, Ç.</li>
+<li>Explique por que não precisamos digitar rápido no começo.</li>
+<li>Abra um documento em branco e escreva pelo menos um parágrafo sobre você.</li>
+<li>Salve com um nome de arquivo que você consiga reconhecer.</li>
+</ol>
+<p><strong>Regra da turma:</strong> escrever no computador não é correr no teclado — é transformar uma ideia em um documento que outra pessoa consegue ler.</p>
+</div>
+</section>
+
+<footer>
+<p>SEMAS • Curso de Informática • Módulo 2 — Aula 01</p>
+<p>Escrevendo no Word e a Postura das Mãos</p>
+</footer>
+
+</main>
+
+<script>
+const lessonKey="semas_mod2_aula01_attempt";
+const questions=[
+["O que é um documento em branco no Word?","Uma página digital onde podemos começar a escrever","Uma página da internet","Um antivírus","Uma pasta do Windows","Um documento em branco é o ponto inicial para criar um novo texto."],
+["Quais são as teclas-guia da mão esquerda nesta aula?","A, S, D, F","Q, W, E, R","Z, X, C, V","1, 2, 3, 4","Na posição básica, os dedos da mão esquerda repousam sobre A, S, D e F."],
+["Quais são as teclas-guia da mão direita no teclado português brasileiro?","J, K, L, Ç","U, I, O, P","H, J, K, L","7, 8, 9, 0","Na posição básica ensinada, a mão direita repousa sobre J, K, L e Ç."],
+["Para que servem as pequenas marcas nas teclas F e J?","Ajudam a localizar a posição das mãos sem olhar tanto para o teclado","Aumentam a velocidade do computador","Ativam o Word","Ligam o Wi-Fi","As marcas em F e J ajudam a encontrar a posição inicial pelo tato."],
+["No começo da digitação, o que é mais importante?","Precisão e postura confortável","Ser mais rápido que o colega","Digitar sem respirar","Usar só dois dedos","A velocidade cresce com prática; primeiro vêm precisão e conforto."],
+["Qual informação NÃO devemos colocar nessa atividade?","Senha ou endereço completo","O que gostamos de fazer","Nosso sonho","Nosso primeiro nome","Dados sensíveis e desnecessários não devem entrar no texto."],
+["Antes de salvar, o que é uma boa prática?","Reler e revisar o texto","Apagar tudo","Fechar o computador à força","Trocar a senha do Wi-Fi","Revisar ajuda a perceber letras faltando, espaços e erros simples."],
+["Num PC compartilhado da SEMAS, o que fazer depois de enviar e guardar o arquivo?","Apagar a cópia local e sair das contas","Deixar o Gmail aberto","Salvar a senha no navegador","Deixar o documento na área de trabalho","A rotina protege a privacidade do aluno e deixa a máquina pronta para a próxima turma."]
+];
+
+let attempt=Number(sessionStorage.getItem(lessonKey)||0);
+let completed=false,lastScore=null,startedAt=Date.now(),finishedAt=null,currentMode="não informado";
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{const d=document.createElement("div");d.className="quiz-item";d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;quiz.appendChild(d);});
+function formatTime(ms){const s=Math.max(0,Math.round(ms/1000)),m=Math.floor(s/60),sec=s%60;return `${m}min ${String(sec).padStart(2,"0")}s`;}
+function showMode(mode){currentMode=mode==="pc"?"SEMAS — computador":"Casa/fora da SEMAS — celular";document.getElementById("pcMode").classList.toggle("active",mode==="pc");document.getElementById("phoneMode").classList.toggle("active",mode==="phone");}
+function updateUI(){const r=document.getElementById("result");if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true;if(!completed)r.innerHTML="<strong>Duas tentativas foram usadas nesta sessão.</strong><br>Em uma nova sessão, o quiz começa novamente.";}else if(!completed){r.innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;}}
+updateUI();
+function checkQuiz(){
+ if(attempt>=2)return;let score=0,all=true,wrong=[];
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return;}if(+s.value===0){score++;a.textContent="Correta! "+q[5];}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5];}});
+ if(!all){document.getElementById("result").innerHTML="<strong>Responda todas as perguntas antes de finalizar.</strong>";return;}
+ attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;finishedAt=Date.now();
+ document.getElementById("result").innerHTML=`<strong>Resultado da tentativa ${attempt}: ${score} de ${questions.length}.</strong><br>Tempo: ${formatTime(finishedAt-startedAt)}.<br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas as questões foram respondidas corretamente."}<br><span style="color:var(--muted)">Não existe nota mínima: o objetivo é desenvolver conforto, precisão e confiança para escrever.</span>`;
+ document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true);updateUI();
+}
+function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false;});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;startedAt=Date.now();finishedAt=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;document.getElementById("result").innerHTML=`Tentativa ${attempt+1} disponível.`;}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+function saveResult(){
+ if(!completed||lastScore===null)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return;}
+ const dream=document.getElementById("dream").value.trim();const now=new Date();let rows="",wrong=[];
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;if(n!==0)wrong.push(i+1);rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;});
+ const report=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SEMAS - Módulo 2 Aula 01 - ${esc(name)}</title><style>body{font-family:Arial,sans-serif;max-width:950px;margin:30px auto;padding:18px;color:#172033;line-height:1.5}h1{color:#123b55}.meta{padding:18px;background:#f1f5f8;border-radius:10px}table{border-collapse:collapse;width:100%;margin-top:15px}th,td{border:1px solid #ccd3dc;padding:8px;text-align:left;vertical-align:top}th{background:#eaf2f7}.note{padding:14px;background:#fff8df;border-radius:8px}</style></head><body><h1>SEMAS — Módulo 2 — Aula 01</h1><h2>Escrevendo no Word e a Postura das Mãos</h2><div class="meta"><strong>Aluno:</strong> ${esc(name)}<br><strong>Data e hora:</strong> ${now.toLocaleString("pt-BR")}<br><strong>Modo:</strong> ${esc(currentMode)}<br><strong>Tentativa:</strong> ${attempt} de 2<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Tempo:</strong> ${formatTime(finishedAt-startedAt)}</div><p class="note"><strong>Não existe nota mínima.</strong> Este relatório registra uma atividade de aprendizagem.</p>${dream?`<p><strong>Meu sonho:</strong> ${esc(dream)}</p>`:""}<p><strong>Questões para revisar:</strong> ${wrong.length?wrong.join(", "):"nenhuma"}.</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Envie por e-mail ao professor, salve no Drive, apague seu arquivo local e saia das contas no computador compartilhado.</p></body></html>`;
+ const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
+ a.href=url;a.download=`SEMAS_Modulo_2_Aula_01_${safe}_Tentativa_${attempt}.html`;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+}
+function finishSession(){
+ if(!confirm("Encerrar a sessão e limpar respostas desta aula neste navegador?"))return;
+ sessionStorage.removeItem(lessonKey);document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false;});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");document.getElementById("studentName").value="";document.getElementById("dream").value="";document.getElementById("saveBtn").disabled=true;document.getElementById("checkBtn").disabled=false;attempt=0;completed=false;lastScore=null;startedAt=Date.now();finishedAt=null;currentMode="não informado";document.getElementById("pcMode").classList.remove("active");document.getElementById("phoneMode").classList.remove("active");document.getElementById("result").innerHTML="Sessão encerrada. Este navegador está pronto para o próximo aluno.";window.scrollTo({top:0,behavior:"smooth"});
+}
+</script>
+</body>
+</html>

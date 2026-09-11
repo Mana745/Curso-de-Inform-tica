@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 1 — Aula 06 — Planejando o Computador dos Sonhos</title>
+<style>
+:root{
+  --bg:#08101d;--card:#111b2e;--card2:#0d1728;--ink:#eef5ff;--muted:#afbdd4;
+  --accent:#69ddff;--accent2:#9dffb7;--warn:#ffd479;--danger:#ff9d9d;--line:#293955;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 15% 0%,#173053 0,transparent 28%),linear-gradient(135deg,#070c16,#0c1628 55%,#0e1d34);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1000px;margin:auto;padding:24px 18px 70px}
+.hero{padding:40px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#23517a,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}
+.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)} h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)} .warning{border-left:4px solid var(--warn);background:#251f12}
+.pc{border-left:4px solid var(--accent)} .phone{border-left:4px solid #bd9cff}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.puzzle{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.piece{padding:18px;border:2px dashed var(--line);border-radius:18px;background:#0a1425;text-align:center}
+.big{font-size:clamp(2rem,7vw,4rem);font-weight:1000;color:var(--accent)}
+.meter{height:12px;border-radius:999px;background:#091322;overflow:hidden;margin-top:8px}
+.meter span{display:block;height:100%;background:linear-gradient(90deg,#69ddff,#9dffb7)}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+.links a:hover{text-decoration:underline;background:#13233a}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.mode-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.mode-panel{display:none;margin-top:14px}.mode-panel.active{display:block}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px 11px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.quiz-item label:hover{background:#16243b}
+.answer{margin-top:10px;color:var(--muted)}#result{font-size:1.1rem;font-weight:800;margin-top:18px}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:720px){main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.puzzle{grid-template-columns:1fr}.mode-buttons{display:grid;grid-template-columns:1fr}button{width:100%;min-height:48px}.quiz-item label{padding:13px 12px}}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 1 • Aula 06</div>
+<h1>Planejando o Computador dos Sonhos</h1>
+<p class="lead">Montar um computador não é escolher as peças “mais fortes”. É escolher peças que <strong>funcionem juntas</strong> e façam sentido para o uso: estudar, trabalhar, criar, jogar ou aprender programação.</p>
+<p><strong>Desafio da aula:</strong> montar mentalmente um PC equilibrado, sem misturar peças incompatíveis e sem gastar dinheiro em algo que não combina com o objetivo.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>5 min</strong>O computador dos sonhos</div>
+<div class="slot"><strong>15 min</strong>Compatibilidade</div>
+<div class="slot"><strong>12 min</strong>Memória RAM</div>
+<div class="slot"><strong>12 min</strong>Monitor</div>
+<div class="slot"><strong>8 min</strong>Teclado e mouse</div>
+<div class="slot"><strong>5 min</strong>Quiz</div>
+<div class="slot"><strong>3 min</strong>Relatório</div>
+</div>
+</section>
+
+<section>
+<h2>2. O que você vai aprender</h2>
+<div class="grid">
+<div class="card goal"><h3>🧩 Compatibilidade</h3><p>Entender que placa-mãe, processador e RAM precisam combinar.</p></div>
+<div class="card goal"><h3>🧠 RAM</h3><p>Perceber por que a memória temporária é importante quando usamos vários programas.</p></div>
+<div class="card goal"><h3>🖥️ Monitor</h3><p>Escolher pensando em tamanho, resolução, conforto e tipo de uso.</p></div>
+<div class="card goal"><h3>⌨️🖱️ Periféricos</h3><p>Escolher teclado e mouse pensando em conforto e necessidade, não apenas aparência.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. Jogo de encaixe mental</h2>
+<div class="puzzle">
+<div class="piece"><div class="big">🧠</div><h3>Processador</h3><p>Precisa ser compatível com o soquete e chipset da placa-mãe.</p></div>
+<div class="piece"><div class="big">🧩</div><h3>Placa-mãe</h3><p>Define quais famílias de CPU, tipos de RAM e conexões podem ser usadas.</p></div>
+<div class="piece"><div class="big">⚡</div><h3>RAM</h3><p>Precisa ter tipo e características aceitas pela placa-mãe e pelo processador.</p></div>
+</div>
+
+<div class="card warning" style="margin-top:14px">
+<h3>Nem tudo que encaixa fisicamente funciona</h3>
+<p>Antes de comprar, é preciso consultar as especificações da placa-mãe e do processador. O tipo de memória suportado, por exemplo, depende dessas duas peças. citeturn613503search10turn613503search13</p>
+</div>
+</section>
+
+<section>
+<h2>4. Memória RAM: a mesa de trabalho do computador</h2>
+<p>A RAM guarda temporariamente dados que o computador está usando naquele momento. Ela é muito mais rápida que o armazenamento e perde seu conteúdo quando a energia é desligada. citeturn613503search0</p>
+
+<div class="grid">
+<div class="card"><h3>📚 Poucas tarefas</h3><p>Navegador, texto e estudo usam memória enquanto estão abertos.</p><div class="meter"><span style="width:35%"></span></div></div>
+<div class="card"><h3>📑 Muitas abas</h3><p>Quanto mais abas, aplicativos e conteúdos abertos, maior pode ser o uso de RAM.</p><div class="meter"><span style="width:70%"></span></div></div>
+<div class="card"><h3>🎮 Jogos e criação</h3><p>Jogos, edição e programas pesados podem exigir mais memória.</p><div class="meter"><span style="width:90%"></span></div></div>
+</div>
+
+<div class="card warning" style="margin-top:14px">
+<h3>Mais RAM não deixa tudo automaticamente mais rápido</h3>
+<p>RAM insuficiente pode causar lentidão quando o sistema precisa compensar usando armazenamento, mas desempenho depende também de CPU, SSD, programas e sistema. O objetivo é ter memória suficiente para o uso.</p>
+</div>
+</section>
+
+<section>
+<h2>5. DDR4, DDR5 e compatibilidade</h2>
+<p>Existem gerações diferentes de memória. Um computador não aceita qualquer módulo apenas porque ele “parece uma memória RAM”.</p>
+<div class="grid">
+<div class="card"><h3>DDR4</h3><p>Uma geração de memória ainda presente em muitos computadores.</p></div>
+<div class="card"><h3>DDR5</h3><p>Uma geração mais recente, usada em plataformas compatíveis.</p></div>
+</div>
+<p class="notice">Não vamos decorar gerações nesta aula. O importante é aprender a verificar o que a placa-mãe e o processador suportam antes da compra.</p>
+</section>
+
+<section>
+<h2>6. Escolhendo o monitor</h2>
+<div class="grid">
+<div class="card"><h3>📏 Tamanho</h3><p>Uma tela maior pode ajudar produtividade, mas precisa caber na mesa e permitir distância confortável.</p></div>
+<div class="card"><h3>🔍 Resolução</h3><p>Maior resolução pode mostrar mais detalhes e espaço de trabalho, dependendo do tamanho da tela.</p></div>
+<div class="card"><h3>👀 Conforto</h3><p>Ajuste de altura, inclinação e conforto visual podem ser importantes para longos períodos de estudo. Monitores de produtividade costumam destacar justamente ergonomia e conforto visual. citeturn613503search2</p></div>
+<div class="card"><h3>🎮 Jogos</h3><p>Jogadores também podem olhar taxa de atualização, tempo de resposta e compatibilidade com a placa de vídeo.</p></div>
+</div>
+</section>
+
+<section>
+<h2>7. Teclado e mouse: conforto também importa</h2>
+<div class="grid">
+<div class="card"><h3>⌨️ Para estudar</h3><p>Teclas confortáveis, layout adequado ao idioma e boa posição na mesa ajudam no uso diário.</p></div>
+<div class="card"><h3>🖱️ Para usar por horas</h3><p>Formato, tamanho e posição do mouse devem permitir uso confortável. A Microsoft possui modelos ergonômicos voltados a reduzir esforço em uso prolongado. citeturn613503search3turn613503search11</p></div>
+<div class="card"><h3>🎮 Para jogar</h3><p>Botões extras, precisão e resposta podem ser úteis, mas não substituem conforto e prática.</p></div>
+<div class="card"><h3>💡 Não compre só pela luz</h3><p>RGB pode ser bonito, mas não torna automaticamente teclado ou mouse melhor.</p></div>
+</div>
+</section>
+
+<section>
+<h2>8. Atividade: Monte seu computador dos sonhos</h2>
+<div class="mode-buttons">
+<button onclick="showMode('pc')">🏫 Estou na SEMAS</button>
+<button class="secondary" onclick="showMode('phone')">📱 Estou acompanhando pelo celular</button>
+</div>
+
+<div id="pcMode" class="mode-panel">
+<div class="card pc">
+<h3>🏫 No laboratório</h3>
+<ol>
+<li>Escolha um objetivo: <strong>estudo</strong>, <strong>jogos</strong>, <strong>edição</strong> ou <strong>programação</strong>.</li>
+<li>Escreva três peças principais: placa-mãe, processador e RAM.</li>
+<li>Explique o que você precisaria verificar antes de afirmar que elas funcionam juntas.</li>
+<li>Escolha um monitor pensando em tamanho e conforto.</li>
+<li>Escolha teclado e mouse pensando em uso real, não apenas aparência.</li>
+</ol>
+</div>
+</div>
+
+<div id="phoneMode" class="mode-panel">
+<div class="card phone">
+<h3>📱 Pelo celular</h3>
+<ol>
+<li>Escolha o uso do seu “computador dos sonhos”.</li>
+<li>Anote em uma folha: CPU, placa-mãe, RAM, monitor, teclado e mouse.</li>
+<li>Ao lado de cada peça, escreva <strong>por que</strong> você escolheu.</li>
+<li>Na próxima aula presencial, compare suas escolhas com as especificações reais.</li>
+</ol>
+</div>
+</div>
+</section>
+
+<section>
+<h2>9. Pesquise depois — links em português</h2>
+<div class="links">
+<a href="https://www.intel.com.br/content/www/br/pt/gaming/resources/how-much-ram-gaming.html" target="_blank" rel="noopener">🔎 Intel Brasil — Como escolher memória RAM</a>
+<a href="https://www.kingston.com/br/blog/pc-performance/amd-processor-chipset-names-explained" target="_blank" rel="noopener">🔎 Kingston Brasil — CPU, chipset e compatibilidade de RAM</a>
+<a href="https://support.microsoft.com/pt-br/surface/accessories/use-microsoft-ergonomic-keyboard" target="_blank" rel="noopener">🔎 Microsoft — Teclado ergonômico</a>
+<a href="https://support.microsoft.com/pt-br/surface/accessories/use-microsoft-ergonomic-mouse" target="_blank" rel="noopener">🔎 Microsoft — Mouse ergonômico</a>
+</div>
+</section>
+
+<section>
+<h2>10. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é aprender a escolher com lógica.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+
+<div class="savebox">
+<h3>Salvar meu registro da aula</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+<p class="notice">Na SEMAS: envie por e-mail, salve no Drive, apague o arquivo local e encerre a sessão.</p>
+</div>
+</section>
+
+<section>
+<h2>11. Missão final</h2>
+<div class="card">
+<ol>
+<li>Explique por que não podemos escolher CPU, placa-mãe e RAM separadamente.</li>
+<li>Explique o que a RAM faz quando muitas abas estão abertas.</li>
+<li>Diga o que você considera mais importante num monitor, teclado e mouse para estudar.</li>
+</ol>
+<p><strong>Regra da turma:</strong> o melhor computador não é o mais caro — é o que combina com o uso e cujas peças funcionam corretamente juntas.</p>
+</div>
+</section>
+
+<footer>
+<p>SEMAS • Curso de Informática • Módulo 1 — Aula 06</p>
+<p>Planejando o Computador dos Sonhos</p>
+</footer>
+
+</main>
+
+<script>
+const lessonKey="semas_mod1_aula06_attempt";
+const questions=[
+["O que deve ser verificado antes de comprar CPU e placa-mãe?","Se soquete, chipset e suporte são compatíveis","Somente a cor das peças","Somente o preço","Se as caixas têm o mesmo tamanho","Processador e placa-mãe precisam ser compatíveis em soquete, chipset e suporte."],
+["A RAM pode ser escolhida sem olhar placa-mãe e processador?","Não","Sim, qualquer RAM serve","Só em notebooks","Só se for DDR5","Placa-mãe e CPU ajudam a determinar o tipo e características de RAM suportadas."],
+["O que a memória RAM faz?","Guarda temporariamente dados que estão sendo usados pelo sistema","Armazena arquivos para sempre","Distribui energia","Resfria a CPU","RAM é memória temporária e rápida usada durante a execução de programas."],
+["Muitas abas abertas podem aumentar o quê?","O uso de memória RAM","A voltagem da tomada","O tamanho do SSD","A resolução do monitor","Cada aba e aplicativo pode consumir parte da memória disponível."],
+["Mais RAM deixa qualquer computador automaticamente mais rápido?","Não","Sim, sempre","Somente com Wi-Fi","Somente em jogos","Desempenho depende de vários componentes; RAM precisa ser suficiente para a carga de trabalho."],
+["O que é importante num monitor para estudo prolongado?","Conforto, tamanho adequado, resolução e possibilidade de ajuste","Somente luzes RGB","Somente ser o maior possível","Somente ter alto-falante","Ergonomia e conforto visual são importantes para uso prolongado."],
+["O que deve pesar na escolha de teclado e mouse?","Conforto, uso e ergonomia","Somente aparência","Somente cor","Somente quantidade de luzes","Periféricos devem ser escolhidos pensando no uso real e no conforto."],
+["Qual frase resume melhor a aula?","O melhor PC é equilibrado, compatível e adequado ao objetivo","O melhor PC é sempre o mais caro","Qualquer peça funciona com qualquer placa-mãe","Mais RAM resolve qualquer problema","Compatibilidade e objetivo de uso são mais importantes que comprar peças isoladamente."]
+];
+
+let attempt=Number(sessionStorage.getItem(lessonKey)||0);
+let completed=false,lastScore=null,startedAt=Date.now(),finishedAt=null,currentMode="não informado";
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{const d=document.createElement("div");d.className="quiz-item";d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;quiz.appendChild(d);});
+function formatTime(ms){const s=Math.max(0,Math.round(ms/1000)),m=Math.floor(s/60),sec=s%60;return `${m}min ${String(sec).padStart(2,"0")}s`;}
+function showMode(mode){currentMode=mode==="pc"?"SEMAS — computador":"Casa/fora da SEMAS — celular";document.getElementById("pcMode").classList.toggle("active",mode==="pc");document.getElementById("phoneMode").classList.toggle("active",mode==="phone");}
+function updateUI(){const r=document.getElementById("result");if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true;if(!completed)r.innerHTML="<strong>Duas tentativas foram usadas nesta sessão.</strong><br>Em uma nova sessão, o quiz começa novamente.";}else if(!completed){r.innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;}}
+updateUI();
+function checkQuiz(){
+ if(attempt>=2)return;let score=0,all=true,wrong=[];
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return;}if(+s.value===0){score++;a.textContent="Correta! "+q[5];}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5];}});
+ if(!all){document.getElementById("result").innerHTML="<strong>Responda todas as perguntas antes de finalizar.</strong>";return;}
+ attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;finishedAt=Date.now();
+ document.getElementById("result").innerHTML=`<strong>Resultado da tentativa ${attempt}: ${score} de ${questions.length}.</strong><br>Tempo: ${formatTime(finishedAt-startedAt)}.<br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas as questões foram respondidas corretamente."}<br><span style="color:var(--muted)">Não existe nota mínima: o objetivo é aprender a escolher com lógica e compatibilidade.</span>`;
+ document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true);updateUI();
+}
+function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false;});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;startedAt=Date.now();finishedAt=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;document.getElementById("result").innerHTML=`Tentativa ${attempt+1} disponível.`;}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+function saveResult(){
+ if(!completed||lastScore===null)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return;}
+ const now=new Date();let rows="",wrong=[];
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;if(n!==0)wrong.push(i+1);rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;});
+ const report=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SEMAS - Módulo 1 Aula 06 - ${esc(name)}</title><style>body{font-family:Arial,sans-serif;max-width:950px;margin:30px auto;padding:18px;color:#172033;line-height:1.5}h1{color:#123b55}.meta{padding:18px;background:#f1f5f8;border-radius:10px}table{border-collapse:collapse;width:100%;margin-top:15px}th,td{border:1px solid #ccd3dc;padding:8px;text-align:left;vertical-align:top}th{background:#eaf2f7}.note{padding:14px;background:#fff8df;border-radius:8px}</style></head><body><h1>SEMAS — Módulo 1 — Aula 06</h1><h2>Planejando o Computador dos Sonhos</h2><div class="meta"><strong>Aluno:</strong> ${esc(name)}<br><strong>Data e hora:</strong> ${now.toLocaleString("pt-BR")}<br><strong>Modo:</strong> ${esc(currentMode)}<br><strong>Tentativa:</strong> ${attempt} de 2<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Tempo:</strong> ${formatTime(finishedAt-startedAt)}</div><p class="note"><strong>Não existe nota mínima.</strong> Este relatório registra uma atividade de aprendizagem.</p><p><strong>Questões para revisar:</strong> ${wrong.length?wrong.join(", "):"nenhuma"}.</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Envie por e-mail ao professor, salve no Drive e apague o arquivo local do computador compartilhado.</p></body></html>`;
+ const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
+ a.href=url;a.download=`SEMAS_Modulo_1_Aula_06_${safe}_Tentativa_${attempt}.html`;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+}
+function finishSession(){
+ if(!confirm("Encerrar a sessão e limpar respostas desta aula neste navegador?"))return;
+ sessionStorage.removeItem(lessonKey);document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false;});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");document.getElementById("studentName").value="";document.getElementById("saveBtn").disabled=true;document.getElementById("checkBtn").disabled=false;attempt=0;completed=false;lastScore=null;startedAt=Date.now();finishedAt=null;currentMode="não informado";document.getElementById("pcMode").classList.remove("active");document.getElementById("phoneMode").classList.remove("active");document.getElementById("result").innerHTML="Sessão encerrada. Este navegador está pronto para o próximo aluno.";window.scrollTo({top:0,behavior:"smooth"});
+}
+</script>
+</body>
+</html>

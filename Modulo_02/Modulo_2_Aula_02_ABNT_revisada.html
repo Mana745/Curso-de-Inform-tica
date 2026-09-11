@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 2 — Aula 02 — Carta Formal e Formatação no Word</title>
+<style>
+:root{
+  --bg:#08101d;--card:#111b2e;--card2:#0d1728;--ink:#eef5ff;--muted:#afbdd4;
+  --accent:#69ddff;--accent2:#9dffb7;--warn:#ffd479;--danger:#ff9d9d;--line:#293955;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 15% 0%,#173053 0,transparent 28%),linear-gradient(135deg,#070c16,#0c1628 55%,#0e1d34);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1000px;margin:auto;padding:24px 18px 70px}
+.hero{padding:40px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#23517a,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)}h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)}.warning{border-left:4px solid var(--warn);background:#251f12}.pc{border-left:4px solid var(--accent)}.phone{border-left:4px solid #bd9cff}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.paper{background:#fff;color:#222;border-radius:8px;padding:34px;box-shadow:0 14px 35px #0006;max-width:760px;margin:18px auto}
+.paper .right{text-align:right}.paper .subject{font-weight:700}.paper .body{text-align:justify;text-indent:2em}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.tool{padding:8px 11px;border:1px solid var(--line);border-radius:8px;background:#091322;font-weight:800}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.step{counter-increment:s;padding:16px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.step:before{content:counter(s);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#07101e;font-weight:900}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+.abnt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:14px}
+.abnt-rule{padding:15px;border:1px solid var(--line);border-radius:14px;background:#0b1526}
+.abnt-rule strong{display:block;color:var(--accent2);font-size:1.05rem;margin-bottom:4px}
+.path{display:inline-block;margin-top:6px;padding:5px 8px;border-radius:7px;background:#07101e;color:var(--accent);font-family:Consolas,monospace;font-size:.9rem}
+.checklist{padding-left:1.2rem}.checklist li{margin:8px 0}
+.tip{border-left:4px solid #bd9cff;background:#18152a}
+.link-desc{color:var(--muted);margin-top:4px;font-size:.93rem}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}button:disabled{opacity:.5}
+.mode-buttons{display:flex;flex-wrap:wrap;gap:10px}.mode-panel{display:none;margin-top:14px}.mode-panel.active{display:block}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.answer{margin-top:10px;color:var(--muted)}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input,.savebox textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:720px){main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.paper{padding:22px 18px}.mode-buttons{display:grid;grid-template-columns:1fr}button{width:100%;min-height:48px}}
+</style>
+</head>
+<body>
+<main>
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 2 • Aula 02</div>
+<h1>Carta Formal e Formatação no Word</h1>
+<p class="lead">Hoje você vai aprender duas coisas juntas: <strong>como escrever uma carta formal</strong> e <strong>como configurar o Word com uma apresentação baseada nas regras usadas em trabalhos segundo a ABNT</strong>.</p>
+<p><strong>Desafio da aula:</strong> configurar a página, formatar os parágrafos e produzir uma solicitação formal sobre uma melhoria real da rua, bairro ou comunidade.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>5 min</strong>Para que serve</div>
+<div class="slot"><strong>7 min</strong>Carta formal</div>
+<div class="slot"><strong>10 min</strong>Estrutura</div>
+<div class="slot"><strong>15 min</strong>Configurar o Word</div>
+<div class="slot"><strong>15 min</strong>Escrever e formatar</div>
+<div class="slot"><strong>6 min</strong>Quiz</div>
+<div class="slot"><strong>2 min</strong>Relatório</div>
+</div>
+</section>
+
+<section>
+<h2>2. O que você vai aprender</h2>
+<div class="grid">
+<div class="card goal"><h3>🏛️ Carta formal</h3><p>Organizar uma solicitação com local, data, destinatário, assunto, texto, despedida e identificação.</p></div>
+<div class="card goal"><h3>📄 Página</h3><p>Configurar papel A4 e margens antes de começar a digitar.</p></div>
+<div class="card goal"><h3>📝 Formatação</h3><p>Usar fonte, tamanho, alinhamento, espaçamento e recuo de parágrafo.</p></div>
+<div class="card goal"><h3>🎯 Autonomia</h3><p>Aprender onde ficam essas ferramentas para conseguir repetir a formatação em outros trabalhos.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. O que é um ofício?</h2>
+<p>O <strong>ofício</strong> é uma forma de comunicação oficial usada por órgãos e instituições. O Manual de Redação da Presidência da República estabelece padrões para comunicações oficiais.</p>
+<div class="card warning">
+<h3>E quando é um cidadão escrevendo?</h3>
+<p>Um morador pode apresentar uma <strong>solicitação, requerimento, manifestação ou carta formal</strong>, conforme os canais e regras da Prefeitura. Nesta aula vamos aprender a estrutura de uma comunicação formal; não é necessário chamar todo pedido de cidadão de “ofício”.</p>
+</div>
+</section>
+
+<section>
+<h2>4. Um pedido precisa responder a quatro perguntas</h2>
+<div class="grid">
+<div class="card"><h3>📍 Onde?</h3><p>Em qual rua, bairro, comunidade ou ponto de referência está o problema?</p></div>
+<div class="card"><h3>⚠️ O quê?</h3><p>Qual é o problema observado?</p></div>
+<div class="card"><h3>👥 Quem é afetado?</h3><p>Moradores, estudantes, idosos, trabalhadores, produtores?</p></div>
+<div class="card"><h3>✅ O que você pede?</h3><p>Iluminação, coleta, manutenção, pavimentação, conectividade ou outra melhoria?</p></div>
+</div>
+</section>
+
+<section>
+<h2>5. Estrutura simples de uma carta formal</h2>
+<div class="paper">
+<p class="right"><strong>[Cidade], [dia] de [mês] de [ano].</strong></p>
+<p><strong>À Prefeitura Municipal de __________________</strong><br>
+A/C: Senhor(a) Prefeito(a) ______________________________</p>
+<p class="subject">Assunto: Solicitação de melhoria na __________________________</p>
+<p>Senhor(a) Prefeito(a),</p>
+<p class="body">Venho respeitosamente apresentar uma solicitação referente à ______________________, localizada na comunidade/bairro __________________________.</p>
+<p class="body">O problema observado é ________________________________________. Essa situação afeta ________________________________________________.</p>
+<p class="body">Por esse motivo, solicito que a Prefeitura avalie a possibilidade de _________________________________________________.</p>
+<p>Agradeço pela atenção.</p>
+<p>Atenciosamente,</p>
+<p><strong>Nome do(a) aluno(a)</strong><br>Atividade educativa — Curso de Informática SEMAS</p>
+</div>
+<div class="card warning">
+<h3>O nome do prefeito deve ser conferido</h3>
+<p>Não adivinhe nem copie de uma página antiga. Se a atividade usar o nome real do(a) prefeito(a), confira no <strong>site oficial da Prefeitura</strong> antes de escrever.</p>
+</div>
+</section>
+
+<section>
+<h2>6. Antes de digitar: vamos configurar o Word</h2>
+
+<div class="card warning">
+<h3>⚠️ Importante: ABNT e carta oficial não são a mesma coisa</h3>
+<p>Nesta atividade vamos usar <strong>regras de apresentação comuns em trabalhos acadêmicos baseados na ABNT</strong> para aprender a formatar o Word. Uma Prefeitura ou outro órgão público pode exigir um modelo próprio para documentos oficiais.</p>
+</div>
+
+<div class="abnt-grid">
+<div class="abnt-rule"><strong>📄 Papel</strong>A4 — 21 cm × 29,7 cm.<br><span class="path">Layout → Tamanho → A4</span></div>
+<div class="abnt-rule"><strong>⬆ Margem superior</strong>3 cm.</div>
+<div class="abnt-rule"><strong>⬅ Margem esquerda</strong>3 cm.</div>
+<div class="abnt-rule"><strong>➡ Margem direita</strong>2 cm.</div>
+<div class="abnt-rule"><strong>⬇ Margem inferior</strong>2 cm.</div>
+<div class="abnt-rule"><strong>🔤 Fonte</strong>Arial ou Times New Roman, tamanho 12, cor preta.</div>
+<div class="abnt-rule"><strong>☰ Corpo do texto</strong>Alinhamento justificado.</div>
+<div class="abnt-rule"><strong>↕ Entre linhas</strong>Espaçamento 1,5.</div>
+<div class="abnt-rule"><strong>↪ Primeiro parágrafo</strong>Recuo da primeira linha: 1,25 cm.</div>
+</div>
+
+<div class="card pc" style="margin-top:14px">
+<h3>Como configurar as margens</h3>
+<ol class="checklist">
+<li>Clique em <strong>Layout</strong>.</li>
+<li>Clique em <strong>Margens</strong>.</li>
+<li>Escolha <strong>Margens Personalizadas</strong>.</li>
+<li>Digite: superior <strong>3 cm</strong>, esquerda <strong>3 cm</strong>, inferior <strong>2 cm</strong> e direita <strong>2 cm</strong>.</li>
+<li>Clique em <strong>OK</strong>.</li>
+</ol>
+</div>
+
+<div class="card pc" style="margin-top:14px">
+<h3>Como configurar fonte e parágrafo</h3>
+<ol class="checklist">
+<li>Se já houver texto, pressione <strong>Ctrl + A</strong> para selecionar tudo.</li>
+<li>Em <strong>Página Inicial</strong>, escolha <strong>Arial 12</strong> ou <strong>Times New Roman 12</strong>.</li>
+<li>No grupo <strong>Parágrafo</strong>, clique em <strong>Justificar</strong>.</li>
+<li>Abra as opções de <strong>Parágrafo</strong>.</li>
+<li>Em espaçamento entre linhas, escolha <strong>1,5</strong>.</li>
+<li>Em recuo especial, escolha <strong>Primeira linha</strong> e coloque <strong>1,25 cm</strong>.</li>
+</ol>
+</div>
+
+<p class="notice">O objetivo aqui não é decorar números: é aprender <strong>onde configurar</strong> cada item no Word e conseguir repetir depois.</p>
+</section>
+
+<section>
+<h2>7. Escrever bem não é usar palavras difíceis</h2>
+<div class="grid">
+<div class="card"><h3>✅ Claro</h3><p>“Há três pontos de iluminação sem funcionar na rua.”</p></div>
+<div class="card"><h3>❌ Vago</h3><p>“Aqui está tudo ruim e ninguém faz nada.”</p></div>
+<div class="card"><h3>✅ Respeitoso</h3><p>“Solicito que seja avaliada a possibilidade de manutenção.”</p></div>
+<div class="card"><h3>❌ Ofensivo</h3><p>Insultos não tornam o pedido mais forte nem mais claro.</p></div>
+</div>
+</section>
+
+<section>
+<h2>8. Atividade: um pedido real da sua comunidade</h2>
+<p>Escolha <strong>um</strong> tema que faça sentido para o lugar onde você vive:</p>
+<div class="grid">
+<div class="card"><h3>💡 Iluminação</h3><p>Postes apagados ou local sem iluminação suficiente.</p></div>
+<div class="card"><h3>🛣️ Rua / acesso</h3><p>Buracos, lama, pavimentação ou acesso difícil.</p></div>
+<div class="card"><h3>🗑️ Coleta</h3><p>Problemas de coleta ou descarte de resíduos.</p></div>
+<div class="card"><h3>🌐 Internet</h3><p>Dificuldade de conectividade que afeta estudo ou serviços.</p></div>
+</div>
+<div class="card warning" style="margin-top:14px">
+<h3>Não invente um problema para “ficar bonito”</h3>
+<p>Você pode escrever sobre uma situação que realmente observa ou criar um exemplo claramente identificado como fictício. O objetivo é aprender a transformar observação em texto organizado.</p>
+</div>
+</section>
+
+<section>
+<h2>9. Passo a passo completo no Word</h2>
+<div class="steps">
+<div class="step"><h3>Configure o papel</h3><p><strong>Layout → Tamanho → A4.</strong></p></div>
+<div class="step"><h3>Configure as margens</h3><p>Superior e esquerda: <strong>3 cm</strong>. Inferior e direita: <strong>2 cm</strong>.</p></div>
+<div class="step"><h3>Escolha a fonte</h3><p>Arial ou Times New Roman, <strong>12</strong>, cor preta.</p></div>
+<div class="step"><h3>Configure o parágrafo</h3><p>Justificado, linhas em <strong>1,5</strong> e primeira linha em <strong>1,25 cm</strong>.</p></div>
+<div class="step"><h3>Escreva local e data</h3><p>Use a data da atividade e confira a escrita.</p></div>
+<div class="step"><h3>Coloque o destinatário</h3><p>Identifique a Prefeitura ou o órgão para quem a carta seria dirigida.</p></div>
+<div class="step"><h3>Crie o assunto</h3><p>Seja curto: <strong>“Solicitação de manutenção da iluminação pública”</strong>.</p></div>
+<div class="step"><h3>Explique o problema</h3><p>Diga onde acontece, o que acontece e quem é afetado.</p></div>
+<div class="step"><h3>Faça o pedido</h3><p>Diga claramente o que você gostaria que fosse avaliado ou realizado.</p></div>
+<div class="step"><h3>Revise</h3><p>Use <strong>Ctrl + A</strong> e confira fonte, tamanho, alinhamento, espaçamento e recuo.</p></div>
+<div class="step"><h3>Salve</h3><p>Use um nome de arquivo que identifique a aula e o aluno.</p></div>
+</div>
+
+<div class="card tip" style="margin-top:14px">
+<h3>💡 Um truque importante</h3>
+<p>Se alguma parte ficar diferente das outras, selecione todo o texto com <strong>Ctrl + A</strong> e confira a formatação novamente. Isso evita que metade do documento fique com uma fonte ou espaçamento diferente.</p>
+</div>
+</section>
+
+<section>
+<h2>10. Importante: atividade educativa × protocolo real</h2>
+<div class="card warning">
+<p>Esta aula produz um <strong>exercício de comunicação cidadã</strong>. Não envia automaticamente nada à Prefeitura.</p>
+<p>Se um pedido for realmente encaminhado, o professor ou responsável deve verificar o canal oficial do município — por exemplo, Ouvidoria, protocolo, telefone de serviços ou formulário eletrônico. Prefeituras brasileiras usam diferentes canais para solicitações como iluminação e serviços urbanos.</p>
+</div>
+</section>
+
+<section>
+<h2>11. Atividade prática</h2>
+<div class="mode-buttons">
+<button onclick="showMode('pc')">🏫 Estou na SEMAS</button>
+<button class="secondary" onclick="showMode('phone')">📱 Estou acompanhando pelo celular</button>
+</div>
+<div id="pcMode" class="mode-panel">
+<div class="card pc">
+<h3>🏫 Na SEMAS</h3>
+<ol>
+<li>Abra o Word ou editor indicado.</li>
+<li>Crie a carta usando o modelo da aula.</li>
+<li>Escolha um problema real ou um exemplo identificado como fictício.</li>
+<li>Use data, destinatário, assunto, três pequenos parágrafos e despedida.</li>
+<li>Confira: A4, margens 3/3/2/2 cm, fonte 12, texto justificado, espaçamento 1,5 e recuo de 1,25 cm.</li>
+<li>Salve como <strong>Modulo_2_Aula_02_Solicitacao_SeuNome.docx</strong>.</li>
+<li>Envie ao professor, salve no Drive e apague a cópia local.</li>
+</ol>
+</div>
+</div>
+<div id="phoneMode" class="mode-panel">
+<div class="card phone">
+<h3>📱 Em casa pelo celular</h3>
+<ol>
+<li>Releia a carta que você produziu.</li>
+<li>Pergunte a alguém da casa qual melhoria considera importante na comunidade.</li>
+<li>Compare com o seu pedido.</li>
+<li>Não é necessário editar no celular; a prática principal continua no Word da SEMAS.</li>
+</ol>
+</div>
+</div>
+</section>
+
+<section>
+<h2>12. 🏠 Para rever em casa — 10 minutos</h2>
+<div class="card">
+<p>Se puder, mostre sua carta para alguém da casa e faça duas perguntas:</p>
+<ol>
+<li>“Você entendeu qual é o problema?”</li>
+<li>“Você entendeu exatamente o que estou pedindo?”</li>
+</ol>
+<p>Se a pessoa responder sim às duas, seu texto provavelmente está claro.</p>
+</div>
+</section>
+
+<section>
+<h2>13. Quer rever depois? Links simples</h2>
+<p>Você <strong>não precisa abrir estes links durante a aula</strong>. Eles ficam aqui apenas para consultar depois, se quiser praticar novamente.</p>
+
+<div class="links">
+<a href="https://prepara.com.br/blog/tecnologia/normas-abnt-word-guia-completo/" target="_blank" rel="noopener">
+<strong>📝 ABNT no Word — passo a passo simples</strong>
+<div class="link-desc">Mostra onde configurar margens, fonte, espaçamento e recuo no Word.</div>
+</a>
+
+<a href="https://brasilescola.uol.com.br/redacao/carta.htm" target="_blank" rel="noopener">
+<strong>✉️ Como escrever uma carta</strong>
+<div class="link-desc">Explica de forma simples as partes de uma carta e como escrever com clareza.</div>
+</a>
+
+<a href="https://support.microsoft.com/pt-br/word/training/change-the-line-spacing-in-word" target="_blank" rel="noopener">
+<strong>↕ Como mudar o espaçamento entre linhas no Word</strong>
+<div class="link-desc">Ajuda da Microsoft para encontrar a ferramenta de espaçamento.</div>
+</a>
+
+<a href="https://support.microsoft.com/pt-br/word/adjust-indents-and-spacing-in-word" target="_blank" rel="noopener">
+<strong>↪ Como mudar o recuo do parágrafo no Word</strong>
+<div class="link-desc">Ajuda da Microsoft para configurar recuo e espaçamento dos parágrafos.</div>
+</a>
+</div>
+
+<div class="card tip">
+<h3>📌 Não se perca nos links</h3>
+<p>Primeiro faça a atividade seguindo esta própria aula. Use os links somente se quiser <strong>ver novamente um passo específico</strong>.</p>
+</div>
+</section>
+
+<section>
+<h2>14. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é aprender a organizar uma solicitação clara e respeitosa.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+<div class="savebox">
+<h3>Salvar meu registro da aula</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<textarea id="requestTopic" rows="3" placeholder="Qual melhoria você escolheu para sua carta?"></textarea>
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+<p class="notice">Na SEMAS: envie por e-mail, salve no Drive, apague seus arquivos locais e saia das contas.</p>
+</div>
+</section>
+
+<section>
+<h2>15. Missão final</h2>
+<div class="card">
+<ol>
+<li>Explique a diferença entre um problema e um pedido.</li>
+<li>Mostre onde ficam data, destinatário, assunto e corpo da carta.</li>
+<li>Explique por que clareza é mais importante que palavras difíceis.</li>
+<li>Diga como descobrir o canal oficial para encaminhar um pedido real.</li>
+</ol>
+<p><strong>Regra da turma:</strong> saber usar o Word também é saber organizar a própria voz.</p>
+</div>
+</section>
+
+<footer><p>SEMAS • Curso de Informática • Módulo 2 — Aula 02</p><p>Carta Formal e Formatação no Word</p></footer>
+</main>
+
+<script>
+const lessonKey="semas_mod2_aula02_attempt";
+const questions=[
+["Qual tamanho de papel vamos usar nesta atividade?","A4","Carta","A3","Qualquer tamanho","Nesta atividade usamos papel A4."],
+["Quais margens vamos configurar?","Superior e esquerda 3 cm; inferior e direita 2 cm","Todas com 1 cm","Todas com 5 cm","Somente margem superior","Usaremos 3 cm na parte superior e esquerda e 2 cm na inferior e direita."],
+["Qual fonte e tamanho são adequados para a atividade?","Arial ou Times New Roman, tamanho 12","Comic Sans tamanho 20","Arial tamanho 8","Qualquer fonte colorida","Arial ou Times New Roman em tamanho 12 deixam o texto simples e legível."],
+["Como ficará o corpo do texto?","Justificado, com espaçamento 1,5","Centralizado e com espaçamento 3","Todo alinhado à direita","Sem espaçamento entre linhas","O corpo da atividade será justificado e terá espaçamento 1,5."],
+["Qual recuo vamos usar no início dos parágrafos?","1,25 cm na primeira linha","10 cm","Nenhum em qualquer situação","5 cm em todo o parágrafo","Nesta atividade usamos recuo de primeira linha de 1,25 cm."],
+["Para que serve Ctrl + A no Word?","Selecionar todo o conteúdo do documento","Salvar o arquivo","Fechar o Word","Abrir a internet","Ctrl + A ajuda a selecionar todo o conteúdo para conferir ou aplicar a formatação."],
+["O que um pedido bem escrito deve explicar?","Onde está o problema, o que acontece, quem é afetado e o que se solicita","Somente o nome do prefeito","Somente a data","Somente a opinião do autor","Esses quatro elementos tornam a solicitação mais clara."],
+["Usar estas regras de formatação transforma a carta em um documento oficial da Prefeitura?","Não","Sim","Somente se estiver em PDF","Somente se usar Arial","A formatação é usada aqui para aprender Word; órgãos públicos podem ter modelos e regras próprios."]
+];
+let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null,startedAt=Date.now(),finishedAt=null,currentMode="não informado";
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{const d=document.createElement("div");d.className="quiz-item";d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;quiz.appendChild(d);});
+function formatTime(ms){const s=Math.max(0,Math.round(ms/1000)),m=Math.floor(s/60),sec=s%60;return `${m}min ${String(sec).padStart(2,"0")}s`;}
+function showMode(mode){currentMode=mode==="pc"?"SEMAS — computador":"Casa/fora da SEMAS — celular";document.getElementById("pcMode").classList.toggle("active",mode==="pc");document.getElementById("phoneMode").classList.toggle("active",mode==="phone");}
+function updateUI(){const r=document.getElementById("result");if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true;if(!completed)r.innerHTML="<strong>Duas tentativas foram usadas nesta sessão.</strong>"}else if(!completed)r.innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;}
+updateUI();
+function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===0){score++;a.textContent="Correta! "+q[5]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}});if(!all){document.getElementById("result").innerHTML="<strong>Responda todas as perguntas.</strong>";return}attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;finishedAt=Date.now();document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
+function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;startedAt=Date.now();document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;document.getElementById("result").innerHTML=`Tentativa ${attempt+1} disponível.`}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function saveResult(){if(!completed)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return}const topic=document.getElementById("requestTopic").value.trim(),now=new Date();let rows="",wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;if(n!==0)wrong.push(i+1);rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`});const report=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>SEMAS M2 A2</title><style>body{font-family:Arial;max-width:950px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}</style></head><body><h1>SEMAS — Módulo 2 — Aula 02</h1><h2>Carta Formal e Formatação no Word</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Data:</strong> ${now.toLocaleString("pt-BR")}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}</p>${topic?`<p><strong>Tema escolhido:</strong> ${esc(topic)}</p>`:""}<p><strong>Questões para revisar:</strong> ${wrong.length?wrong.join(", "):"nenhuma"}.</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. Envie por e-mail, salve no Drive, apague a cópia local e saia das contas.</p></body></html>`;const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");a.href=url;a.download=`SEMAS_Modulo_2_Aula_02_${safe}.html`;a.click();URL.revokeObjectURL(url)}
+function finishSession(){if(!confirm("Encerrar a sessão e limpar esta aula neste navegador?"))return;sessionStorage.removeItem(lessonKey);location.reload()}
+</script>
+</body>
+</html>

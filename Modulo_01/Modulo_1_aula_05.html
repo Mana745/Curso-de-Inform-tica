@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 1 — Aula 05 — O Wi-Fi e os Seus Obstáculos</title>
+<style>
+:root{
+  --bg:#08101d;--card:#111b2e;--card2:#0d1728;--ink:#eef5ff;--muted:#afbdd4;
+  --accent:#69ddff;--accent2:#9dffb7;--warn:#ffd479;--danger:#ff9d9d;--line:#293955;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 15% 0%,#173053 0,transparent 28%),linear-gradient(135deg,#070c16,#0c1628 55%,#0e1d34);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1000px;margin:auto;padding:24px 18px 70px}
+.hero{padding:40px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#23517a,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}
+.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)} h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)} .warning{border-left:4px solid var(--warn);background:#251f12}
+.danger{border-left:4px solid var(--danger);background:#291719}.pc{border-left:4px solid var(--accent)}.phone{border-left:4px solid #bd9cff}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.big{font-size:clamp(2rem,7vw,4rem);font-weight:1000;color:var(--accent)}
+.obstacles{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.obstacle{padding:16px;border:1px solid var(--line);border-radius:14px;background:#0b1526;text-align:center}
+.level{font-size:2rem}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+.links a:hover{text-decoration:underline;background:#13233a}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.mode-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.mode-panel{display:none;margin-top:14px}.mode-panel.active{display:block}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px 11px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.quiz-item label:hover{background:#16243b}
+.answer{margin-top:10px;color:var(--muted)}#result{font-size:1.1rem;font-weight:800;margin-top:18px}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:720px){main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.compare{grid-template-columns:1fr}.mode-buttons{display:grid;grid-template-columns:1fr}button{width:100%;min-height:48px}.quiz-item label{padding:13px 12px}}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 1 • Aula 05</div>
+<h1>O Wi‑Fi e os Seus Obstáculos</h1>
+<p class="lead">Wi‑Fi usa ondas de rádio para levar dados pelo ar. Essas ondas podem atravessar ambientes, mas perdem força com distância, paredes, lajes, espelhos, interferência e outras redes próximas.</p>
+<p><strong>Desafio da aula:</strong> entender por que uma rede pode funcionar muito bem perto do roteador e piorar em outro cômodo.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>5 min</strong>Pergunta inicial</div>
+<div class="slot"><strong>15 min</strong>2,4 × 5 GHz</div>
+<div class="slot"><strong>12 min</strong>Obstáculos</div>
+<div class="slot"><strong>10 min</strong>Interferência</div>
+<div class="slot"><strong>10 min</strong>Senha e segurança</div>
+<div class="slot"><strong>5 min</strong>Quiz</div>
+<div class="slot"><strong>3 min</strong>Relatório</div>
+</div>
+</section>
+
+<section>
+<h2>2. O que você vai aprender</h2>
+<div class="grid">
+<div class="card goal"><h3>📶 2,4 GHz</h3><p>Entender por que normalmente alcança mais longe e lida melhor com obstáculos.</p></div>
+<div class="card goal"><h3>⚡ 5 GHz</h3><p>Entender por que normalmente oferece mais capacidade e velocidade a distâncias menores.</p></div>
+<div class="card goal"><h3>🧱 Obstáculos</h3><p>Reconhecer materiais e situações que enfraquecem o sinal.</p></div>
+<div class="card goal"><h3>🔐 Segurança</h3><p>Proteger o Wi‑Fi contra acesso não autorizado.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. A pergunta que abre a aula</h2>
+<div class="card">
+<p>Por que o Wi‑Fi pode estar ótimo perto do roteador e ficar ruim atrás de duas paredes?</p>
+<p><strong>O sinal está “acabando” ou alguma coisa está atrapalhando?</strong></p>
+</div>
+</section>
+
+<section>
+<h2>4. 2,4 GHz e 5 GHz</h2>
+<div class="compare">
+<div class="card">
+<div class="big">2,4 GHz</div>
+<h3>Mais alcance, geralmente</h3>
+<p>Costuma alcançar distâncias maiores e atravessar obstáculos com mais facilidade.</p>
+<p>Também costuma ter <strong>mais interferência</strong>, porque muitos aparelhos usam essa faixa.</p>
+</div>
+<div class="card">
+<div class="big">5 GHz</div>
+<h3>Mais capacidade, geralmente</h3>
+<p>Costuma permitir velocidades maiores e menor congestionamento em muitos ambientes.</p>
+<p>Por outro lado, perde força mais rapidamente com distância e obstáculos.</p>
+</div>
+</div>
+
+<div class="card warning" style="margin-top:14px">
+<h3>Não é uma regra absoluta</h3>
+<p>O resultado real depende do roteador, antenas, potência, paredes, posição, canal, dispositivo e ambiente. “2,4 vai longe e 5 é rápido” é uma boa primeira ideia, mas não explica tudo.</p>
+</div>
+</section>
+
+<section>
+<h2>5. O que atrapalha o Wi‑Fi?</h2>
+<div class="obstacles">
+<div class="obstacle"><div class="level">🧱</div><h3>Paredes</h3><p>Tijolo, concreto e materiais densos reduzem o sinal.</p></div>
+<div class="obstacle"><div class="level">🏢</div><h3>Lajes</h3><p>Pisos e lajes entre andares podem enfraquecer bastante a cobertura.</p></div>
+<div class="obstacle"><div class="level">🪞</div><h3>Espelhos</h3><p>Superfícies grandes com metal podem refletir e alterar a propagação do sinal.</p></div>
+<div class="obstacle"><div class="level">🚪</div><h3>Portas e móveis</h3><p>Objetos grandes e materiais diferentes podem influenciar o caminho do sinal.</p></div>
+<div class="obstacle"><div class="level">📡📡</div><h3>Redes vizinhas</h3><p>Muitas redes usando canais próximos podem aumentar a interferência.</p></div>
+<div class="obstacle"><div class="level">🍲</div><h3>Outros aparelhos</h3><p>Alguns equipamentos que usam radiofrequência também podem gerar interferência, especialmente em 2,4 GHz.</p></div>
+</div>
+</section>
+
+<section>
+<h2>6. Onde colocar o roteador?</h2>
+<div class="grid">
+<div class="card"><h3>✅ Mais central</h3><p>Uma posição central tende a distribuir melhor o sinal pela casa.</p></div>
+<div class="card"><h3>✅ Mais livre</h3><p>Evite esconder o roteador atrás de móveis grandes ou dentro de armários fechados.</p></div>
+<div class="card"><h3>✅ Mais alto</h3><p>Em muitos ambientes, uma posição mais elevada e desobstruída ajuda a cobertura.</p></div>
+<div class="card"><h3>❌ Perto de interferência</h3><p>Evite colocá-lo encostado em grandes superfícies metálicas ou perto de equipamentos que gerem muita interferência.</p></div>
+</div>
+</section>
+
+<section>
+<h2>7. Atividade prática: Caça ao obstáculo</h2>
+<div class="mode-buttons">
+<button onclick="showMode('pc')">🏫 Estou na SEMAS</button>
+<button class="secondary" onclick="showMode('phone')">📱 Estou acompanhando pelo celular</button>
+</div>
+
+<div id="pcMode" class="mode-panel">
+<div class="card pc">
+<h3>🏫 No laboratório</h3>
+<ol>
+<li>Observe onde o ponto de acesso ou roteador está instalado.</li>
+<li>Conte quantas paredes ou obstáculos existem entre ele e seu computador.</li>
+<li>Veja o ícone de Wi‑Fi do Windows e observe a indicação de sinal.</li>
+<li>Compare com outro ponto da sala, sem desconectar equipamentos.</li>
+<li>Converse com o professor: o que pode explicar uma diferença de sinal?</li>
+</ol>
+</div>
+</div>
+
+<div id="phoneMode" class="mode-panel">
+<div class="card phone">
+<h3>📱 Pelo celular</h3>
+<ol>
+<li>Observe o sinal de Wi‑Fi perto do roteador.</li>
+<li>Caminhe para outro cômodo da casa, com segurança.</li>
+<li>Veja se a indicação muda.</li>
+<li>Conte paredes, lajes ou obstáculos entre você e o roteador.</li>
+<li>Não instale aplicativos de análise de Wi‑Fi; a atividade é apenas de observação.</li>
+</ol>
+</div>
+</div>
+</section>
+
+<section>
+<h2>8. Rede vizinha também pode atrapalhar?</h2>
+<p>Sim. Wi‑Fi usa canais de rádio. Quando existem muitas redes próximas usando frequências semelhantes, pode haver mais disputa pelo meio e mais interferência.</p>
+
+<div class="card warning" style="margin-top:14px">
+<h3>Mais barrinhas não significa internet mais rápida</h3>
+<p>O ícone mostra principalmente qualidade do enlace Wi‑Fi com o ponto de acesso. A velocidade da internet também depende do provedor, congestionamento, servidor acessado e vários outros fatores.</p>
+</div>
+</section>
+
+<section>
+<h2>9. Segurança: por que colocar senha forte?</h2>
+<p>A senha do Wi‑Fi serve para impedir que pessoas não autorizadas entrem na sua rede.</p>
+
+<div class="grid">
+<div class="card"><h3>🔐 Senha forte</h3><p>Use uma senha longa, difícil de adivinhar e diferente de informações óbvias como nome, telefone ou data de nascimento.</p></div>
+<div class="card"><h3>🛡️ WPA2/WPA3</h3><p>Use modos de segurança modernos quando o roteador e os aparelhos forem compatíveis. WPA3 é preferível quando disponível.</p></div>
+<div class="card"><h3>🙅 Não compartilhe com qualquer pessoa</h3><p>Compartilhar a senha significa permitir acesso à sua rede local.</p></div>
+<div class="card"><h3>⚙️ Troque padrões antigos</h3><p>Se a senha veio de fábrica e é fraca ou conhecida, o responsável pela rede pode alterar seguindo o manual do roteador.</p></div>
+</div>
+
+<div class="card danger" style="margin-top:14px">
+<h3>Não é sobre “roubar sinal” apenas</h3>
+<p>Uma rede sem proteção pode permitir <strong>acesso não autorizado</strong>, consumo da conexão e exposição maior dos dispositivos da rede. A ideia principal é segurança e privacidade.</p>
+</div>
+</section>
+
+<section>
+<h2>10. Pesquise depois — links em português</h2>
+<div class="links">
+<a href="https://www.gov.br/anatel/pt-br/dados/qualidade/qualidade-dos-servicos/medicoes-da-banda-larga" target="_blank" rel="noopener">🔎 Anatel — 2,4 GHz, 5 GHz e qualidade do Wi‑Fi</a>
+<a href="https://www.gov.br/anatel/pt-br/dados/qualidade/qualidade-dos-servicos/duvidas-frequentes/velocidade-da-banda-larga/23" target="_blank" rel="noopener">🔎 Anatel — Fatores que influenciam a qualidade da banda larga</a>
+<a href="https://www.tp-link.com/br/support/faq/468/" target="_blank" rel="noopener">🔎 TP‑Link Brasil — Como melhorar sinal e alcance do Wi‑Fi</a>
+<a href="https://support.microsoft.com/pt-pt/windows/experience/connectivity-networking/setting-up-a-wireless-network-in-windows" target="_blank" rel="noopener">🔎 Microsoft — Segurança e configuração de rede sem fio</a>
+</div>
+</section>
+
+<section>
+<h2>11. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é saber por que o Wi‑Fi muda conforme o ambiente.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+
+<div class="savebox">
+<h3>Salvar meu registro da aula</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+<p class="notice">Na SEMAS: envie por e-mail, salve no Drive, apague o arquivo local e encerre a sessão.</p>
+</div>
+</section>
+
+<section>
+<h2>12. Missão final</h2>
+<div class="card">
+<ol>
+<li>Explique por que 2,4 GHz costuma chegar mais longe.</li>
+<li>Diga dois obstáculos que podem enfraquecer o Wi‑Fi.</li>
+<li>Explique por que uma rede deve ter senha forte.</li>
+</ol>
+<p><strong>Regra da turma:</strong> Wi‑Fi não é magia — é rádio, ambiente, distância e segurança trabalhando juntos.</p>
+</div>
+</section>
+
+<footer>
+<p>SEMAS • Curso de Informática • Módulo 1 — Aula 05</p>
+<p>O Wi‑Fi e os Seus Obstáculos</p>
+</footer>
+
+</main>
+
+<script>
+const lessonKey="semas_mod1_aula05_attempt";
+const questions=[
+["Qual faixa costuma alcançar mais longe em ambientes comuns?","2,4 GHz","5 GHz","As duas sempre exatamente igual","Nenhuma usa rádio","2,4 GHz costuma ter melhor alcance e atravessar obstáculos com mais facilidade."],
+["Qual faixa costuma oferecer maior capacidade/velocidade perto do roteador?","5 GHz","2,4 GHz","As duas nunca mudam","Bluetooth","5 GHz costuma oferecer maior largura de banda e velocidades mais altas em boas condições."],
+["Por que 5 GHz costuma perder sinal mais rápido com paredes e distância?","Porque sua propagação é mais sensível a obstáculos e distância","Porque não usa ondas de rádio","Porque não funciona dentro de casas","Porque depende de cabo USB","Frequências mais altas tendem a sofrer mais atenuação em obstáculos comuns."],
+["Qual destes pode enfraquecer o Wi‑Fi?","Paredes, lajes e grandes obstáculos","Somente o teclado","A cor da tela","O nome do computador","Barreiras físicas podem reduzir a intensidade do sinal."],
+["Redes Wi‑Fi vizinhas podem influenciar sua conexão?","Sim","Não, nunca","Somente se tiverem a mesma senha","Somente em computadores antigos","Redes próximas podem disputar canais e aumentar a interferência."],
+["Ter todas as barrinhas de Wi‑Fi significa obrigatoriamente internet rápida?","Não","Sim, sempre","Somente em 5 GHz","Somente no celular","Sinal Wi‑Fi forte não garante velocidade do provedor ou do servidor acessado."],
+["Por que usar senha forte no Wi‑Fi?","Para impedir acesso não autorizado à rede","Para aumentar a memória RAM","Para melhorar a tela","Para resfriar o roteador","A senha ajuda a proteger a rede contra pessoas não autorizadas."],
+["Qual segurança é preferível quando roteador e aparelhos suportam?","WPA3","Rede aberta","Sem senha","WEP antigo","A Microsoft recomenda WPA3 quando disponível e compatível."]
+];
+
+let attempt=Number(sessionStorage.getItem(lessonKey)||0);
+let completed=false,lastScore=null,startedAt=Date.now(),finishedAt=null,currentMode="não informado";
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{const d=document.createElement("div");d.className="quiz-item";d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;quiz.appendChild(d);});
+function formatTime(ms){const s=Math.max(0,Math.round(ms/1000)),m=Math.floor(s/60),sec=s%60;return `${m}min ${String(sec).padStart(2,"0")}s`;}
+function showMode(mode){currentMode=mode==="pc"?"SEMAS — computador":"Casa/fora da SEMAS — celular";document.getElementById("pcMode").classList.toggle("active",mode==="pc");document.getElementById("phoneMode").classList.toggle("active",mode==="phone");}
+function updateUI(){const r=document.getElementById("result");if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true;if(!completed)r.innerHTML="<strong>Duas tentativas foram usadas nesta sessão.</strong><br>Em uma nova sessão, o quiz começa novamente.";}else if(!completed){r.innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;}}
+updateUI();
+function checkQuiz(){
+ if(attempt>=2)return;let score=0,all=true,wrong=[];
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return;}if(+s.value===0){score++;a.textContent="Correta! "+q[5];}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5];}});
+ if(!all){document.getElementById("result").innerHTML="<strong>Responda todas as perguntas antes de finalizar.</strong>";return;}
+ attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;finishedAt=Date.now();
+ document.getElementById("result").innerHTML=`<strong>Resultado da tentativa ${attempt}: ${score} de ${questions.length}.</strong><br>Tempo: ${formatTime(finishedAt-startedAt)}.<br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas as questões foram respondidas corretamente."}<br><span style="color:var(--muted)">Não existe nota mínima: o objetivo é entender como ambiente e segurança influenciam o Wi‑Fi.</span>`;
+ document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true);updateUI();
+}
+function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false;});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;startedAt=Date.now();finishedAt=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;document.getElementById("result").innerHTML=`Tentativa ${attempt+1} disponível.`;}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+function saveResult(){
+ if(!completed||lastScore===null)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return;}
+ const now=new Date();let rows="",wrong=[];
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;if(n!==0)wrong.push(i+1);rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;});
+ const report=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SEMAS - Módulo 1 Aula 05 - ${esc(name)}</title><style>body{font-family:Arial,sans-serif;max-width:950px;margin:30px auto;padding:18px;color:#172033;line-height:1.5}h1{color:#123b55}.meta{padding:18px;background:#f1f5f8;border-radius:10px}table{border-collapse:collapse;width:100%;margin-top:15px}th,td{border:1px solid #ccd3dc;padding:8px;text-align:left;vertical-align:top}th{background:#eaf2f7}.note{padding:14px;background:#fff8df;border-radius:8px}</style></head><body><h1>SEMAS — Módulo 1 — Aula 05</h1><h2>O Wi‑Fi e os Seus Obstáculos</h2><div class="meta"><strong>Aluno:</strong> ${esc(name)}<br><strong>Data e hora:</strong> ${now.toLocaleString("pt-BR")}<br><strong>Modo:</strong> ${esc(currentMode)}<br><strong>Tentativa:</strong> ${attempt} de 2<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Tempo:</strong> ${formatTime(finishedAt-startedAt)}</div><p class="note"><strong>Não existe nota mínima.</strong> Este relatório registra uma atividade de aprendizagem.</p><p><strong>Questões para revisar:</strong> ${wrong.length?wrong.join(", "):"nenhuma"}.</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Envie por e-mail ao professor, salve no Drive e apague o arquivo local do computador compartilhado.</p></body></html>`;
+ const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
+ a.href=url;a.download=`SEMAS_Modulo_1_Aula_05_${safe}_Tentativa_${attempt}.html`;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+}
+function finishSession(){
+ if(!confirm("Encerrar a sessão e limpar respostas desta aula neste navegador?"))return;
+ sessionStorage.removeItem(lessonKey);document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false;});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");document.getElementById("studentName").value="";document.getElementById("saveBtn").disabled=true;document.getElementById("checkBtn").disabled=false;attempt=0;completed=false;lastScore=null;startedAt=Date.now();finishedAt=null;currentMode="não informado";document.getElementById("pcMode").classList.remove("active");document.getElementById("phoneMode").classList.remove("active");document.getElementById("result").innerHTML="Sessão encerrada. Este navegador está pronto para o próximo aluno.";window.scrollTo({top:0,behavior:"smooth"});
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 1 — Aula 02 — Testando a Internet e Comandos do PowerShell</title>
+<style>
+:root{
+  --bg:#08101d;--card:#111b2e;--card2:#0d1728;--ink:#eef5ff;--muted:#afbdd4;
+  --accent:#69ddff;--accent2:#9dffb7;--warn:#ffd479;--danger:#ff9d9d;--line:#293955;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 15% 0%,#173053 0,transparent 28%),linear-gradient(135deg,#070c16,#0c1628 55%,#0e1d34);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1000px;margin:auto;padding:24px 18px 70px}
+.hero{padding:40px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#23517a,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}
+.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)} h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)} .warning{border-left:4px solid var(--warn);background:#251f12}
+.pc{border-left:4px solid var(--accent)} .phone{border-left:4px solid #bd9cff}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.terminal{font-family:Consolas,monospace;background:#050a11;border:1px solid #263650;border-radius:14px;padding:16px;color:#d8f6df;overflow:auto}
+.prompt{color:#69ddff}.cmd{color:#ffd479}.out{color:#d8f6df}
+.command{font-family:Consolas,monospace;padding:4px 8px;border-radius:8px;background:#07101e;color:#ffd479}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.score{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.score .card{text-align:center}
+.score .big{font-size:2rem;font-weight:900}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+.links a:hover{text-decoration:underline;background:#13233a}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)} button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.mode-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.mode-panel{display:none;margin-top:14px}.mode-panel.active{display:block}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px 11px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.quiz-item label:hover{background:#16243b}
+.answer{margin-top:10px;color:var(--muted)}#result{font-size:1.1rem;font-weight:800;margin-top:18px}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem} footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:720px){main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.compare,.score{grid-template-columns:1fr}.mode-buttons{display:grid;grid-template-columns:1fr}button{width:100%;min-height:48px}.quiz-item label{padding:13px 12px}}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 1 • Aula 02</div>
+<h1>Testando a Internet e Comandos do PowerShell</h1>
+<p class="lead">Na aula anterior usamos o CMD. Agora vamos conhecer o <strong>PowerShell</strong>, descobrir o endereço IP do computador e fazer testes simples de rede para observar conectividade e tempo de resposta.</p>
+<p><strong>Desafio da aula:</strong> identificar o IPv4 do computador e interpretar um teste de rede sem confundir <strong>latência</strong> com <strong>velocidade de download</strong>.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>5 min</strong>CMD × PowerShell</div>
+<div class="slot"><strong>10 min</strong>Abrindo PowerShell</div>
+<div class="slot"><strong>15 min</strong>ipconfig</div>
+<div class="slot"><strong>15 min</strong>Teste de rede</div>
+<div class="slot"><strong>8 min</strong>Semáforo da conexão</div>
+<div class="slot"><strong>5 min</strong>Quiz</div>
+<div class="slot"><strong>2 min</strong>Relatório</div>
+</div>
+</section>
+
+<section>
+<h2>2. O que você vai aprender</h2>
+<div class="grid">
+<div class="card goal"><h3>⌨️ CMD</h3><p>Relembrar o shell tradicional do Windows.</p></div>
+<div class="card goal"><h3>💙 PowerShell</h3><p>Conhecer uma ferramenta mais moderna para comandos e automação.</p></div>
+<div class="card goal"><h3>🌐 ipconfig</h3><p>Encontrar IPv4, gateway e outras informações básicas de rede.</p></div>
+<div class="card goal"><h3>⏱️ Latência</h3><p>Interpretar tempo de resposta sem chamar isso de “velocidade da internet”.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. CMD e PowerShell: qual é a diferença?</h2>
+<div class="compare">
+<div class="card">
+<h3>CMD</h3>
+<p>É o interpretador de comandos tradicional do Windows. Continua útil para muitos comandos clássicos.</p>
+<div class="terminal"><span class="prompt">C:\Users\Aluno&gt;</span> <span class="cmd">ipconfig</span></div>
+</div>
+<div class="card">
+<h3>PowerShell</h3>
+<p>É um shell e linguagem de automação com recursos mais avançados. Também consegue executar muitos comandos tradicionais do Windows.</p>
+<div class="terminal"><span class="prompt">PS C:\Users\Aluno&gt;</span> <span class="cmd">ipconfig</span></div>
+</div>
+</div>
+<div class="card warning" style="margin-top:14px">
+<h3>O CMD não “morreu”</h3>
+<p>Os dois existem no Windows. A ideia desta aula é perceber que PowerShell oferece mais possibilidades para automação e administração, sem deixar de aceitar muitos comandos antigos.</p>
+</div>
+</section>
+
+<section>
+<h2>4. Como abrir o PowerShell</h2>
+<div class="grid">
+<div class="card"><h3>1. Menu Iniciar</h3><p>Clique no botão do Windows.</p></div>
+<div class="card"><h3>2. Pesquise</h3><p>Digite <strong>PowerShell</strong>.</p></div>
+<div class="card"><h3>3. Abra normalmente</h3><p>Não precisamos executar como administrador nesta aula.</p></div>
+</div>
+</section>
+
+<section>
+<h2>5. Descobrindo o IP com ipconfig</h2>
+<p>No PowerShell, digite:</p>
+<div class="terminal"><span class="prompt">PS C:\Users\Aluno&gt;</span> <span class="cmd">ipconfig</span></div>
+
+<div class="grid" style="margin-top:14px">
+<div class="card"><h3>IPv4</h3><p>Procure algo como <span class="command">Endereço IPv4</span>. Exemplo didático: <span class="command">192.168.1.23</span>.</p></div>
+<div class="card"><h3>Gateway padrão</h3><p>É normalmente o endereço usado para alcançar outras redes, muitas vezes o roteador local.</p></div>
+<div class="card"><h3>Adaptador</h3><p>Pode aparecer Ethernet, Wi‑Fi e outros adaptadores. Nem todos estarão conectados.</p></div>
+</div>
+
+<div class="card warning" style="margin-top:14px">
+<h3>Esse IPv4 é o “IP da internet”?</h3>
+<p>Nem sempre. Em redes domésticas e escolares, o endereço mostrado costuma ser um <strong>IP privado/local</strong>. O endereço público usado na internet é outro conceito.</p>
+</div>
+</section>
+
+<section>
+<h2>6. Testando a conectividade com PowerShell</h2>
+<p>Uma forma moderna de testar se outro computador ou serviço pode ser alcançado é:</p>
+<div class="terminal"><span class="prompt">PS C:\Users\Aluno&gt;</span> <span class="cmd">Test-Connection google.com -Count 4</span></div>
+
+<p>Esse comando envia solicitações de eco, parecidas com o <span class="command">ping</span>, e mostra as respostas.</p>
+
+<div class="card" style="margin-top:14px">
+<h3>Outro teste útil</h3>
+<p>O PowerShell também possui <span class="command">Test-NetConnection</span>, usado para diagnóstico de conectividade. Para esta aula, vamos apenas conhecer o nome e manter o teste prático simples.</p>
+</div>
+</section>
+
+<section>
+<h2>7. “Internet rápida ou lenta?” — vamos falar direito</h2>
+<p>Para tornar a aula divertida, vamos observar o <strong>tempo de resposta</strong>. Isso não é a mesma coisa que velocidade de download.</p>
+
+<div class="score">
+<div class="card">
+<div class="big">🟢</div>
+<h3>Resposta baixa</h3>
+<p>Menor tempo de resposta costuma significar sensação mais ágil em jogos, chamadas e navegação.</p>
+</div>
+<div class="card">
+<div class="big">🟡</div>
+<h3>Resposta média</h3>
+<p>Pode funcionar normalmente, mas algumas atividades em tempo real podem sentir atraso.</p>
+</div>
+<div class="card">
+<div class="big">🔴</div>
+<h3>Resposta alta ou perdas</h3>
+<p>Pode indicar atraso, instabilidade ou problema no caminho até o destino.</p>
+</div>
+</div>
+
+<div class="card warning" style="margin-top:14px">
+<h3>Não transforme números em regra absoluta</h3>
+<p>O resultado depende do destino, distância, Wi‑Fi, provedor, horário e rota. Nesta aula o “semáforo” serve apenas para comparar resultados entre testes, não para dizer que uma conexão é boa ou ruim por um número isolado.</p>
+</div>
+</section>
+
+<section>
+<h2>8. Atividade prática: Semáforo da conexão</h2>
+<div class="mode-buttons">
+<button onclick="showMode('pc')">🏫 Estou na SEMAS</button>
+<button class="secondary" onclick="showMode('phone')">📱 Estou acompanhando pelo celular</button>
+</div>
+
+<div id="pcMode" class="mode-panel">
+<div class="card pc">
+<h3>🏫 No laboratório</h3>
+<ol>
+<li>Abra o PowerShell.</li>
+<li>Execute <span class="command">ipconfig</span> e encontre o IPv4.</li>
+<li>Execute <span class="command">Test-Connection google.com -Count 4</span>.</li>
+<li>Observe os tempos de resposta.</li>
+<li>Compare com um colega: os resultados são exatamente iguais?</li>
+<li>Classifique de forma lúdica como “mais rápido de responder”, “intermediário” ou “mais demorado”, sem tratar isso como teste de velocidade.</li>
+</ol>
+</div>
+</div>
+
+<div id="phoneMode" class="mode-panel">
+<div class="card phone">
+<h3>📱 Pelo celular</h3>
+<p>Não instale terminal nem aplicativo extra.</p>
+<ol>
+<li>Leia os exemplos de <span class="command">ipconfig</span> e <span class="command">Test-Connection</span>.</li>
+<li>Explique o que é IPv4.</li>
+<li>Explique o que significa um tempo em milissegundos.</li>
+<li>Faça a prática quando retornar à SEMAS.</li>
+</ol>
+</div>
+</div>
+</section>
+
+<section>
+<h2>9. Pesquise depois — links oficiais em português</h2>
+<div class="links">
+<a href="https://learn.microsoft.com/pt-br/windows-server/administration/windows-commands/ipconfig" target="_blank" rel="noopener">🔎 Microsoft Learn — ipconfig</a>
+<a href="https://learn.microsoft.com/pt-br/powershell/scripting/overview?view=powershell-7.6" target="_blank" rel="noopener">🔎 Microsoft Learn — O que é PowerShell?</a>
+<a href="https://learn.microsoft.com/pt-br/powershell/module/microsoft.powershell.management/test-connection?view=powershell-7.6" target="_blank" rel="noopener">🔎 Microsoft Learn — Test-Connection</a>
+<a href="https://learn.microsoft.com/pt-br/powershell/module/nettcpip/?view=windowsserver2022-ps" target="_blank" rel="noopener">🔎 Microsoft Learn — Ferramentas de rede do PowerShell</a>
+</div>
+</section>
+
+<section>
+<h2>10. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é interpretar corretamente os comandos.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+
+<div class="savebox">
+<h3>Salvar meu registro da aula</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+<p class="notice">Na SEMAS: envie por e-mail, salve no Drive, apague o arquivo local e encerre a sessão.</p>
+</div>
+</section>
+
+<section>
+<h2>11. Missão final</h2>
+<div class="card">
+<ol>
+<li>Explique uma diferença entre CMD e PowerShell.</li>
+<li>Mostre onde encontrar o IPv4 usando <span class="command">ipconfig</span>.</li>
+<li>Explique por que latência e velocidade de download não são a mesma coisa.</li>
+</ol>
+<p><strong>Regra da turma:</strong> um bom técnico não olha apenas para o número — ele entende o que o número realmente mede.</p>
+</div>
+</section>
+
+<footer>
+<p>SEMAS • Curso de Informática • Módulo 1 — Aula 02</p>
+<p>Testando a Internet e Comandos do PowerShell</p>
+</footer>
+
+</main>
+
+<script>
+const lessonKey="semas_mod1_aula02_attempt";
+const questions=[
+["Qual frase descreve melhor o PowerShell?","Um shell de linha de comando e ferramenta de automação mais avançada","Um tipo de placa-mãe","Um navegador de internet","Uma memória externa","PowerShell combina shell, comandos e recursos de automação."],
+["O CMD ainda existe no Windows?","Sim","Não, foi removido","Só em celulares","Só no Linux","CMD e PowerShell continuam disponíveis no Windows."],
+["Qual comando mostra informações como IPv4 e gateway?","ipconfig","systeminfo","format","shutdown","ipconfig exibe informações atuais de configuração de rede TCP/IP."],
+["O IPv4 mostrado pelo ipconfig em uma rede local costuma ser o quê?","Um endereço privado/local do computador naquela rede","Sempre o IP público da internet","A senha do Wi-Fi","O endereço MAC","Em redes domésticas e escolares, o endereço IPv4 mostrado geralmente é local/privado."],
+["O que Test-Connection faz?","Testa se um destino responde pela rede usando solicitações de eco","Mede a capacidade do SSD","Cria uma pasta","Desliga o roteador","Test-Connection é usado para verificar se um destino pode ser alcançado em uma rede IP."],
+["O que significa ms em um teste de rede?","Milissegundos de tempo de resposta","Megabytes por segundo de download","Memória do sistema","Modelo do servidor","ms significa milissegundos e representa tempo, não largura de banda."],
+["Latência baixa significa necessariamente internet com download rápido?","Não","Sim, sempre","Somente no cabo","Somente no Wi-Fi","Latência e velocidade de download medem aspectos diferentes da conexão."],
+["Por que dois alunos podem obter tempos diferentes no mesmo teste?","Porque rede, rota, Wi-Fi e momento do teste podem variar","Porque o PowerShell inventa números","Porque cada teclado muda a internet","Porque o monitor interfere no servidor","Resultados de rede podem variar conforme condições locais e caminho até o destino."]
+];
+
+let attempt=Number(sessionStorage.getItem(lessonKey)||0);
+let completed=false,lastScore=null,startedAt=Date.now(),finishedAt=null,currentMode="não informado";
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{const d=document.createElement("div");d.className="quiz-item";d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;quiz.appendChild(d);});
+function formatTime(ms){const s=Math.max(0,Math.round(ms/1000)),m=Math.floor(s/60),sec=s%60;return `${m}min ${String(sec).padStart(2,"0")}s`;}
+function showMode(mode){currentMode=mode==="pc"?"SEMAS — computador":"Casa/fora da SEMAS — celular";document.getElementById("pcMode").classList.toggle("active",mode==="pc");document.getElementById("phoneMode").classList.toggle("active",mode==="phone");}
+function updateUI(){const r=document.getElementById("result");if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true;if(!completed)r.innerHTML="<strong>Duas tentativas foram usadas nesta sessão.</strong><br>Em uma nova sessão, o quiz começa novamente.";}else if(!completed){r.innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;}}
+updateUI();
+function checkQuiz(){
+ if(attempt>=2)return;let score=0,all=true,wrong=[];
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return;}if(+s.value===0){score++;a.textContent="Correta! "+q[5];}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5];}});
+ if(!all){document.getElementById("result").innerHTML="<strong>Responda todas as perguntas antes de finalizar.</strong>";return;}
+ attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;finishedAt=Date.now();
+ document.getElementById("result").innerHTML=`<strong>Resultado da tentativa ${attempt}: ${score} de ${questions.length}.</strong><br>Tempo: ${formatTime(finishedAt-startedAt)}.<br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas as questões foram respondidas corretamente."}<br><span style="color:var(--muted)">Não existe nota mínima: o objetivo é interpretar corretamente o que os comandos medem.</span>`;
+ document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true);updateUI();
+}
+function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false;});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;startedAt=Date.now();finishedAt=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;document.getElementById("result").innerHTML=`Tentativa ${attempt+1} disponível.`;}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+function saveResult(){
+ if(!completed||lastScore===null)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return;}
+ const now=new Date();let rows="",wrong=[];
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;if(n!==0)wrong.push(i+1);rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;});
+ const report=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SEMAS - Módulo 1 Aula 02 - ${esc(name)}</title><style>body{font-family:Arial,sans-serif;max-width:950px;margin:30px auto;padding:18px;color:#172033;line-height:1.5}h1{color:#123b55}.meta{padding:18px;background:#f1f5f8;border-radius:10px}table{border-collapse:collapse;width:100%;margin-top:15px}th,td{border:1px solid #ccd3dc;padding:8px;text-align:left;vertical-align:top}th{background:#eaf2f7}.note{padding:14px;background:#fff8df;border-radius:8px}</style></head><body><h1>SEMAS — Módulo 1 — Aula 02</h1><h2>Testando a Internet e Comandos do PowerShell</h2><div class="meta"><strong>Aluno:</strong> ${esc(name)}<br><strong>Data e hora:</strong> ${now.toLocaleString("pt-BR")}<br><strong>Modo:</strong> ${esc(currentMode)}<br><strong>Tentativa:</strong> ${attempt} de 2<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Tempo:</strong> ${formatTime(finishedAt-startedAt)}</div><p class="note"><strong>Não existe nota mínima.</strong> Este relatório registra uma atividade de aprendizagem.</p><p><strong>Questões para revisar:</strong> ${wrong.length?wrong.join(", "):"nenhuma"}.</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Envie por e-mail ao professor, salve no Drive e apague o arquivo local do computador compartilhado.</p></body></html>`;
+ const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
+ a.href=url;a.download=`SEMAS_Modulo_1_Aula_02_${safe}_Tentativa_${attempt}.html`;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+}
+function finishSession(){
+ if(!confirm("Encerrar a sessão e limpar respostas desta aula neste navegador?"))return;
+ sessionStorage.removeItem(lessonKey);document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false;});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");document.getElementById("studentName").value="";document.getElementById("saveBtn").disabled=true;document.getElementById("checkBtn").disabled=false;attempt=0;completed=false;lastScore=null;startedAt=Date.now();finishedAt=null;currentMode="não informado";document.getElementById("pcMode").classList.remove("active");document.getElementById("phoneMode").classList.remove("active");document.getElementById("result").innerHTML="Sessão encerrada. Este navegador está pronto para o próximo aluno.";window.scrollTo({top:0,behavior:"smooth"});
+}
+</script>
+</body>
+</html>

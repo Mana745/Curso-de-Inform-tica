@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 0 — Aula 02 — Segurança com Eletricidade e Cuidado Digital</title>
+<style>
+:root{
+  --bg:#08101d;--card:#111b2e;--card2:#0d1728;--ink:#eef5ff;--muted:#afbdd4;
+  --accent:#69ddff;--accent2:#9dffb7;--warn:#ffd479;--danger:#ff9d9d;--line:#293955;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:
+  radial-gradient(circle at 15% 0%,#173053 0,transparent 28%),
+  linear-gradient(135deg,#070c16,#0c1628 55%,#0e1d34);
+  color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65
+}
+main{max-width:1000px;margin:auto;padding:24px 18px 70px}
+.hero{
+  padding:40px 28px;border:1px solid var(--line);border-radius:24px;
+  background:radial-gradient(circle at 85% 12%,#23517a,transparent 35%),var(--card);
+  box-shadow:0 20px 50px #0007
+}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}
+.lead{font-size:1.12rem;color:var(--muted);max-width:850px}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent);line-height:1.2}
+h3{color:var(--accent2);line-height:1.25}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)}
+.warning{border-left:4px solid var(--warn);background:#251f12}
+.danger{border-left:4px solid var(--danger);background:#291719}
+.safe{border-left:4px solid var(--accent2)}
+.phone{border-left:4px solid #bd9cff}
+.pc{border-left:4px solid var(--accent)}
+.time{
+  display:inline-block;padding:4px 10px;border-radius:999px;background:#0a1425;
+  border:1px solid var(--line);color:var(--warn);font-weight:800;font-size:.9rem
+}
+.timeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px}
+.timeline .slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}
+.timeline strong{display:block;color:var(--accent2)}
+.safety-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.safety-item{padding:17px;border-radius:16px;border:1px solid var(--line);background:#0b1526}
+.bigicon{font-size:2rem}
+.posture{
+  display:grid;grid-template-columns:minmax(260px,420px) 1fr;gap:20px;align-items:center
+}
+.posture-figure{
+  border:1px solid var(--line);border-radius:18px;background:#091321;padding:14px
+}
+svg{max-width:100%;height:auto;display:block;margin:auto}
+button{
+  cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;
+  background:var(--accent);color:#06111a;font-size:1rem
+}
+button.secondary{background:#263650;color:var(--ink)}
+button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.mode-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.mode-panel{display:none;margin-top:14px}
+.mode-panel.active{display:block}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px 11px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}
+.quiz-item label:hover{background:#16243b}
+.answer{margin-top:10px;color:var(--muted)}
+#result{font-size:1.1rem;font-weight:800;margin-top:18px}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input{
+  width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);
+  background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem
+}
+.notice{color:var(--muted);font-size:.93rem}
+.links a{
+  display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);
+  border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none
+}
+.links a:hover{text-decoration:underline;background:#13233a}
+footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:720px){
+  main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}
+  .posture{grid-template-columns:1fr}.mode-buttons{display:grid;grid-template-columns:1fr}
+  button{width:100%;min-height:48px}.quiz-item label{padding:13px 12px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+  <div class="kicker">SEMAS • Curso de Informática • Módulo 0 • Aula 02</div>
+  <h1>Segurança com Eletricidade e Cuidado Digital</h1>
+  <p class="lead">Tecnologia ajuda muito — mas saber usar com segurança é parte de saber usar bem. Hoje vamos aprender a evitar acidentes com eletricidade, agir melhor durante tempestades e cuidar do corpo ao usar computador e celular.</p>
+  <p><strong>Desafio da aula:</strong> identificar pelo menos <strong>três hábitos seguros</strong> que você pode levar para casa hoje.</p>
+</header>
+
+<section>
+  <h2>1. Roteiro da nossa 1 hora</h2>
+  <div class="timeline">
+    <div class="slot"><strong>5 min</strong>Pergunta inicial</div>
+    <div class="slot"><strong>12 min</strong>Choques e cuidados em casa</div>
+    <div class="slot"><strong>10 min</strong>Celular carregando</div>
+    <div class="slot"><strong>10 min</strong>Raios e tempestades</div>
+    <div class="slot"><strong>10 min</strong>Postura e tela</div>
+    <div class="slot"><strong>8 min</strong>Quiz</div>
+    <div class="slot"><strong>5 min</strong>Fechamento e relatório</div>
+  </div>
+  <p class="notice">Os links de pesquisa ficam disponíveis para explorar depois. Não é preciso abrir todos durante os 60 minutos.</p>
+</section>
+
+<section>
+  <h2>2. O que você vai aprender</h2>
+  <div class="grid">
+    <div class="card goal"><h3>⚡ Evitar choques</h3><p>Reconhecer situações perigosas envolvendo tomadas, fios e água.</p></div>
+    <div class="card goal"><h3>📱 Carregar com segurança</h3><p>Entender por que cabos, carregadores e o local de carregamento merecem atenção.</p></div>
+    <div class="card goal"><h3>⛈️ Agir em tempestades</h3><p>Saber quais comportamentos reduzem riscos durante raios e trovoadas.</p></div>
+    <div class="card goal"><h3>🪑 Cuidar do corpo</h3><p>Ajustar cadeira, tela e postura para usar o computador com mais conforto.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>3. Pergunta que abre a aula</h2>
+  <div class="card">
+    <p>Você já viu alguém usar o celular carregando, mexer em uma tomada com a mão molhada ou ficar muito curvado olhando para a tela?</p>
+    <p><strong>Qual dessas situações parece mais perigosa? Por quê?</strong></p>
+    <p class="notice">Converse por dois minutos com um colega. Não precisa acertar — vamos descobrir juntos.</p>
+  </div>
+</section>
+
+<section>
+  <h2>4. Eletricidade e água: uma combinação perigosa</h2>
+  <div class="safety-grid">
+    <div class="safety-item">
+      <div class="bigicon">💧🔌</div>
+      <h3>Mãos molhadas</h3>
+      <p>Não toque em tomadas, plugues ou aparelhos elétricos com as mãos molhadas. A presença de água pode aumentar o risco de choque.</p>
+    </div>
+    <div class="safety-item">
+      <div class="bigicon">⚡🧵</div>
+      <h3>Fio desencapado</h3>
+      <p>Não toque. Afaste-se e avise um adulto responsável. Fios danificados precisam ser avaliados por pessoa capacitada.</p>
+    </div>
+    <div class="safety-item">
+      <div class="bigicon">🔌🚫</div>
+      <h3>Objetos na tomada</h3>
+      <p>Nunca coloque chaves, garfos, arames ou qualquer outro objeto em uma tomada.</p>
+    </div>
+    <div class="safety-item">
+      <div class="bigicon">🧯</div>
+      <h3>Cheiro de queimado</h3>
+      <p>Se um aparelho, tomada ou carregador aquecer demais, soltar fumaça ou tiver cheiro de queimado, não continue usando. Chame um adulto responsável.</p>
+    </div>
+  </div>
+
+  <div class="card danger" style="margin-top:14px">
+    <h3>🚫 A regra mais importante</h3>
+    <p>Aluno não faz reparo elétrico. Não abre tomada, não desencapa fio e não tenta “consertar rapidinho”. Segurança vem antes da curiosidade.</p>
+  </div>
+</section>
+
+<section>
+  <h2>5. E o celular enquanto está carregando?</h2>
+  <div class="card warning">
+    <h3>📱🔌 O cuidado correto</h3>
+    <p>Carregadores e celulares em boas condições são feitos para funcionar conectados, mas o hábito mais seguro para esta turma é: <strong>se for usar bastante o celular, desconecte-o da tomada</strong>. Órgãos e concessionárias brasileiras orientam evitar o uso de celulares e tablets enquanto estão carregando, principalmente para reduzir riscos em situações de cabo danificado, carregador inadequado, aquecimento ou descargas elétricas.</p>
+  </div>
+
+  <div class="grid" style="margin-top:14px">
+    <div class="card safe"><h3>✅ Faça</h3><p>Use carregador adequado, cabo inteiro e tomada em boas condições. Carregue sobre superfície firme e ventilada.</p></div>
+    <div class="card danger"><h3>❌ Evite</h3><p>Carregador quebrado, cabo com fios aparecendo, aparelho sobre cama/sofá enquanto carrega ou manuseio com mãos molhadas.</p></div>
+  </div>
+
+  <p class="notice">Nesta aula não vamos criar medo da tecnologia. Vamos aprender a reconhecer quando uma situação deixa de ser normal e passa a exigir cuidado.</p>
+</section>
+
+<section>
+  <h2>6. Tempestade com raios: o que muda?</h2>
+  <p>Raios são descargas elétricas muito intensas. Durante tempestades, precisamos aumentar os cuidados dentro e fora de casa.</p>
+
+  <div class="grid">
+    <div class="card safe">
+      <h3>🏠 Dentro de casa</h3>
+      <ul>
+        <li>Permaneça em local fechado e seguro.</li>
+        <li>Fique afastado de janelas e portas.</li>
+        <li>Evite usar aparelhos conectados à tomada durante a tempestade.</li>
+        <li>Evite banho em chuveiro elétrico durante a ocorrência de raios.</li>
+      </ul>
+    </div>
+    <div class="card danger">
+      <h3>🌳 Fora de casa</h3>
+      <ul>
+        <li>Não se abrigue sob árvore isolada.</li>
+        <li>Evite áreas abertas, topos de morros e estruturas metálicas.</li>
+        <li>Procure abrigo seguro em construção adequada ou veículo fechado.</li>
+        <li>Não permaneça na água durante a tempestade.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card warning" style="margin-top:14px">
+    <h3>⚠️ Importante</h3>
+    <p>Se a tempestade já estiver muito próxima, não saia correndo pela casa mexendo em tomadas. A prioridade é permanecer em local seguro e seguir orientações de adultos e da Defesa Civil.</p>
+  </div>
+</section>
+
+<section>
+  <h2>7. Cuidado digital também é cuidado com o corpo</h2>
+  <p>Usar computador por muito tempo numa posição ruim pode causar desconforto. Não existe uma “posição militar perfeita”; o objetivo é ficar confortável, apoiar o corpo e <strong>mudar de posição ao longo do tempo</strong>.</p>
+
+  <div class="posture">
+    <div class="posture-figure">
+      <svg viewBox="0 0 430 330" role="img" aria-label="Ilustração didática de postura ao computador">
+        <rect x="274" y="75" width="115" height="78" rx="8" fill="#13263f" stroke="#69ddff" stroke-width="4"/>
+        <rect x="322" y="153" width="18" height="55" fill="#314661"/>
+        <rect x="290" y="204" width="85" height="9" rx="4" fill="#314661"/>
+        <rect x="200" y="212" width="205" height="13" rx="5" fill="#52617a"/>
+        <line x1="250" y1="225" x2="250" y2="315" stroke="#52617a" stroke-width="10"/>
+        <line x1="375" y1="225" x2="375" y2="315" stroke="#52617a" stroke-width="10"/>
+        <circle cx="145" cy="80" r="33" fill="#ffd479"/>
+        <line x1="147" y1="112" x2="157" y2="202" stroke="#9dffb7" stroke-width="12" stroke-linecap="round"/>
+        <line x1="157" y1="145" x2="230" y2="188" stroke="#9dffb7" stroke-width="11" stroke-linecap="round"/>
+        <line x1="230" y1="188" x2="285" y2="188" stroke="#9dffb7" stroke-width="10" stroke-linecap="round"/>
+        <line x1="157" y1="202" x2="222" y2="244" stroke="#9dffb7" stroke-width="13" stroke-linecap="round"/>
+        <line x1="222" y1="244" x2="222" y2="305" stroke="#9dffb7" stroke-width="13" stroke-linecap="round"/>
+        <line x1="222" y1="305" x2="270" y2="305" stroke="#9dffb7" stroke-width="12" stroke-linecap="round"/>
+        <rect x="87" y="145" width="25" height="105" rx="8" fill="#314661"/>
+        <rect x="70" y="235" width="115" height="15" rx="6" fill="#314661"/>
+        <line x1="128" y1="250" x2="128" y2="315" stroke="#314661" stroke-width="10"/>
+        <path d="M178 78 L270 78" stroke="#69ddff" stroke-width="3" stroke-dasharray="8 8"/>
+        <text x="280" y="67" fill="#afbdd4" font-size="14">tela próxima à linha dos olhos</text>
+      </svg>
+    </div>
+
+    <div>
+      <div class="card"><h3>🖥️ Tela</h3><p>Deixe a tela numa posição confortável, evitando ficar com o pescoço muito inclinado. Ajuste brilho e tamanho das letras para não forçar a visão.</p></div>
+      <div class="card" style="margin-top:10px"><h3>🪑 Corpo</h3><p>Apoie as costas. Mantenha os pés apoiados no chão ou em apoio adequado. Ombros devem ficar relaxados.</p></div>
+      <div class="card" style="margin-top:10px"><h3>⌨️ Mãos</h3><p>Teclado e mouse devem ficar ao alcance, sem obrigar você a esticar demais os braços.</p></div>
+      <div class="card" style="margin-top:10px"><h3>🚶 Movimento</h3><p>Levante-se, alongue-se e mude de posição de tempos em tempos. Ficar imóvel por muito tempo não é o objetivo.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>8. Atividade rápida: Caça ao risco</h2>
+  <p>Escolha onde você está fazendo a aula.</p>
+
+  <div class="mode-buttons">
+    <button onclick="showMode('pc')">🏫 Estou na SEMAS</button>
+    <button class="secondary" onclick="showMode('phone')">📱 Estou acompanhando pelo celular</button>
+  </div>
+
+  <div id="pcMode" class="mode-panel">
+    <div class="card pc">
+      <h3>🏫 No laboratório</h3>
+      <p>Sem mexer em tomadas ou cabos, observe seu posto de trabalho e responda:</p>
+      <ol>
+        <li>Minhas costas estão apoiadas?</li>
+        <li>Consigo ver a tela sem abaixar demais o pescoço?</li>
+        <li>Mouse e teclado estão fáceis de alcançar?</li>
+        <li>Existe algum cabo ou equipamento aparentemente danificado? Se sim, <strong>não toque</strong>: avise o professor.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div id="phoneMode" class="mode-panel">
+    <div class="card phone">
+      <h3>📱 Pelo celular</h3>
+      <p>Faça uma inspeção apenas visual e segura:</p>
+      <ol>
+        <li>O cabo do seu carregador está inteiro?</li>
+        <li>Você costuma carregar o celular sobre cama ou sofá?</li>
+        <li>Quando usa o celular por muito tempo, fica com o pescoço muito curvado?</li>
+        <li>Escolha <strong>um hábito</strong> que você pode melhorar a partir de hoje.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>9. Pesquise depois — links em português</h2>
+  <p>Estes materiais servem para quem quiser continuar descobrindo depois da aula.</p>
+  <div class="links">
+    <a href="https://www.cemig.com.br/wp-content/uploads/2026/03/prevencao-acidentes-domesticos.pdf" target="_blank" rel="noopener">🔎 CEMIG — Prevenção de acidentes domésticos com eletricidade</a>
+    <a href="https://www.gov.br/mme/pt-br/arquivos/2009-cartilha-kaingang-portugues.pdf" target="_blank" rel="noopener">🔎 Ministério de Minas e Energia — Uso seguro da energia elétrica</a>
+    <a href="https://prefeitura.sp.gov.br/web/capela_do_socorro/w/cuidados-essenciais-durante-tempestades-com-raios-e-trovoada" target="_blank" rel="noopener">🔎 Defesa Civil / Prefeitura de São Paulo — Cuidados em tempestades com raios</a>
+    <a href="https://www.gov.br/trabalho-e-emprego/pt-br/acesso-a-informacao/participacao-social/conselhos-e-orgaos-colegiados/comissao-tripartite-partitaria-permanente/arquivos/normas-regulamentadoras/nr-17-atualizada-2022.pdf" target="_blank" rel="noopener">🔎 Ministério do Trabalho — NR-17 Ergonomia (material mais avançado)</a>
+  </div>
+  <p class="notice">A NR-17 é um material técnico. O aluno não precisa entender a norma inteira; ela está aqui para mostrar que postura, mobiliário e organização do trabalho também são assuntos estudados profissionalmente.</p>
+</section>
+
+<section>
+  <h2>10. Quiz de descoberta</h2>
+  <p>Não existe nota mínima. Cada explicação faz parte da aula.</p>
+  <div id="quiz"></div>
+
+  <button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+  <button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+  <div id="result"></div>
+
+  <div class="savebox">
+    <h3>Salvar meu registro da aula</h3>
+    <p class="notice">O relatório será criado no seu navegador. Nenhum resultado é enviado automaticamente.</p>
+    <input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+    <button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+    <button class="ghost" id="finishBtn" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+    <p class="notice"><strong>Na SEMAS:</strong> envie o relatório por e-mail, guarde uma cópia no Drive, apague o arquivo local e encerre sua sessão.</p>
+  </div>
+</section>
+
+<section>
+  <h2>11. Missão final</h2>
+  <div class="card">
+    <p>Complete mentalmente ou conte ao professor:</p>
+    <ol>
+      <li>Um cuidado com eletricidade que eu vou lembrar é...</li>
+      <li>Durante uma tempestade com raios, eu devo...</li>
+      <li>Para cuidar do meu corpo no computador, eu posso...</li>
+    </ol>
+    <p><strong>Regra da turma:</strong> saber tecnologia também significa saber quando não devemos mexer.</p>
+  </div>
+</section>
+
+<footer>
+  <p>SEMAS • Curso de Informática • Módulo 0 — Primeiros Passos e a Eletricidade no Nosso Dia a Dia • Aula 02</p>
+  <p>Material didático. Atividades elétricas nesta aula são somente de observação segura.</p>
+</footer>
+
+</main>
+
+<script>
+const lessonKey="semas_mod0_aula02_attempt";
+const questions=[
+  [
+    "O que você deve fazer ao encontrar um fio desencapado?",
+    "Não tocar e avisar um adulto responsável",
+    "Encostar rapidamente para testar",
+    "Cobrir com a mão",
+    "Jogar água para esfriar",
+    "Fios danificados podem causar choque. O correto é não tocar e chamar uma pessoa responsável."
+  ],
+  [
+    "Por que não devemos mexer em tomadas com as mãos molhadas?",
+    "Porque a água pode aumentar o risco de choque elétrico",
+    "Porque a tomada perde a senha",
+    "Porque o aparelho fica sem internet",
+    "Porque a corrente vira bateria",
+    "Água e eletricidade exigem cuidado especial, pois a presença de umidade pode aumentar o risco de choque."
+  ],
+  [
+    "Qual é um hábito mais seguro durante o carregamento do celular?",
+    "Usar carregador e cabo em boas condições e evitar uso desnecessário enquanto está ligado à tomada",
+    "Cobrir o celular com travesseiro",
+    "Usar cabo com fios aparecendo",
+    "Segurar o aparelho com as mãos molhadas",
+    "Condições do carregador, cabo, tomada e ventilação são importantes para a segurança."
+  ],
+  [
+    "Durante uma tempestade com raios, qual atitude é mais segura?",
+    "Permanecer em local fechado e evitar aparelhos conectados à tomada",
+    "Ficar embaixo de uma árvore isolada",
+    "Tomar banho no chuveiro elétrico",
+    "Ir para uma área aberta para observar os raios",
+    "Orientações de Defesa Civil recomendam abrigo seguro e cuidados com equipamentos e instalações durante tempestades."
+  ],
+  [
+    "Se você estiver fora de casa durante uma tempestade, onde NÃO deve procurar abrigo?",
+    "Debaixo de uma árvore isolada",
+    "Dentro de uma construção segura",
+    "Dentro de um veículo fechado",
+    "Em local protegido indicado por responsáveis",
+    "Árvores isoladas não são abrigo seguro durante tempestades com raios."
+  ],
+  [
+    "Qual postura é mais adequada no computador?",
+    "Costas apoiadas, tela confortável e mouse/teclado ao alcance",
+    "Pescoço sempre muito curvado",
+    "Braços totalmente esticados para alcançar o teclado",
+    "Sentar sem mudar de posição por horas",
+    "Ergonomia procura adaptar o posto ao corpo, com apoio, alcance confortável e possibilidade de variar a postura."
+  ],
+  [
+    "O que devemos fazer durante períodos longos usando computador?",
+    "Mudar de posição e fazer pequenas pausas de movimento",
+    "Ficar completamente imóvel",
+    "Aproximar cada vez mais o rosto da tela",
+    "Evitar apoiar os pés",
+    "Alternar posições e movimentar-se ajuda a reduzir desconforto."
+  ],
+  [
+    "Qual frase resume melhor a aula?",
+    "Usar tecnologia bem também significa reconhecer riscos e cuidar do corpo",
+    "Todo aparelho elétrico é perigoso e não deve ser usado",
+    "Só adultos podem aprender tecnologia",
+    "Segurança não tem relação com informática",
+    "Tecnologia deve ser usada com conhecimento, atenção e hábitos seguros — não com medo."
+  ]
+];
+
+let attempt=Number(sessionStorage.getItem(lessonKey)||0);
+let completed=false,lastScore=null,startedAt=Date.now(),finishedAt=null,currentMode="não informado";
+const quiz=document.getElementById("quiz");
+
+questions.forEach((q,i)=>{
+  const d=document.createElement("div"); d.className="quiz-item";
+  d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
+    q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+
+    `<div class="answer" id="a${i}"></div>`;
+  quiz.appendChild(d);
+});
+
+function formatTime(ms){
+  const s=Math.max(0,Math.round(ms/1000)),m=Math.floor(s/60),sec=s%60;
+  return `${m}min ${String(sec).padStart(2,"0")}s`;
+}
+
+function showMode(mode){
+  currentMode=mode==="pc"?"SEMAS — computador":"Casa/fora da SEMAS — celular";
+  document.getElementById("pcMode").classList.toggle("active",mode==="pc");
+  document.getElementById("phoneMode").classList.toggle("active",mode==="phone");
+}
+
+function updateUI(){
+  const r=document.getElementById("result");
+  if(attempt>=2){
+    document.getElementById("checkBtn").disabled=true;
+    document.getElementById("retryBtn").disabled=true;
+    if(!completed) r.innerHTML="<strong>Duas tentativas foram usadas nesta sessão.</strong><br>Revise livremente. Em uma nova sessão, a atividade começa novamente.";
+  }else if(!completed){
+    r.innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;
+  }
+}
+updateUI();
+
+function checkQuiz(){
+  if(attempt>=2)return;
+  let score=0,all=true,wrong=[];
+
+  questions.forEach((q,i)=>{
+    const s=document.querySelector(`input[name="q${i}"]:checked`);
+    const a=document.getElementById("a"+i);
+    if(!s){all=false;a.textContent="Responda esta questão antes de finalizar.";return;}
+    if(+s.value===0){score++;a.textContent="Correta! "+q[5];}
+    else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5];}
+  });
+
+  if(!all){
+    document.getElementById("result").innerHTML="<strong>Responda todas as perguntas antes de finalizar.</strong>";
+    return;
+  }
+
+  attempt++; sessionStorage.setItem(lessonKey,attempt);
+  completed=true; lastScore=score; finishedAt=Date.now();
+
+  const msg=score===questions.length
+    ?"Você acertou todas. Agora o mais importante é colocar esses hábitos em prática."
+    :score>=6
+    ?"Você entendeu boa parte da aula. Revise as questões indicadas e veja o que ainda pode descobrir."
+    :"As questões para revisar mostram exatamente onde você pode aprender mais. Não há nota mínima.";
+
+  document.getElementById("result").innerHTML=
+    `<strong>Resultado da tentativa ${attempt}: ${score} de ${questions.length}.</strong><br>`+
+    `Tempo: ${formatTime(finishedAt-startedAt)}.<br>`+
+    `${wrong.length?`Questões para explorar novamente: ${wrong.join(", ")}.`:"Todas as questões foram respondidas corretamente."}<br>`+
+    `<span style="color:var(--muted)">${msg}</span>`;
+
+  document.getElementById("saveBtn").disabled=false;
+  document.getElementById("checkBtn").disabled=true;
+  document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true);
+  updateUI();
+}
+
+function retryQuiz(){
+  if(attempt>=2 || !completed)return;
+  document.querySelectorAll('#quiz input[type="radio"]').forEach(x=>{x.checked=false;x.disabled=false;});
+  questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");
+  completed=false;lastScore=null;startedAt=Date.now();finishedAt=null;
+  document.getElementById("checkBtn").disabled=false;
+  document.getElementById("saveBtn").disabled=true;
+  document.getElementById("result").innerHTML=`Tentativa ${attempt+1} disponível. Revise antes de responder novamente.`;
+}
+
+function esc(s){
+  return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+}
+
+function saveResult(){
+  if(!completed || lastScore===null)return;
+  const name=document.getElementById("studentName").value.trim();
+  if(!name){alert("Digite seu nome completo antes de baixar o relatório.");return;}
+
+  const now=new Date();let rows="",wrong=[];
+  questions.forEach((q,i)=>{
+    const s=document.querySelector(`input[name="q${i}"]:checked`);
+    const n=s?+s.value:-1;if(n!==0)wrong.push(i+1);
+    rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;
+  });
+
+  const report=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SEMAS - Módulo 0 Aula 02 - ${esc(name)}</title>
+  <style>
+  body{font-family:Arial,sans-serif;max-width:950px;margin:30px auto;padding:18px;color:#172033;line-height:1.5}
+  h1{color:#123b55}.meta{padding:18px;background:#f1f5f8;border-radius:10px;margin-bottom:20px}
+  table{border-collapse:collapse;width:100%;margin-top:15px}th,td{border:1px solid #ccd3dc;padding:8px;text-align:left;vertical-align:top}
+  th{background:#eaf2f7}.note{padding:14px;background:#fff8df;border-radius:8px}
+  </style></head><body>
+  <h1>SEMAS — Módulo 0 — Aula 02</h1>
+  <h2>Segurança com Eletricidade e Cuidado Digital</h2>
+  <div class="meta">
+  <strong>Aluno:</strong> ${esc(name)}<br>
+  <strong>Data e hora:</strong> ${now.toLocaleString("pt-BR")}<br>
+  <strong>Modo informado:</strong> ${esc(currentMode)}<br>
+  <strong>Tentativa nesta sessão:</strong> ${attempt} de 2<br>
+  <strong>Resultado:</strong> ${lastScore}/${questions.length}<br>
+  <strong>Tempo de realização:</strong> ${formatTime(finishedAt-startedAt)}
+  </div>
+  <h2>Registro de aprendizagem</h2>
+  <p><strong>Questões para revisar:</strong> ${wrong.length?wrong.join(", "):"nenhuma"}.</p>
+  <p class="note"><strong>Importante:</strong> não existe nota mínima. Este relatório registra uma atividade de aprendizagem e não mede isoladamente a capacidade do aluno.</p>
+  <h2>Respostas</h2>
+  <table><tr><th>#</th><th>Pergunta</th><th>Resposta marcada</th><th>Resultado</th></tr>${rows}</table>
+  <h2>Próximo passo</h2>
+  <p>Envie este relatório por e-mail ao professor, salve uma cópia no seu Google Drive e, no computador compartilhado da SEMAS, apague o arquivo local depois do envio.</p>
+  </body></html>`;
+
+  const blob=new Blob([report],{type:"text/html;charset=utf-8"});
+  const url=URL.createObjectURL(blob),a=document.createElement("a");
+  const safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
+  a.href=url;a.download=`SEMAS_Modulo_0_Aula_02_${safe}_Tentativa_${attempt}.html`;
+  document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+}
+
+function finishSession(){
+  const ok=confirm("Use este botão depois de enviar/salvar seu relatório. Encerrar apagará deste navegador o contador desta aula e limpará as respostas da tela. Continuar?");
+  if(!ok)return;
+  sessionStorage.removeItem(lessonKey);
+  document.querySelectorAll('#quiz input[type="radio"]').forEach(x=>{x.checked=false;x.disabled=false;});
+  questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");
+  document.getElementById("studentName").value="";
+  document.getElementById("saveBtn").disabled=true;
+  document.getElementById("checkBtn").disabled=false;
+  attempt=0;completed=false;lastScore=null;startedAt=Date.now();finishedAt=null;currentMode="não informado";
+  document.getElementById("pcMode").classList.remove("active");
+  document.getElementById("phoneMode").classList.remove("active");
+  document.getElementById("result").innerHTML="Sessão encerrada. Este navegador está pronto para o próximo aluno.";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+</script>
+</body>
+</html>

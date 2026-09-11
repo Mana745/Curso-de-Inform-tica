@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 1 — Aula 01 — Conversando com o PC por Texto</title>
+<style>
+:root{
+  --bg:#08101d;--card:#111b2e;--card2:#0d1728;--ink:#eef5ff;--muted:#afbdd4;
+  --accent:#69ddff;--accent2:#9dffb7;--warn:#ffd479;--danger:#ff9d9d;--line:#293955;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 15% 0%,#173053 0,transparent 28%),linear-gradient(135deg,#070c16,#0c1628 55%,#0e1d34);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1000px;margin:auto;padding:24px 18px 70px}
+.hero{padding:40px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#23517a,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}
+.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)} h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)} .warning{border-left:4px solid var(--warn);background:#251f12}
+.pc{border-left:4px solid var(--accent)} .phone{border-left:4px solid #bd9cff}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.terminal{font-family:Consolas,monospace;background:#050a11;border:1px solid #263650;border-radius:14px;padding:16px;color:#d8f6df;overflow:auto}
+.terminal .prompt{color:#69ddff}.terminal .cmd{color:#ffd479}.terminal .out{color:#d8f6df}
+.command{font-family:Consolas,monospace;padding:4px 8px;border-radius:8px;background:#07101e;color:#ffd479}
+.steps{counter-reset:step;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.step{counter-increment:step;padding:17px;border:1px solid var(--line);border-radius:15px;background:#0b1526}
+.step:before{content:counter(step);display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#06111a;font-weight:900;margin-bottom:8px}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+.links a:hover{text-decoration:underline;background:#13233a}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)} button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.mode-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.mode-panel{display:none;margin-top:14px}.mode-panel.active{display:block}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px 11px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.quiz-item label:hover{background:#16243b}
+.answer{margin-top:10px;color:var(--muted)}#result{font-size:1.1rem;font-weight:800;margin-top:18px}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:720px){main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.mode-buttons{display:grid;grid-template-columns:1fr}button{width:100%;min-height:48px}.quiz-item label{padding:13px 12px}}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+  <div class="kicker">SEMAS • Curso de Informática • Módulo 1 • Aula 01</div>
+  <h1>Conversando com o PC por Texto</h1>
+  <p class="lead">Hoje vamos descobrir que o computador também pode ser controlado digitando comandos. No Windows, uma das ferramentas mais tradicionais para isso é o <strong>Prompt de Comando (CMD)</strong>.</p>
+  <p><strong>Desafio da aula:</strong> usar dois comandos reais — <span class="command">systeminfo</span> e <span class="command">ping</span> — e explicar o que cada um mostra.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+  <div class="slot"><strong>5 min</strong>Pergunta inicial</div>
+  <div class="slot"><strong>10 min</strong>O que é CMD</div>
+  <div class="slot"><strong>15 min</strong>systeminfo</div>
+  <div class="slot"><strong>15 min</strong>ping</div>
+  <div class="slot"><strong>8 min</strong>Atividade prática</div>
+  <div class="slot"><strong>5 min</strong>Quiz</div>
+  <div class="slot"><strong>2 min</strong>Relatório</div>
+</div>
+</section>
+
+<section>
+<h2>2. O que você vai aprender</h2>
+<div class="grid">
+  <div class="card goal"><h3>⌨️ CMD</h3><p>Entender que podemos controlar e consultar o computador digitando comandos.</p></div>
+  <div class="card goal"><h3>🖥️ systeminfo</h3><p>Consultar informações do Windows e do computador.</p></div>
+  <div class="card goal"><h3>📡 ping</h3><p>Testar se um destino de rede responde e observar o tempo de resposta.</p></div>
+  <div class="card goal"><h3>🧠 Interpretação</h3><p>Aprender a ler resultados sem apenas decorar comandos.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. A pergunta que abre a aula</h2>
+<div class="card">
+  <p>Até agora usamos principalmente mouse, ícones e menus.</p>
+  <p><strong>E se você pudesse pedir informações ao computador digitando uma ordem?</strong></p>
+</div>
+</section>
+
+<section>
+<h2>4. O que é o Prompt de Comando?</h2>
+<p>O <strong>Prompt de Comando</strong>, também chamado de <strong>CMD</strong>, é uma ferramenta do Windows que recebe comandos em texto.</p>
+
+<div class="terminal">
+<span class="prompt">C:\Users\Aluno&gt;</span> <span class="cmd">comando</span><br>
+<span class="out">O Windows executa a instrução e mostra uma resposta.</span>
+</div>
+
+<div class="grid" style="margin-top:14px">
+  <div class="card"><h3>🖱️ Interface gráfica</h3><p>Você clica em janelas, menus e botões.</p></div>
+  <div class="card"><h3>⌨️ Linha de comando</h3><p>Você digita uma instrução e pressiona Enter.</p></div>
+</div>
+
+<div class="card warning" style="margin-top:14px">
+  <h3>Comando é uma ordem</h3>
+  <p>Não digite comandos encontrados aleatoriamente na internet. Alguns apenas mostram informações, mas outros podem alterar ou apagar coisas. Nesta aula usaremos somente comandos seguros definidos pelo professor.</p>
+</div>
+</section>
+
+<section>
+<h2>5. Como abrir o CMD</h2>
+<div class="steps">
+  <div class="step"><h3>Abra o Menu Iniciar</h3><p>Clique no botão do Windows.</p></div>
+  <div class="step"><h3>Digite CMD</h3><p>Pesquise por <strong>Prompt de Comando</strong>.</p></div>
+  <div class="step"><h3>Abra normalmente</h3><p>Clique no aplicativo. Para esta aula, não precisamos executar como administrador.</p></div>
+  <div class="step"><h3>Observe</h3><p>Uma janela escura aparecerá com um cursor esperando sua instrução.</p></div>
+</div>
+</section>
+
+<section>
+<h2>6. Primeiro comando: systeminfo</h2>
+<p>Digite:</p>
+<div class="terminal">
+<span class="prompt">C:\Users\Aluno&gt;</span> <span class="cmd">systeminfo</span>
+</div>
+
+<p>O Windows coleta e mostra várias informações do sistema. A saída pode ser longa.</p>
+
+<div class="grid">
+  <div class="card"><h3>🏷️ Fabricante</h3><p>Procure por algo como <strong>Fabricante do sistema</strong> ou informação equivalente.</p></div>
+  <div class="card"><h3>🖥️ Modelo</h3><p>Veja se aparece o modelo ou identificação do computador.</p></div>
+  <div class="card"><h3>🧠 Memória física</h3><p>Procure a informação de memória física total instalada/reconhecida pelo sistema.</p></div>
+  <div class="card"><h3>🪟 Windows</h3><p>Também aparecem nome e versão do sistema operacional.</p></div>
+</div>
+
+<div class="card warning" style="margin-top:14px">
+  <h3>Marca nem sempre aparece do mesmo jeito</h3>
+  <p>Dependendo do fabricante e da instalação, alguns campos podem aparecer com nomes diferentes ou informações genéricas. O importante é aprender a procurar e interpretar.</p>
+</div>
+</section>
+
+<section>
+<h2>7. Segundo comando: ping</h2>
+<p>O comando <span class="command">ping</span> envia pequenas mensagens de teste para um destino e observa se recebe respostas.</p>
+
+<div class="terminal">
+<span class="prompt">C:\Users\Aluno&gt;</span> <span class="cmd">ping google.com</span><br><br>
+<span class="out">Resposta de ... tempo=XXms</span><br>
+<span class="out">Resposta de ... tempo=XXms</span><br>
+<span class="out">Resposta de ... tempo=XXms</span>
+</div>
+
+<div class="grid" style="margin-top:14px">
+  <div class="card"><h3>✅ Resposta</h3><p>Se chegam respostas, existe conectividade até aquele destino naquele momento.</p></div>
+  <div class="card"><h3>⏱️ Tempo em ms</h3><p>O valor em milissegundos indica aproximadamente quanto tempo a ida e volta do teste levou.</p></div>
+  <div class="card"><h3>❌ Perda</h3><p>Se mensagens não retornam, pode haver perda de pacotes, bloqueio do teste ou problema de conexão.</p></div>
+</div>
+
+<div class="card warning" style="margin-top:14px">
+  <h3>Ping não mede velocidade da internet</h3>
+  <p>Ele ajuda a observar <strong>alcance, perda e tempo de resposta</strong>. Uma conexão pode responder ao ping e ainda estar lenta para baixar arquivos. Também existem servidores que bloqueiam esse tipo de teste mesmo estando online.</p>
+</div>
+</section>
+
+<section>
+<h2>8. Um teste ainda mais simples</h2>
+<p>Podemos testar um endereço conhecido na internet, como:</p>
+<div class="terminal">
+<span class="prompt">C:\Users\Aluno&gt;</span> <span class="cmd">ping 8.8.8.8</span>
+</div>
+<p class="notice">O endereço 8.8.8.8 pertence ao serviço de DNS público do Google e é frequentemente usado em testes de conectividade.</p>
+</section>
+
+<section>
+<h2>9. Atividade prática</h2>
+<div class="mode-buttons">
+  <button onclick="showMode('pc')">🏫 Estou na SEMAS</button>
+  <button class="secondary" onclick="showMode('phone')">📱 Estou acompanhando pelo celular</button>
+</div>
+
+<div id="pcMode" class="mode-panel">
+  <div class="card pc">
+    <h3>🏫 No computador da SEMAS</h3>
+    <ol>
+      <li>Abra o CMD.</li>
+      <li>Execute <span class="command">systeminfo</span>.</li>
+      <li>Anote mentalmente ou no relatório: fabricante, modelo e memória física total, se aparecerem.</li>
+      <li>Execute <span class="command">ping google.com</span>.</li>
+      <li>Observe se houve resposta e veja os tempos em <strong>ms</strong>.</li>
+      <li>Compare com um colega: os resultados precisam ser exatamente iguais? Não necessariamente.</li>
+    </ol>
+  </div>
+</div>
+
+<div id="phoneMode" class="mode-panel">
+  <div class="card phone">
+    <h3>📱 Pelo celular</h3>
+    <p>Você não precisa instalar aplicativo de terminal.</p>
+    <ol>
+      <li>Leia os exemplos de <span class="command">systeminfo</span> e <span class="command">ping</span>.</li>
+      <li>Explique qual comando mostra informações do computador.</li>
+      <li>Explique qual comando testa se um destino responde pela rede.</li>
+      <li>Faça a parte prática quando retornar ao laboratório.</li>
+    </ol>
+  </div>
+</div>
+</section>
+
+<section>
+<h2>10. Você sabia?</h2>
+<div class="grid">
+  <div class="card"><h3>🧑‍💻 Técnicos usam terminal</h3><p>Suporte, redes, servidores e desenvolvimento usam ferramentas de linha de comando todos os dias.</p></div>
+  <div class="card"><h3>🐧 Linux também tem terminal</h3><p>O conceito de digitar comandos existe em vários sistemas operacionais, não apenas no Windows.</p></div>
+  <div class="card"><h3>🎓 Isso cresce muito</h3><p>Hoje estamos usando dois comandos simples. Mais adiante, linha de comando pode automatizar tarefas e diagnosticar sistemas.</p></div>
+</div>
+</section>
+
+<section>
+<h2>11. Pesquise depois — links em português</h2>
+<div class="links">
+  <a href="https://learn.microsoft.com/pt-br/windows-server/administration/windows-commands/systeminfo" target="_blank" rel="noopener">🔎 Microsoft Learn — comando systeminfo</a>
+  <a href="https://learn.microsoft.com/pt-br/windows-server/administration/windows-commands/ping" target="_blank" rel="noopener">🔎 Microsoft Learn — comando ping</a>
+  <a href="https://support.microsoft.com/pt-br/windows/" target="_blank" rel="noopener">🔎 Microsoft — Ajuda do Windows</a>
+</div>
+</section>
+
+<section>
+<h2>12. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é saber o que cada comando faz e interpretar a resposta.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+
+<div class="savebox">
+  <h3>Salvar meu registro da aula</h3>
+  <input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+  <button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+  <button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+  <p class="notice">Na SEMAS: envie por e-mail, salve no Drive, apague o arquivo local e encerre a sessão.</p>
+</div>
+</section>
+
+<section>
+<h2>13. Missão final</h2>
+<div class="card">
+  <ol>
+    <li>Explique o que é o CMD.</li>
+    <li>Diga o que você consegue descobrir com <span class="command">systeminfo</span>.</li>
+    <li>Explique o que significa receber respostas em um <span class="command">ping</span>.</li>
+  </ol>
+  <p><strong>Regra da turma:</strong> linha de comando não é para decorar. É para aprender a pedir algo ao computador e entender a resposta.</p>
+</div>
+</section>
+
+<footer>
+<p>SEMAS • Curso de Informática • Módulo 1 — Aula 01</p>
+<p>Conversando com o PC por Texto (Prompt de Comando)</p>
+</footer>
+
+</main>
+
+<script>
+const lessonKey="semas_mod1_aula01_attempt";
+const questions=[
+["O que é o Prompt de Comando (CMD)?","Uma ferramenta do Windows que recebe comandos digitados em texto","Um tipo de monitor","Um antivírus","Uma peça do computador","O CMD permite executar comandos e consultar informações usando texto."],
+["Qual comando desta aula mostra informações do sistema?","systeminfo","ping","exit","dirigente","systeminfo mostra várias informações do Windows e do computador."],
+["Que informação pode aparecer no systeminfo?","Fabricante, modelo, memória física e versão do Windows","Senha do Gmail","Conteúdo de todos os arquivos pessoais","Velocidade do mouse","systeminfo apresenta dados técnicos do sistema e do equipamento."],
+["O que o comando ping faz?","Envia mensagens de teste para um destino e verifica se recebe respostas","Apaga arquivos temporários","Desliga o computador","Mostra a memória RAM instalada","ping é usado para testar alcance e resposta na rede."],
+["O que significa ms no resultado do ping?","Milissegundos, usados para mostrar o tempo aproximado de ida e volta do teste","Megabytes por segundo","Memória do sistema","Modelo do servidor","O tempo de resposta do ping é mostrado em milissegundos."],
+["Se google.com responde ao ping, o que podemos concluir?","Que existe conectividade até aquele destino naquele momento","Que a internet está obrigatoriamente rápida","Que não existe nenhuma perda em toda a rede","Que o computador não tem vírus","Resposta ao ping mostra conectividade, mas não mede toda a qualidade da internet."],
+["Ping mede a velocidade de download da internet?","Não","Sim, sempre","Somente em notebooks","Somente no Wi-Fi","Ping mede principalmente tempo de resposta, alcance e pode mostrar perda de pacotes."],
+["O que fazer antes de executar um comando desconhecido encontrado na internet?","Não executar automaticamente; pesquisar e pedir orientação","Executar como administrador","Digitar várias vezes","Desligar o monitor","Alguns comandos podem alterar ou apagar dados. É importante entender o comando antes de executá-lo."]
+];
+
+let attempt=Number(sessionStorage.getItem(lessonKey)||0);
+let completed=false,lastScore=null,startedAt=Date.now(),finishedAt=null,currentMode="não informado";
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{const d=document.createElement("div");d.className="quiz-item";d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;quiz.appendChild(d);});
+function formatTime(ms){const s=Math.max(0,Math.round(ms/1000)),m=Math.floor(s/60),sec=s%60;return `${m}min ${String(sec).padStart(2,"0")}s`;}
+function showMode(mode){currentMode=mode==="pc"?"SEMAS — computador":"Casa/fora da SEMAS — celular";document.getElementById("pcMode").classList.toggle("active",mode==="pc");document.getElementById("phoneMode").classList.toggle("active",mode==="phone");}
+function updateUI(){const r=document.getElementById("result");if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true;if(!completed)r.innerHTML="<strong>Duas tentativas foram usadas nesta sessão.</strong><br>Em uma nova sessão, o quiz começa novamente.";}else if(!completed){r.innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;}}
+updateUI();
+function checkQuiz(){
+  if(attempt>=2)return;let score=0,all=true,wrong=[];
+  questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return;}if(+s.value===0){score++;a.textContent="Correta! "+q[5];}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5];}});
+  if(!all){document.getElementById("result").innerHTML="<strong>Responda todas as perguntas antes de finalizar.</strong>";return;}
+  attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;finishedAt=Date.now();
+  document.getElementById("result").innerHTML=`<strong>Resultado da tentativa ${attempt}: ${score} de ${questions.length}.</strong><br>Tempo: ${formatTime(finishedAt-startedAt)}.<br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas as questões foram respondidas corretamente."}<br><span style="color:var(--muted)">Não existe nota mínima: o objetivo é entender o comando e interpretar a resposta.</span>`;
+  document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true);updateUI();
+}
+function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false;});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;startedAt=Date.now();finishedAt=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;document.getElementById("result").innerHTML=`Tentativa ${attempt+1} disponível.`;}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+function saveResult(){
+  if(!completed||lastScore===null)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return;}
+  const now=new Date();let rows="",wrong=[];
+  questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;if(n!==0)wrong.push(i+1);rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;});
+  const report=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SEMAS - Módulo 1 Aula 01 - ${esc(name)}</title><style>body{font-family:Arial,sans-serif;max-width:950px;margin:30px auto;padding:18px;color:#172033;line-height:1.5}h1{color:#123b55}.meta{padding:18px;background:#f1f5f8;border-radius:10px}table{border-collapse:collapse;width:100%;margin-top:15px}th,td{border:1px solid #ccd3dc;padding:8px;text-align:left;vertical-align:top}th{background:#eaf2f7}.note{padding:14px;background:#fff8df;border-radius:8px}</style></head><body><h1>SEMAS — Módulo 1 — Aula 01</h1><h2>Conversando com o PC por Texto</h2><div class="meta"><strong>Aluno:</strong> ${esc(name)}<br><strong>Data e hora:</strong> ${now.toLocaleString("pt-BR")}<br><strong>Modo:</strong> ${esc(currentMode)}<br><strong>Tentativa:</strong> ${attempt} de 2<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Tempo:</strong> ${formatTime(finishedAt-startedAt)}</div><p class="note"><strong>Não existe nota mínima.</strong> Este relatório registra uma atividade de aprendizagem.</p><p><strong>Questões para revisar:</strong> ${wrong.length?wrong.join(", "):"nenhuma"}.</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Envie por e-mail ao professor, salve no Drive e apague o arquivo local do computador compartilhado.</p></body></html>`;
+  const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
+  a.href=url;a.download=`SEMAS_Modulo_1_Aula_01_${safe}_Tentativa_${attempt}.html`;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+}
+function finishSession(){
+  if(!confirm("Encerrar a sessão e limpar respostas desta aula neste navegador?"))return;
+  sessionStorage.removeItem(lessonKey);document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false;});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");document.getElementById("studentName").value="";document.getElementById("saveBtn").disabled=true;document.getElementById("checkBtn").disabled=false;attempt=0;completed=false;lastScore=null;startedAt=Date.now();finishedAt=null;currentMode="não informado";document.getElementById("pcMode").classList.remove("active");document.getElementById("phoneMode").classList.remove("active");document.getElementById("result").innerHTML="Sessão encerrada. Este navegador está pronto para o próximo aluno.";window.scrollTo({top:0,behavior:"smooth"});
+}
+</script>
+</body>
+</html>

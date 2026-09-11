@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 3 — Aula 06 — Ideias de Profissões e Negócios para a Cidade</title>
+<style>
+:root{
+  --bg:#07101c;--card:#101b2d;--card2:#0b1525;--ink:#eff7ff;--muted:#afbed3;
+  --accent:#74dcff;--accent2:#a5ffb7;--warn:#ffd37b;--danger:#ff9e9e;--line:#2a3a54;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 15% 0%,#18345a 0,transparent 30%),linear-gradient(135deg,#070c15,#0c1628 55%,#102039);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1040px;margin:auto;padding:24px 18px 70px}
+.hero{padding:42px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#245684,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)}h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)}.warning{border-left:4px solid var(--warn);background:#251f12}.danger{border-left:4px solid var(--danger);background:#29171b}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.prompt{font-family:Consolas,monospace;background:#07101e;color:#ffd479;padding:14px;border-radius:10px;white-space:pre-wrap}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.good{border-left:4px solid var(--accent2)}.bad{border-left:4px solid var(--danger)}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.step{counter-increment:s;padding:16px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.step:before{content:counter(s);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#07101e;font-weight:900}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}button:disabled{opacity:.5}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.answer{margin-top:10px;color:var(--muted)}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input,.savebox textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}
+details{margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425}
+summary{cursor:pointer;font-weight:850;color:var(--accent2)}
+footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:760px){main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}.compare{grid-template-columns:1fr}button{width:100%;min-height:48px}}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 3 • Aula 06</div>
+<h1>Ideias de Profissões e Negócios para a Cidade</h1>
+<p class="lead">A inteligência artificial pode ajudar a organizar pesquisas, criar ideias e melhorar a comunicação de um pequeno negócio. Mas ela não conhece automaticamente a realidade da sua cidade. <strong>Primeiro pesquisamos fatos reais; depois usamos a IA para pensar possibilidades.</strong></p>
+<p><strong>Desafio da aula:</strong> escolher um produto, serviço ou atividade da região, pesquisar sua realidade e criar uma ideia de divulgação usando IA como assistente.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>7 min</strong>Oportunidade × invenção</div>
+<div class="slot"><strong>10 min</strong>Pesquisa local</div>
+<div class="slot"><strong>10 min</strong>Profissões digitais</div>
+<div class="slot"><strong>10 min</strong>Melhorando vendas</div>
+<div class="slot"><strong>12 min</strong>Roteiro de propaganda</div>
+<div class="slot"><strong>6 min</strong>Atividade</div>
+<div class="slot"><strong>5 min</strong>Quiz/relatório</div>
+</div>
+</section>
+
+<section>
+<h2>2. O que você vai aprender</h2>
+<div class="grid">
+<div class="card goal"><h3>🔎 Pesquisar</h3><p>Buscar o que realmente existe e é produzido na cidade ou região.</p></div>
+<div class="card goal"><h3>💡 Criar ideias</h3><p>Usar IA para imaginar formas de melhorar divulgação e vendas.</p></div>
+<div class="card goal"><h3>💻 Profissões digitais</h3><p>Conhecer trabalhos que usam internet e computador.</p></div>
+<div class="card goal"><h3>📢 Comunicar</h3><p>Criar um roteiro simples de propaganda para um comércio local.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. A IA não deve inventar a economia da cidade</h2>
+<div class="compare">
+<div class="card bad">
+<h3>❌ Jeito errado</h3>
+<div class="prompt">Qual é o produto mais importante da minha cidade?</div>
+<p>Se a IA não souber onde você está, qual ano está sendo considerado ou quais dados existem, pode responder errado ou generalizar.</p>
+</div>
+<div class="card good">
+<h3>✅ Jeito melhor</h3>
+<div class="prompt">Vou fornecer dados de fontes oficiais sobre a produção e o comércio da minha cidade. Organize os dados em uma lista e sugira 3 perguntas que eu deveria investigar antes de pensar em uma ideia de negócio.</div>
+<p>Aqui a IA ajuda a organizar fatos fornecidos, sem fingir que descobriu sozinha a realidade local.</p>
+</div>
+</div>
+</section>
+
+<section>
+<h2>4. Onde pesquisar informações reais da cidade?</h2>
+<div class="grid">
+<div class="card"><h3>🏛️ Prefeitura</h3><p>Projetos, feiras, economia, agricultura, comércio, eventos e serviços.</p></div>
+<div class="card"><h3>📊 IBGE</h3><p>Dados sobre município, população, economia e produção agropecuária.</p></div>
+<div class="card"><h3>💼 Sebrae</h3><p>Informações e capacitações para pequenos negócios e empreendedorismo.</p></div>
+<div class="card"><h3>🧑‍🌾 Comunidade</h3><p>Produtores, comerciantes, artesãos, feirantes e trabalhadores sabem muito sobre a realidade local.</p></div>
+</div>
+</section>
+
+<section>
+<h2>5. Pesquisa antes da ideia</h2>
+<div class="steps">
+<div class="step"><h3>Descubra</h3><p>O que é produzido, vendido ou realizado na região?</p></div>
+<div class="step"><h3>Observe</h3><p>Quem compra? Onde vende? Como divulga?</p></div>
+<div class="step"><h3>Identifique</h3><p>Existe alguma dificuldade de comunicação ou venda?</p></div>
+<div class="step"><h3>Só então pergunte à IA</h3><p>Como a tecnologia poderia ajudar?</p></div>
+</div>
+</section>
+
+<section>
+<h2>6. Exemplo: produto regional</h2>
+<p>Imagine que a pesquisa encontrou pequenos produtores vendendo polpas de frutas.</p>
+<div class="prompt">Tenho um pequeno negócio de polpas de frutas.
+Vendo principalmente para pessoas da minha cidade.
+Hoje divulgo apenas por indicação.
+
+Dê 5 ideias simples e de baixo custo para melhorar a divulgação usando internet.
+Não invente números de vendas.
+Não prometa lucro.
+Explique cada ideia em uma frase.</div>
+<div class="card warning">
+<h3>A IA sugere — a realidade decide</h3>
+<p>Uma ideia só vira oportunidade depois de verificar custo, público, transporte, internet disponível, concorrência e interesse dos clientes.</p>
+</div>
+</section>
+
+<section>
+<h2>7. Pequenas profissões que usam internet</h2>
+<p>Existem trabalhos e serviços que podem usar computador, celular e internet sem exigir um grande escritório.</p>
+<div class="grid">
+<div class="card"><h3>📱 Apoio a redes sociais</h3><p>Criar calendário de postagens, textos e imagens para pequenos negócios.</p></div>
+<div class="card"><h3>📷 Fotografia de produtos</h3><p>Produzir fotos simples e organizadas para catálogos e divulgação.</p></div>
+<div class="card"><h3>⌨️ Digitação e documentos</h3><p>Ajudar a preparar currículos, cartas, tabelas e documentos digitais.</p></div>
+<div class="card"><h3>🛍️ Catálogo digital</h3><p>Organizar produtos, preços, fotos e descrições.</p></div>
+<div class="card"><h3>🎨 Artes simples</h3><p>Criar cartazes, convites e peças digitais para divulgação.</p></div>
+<div class="card"><h3>💬 Atendimento digital</h3><p>Ajudar pequenos negócios a organizar mensagens e respostas a clientes.</p></div>
+</div>
+<div class="card danger">
+<h3>Para crianças e adolescentes, isto é exploração de possibilidades — não promessa de renda</h3>
+<p>Algumas atividades profissionais possuem regras de idade, exigem conhecimento técnico, supervisão, equipamentos ou formalização. Nesta aula estamos conhecendo caminhos possíveis para o futuro.</p>
+</div>
+</section>
+
+<section>
+<h2>8. Trabalhar de casa ou do sítio: o que realmente é necessário?</h2>
+<div class="grid">
+<div class="card"><h3>📶 Conexão</h3><p>Alguns trabalhos dependem de internet estável.</p></div>
+<div class="card"><h3>💻 Equipamento</h3><p>Computador ou celular adequado para a tarefa.</p></div>
+<div class="card"><h3>🧠 Conhecimento</h3><p>Saber usar as ferramentas e entender o trabalho.</p></div>
+<div class="card"><h3>🤝 Cliente</h3><p>Resolver uma necessidade real de alguém.</p></div>
+<div class="card"><h3>⏰ Organização</h3><p>Cumprir prazos e manter arquivos organizados.</p></div>
+<div class="card"><h3>🔐 Segurança</h3><p>Proteger contas, dados e informações dos clientes.</p></div>
+</div>
+</section>
+
+<section>
+<h2>9. A internet pode ampliar uma venda local</h2>
+<p>Uma pequena empresa pode usar presença digital para ser encontrada, apresentar seus produtos e conversar melhor com clientes.</p>
+<div class="grid">
+<div class="card"><h3>📸 Mostrar</h3><p>Fotos claras do produto.</p></div>
+<div class="card"><h3>📝 Explicar</h3><p>Descrição, preço e forma de encomenda.</p></div>
+<div class="card"><h3>📍 Localizar</h3><p>Informar região de atendimento sem expor endereço residencial desnecessariamente.</p></div>
+<div class="card"><h3>💬 Responder</h3><p>Atendimento educado e objetivo.</p></div>
+</div>
+</section>
+
+<section>
+<h2>10. O que a IA pode ajudar a fazer?</h2>
+<div class="grid">
+<div class="card"><h3>Ideias</h3><div class="prompt">Sugira 5 formas simples de divulgar este produto.</div></div>
+<div class="card"><h3>Descrição</h3><div class="prompt">Escreva uma descrição curta e clara para este produto.</div></div>
+<div class="card"><h3>Público</h3><div class="prompt">Que perguntas devo fazer para descobrir quem poderia comprar?</div></div>
+<div class="card"><h3>Roteiro</h3><div class="prompt">Crie um roteiro de 20 segundos para apresentar o produto.</div></div>
+</div>
+</section>
+
+<section>
+<h2>11. Propaganda não é mentira</h2>
+<div class="compare">
+<div class="card bad">
+<h3>❌ Propaganda enganosa</h3>
+<div class="prompt">“A melhor polpa do Pará! Cura o cansaço e todo mundo ama!”</div>
+<p>São afirmações que podem não ter prova e até fazer alegações inadequadas.</p>
+</div>
+<div class="card good">
+<h3>✅ Comunicação responsável</h3>
+<div class="prompt">“Polpas de frutas produzidas na região, disponíveis em sabores variados. Consulte sabores, preços e formas de entrega.”</div>
+<p>Informa sem inventar garantias.</p>
+</div>
+</div>
+</section>
+
+<section>
+<h2>12. Receita para um roteiro de propaganda</h2>
+<div class="steps">
+<div class="step"><h3>Chame atenção</h3><p>Uma frase simples.</p></div>
+<div class="step"><h3>Apresente</h3><p>O que é o produto ou serviço?</p></div>
+<div class="step"><h3>Mostre utilidade</h3><p>Por que alguém poderia se interessar?</p></div>
+<div class="step"><h3>Informe</h3><p>Como saber mais ou fazer pedido?</p></div>
+<div class="step"><h3>Revise</h3><p>Retire exageros que não possam ser comprovados.</p></div>
+</div>
+</section>
+
+<section>
+<h2>13. Prompt para criar o roteiro</h2>
+<div class="prompt">Crie um roteiro de propaganda de até 20 segundos para um pequeno comércio local.
+
+Produto: polpas de frutas.
+Público: moradores da cidade.
+Tom: simples, alegre e respeitoso.
+Objetivo: apresentar o produto e convidar a pessoa a pedir informações.
+Não invente preço, endereço, benefícios de saúde ou promoções.
+Não use a expressão “o melhor da cidade”.</div>
+</section>
+
+<section>
+<h2>14. Exemplo de resultado</h2>
+<div class="card">
+<p><strong>Narrador:</strong> “Que tal conhecer sabores produzidos na nossa região? Temos polpas de frutas em diferentes opções para sua casa. Fale conosco para conhecer os sabores disponíveis, preços e formas de entrega.”</p>
+</div>
+<p>Depois de receber o texto da IA, o comerciante ainda precisa conferir se todas as informações são verdadeiras.</p>
+</section>
+
+<section>
+<h2>15. Atividade principal: da pesquisa para a ideia</h2>
+<div class="steps">
+<div class="step"><h3>Escolha</h3><p>Um produto, serviço ou atividade realmente existente na região.</p></div>
+<div class="step"><h3>Pesquise</h3><p>Encontre pelo menos uma fonte ou informação real sobre ele.</p></div>
+<div class="step"><h3>Registre</h3><p>Escreva 3 fatos que a pesquisa mostrou.</p></div>
+<div class="step"><h3>Pergunte à IA</h3><p>Peça ideias para melhorar divulgação ou organização.</p></div>
+<div class="step"><h3>Escolha uma ideia</h3><p>Explique por que ela poderia funcionar.</p></div>
+<div class="step"><h3>Crie propaganda</h3><p>Monte um roteiro de até 20 segundos.</p></div>
+</div>
+</section>
+
+<section>
+<h2>16. Modelo de atividade</h2>
+<div class="prompt">Produto/serviço pesquisado: ______________________
+
+Fonte consultada: ________________________________
+
+3 fatos que descobri:
+1. _____________________________________________
+2. _____________________________________________
+3. _____________________________________________
+
+Uma dificuldade ou oportunidade:
+________________________________________________
+
+Uma ideia sugerida com ajuda da IA:
+________________________________________________
+
+Meu roteiro de propaganda:
+________________________________________________
+________________________________________________</div>
+</section>
+
+<section>
+<h2>17. “Quem trabalha com isso?”</h2>
+<div class="grid">
+<div class="card"><h3>📣 Marketing</h3><p>Planeja comunicação, campanhas e relacionamento com clientes.</p></div>
+<div class="card"><h3>🎨 Design</h3><p>Organiza visualmente mensagens, marcas e materiais.</p></div>
+<div class="card"><h3>💻 Desenvolvimento Web</h3><p>Cria sites, páginas e sistemas para negócios.</p></div>
+<div class="card"><h3>📊 Administração</h3><p>Ajuda a organizar vendas, custos, clientes e processos.</p></div>
+<div class="card"><h3>📷 Produção de conteúdo</h3><p>Produz fotos, vídeos, textos e materiais digitais.</p></div>
+<div class="card"><h3>🌾 Empreendedor local</h3><p>Conhece o produto e o cliente e pode usar tecnologia para melhorar o negócio.</p></div>
+</div>
+</section>
+
+<section>
+<h2>18. 🏠 Para rever em casa — 10 minutos</h2>
+<div class="card">
+<p>Converse com alguém da casa que trabalhe, venda ou produza alguma coisa.</p>
+<p>Pergunte:</p>
+<ol>
+<li>O que você vende, produz ou faz?</li>
+<li>Como as pessoas descobrem seu trabalho?</li>
+<li>Qual é a maior dificuldade para divulgar ou vender?</li>
+</ol>
+<p>Não é obrigatório que a pessoa tenha um negócio. O objetivo é observar como trabalho, necessidade e comunicação se encontram.</p>
+</div>
+</section>
+
+<section>
+<h2>19. Pesquise depois — fontes úteis</h2>
+<div class="links">
+<a href="https://www.ibge.gov.br/cidades-e-estados/" target="_blank" rel="noopener">🔎 IBGE — Cidades e Estados</a>
+<a href="https://sebrae.com.br/empreendedores/conteudos" target="_blank" rel="noopener">🔎 Sebrae — Conteúdos para empreendedores</a>
+<a href="https://pa.loja.sebrae.com.br/presenca-digital-como-construir-a-sua-e-qual-a-importancia-chatbot-372000031448" target="_blank" rel="noopener">🔎 Sebrae — Presença digital</a>
+<a href="https://loja.sebrae.com.br/marketing-digital-para-sua-empresa-primeiros-passos-1-372000031607" target="_blank" rel="noopener">🔎 Sebrae — Primeiros passos no marketing digital</a>
+<p class="notice">Além dessas fontes, procure o site oficial da prefeitura da cidade da turma e outras fontes locais confiáveis.</p>
+</div>
+</section>
+
+<section>
+<h2>20. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é aprender a combinar pesquisa real, criatividade e uso responsável da IA.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+
+<div class="savebox">
+<h3>Salvar meu registro da aula</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<textarea id="businessIdea" rows="6" placeholder="Opcional: registre aqui sua ideia de produto/serviço e o roteiro de propaganda."></textarea>
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+<p class="notice">Na SEMAS: envie conforme orientação, salve no Drive quando necessário, apague arquivos locais e saia das contas.</p>
+</div>
+</section>
+
+<section>
+<h2>21. Missão final</h2>
+<div class="card">
+<ol>
+<li>Diga onde pesquisaria informações reais sobre a economia da cidade.</li>
+<li>Explique por que a IA não deve inventar dados locais.</li>
+<li>Dê um exemplo de trabalho que pode usar internet.</li>
+<li>Crie uma ideia simples para ajudar um pequeno negócio.</li>
+<li>Escreva uma propaganda sem prometer aquilo que não pode provar.</li>
+</ol>
+<p><strong>Regra da turma:</strong> a IA pode gerar uma ideia em segundos; descobrir se essa ideia resolve um problema real exige pesquisa, observação e pessoas.</p>
+</div>
+</section>
+
+<footer>
+<p>SEMAS • Curso de Informática • Módulo 3 — Aula 06</p>
+<p>Ideias de Profissões e Negócios para a Cidade</p>
+</footer>
+
+</main>
+
+<script>
+const lessonKey="semas_mod3_aula06_attempt";
+const questions=[
+["Antes de pedir ideias de negócio à IA, o que devemos fazer?","Pesquisar a realidade local","Mandar a IA inventar dados","Escolher qualquer produto","Criar uma propaganda primeiro","Pesquisa real ajuda a distinguir oportunidade de invenção."],
+["Qual é uma fonte útil para conhecer dados do município?","IBGE","Um comentário anônimo qualquer","Uma propaganda","Uma mensagem sem fonte","O IBGE disponibiliza dados estatísticos sobre municípios."],
+["O que a IA pode fazer bem nesta aula?","Organizar informações e sugerir possibilidades","Garantir lucro","Descobrir automaticamente toda a economia local","Provar que uma ideia vai dar certo","IA pode apoiar análise e criatividade, mas não garante resultados."],
+["Qual trabalho pode usar internet de casa ou do sítio?","Criação de conteúdo ou catálogo digital","Somente piloto de avião","Somente trabalho em fábrica","Nenhum trabalho","Alguns serviços digitais podem ser feitos remotamente quando há estrutura e conhecimento."],
+["Qual frase é uma propaganda inadequada sem prova?","É o melhor produto da cidade e cura o cansaço","Consulte sabores e preços disponíveis","Conheça nossos produtos","Fale conosco para saber mais","Propaganda não deve inventar superioridade ou benefícios que não possam ser comprovados."],
+["Para que serve um roteiro de propaganda?","Organizar uma mensagem curta e clara sobre um produto ou serviço","Inventar informações","Ocultar o preço real","Substituir o produto","O roteiro organiza a comunicação."],
+["Para crianças e adolescentes, as profissões mostradas representam o quê?","Possibilidades para conhecer e desenvolver habilidades","Garantia de renda imediata","Obrigação de trabalhar","Empregos sem regras de idade","A aula apresenta caminhos futuros, não promessa ou obrigação de trabalho."],
+["Qual é a ideia principal da aula?","Pesquisa real primeiro, IA como assistente depois","IA decide tudo sozinha","Propaganda é mais importante que o produto","Toda ideia de IA vira negócio","O uso responsável começa por fatos e necessidades reais."]
+];
+
+let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{
+ const d=document.createElement("div");d.className="quiz-item";
+ d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;
+ quiz.appendChild(d);
+});
+function updateUI(){document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true}}
+updateUI();
+function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===0){score++;a.textContent="Correta! "+q[5]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}});if(!all)return;attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
+function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;updateUI()}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function saveResult(){
+ if(!completed)return;
+ const name=document.getElementById("studentName").value.trim();
+ if(!name){alert("Digite seu nome completo.");return}
+ const idea=document.getElementById("businessIdea").value.trim();
+ let rows="";
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`});
+ const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}.idea{padding:12px;background:#f2f5f8;border-radius:8px;white-space:pre-wrap}</style></head><body><h1>SEMAS — Módulo 3 — Aula 06</h1><h2>Ideias de Profissões e Negócios para a Cidade</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}</p>${idea?`<p><strong>Minha ideia:</strong></p><div class="idea">${esc(idea)}</div>`:""}<table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. O objetivo é combinar pesquisa, criatividade e responsabilidade.</p></body></html>`;
+ const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
+ a.href=url;a.download=`SEMAS_Modulo_3_Aula_06_${safe}.html`;a.click();URL.revokeObjectURL(url);
+}
+function finishSession(){if(!confirm("Encerrar a sessão e limpar esta aula neste navegador?"))return;sessionStorage.removeItem(lessonKey);location.reload()}
+</script>
+</body>
+</html>

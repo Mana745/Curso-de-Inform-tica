@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 4 — Aula 01 — O Pensamento dos Computadores (Lógica)</title>
+<style>
+:root{
+  --bg:#08101c;--card:#101a2c;--card2:#0c1524;--ink:#eef6ff;--muted:#afbdd2;
+  --accent:#73ddff;--accent2:#a8ffb9;--warn:#ffd47d;--danger:#ff9e9e;--line:#2b3b55;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 16% 0%,#1a355c 0,transparent 30%),linear-gradient(135deg,#070c15,#0d1729 55%,#10203a);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}
+main{max-width:1040px;margin:auto;padding:24px 18px 70px}
+.hero{padding:42px 28px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 12%,#265984,transparent 35%),var(--card);box-shadow:0 20px 50px #0007}
+.kicker{color:var(--accent);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.04;margin:.2em 0}.lead{font-size:1.12rem;color:var(--muted)}
+section{margin-top:22px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#10192b}
+h2{margin-top:0;color:var(--accent)}h3{color:var(--accent2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card2)}
+.goal{border-left:4px solid var(--accent2)}.warning{border-left:4px solid var(--warn);background:#251f12}.danger{border-left:4px solid var(--danger);background:#29171b}
+.timeline-hour{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.slot{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0b1526}.slot strong{display:block;color:var(--accent2)}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.good{border-left:4px solid var(--accent2)}.bad{border-left:4px solid var(--danger)}
+.algorithm{counter-reset:a;display:grid;gap:10px}
+.alg-step{counter-increment:a;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:#0b1526;display:grid;grid-template-columns:42px 1fr;gap:12px;align-items:start}
+.alg-step:before{content:counter(a);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#06111a;font-weight:900}
+.code{font-family:Consolas,monospace;background:#07101e;color:#ffd479;padding:14px;border-radius:10px;white-space:pre-wrap}
+.flow{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;align-items:center}
+.box{padding:14px;border:1px solid var(--line);border-radius:14px;background:#091422;text-align:center;min-height:110px;display:flex;align-items:center;justify-content:center}
+.arrow{text-align:center;font-size:1.5rem;color:var(--accent);font-weight:900}
+.links a{display:block;margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425;color:var(--accent);text-decoration:none}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:850;background:var(--accent);color:#06111a;font-size:1rem}
+button.secondary{background:#263650;color:var(--ink)}button.ghost{background:#152238;color:var(--muted);border:1px solid var(--line)}button:disabled{opacity:.5}
+.quiz-item{padding:18px;border:1px solid var(--line);border-radius:16px;margin:14px 0;background:#0c1627}
+.quiz-item label{display:block;padding:10px;border-radius:10px;margin:7px 0;background:#091322;cursor:pointer}.answer{margin-top:10px;color:var(--muted)}
+.savebox{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#0b1526}
+.savebox input,.savebox textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#07101e;color:var(--ink);margin:8px 0 12px;font-size:1rem}
+.notice{color:var(--muted);font-size:.93rem}
+details{margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1425}
+summary{cursor:pointer;font-weight:850;color:var(--accent2)}
+footer{margin-top:30px;color:var(--muted);font-size:.9rem}
+@media(max-width:760px){
+ main{padding:14px 12px 55px}.hero{padding:28px 20px}section{padding:19px 15px}
+ .compare,.flow{grid-template-columns:1fr}.arrow{transform:rotate(90deg);height:24px}
+ button{width:100%;min-height:48px}
+}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+<div class="kicker">SEMAS • Curso de Informática • Módulo 4 • Aula 01</div>
+<h1>O Pensamento dos Computadores</h1>
+<p class="lead">Antes de criar uma página da internet, precisamos aprender uma ideia que aparece em toda programação: <strong>resolver um problema usando passos claros e organizados</strong>.</p>
+<p><strong>Desafio da aula:</strong> escrever um algoritmo tão claro para ligar o computador e abrir o navegador que outra pessoa consiga seguir sem precisar adivinhar o que você quis dizer.</p>
+</header>
+
+<section>
+<h2>1. Roteiro da nossa 1 hora</h2>
+<div class="timeline-hour">
+<div class="slot"><strong>8 min</strong>O que é lógica</div>
+<div class="slot"><strong>10 min</strong>O que é algoritmo</div>
+<div class="slot"><strong>10 min</strong>Sequência e detalhes</div>
+<div class="slot"><strong>10 min</strong>Computador literal</div>
+<div class="slot"><strong>12 min</strong>Atividade no papel</div>
+<div class="slot"><strong>5 min</strong>Teste do algoritmo</div>
+<div class="slot"><strong>5 min</strong>Quiz/relatório</div>
+</div>
+</section>
+
+<section>
+<h2>2. O que você vai aprender</h2>
+<div class="grid">
+<div class="card goal"><h3>🧠 Lógica</h3><p>Organizar pensamentos para chegar a um resultado.</p></div>
+<div class="card goal"><h3>🪜 Algoritmo</h3><p>Descrever uma tarefa como uma sequência de passos.</p></div>
+<div class="card goal"><h3>🔢 Ordem</h3><p>Perceber que trocar a sequência pode mudar o resultado.</p></div>
+<div class="card goal"><h3>🌐 Ponte para HTML</h3><p>Entender por que instruções e estrutura importam quando começarmos a criar páginas.</p></div>
+</div>
+</section>
+
+<section>
+<h2>3. O que é lógica?</h2>
+<p>Nesta aula, vamos usar a palavra <strong>lógica</strong> como a capacidade de organizar ideias e regras de maneira coerente para resolver um problema.</p>
+<div class="card">
+<h3>Exemplo simples</h3>
+<p>Se eu quero abrir um site, primeiro preciso ter um computador ligado e um navegador aberto. Não faria sentido tentar digitar o endereço do site antes de abrir o navegador.</p>
+</div>
+</section>
+
+<section>
+<h2>4. O que é um algoritmo?</h2>
+<p>Um algoritmo é uma sequência de instruções criada para realizar uma tarefa ou resolver um problema.</p>
+<div class="compare">
+<div class="card good">
+<h3>🍰 Receita</h3>
+<p>Separar ingredientes → misturar → colocar na forma → assar.</p>
+</div>
+<div class="card good">
+<h3>🪥 Escovar os dentes</h3>
+<p>Pegar a escova → colocar creme dental → escovar → enxaguar.</p>
+</div>
+</div>
+<div class="card warning" style="margin-top:14px">
+<h3>A comparação com receita ajuda, mas algoritmo é mais amplo</h3>
+<p>Na computação, algoritmos podem incluir decisões, repetições, cálculos e outras regras. Hoje começaremos apenas pela <strong>sequência</strong>.</p>
+</div>
+</section>
+
+<section>
+<h2>5. A ordem importa</h2>
+<div class="compare">
+<div class="card good">
+<h3>✅ Ordem possível</h3>
+<div class="code">1. Pegue o copo.
+2. Abra a torneira.
+3. Encha o copo.
+4. Feche a torneira.</div>
+</div>
+<div class="card bad">
+<h3>❌ Ordem problemática</h3>
+<div class="code">1. Encha o copo.
+2. Pegue o copo.
+3. Abra a torneira.</div>
+<p>O primeiro passo já exige algo que ainda não aconteceu.</p>
+</div>
+</div>
+</section>
+
+<section>
+<h2>6. “O computador obedece de cima para baixo” — com uma correção importante</h2>
+<p>Para começar, vamos imaginar um programa simples executando instruções em sequência. Muitas instruções são realmente processadas na ordem em que aparecem.</p>
+<div class="flow">
+<div class="box">Início</div><div class="arrow">→</div>
+<div class="box">Passo 1</div><div class="arrow">→</div>
+<div class="box">Passo 2</div><div class="arrow">→</div>
+<div class="box">Resultado</div>
+</div>
+<div class="card warning" style="margin-top:14px">
+<h3>Mas programas reais não são sempre uma linha reta</h3>
+<p>Mais tarde você verá decisões, repetições, eventos e tarefas que podem mudar o fluxo. Nesta primeira aula, usamos a sequência simples para aprender o fundamento.</p>
+</div>
+</section>
+
+<section>
+<h2>7. O computador não completa aquilo que você “quis dizer”</h2>
+<p>Quando programamos, precisamos dar instruções compatíveis com a linguagem e com o que o sistema consegue executar.</p>
+<div class="compare">
+<div class="card bad">
+<h3>❌ Humano entende, computador não necessariamente</h3>
+<div class="code">Abre aí a internet.</div>
+</div>
+<div class="card good">
+<h3>✅ Passos observáveis</h3>
+<div class="code">1. Ligue o computador.
+2. Aguarde o sistema iniciar.
+3. Abra o navegador.
+4. Clique na barra de endereço.
+5. Digite o endereço desejado.
+6. Pressione Enter.</div>
+</div>
+</div>
+</section>
+
+<section>
+<h2>8. O segredo: não pular etapas importantes</h2>
+<p>Um algoritmo precisa ser claro para quem vai executá-lo.</p>
+<details>
+<summary>Exemplo: “Faça um sanduíche”</summary>
+<p>Isso descreve o objetivo, mas não explica como chegar até ele.</p>
+</details>
+<details>
+<summary>Exemplo melhor</summary>
+<div class="code">1. Separe duas fatias de pão.
+2. Coloque o recheio em uma delas.
+3. Coloque a segunda fatia sobre o recheio.</div>
+</details>
+</section>
+
+<section>
+<h2>9. Mas não precisamos escrever cada movimento do corpo</h2>
+<div class="card warning">
+<h3>Detalhe suficiente, não detalhe infinito</h3>
+<p>“Mova o braço 14 centímetros” normalmente seria exagero para uma receita. A boa instrução tem detalhes suficientes para a pessoa ou máquina entender a tarefa no nível necessário.</p>
+</div>
+<p>Esse equilíbrio será muito importante quando começarmos a escrever código.</p>
+</section>
+
+<section>
+<h2>10. Atividade principal — Algoritmo para ligar o PC e abrir o navegador</h2>
+<p>Primeiro, faça <strong>no papel</strong>. Não copie o exemplo pronto.</p>
+<div class="algorithm">
+<div class="alg-step"><div><strong>Comece com o computador desligado.</strong><br><span class="notice">Qual é a primeira ação necessária?</span></div></div>
+<div class="alg-step"><div><strong>Continue até o sistema estar pronto.</strong><br><span class="notice">Há algum momento em que precisamos aguardar?</span></div></div>
+<div class="alg-step"><div><strong>Abra o navegador.</strong><br><span class="notice">Como outra pessoa identifica onde clicar?</span></div></div>
+<div class="alg-step"><div><strong>Chegue até um site.</strong><br><span class="notice">Onde o endereço é digitado? Como confirmar?</span></div></div>
+</div>
+</section>
+
+<section>
+<h2>11. Modelo para preencher no papel</h2>
+<div class="code">OBJETIVO: Ligar o computador e abrir um site.
+
+PASSO 1: ______________________________________
+PASSO 2: ______________________________________
+PASSO 3: ______________________________________
+PASSO 4: ______________________________________
+PASSO 5: ______________________________________
+PASSO 6: ______________________________________
+PASSO 7: ______________________________________
+
+RESULTADO ESPERADO:
+_______________________________________________</div>
+</section>
+
+<section>
+<h2>12. Agora vem a parte mais importante: testar</h2>
+<div class="steps">
+<div class="alg-step"><div><strong>Troque o papel com um colega.</strong><br>Ele deve seguir exatamente a sequência escrita.</div></div>
+<div class="alg-step"><div><strong>Não explique oralmente.</strong><br>Se ele precisar perguntar, talvez falte clareza.</div></div>
+<div class="alg-step"><div><strong>Marque onde houve dúvida.</strong><br>Esse é um possível defeito no algoritmo.</div></div>
+<div class="alg-step"><div><strong>Corrija e teste novamente.</strong><br>Melhorar instruções faz parte do trabalho.</div></div>
+</div>
+</section>
+
+<section>
+<h2>13. Encontrou um erro? Isso é bom</h2>
+<div class="card">
+<h3>🐞 Primeiro contato com a ideia de “bug”</h3>
+<p>Se a sequência produz um resultado diferente do esperado, existe algo para investigar. Programadores passam muito tempo testando, encontrando problemas e corrigindo instruções.</p>
+</div>
+<p>Errar durante o teste não significa fracasso. Significa que o teste revelou uma informação útil.</p>
+</section>
+
+<section>
+<h2>14. E o que isso tem a ver com HTML?</h2>
+<p>HTML é a linguagem básica usada para definir a estrutura e o significado do conteúdo de páginas da Web. Nas próximas aulas, vamos começar a escrever essa estrutura. citeturn764904search0turn764904search8</p>
+<div class="code">&lt;h1&gt;Minha primeira página&lt;/h1&gt;
+&lt;p&gt;Olá, mundo!&lt;/p&gt;</div>
+<p>Você ainda não precisa decorar nada. Observe apenas que existem instruções estruturadas e uma ordem no documento.</p>
+</section>
+
+<section>
+<h2>15. O que muda quando começamos a programar?</h2>
+<div class="grid">
+<div class="card"><h3>Hoje</h3><p>Algoritmo escrito em português.</p></div>
+<div class="card"><h3>Depois</h3><p>Estrutura escrita em HTML.</p></div>
+<div class="card"><h3>Mais adiante</h3><p>Podemos adicionar estilos e comportamentos.</p></div>
+</div>
+<p>A própria documentação MDN define HTML como a tecnologia que estrutura o conteúdo de uma página Web. citeturn764904search14</p>
+</section>
+
+<section>
+<h2>16. 🏠 Para rever em casa — 10 minutos</h2>
+<div class="card">
+<p>Escolha uma atividade simples de casa e explique para alguém como se fosse um algoritmo:</p>
+<ul>
+<li>preparar café;</li>
+<li>regar uma planta;</li>
+<li>ligar a televisão;</li>
+<li>preparar a mochila;</li>
+<li>alimentar um animal.</li>
+</ul>
+<p>Peça para a pessoa dizer se algum passo ficou faltando ou fora de ordem.</p>
+</div>
+</section>
+
+<section>
+<h2>17. Referência complementar fornecida</h2>
+<div class="card">
+<p>O Reel fornecido pode ser usado pelo professor como material complementar se estiver disponível no momento da aula. Conteúdos de redes sociais podem mudar, exigir login ou deixar de existir, por isso ele não é a fonte principal do conteúdo.</p>
+<a href="https://www.instagram.com/reel/DR2huNqD2VZ/" target="_blank" rel="noopener" style="color:var(--accent)">Abrir o Reel fornecido →</a>
+</div>
+</section>
+
+<section>
+<h2>18. Pesquise depois</h2>
+<div class="links">
+<a href="https://developer.mozilla.org/pt-BR/docs/Web/HTML" target="_blank" rel="noopener">🔎 MDN — HTML</a>
+<a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content" target="_blank" rel="noopener">🔎 MDN — Estruturando conteúdo com HTML</a>
+<a href="https://code.org/en-US/students/elementary" target="_blank" rel="noopener">🔎 Code.org — Ciência da Computação para jovens</a>
+</div>
+</section>
+
+<section>
+<h2>19. Quiz de descoberta</h2>
+<p>Não existe nota mínima. O objetivo é começar a pensar em passos, ordem, teste e correção.</p>
+<div id="quiz"></div>
+<button id="checkBtn" onclick="checkQuiz()">Ver meu resultado</button>
+<button class="secondary" id="retryBtn" onclick="retryQuiz()">Nova tentativa nesta sessão</button>
+<div id="result"></div>
+
+<div class="savebox">
+<h3>Salvar meu registro da aula</h3>
+<input id="studentName" type="text" autocomplete="off" placeholder="Digite seu nome completo">
+<textarea id="algorithmText" rows="7" placeholder="Opcional: escreva aqui seu algoritmo para ligar o computador e abrir o navegador."></textarea>
+<button id="saveBtn" onclick="saveResult()" disabled>Baixar meu relatório</button>
+<button class="ghost" onclick="finishSession()" style="margin-top:10px">Encerrar minha sessão neste PC</button>
+<p class="notice">Na SEMAS: envie conforme orientação, salve no Drive quando necessário, apague arquivos locais e saia das contas.</p>
+</div>
+</section>
+
+<section>
+<h2>20. Missão final</h2>
+<div class="card">
+<ol>
+<li>Explique o que é um algoritmo.</li>
+<li>Dê um exemplo de uma sequência fora de ordem.</li>
+<li>Explique por que testar o algoritmo é importante.</li>
+<li>Diga o que pode acontecer quando pulamos uma etapa necessária.</li>
+<li>Explique como essa ideia nos prepara para começar HTML.</li>
+</ol>
+<p><strong>Regra da turma:</strong> antes de escrever código, aprenda a dividir o problema em passos que possam ser entendidos, testados e corrigidos.</p>
+</div>
+</section>
+
+<footer>
+<p>SEMAS • Curso de Informática • Módulo 4 — Aula 01</p>
+<p>O Pensamento dos Computadores (Lógica)</p>
+</footer>
+
+</main>
+
+<script>
+const lessonKey="semas_mod4_aula01_attempt";
+const questions=[
+["O que é um algoritmo?","Uma sequência de instruções para realizar uma tarefa ou resolver um problema","Um desenho do computador","Uma senha","Um navegador","Algoritmos descrevem procedimentos em passos."],
+["Por que a ordem dos passos pode ser importante?","Porque um passo pode depender de outro que vem antes","Porque deixa o papel mais bonito","Porque aumenta a internet","Porque muda a cor da tela","A sequência pode determinar se a tarefa consegue ser realizada."],
+["Nesta aula, o que significa usar lógica?","Organizar ideias e regras de forma coerente para resolver um problema","Decorar palavras difíceis","Usar somente matemática","Abrir muitos programas","Lógica ajuda a estruturar o raciocínio."],
+["Todo programa real executa sempre uma linha reta de cima para baixo?","Não","Sim","Somente no Windows","Somente em HTML","Programas podem ter decisões, repetições, eventos e outros fluxos."],
+["Se um colega não consegue seguir seu algoritmo sem perguntar, o que isso pode indicar?","Que alguma instrução pode estar pouco clara ou incompleta","Que o algoritmo está perfeito","Que o computador está quebrado","Que devemos apagar tudo","O teste ajuda a descobrir passos ambíguos ou ausentes."],
+["Encontrar um erro durante o teste significa o quê?","Que descobrimos algo que pode ser corrigido","Que devemos desistir","Que programação não funciona","Que o erro deve ser escondido","Testes servem justamente para revelar problemas."],
+["O que HTML faz principalmente?","Estrutura o conteúdo de páginas da Web","Substitui a internet","É um antivírus","É uma marca de computador","HTML define estrutura e significado do conteúdo Web."],
+["Qual é a ideia principal desta aula?","Dividir problemas em passos claros, testáveis e corrigíveis","Decorar comandos antes de entender","Fazer tudo de uma vez","Evitar testar","Pensamento passo a passo prepara o aluno para programação."]
+];
+let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
+const quiz=document.getElementById("quiz");
+questions.forEach((q,i)=>{
+ const d=document.createElement("div");d.className="quiz-item";
+ d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;
+ quiz.appendChild(d);
+});
+function updateUI(){document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true}}
+updateUI();
+function checkQuiz(){
+ if(attempt>=2)return;
+ let score=0,all=true,wrong=[];
+ questions.forEach((q,i)=>{
+  const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);
+  if(!s){all=false;a.textContent="Responda esta questão.";return}
+  if(+s.value===0){score++;a.textContent="Correta! "+q[5]}
+  else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}
+ });
+ if(!all)return;
+ attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;
+ document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;
+ document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;
+ document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true);
+}
+function retryQuiz(){
+ if(attempt>=2||!completed)return;
+ document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});
+ questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");
+ completed=false;lastScore=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;updateUI();
+}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function saveResult(){
+ if(!completed)return;
+ const name=document.getElementById("studentName").value.trim();
+ if(!name){alert("Digite seu nome completo.");return}
+ const algo=document.getElementById("algorithmText").value.trim();
+ let rows="";
+ questions.forEach((q,i)=>{
+  const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;
+  rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;
+ });
+ const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}.algo{padding:12px;background:#f2f5f8;border-radius:8px;white-space:pre-wrap}</style></head><body><h1>SEMAS — Módulo 4 — Aula 01</h1><h2>O Pensamento dos Computadores (Lógica)</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}</p>${algo?`<p><strong>Meu algoritmo:</strong></p><div class="algo">${esc(algo)}</div>`:""}<table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. O objetivo é pensar em passos claros e testáveis.</p></body></html>`;
+ const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
+ a.href=url;a.download=`SEMAS_Modulo_4_Aula_01_${safe}.html`;a.click();URL.revokeObjectURL(url);
+}
+function finishSession(){if(!confirm("Encerrar a sessão e limpar esta aula neste navegador?"))return;sessionStorage.removeItem(lessonKey);location.reload()}
+</script>
+</body>
+</html>
