@@ -303,25 +303,46 @@ Não coloque nomes de pessoas nem marcas.</div>
 <script>
 const lessonKey="semas_mod3_aula04_attempt";
 const questions=[
-["Como uma IA de imagens recebe a ideia do usuário?","Por meio de uma descrição ou prompt","Somente por telefone","Somente por planilha","Apenas por código","O prompt descreve a cena que o sistema deve tentar gerar."],
-["Qual prompt tende a produzir um resultado mais próximo da ideia?","Um prompt com cena, lugar, elementos, estilo e clima","Faça qualquer coisa","Desenhe algo","Imagem bonita","Detalhes dão mais contexto ao modelo."],
-["Qual item pode fazer parte de um prompt visual?","Cores e estilo","Senha do e-mail","CPF","Número de cartão","Cores e estilo ajudam a definir o resultado sem expor dados pessoais."],
-["Se a primeira imagem não ficou boa, o que fazer?","Refinar o prompt e tentar novamente","Concluir que a IA não funciona","Apagar o computador","Mudar a senha","A geração visual pode ser iterativa."],
-["É correto usar foto de um colega e colocá-lo em uma cena criada por IA sem autorização?","Não","Sim","Somente se for engraçado","Somente no celular","Pessoas reais merecem privacidade e consentimento."],
-["Uma imagem de IA pode ser apresentada como fotografia real de um evento que nunca ocorreu?","Não","Sim","Somente se estiver bonita","Somente na escola","Isso pode enganar outras pessoas e espalhar informação falsa."],
-["Qual é uma boa atividade para representar a cultura local?","Descrever paisagem, feira, artesanato ou atividade regional com respeito","Inventar dados pessoais de moradores","Usar nome completo de pessoas sem necessidade","Copiar qualquer imagem da internet","A proposta é representar elementos locais com descrição própria e respeito."],
-["Qual é a ideia principal da aula?","Aprender a descrever visualmente uma ideia antes de gerar a imagem","A IA desenha perfeitamente sem instruções","Toda imagem precisa ser uma fotografia","Quanto menos detalhes, sempre melhor","Clareza na descrição melhora a comunicação com a ferramenta."]
+["Como uma IA de imagens recebe a ideia do usuário?","Por meio de uma descrição ou prompt","Somente por telefone","Somente por planilha","Apenas por código",0,"O prompt descreve a cena que o sistema deve tentar gerar."],
+["Qual prompt tende a produzir um resultado mais próximo da ideia?","Um prompt com cena, lugar, elementos, estilo e clima","Faça qualquer coisa","Desenhe algo","Imagem bonita",0,"Detalhes dão mais contexto ao modelo."],
+["Qual item pode fazer parte de um prompt visual?","Cores e estilo","Senha do e-mail","CPF","Número de cartão",0,"Cores e estilo ajudam a definir o resultado sem expor dados pessoais."],
+["Se a primeira imagem não ficou boa, o que fazer?","Refinar o prompt e tentar novamente","Concluir que a IA não funciona","Apagar o computador","Mudar a senha",0,"A geração visual pode ser iterativa."],
+["É correto usar foto de um colega e colocá-lo em uma cena criada por IA sem autorização?","Não","Sim","Somente se for engraçado","Somente no celular",0,"Pessoas reais merecem privacidade e consentimento."],
+["Uma imagem de IA pode ser apresentada como fotografia real de um evento que nunca ocorreu?","Não","Sim","Somente se estiver bonita","Somente na escola",0,"Isso pode enganar outras pessoas e espalhar informação falsa."],
+["Qual é uma boa atividade para representar a cultura local?","Descrever paisagem, feira, artesanato ou atividade regional com respeito","Inventar dados pessoais de moradores","Usar nome completo de pessoas sem necessidade","Copiar qualquer imagem da internet",0,"A proposta é representar elementos locais com descrição própria e respeito."],
+["Qual é a ideia principal da aula?","Aprender a descrever visualmente uma ideia antes de gerar a imagem","A IA desenha perfeitamente sem instruções","Toda imagem precisa ser uma fotografia","Quanto menos detalhes, sempre melhor",0,"Clareza na descrição melhora a comunicação com a ferramenta."]
 ];
 let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
 const quiz=document.getElementById("quiz");
+function shuffleOptions(options){
+  const shuffled=[...options];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  return shuffled;
+}
+
 questions.forEach((q,i)=>{
- const d=document.createElement("div");d.className="quiz-item";
- d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;
- quiz.appendChild(d);
+  const d=document.createElement("div");
+  d.className="quiz-item";
+
+  const options=q.slice(1,5).map((text,originalIndex)=>({
+    text,
+    originalIndex
+  }));
+
+  const shuffledOptions=shuffleOptions(options);
+
+  d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
+    shuffledOptions.map(o=>`<label><input type="radio" name="q${i}" value="${o.originalIndex}"> ${o.text}</label>`).join("")+
+    `<div class="answer" id="a${i}"></div>`;
+
+  quiz.appendChild(d);
 });
 function updateUI(){document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true}}
 updateUI();
-function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===0){score++;a.textContent="Correta! "+q[5]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}});if(!all)return;attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
+function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===q[5]){score++;a.textContent="Correta! "+q[6]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[6]}});if(!all)return;attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
 function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;updateUI()}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
 function saveResult(){
@@ -330,7 +351,7 @@ function saveResult(){
  if(!name){alert("Digite seu nome completo.");return}
  const prompt=document.getElementById("imagePrompt").value.trim();
  let rows="";
- questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`});
+ questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===q[5]?"Correta":"Revisar"}</td></tr>`});
  const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}.prompt{padding:12px;background:#f2f5f8;border-radius:8px;white-space:pre-wrap}</style></head><body><h1>SEMAS — Módulo 3 — Aula 04</h1><h2>Criando Desenhos e Imagens com IA</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}</p>${prompt?`<p><strong>Meu prompt visual:</strong></p><div class="prompt">${esc(prompt)}</div>`:""}<table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. O objetivo é aprender a descrever e criar com responsabilidade.</p></body></html>`;
  const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
  a.href=url;a.download=`SEMAS_Modulo_3_Aula_04_${safe}.html`;a.click();URL.revokeObjectURL(url);
