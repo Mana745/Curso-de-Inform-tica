@@ -350,6 +350,7 @@ const questions=[
     "Como o local onde ficam todos os documentos do aluno",
     "Como uma bateria gigante",
     "Como um tipo de monitor",
+    0,
     "A placa-mãe é a principal placa que oferece conexões e caminhos para diferentes componentes trabalharem juntos."
   ],
   [
@@ -358,6 +359,7 @@ const questions=[
     "Os dois são tipos de monitor",
     "Os dois são memória RAM",
     "Os dois servem apenas para internet",
+    0,
     "HD e SSD são dispositivos de armazenamento, embora usem tecnologias diferentes."
   ],
   [
@@ -366,6 +368,7 @@ const questions=[
     "O SSD usa papel e o HD usa bateria",
     "O HD é sempre externo e o SSD sempre interno",
     "O SSD não guarda arquivos",
+    0,
     "O HD tradicional usa discos magnéticos e partes móveis; o SSD usa memória flash."
   ],
   [
@@ -374,6 +377,7 @@ const questions=[
     "HD mecânico tradicional",
     "Monitor",
     "Teclado",
+    0,
     "SSDs normalmente oferecem acesso muito mais rápido aos dados do que HDDs tradicionais."
   ],
   [
@@ -382,6 +386,7 @@ const questions=[
     "Um tipo de processador",
     "Uma tela pequena",
     "Uma placa-mãe externa",
+    0,
     "Pen drives usam memória flash para guardar e transportar arquivos."
   ],
   [
@@ -390,6 +395,7 @@ const questions=[
     "Empurrar com mais força",
     "Torcer o conector",
     "Bater no pen drive",
+    0,
     "Conectores não devem ser forçados. Se houver dúvida, peça ajuda."
   ],
   [
@@ -398,6 +404,7 @@ const questions=[
     "Puxar imediatamente durante a cópia",
     "Desligar o monitor",
     "Abrir mais arquivos",
+    0,
     "A ejeção ajuda a evitar retirar o dispositivo enquanto o sistema ainda está usando ou gravando dados."
   ],
   [
@@ -406,6 +413,7 @@ const questions=[
     "Porque o SSD é um tipo de teclado",
     "Porque a RAM é um pen drive",
     "Porque SSD só funciona com internet",
+    0,
     "SSD e RAM têm funções diferentes. O SSD é armazenamento persistente; RAM será estudada em outra aula."
   ]
 ];
@@ -414,11 +422,29 @@ let attempt=Number(sessionStorage.getItem(lessonKey)||0);
 let completed=false,lastScore=null,startedAt=Date.now(),finishedAt=null,currentMode="não informado";
 const quiz=document.getElementById("quiz");
 
+function shuffleOptions(options){
+  const shuffled=[...options];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  return shuffled;
+}
+
 questions.forEach((q,i)=>{
   const d=document.createElement("div");d.className="quiz-item";
+
+  const options=q.slice(1,5).map((text,originalIndex)=>({
+    text,
+    originalIndex
+  }));
+
+  const shuffledOptions=shuffleOptions(options);
+
   d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
-    q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+
+    shuffledOptions.map(o=>`<label><input type="radio" name="q${i}" value="${o.originalIndex}"> ${o.text}</label>`).join("")+
     `<div class="answer" id="a${i}"></div>`;
+
   quiz.appendChild(d);
 });
 
@@ -453,8 +479,8 @@ function checkQuiz(){
     const s=document.querySelector(`input[name="q${i}"]:checked`);
     const a=document.getElementById("a"+i);
     if(!s){all=false;a.textContent="Responda esta questão antes de finalizar.";return;}
-    if(+s.value===0){score++;a.textContent="Correta! "+q[5];}
-    else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5];}
+    if(+s.value===q[5]){score++;a.textContent="Correta! "+q[6];}
+    else{wrong.push(i+1);a.textContent="Vale revisar: "+q[6];}
   });
 
   if(!all){
@@ -506,8 +532,8 @@ function saveResult(){
   questions.forEach((q,i)=>{
     const s=document.querySelector(`input[name="q${i}"]:checked`);
     const n=s?+s.value:-1;
-    if(n!==0)wrong.push(i+1);
-    rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;
+    if(n!==q[5])wrong.push(i+1);
+    rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===q[5]?"Correta":"Revisar"}</td></tr>`;
   });
 
   const report=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
