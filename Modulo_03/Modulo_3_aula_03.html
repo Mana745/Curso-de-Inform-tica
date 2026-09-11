@@ -321,28 +321,49 @@ Use apenas 3 etapas.</div>
 <script>
 const lessonKey="semas_mod3_aula03_attempt";
 const questions=[
-["Qual é o melhor uso da IA para estudar?","Pedir explicações, praticar e verificar o que aprendeu","Copiar todas as respostas","Pedir que faça a prova","Usar sem ler a resposta","A IA pode apoiar o aprendizado, mas o estudante precisa pensar e praticar."],
-["Se você não entendeu a primeira explicação, o que pode fazer?","Pedir outra explicação, outro exemplo ou passo a passo","Desistir imediatamente","Copiar sem entender","Trocar o nome do assunto","Você pode pedir à IA que adapte a explicação."],
-["O que caracteriza um bom resumo?","Mantém as ideias principais em menos palavras","Apaga todas as explicações","Muda o sentido do texto","Inclui informações inventadas","Um resumo deve preservar os pontos centrais."],
-["Qual é um bom jeito de usar perguntas criadas pela IA?","Responder primeiro e só depois receber feedback","Pedir o gabarito antes","Copiar as respostas","Ignorar os erros","Tentar responder antes do gabarito promove prática ativa."],
-["O que pedir quando erramos uma pergunta?","Uma pista e depois uma explicação","Apenas a resposta final","Que a IA apague a pergunta","Nada","Pistas e explicações ajudam a entender o erro."],
-["Um resumo feito pela IA é automaticamente verdadeiro?","Não","Sim","Somente se for curto","Somente se tiver tópicos","A qualidade do resumo depende também da fonte e a IA pode cometer erros."],
-["Por que usar o material da escola como base pode ser melhor?","Porque mantém o estudo alinhado ao conteúdo realmente trabalhado","Porque a IA fica infalível","Porque elimina a necessidade de estudar","Porque substitui o professor","O material da escola ajuda a manter o foco no conteúdo correto."],
-["Qual frase resume melhor a aula?","Use a IA para conseguir aprender e fazer sozinho","Use a IA para evitar pensar","Use a IA como única fonte","Use a IA para copiar mais rápido","O objetivo é aumentar a autonomia do estudante."]
+["Qual é o melhor uso da IA para estudar?","Pedir explicações, praticar e verificar o que aprendeu","Copiar todas as respostas","Pedir que faça a prova","Usar sem ler a resposta",0,"A IA pode apoiar o aprendizado, mas o estudante precisa pensar e praticar."],
+["Se você não entendeu a primeira explicação, o que pode fazer?","Pedir outra explicação, outro exemplo ou passo a passo","Desistir imediatamente","Copiar sem entender","Trocar o nome do assunto",0,"Você pode pedir à IA que adapte a explicação."],
+["O que caracteriza um bom resumo?","Mantém as ideias principais em menos palavras","Apaga todas as explicações","Muda o sentido do texto","Inclui informações inventadas",0,"Um resumo deve preservar os pontos centrais."],
+["Qual é um bom jeito de usar perguntas criadas pela IA?","Responder primeiro e só depois receber feedback","Pedir o gabarito antes","Copiar as respostas","Ignorar os erros",0,"Tentar responder antes do gabarito promove prática ativa."],
+["O que pedir quando erramos uma pergunta?","Uma pista e depois uma explicação","Apenas a resposta final","Que a IA apague a pergunta","Nada",0,"Pistas e explicações ajudam a entender o erro."],
+["Um resumo feito pela IA é automaticamente verdadeiro?","Não","Sim","Somente se for curto","Somente se tiver tópicos",0,"A qualidade do resumo depende também da fonte e a IA pode cometer erros."],
+["Por que usar o material da escola como base pode ser melhor?","Porque mantém o estudo alinhado ao conteúdo realmente trabalhado","Porque a IA fica infalível","Porque elimina a necessidade de estudar","Porque substitui o professor",0,"O material da escola ajuda a manter o foco no conteúdo correto."],
+["Qual frase resume melhor a aula?","Use a IA para conseguir aprender e fazer sozinho","Use a IA para evitar pensar","Use a IA como única fonte","Use a IA para copiar mais rápido",0,"O objetivo é aumentar a autonomia do estudante."]
 ];
 let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
 const quiz=document.getElementById("quiz");
+function shuffleOptions(options){
+  const shuffled=[...options];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  return shuffled;
+}
+
 questions.forEach((q,i)=>{
- const d=document.createElement("div");d.className="quiz-item";
- d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;
- quiz.appendChild(d);
+  const d=document.createElement("div");
+  d.className="quiz-item";
+
+  const options=q.slice(1,5).map((text,originalIndex)=>({
+    text,
+    originalIndex
+  }));
+
+  const shuffledOptions=shuffleOptions(options);
+
+  d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
+    shuffledOptions.map(o=>`<label><input type="radio" name="q${i}" value="${o.originalIndex}"> ${o.text}</label>`).join("")+
+    `<div class="answer" id="a${i}"></div>`;
+
+  quiz.appendChild(d);
 });
 function updateUI(){document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true}}
 updateUI();
-function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===0){score++;a.textContent="Correta! "+q[5]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}});if(!all)return;attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
+function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===q[5]){score++;a.textContent="Correta! "+q[6]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[6]}});if(!all)return;attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
 function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;updateUI()}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-function saveResult(){if(!completed)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return}const prompt=document.getElementById("studyPrompt").value.trim();let rows="";questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`});const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}.prompt{padding:12px;background:#f2f5f8;border-radius:8px}</style></head><body><h1>SEMAS — Módulo 3 — Aula 03</h1><h2>Usando a IA para Estudar e Fazer Resumos</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}</p>${prompt?`<p><strong>Meu prompt de estudo:</strong></p><div class="prompt">${esc(prompt)}</div>`:""}<table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. O objetivo é usar a IA para aprender com mais autonomia.</p></body></html>`;const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");a.href=url;a.download=`SEMAS_Modulo_3_Aula_03_${safe}.html`;a.click();URL.revokeObjectURL(url)}
+function saveResult(){if(!completed)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return}const prompt=document.getElementById("studyPrompt").value.trim();let rows="";questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===q[5]?"Correta":"Revisar"}</td></tr>`});const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}.prompt{padding:12px;background:#f2f5f8;border-radius:8px}</style></head><body><h1>SEMAS — Módulo 3 — Aula 03</h1><h2>Usando a IA para Estudar e Fazer Resumos</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}</p>${prompt?`<p><strong>Meu prompt de estudo:</strong></p><div class="prompt">${esc(prompt)}</div>`:""}<table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. O objetivo é usar a IA para aprender com mais autonomia.</p></body></html>`;const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");a.href=url;a.download=`SEMAS_Modulo_3_Aula_03_${safe}.html`;a.click();URL.revokeObjectURL(url)}
 function finishSession(){if(!confirm("Encerrar a sessão e limpar esta aula neste navegador?"))return;sessionStorage.removeItem(lessonKey);location.reload()}
 </script>
 </body>
