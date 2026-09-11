@@ -345,25 +345,50 @@ function practiceNext(){if(practiceIndex<practiceSteps.length-1){practiceIndex++
 function practicePrev(){if(practiceIndex>0){practiceIndex--;sessionStorage.setItem(practiceKey,practiceIndex);renderPractice()}}
 
 const questions=[
-["Com qual sinal começa uma fórmula no Excel?","=","+","-","%","O sinal = informa ao Excel que aquela entrada deve ser calculada como fórmula."],
-["Qual fórmula soma B2, B3 e B4?","=B2+B3+B4","B2+B3+B4","=B2-B3-B4","=B2/B3/B4","Para somar diretamente as três células, usamos + e começamos com =."],
-["Qual operador faz subtração no Excel?","-","+","/","%","O sinal - é o operador de subtração."],
-["Se 25 + 8 + 6, qual é o total?","39","29","49","31","25 + 8 + 6 = 39."],
-["Quanto é 10% de 100?","10","1","20","90","10% significa 10 em cada 100."],
-["Se o total está em B5, qual fórmula aplica 10% de desconto nesta aula?","=B5-(B5*10%)","=B5+10%","=B5-10","B5*10","Primeiro calculamos 10% do total e depois subtraímos esse valor."],
-["Por que é útil usar referências como B2 e B3?","Porque, se os valores mudarem, as fórmulas podem recalcular o resultado","Porque deixam o arquivo mais colorido","Porque evitam abrir o Excel","Porque substituem a internet","Referências ligam a fórmula aos dados da planilha."],
-["Depois de terminar no PC da SEMAS, qual rotina está correta?","Enviar, salvar no Drive, apagar a cópia local e sair das contas","Deixar tudo aberto","Salvar a senha","Deixar o arquivo na Área de Trabalho","Essa rotina protege a privacidade e prepara o computador para a próxima turma."]
+["Com qual sinal começa uma fórmula no Excel?","=","+","-","%",0,"O sinal = informa ao Excel que aquela entrada deve ser calculada como fórmula."],
+["Qual fórmula soma B2, B3 e B4?","=B2+B3+B4","B2+B3+B4","=B2-B3-B4","=B2/B3/B4",0,"Para somar diretamente as três células, usamos + e começamos com =."],
+["Qual operador faz subtração no Excel?","-","+","/","%",0,"O sinal - é o operador de subtração."],
+["Se 25 + 8 + 6, qual é o total?","39","29","49","31",0,"25 + 8 + 6 = 39."],
+["Quanto é 10% de 100?","10","1","20","90",0,"10% significa 10 em cada 100."],
+["Se o total está em B5, qual fórmula aplica 10% de desconto nesta aula?","=B5-(B5*10%)","=B5+10%","=B5-10","B5*10",0,"Primeiro calculamos 10% do total e depois subtraímos esse valor."],
+["Por que é útil usar referências como B2 e B3?","Porque, se os valores mudarem, as fórmulas podem recalcular o resultado","Porque deixam o arquivo mais colorido","Porque evitam abrir o Excel","Porque substituem a internet",0,"Referências ligam a fórmula aos dados da planilha."],
+["Depois de terminar no PC da SEMAS, qual rotina está correta?","Enviar, salvar no Drive, apagar a cópia local e sair das contas","Deixar tudo aberto","Salvar a senha","Deixar o arquivo na Área de Trabalho",0,"Essa rotina protege a privacidade e prepara o computador para a próxima turma."]
 ];
 let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
 const quiz=document.getElementById("quiz");
-questions.forEach((q,i)=>{const d=document.createElement("div");d.className="quiz-item";d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;quiz.appendChild(d)});
+function shuffleOptions(options){
+  const shuffled=[...options];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  return shuffled;
+}
+
+questions.forEach((q,i)=>{
+  const d=document.createElement("div");
+  d.className="quiz-item";
+
+  const options=q.slice(1,5).map((text,originalIndex)=>({
+    text,
+    originalIndex
+  }));
+
+  const shuffledOptions=shuffleOptions(options);
+
+  d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
+    shuffledOptions.map(o=>`<label><input type="radio" name="q${i}" value="${o.originalIndex}"> ${o.text}</label>`).join("")+
+    `<div class="answer" id="a${i}"></div>`;
+
+  quiz.appendChild(d);
+});
 function updateUI(){document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true}}
 updateUI();
 function showMode(mode){document.getElementById("pcMode").classList.toggle("active",mode==="pc");document.getElementById("phoneMode").classList.toggle("active",mode==="phone")}
-function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===0){score++;a.textContent="Correta! "+q[5]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}});if(!all)return;attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
+function checkQuiz(){if(attempt>=2)return;let score=0,all=true,wrong=[];questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);if(!s){all=false;a.textContent="Responda esta questão.";return}if(+s.value===q[5]){score++;a.textContent="Correta! "+q[6]}else{wrong.push(i+1);a.textContent="Vale revisar: "+q[6]}});if(!all)return;attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;document.getElementById("result").innerHTML=`<strong>Resultado: ${score}/${questions.length}.</strong><br>${wrong.length?`Questões para revisar: ${wrong.join(", ")}.`:"Todas corretas."}<br><span class="notice">Não existe nota mínima.</span>`;document.getElementById("saveBtn").disabled=false;document.getElementById("checkBtn").disabled=true;document.querySelectorAll('#quiz input').forEach(x=>x.disabled=true)}
 function retryQuiz(){if(attempt>=2||!completed)return;document.querySelectorAll('#quiz input').forEach(x=>{x.checked=false;x.disabled=false});questions.forEach((q,i)=>document.getElementById("a"+i).textContent="");completed=false;lastScore=null;document.getElementById("checkBtn").disabled=false;document.getElementById("saveBtn").disabled=true;updateUI()}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-function saveResult(){if(!completed)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return}let rows="";questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`});const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}</style></head><body><h1>SEMAS — Módulo 2 — Aula 06</h1><h2>Fazendo Contas na Tabela</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Prática guiada alcançada:</strong> passo ${practiceIndex+1}/${practiceSteps.length}</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. Envie por e-mail, salve no Drive, apague a cópia local e saia das contas.</p></body></html>`;const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");a.href=url;a.download=`SEMAS_Modulo_2_Aula_06_${safe}.html`;a.click();URL.revokeObjectURL(url)}
+function saveResult(){if(!completed)return;const name=document.getElementById("studentName").value.trim();if(!name){alert("Digite seu nome completo.");return}let rows="";questions.forEach((q,i)=>{const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===q[5]?"Correta":"Revisar"}</td></tr>`});const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}</style></head><body><h1>SEMAS — Módulo 2 — Aula 06</h1><h2>Fazendo Contas na Tabela</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}<br><strong>Prática guiada alcançada:</strong> passo ${practiceIndex+1}/${practiceSteps.length}</p><table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. Envie por e-mail, salve no Drive, apague a cópia local e saia das contas.</p></body></html>`;const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");a.href=url;a.download=`SEMAS_Modulo_2_Aula_06_${safe}.html`;a.click();URL.revokeObjectURL(url)}
 function finishSession(){if(!confirm("Encerrar a sessão e limpar esta aula neste navegador?"))return;sessionStorage.removeItem(lessonKey);sessionStorage.removeItem(practiceKey);location.reload()}
 </script>
 </body>
