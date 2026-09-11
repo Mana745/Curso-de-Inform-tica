@@ -1,13 +1,113 @@
-LICENÇA - CURSO DE INFORMÁTICA SEMAS
+LICENÇA — CURSO DE INFORMÁTICA SEMAS
 
-Este material didático e todo o seu código-fonte estão protegidos sob a Licença Pública Creative Commons Atribuição-NãoComercial-CompartilhaIgual 4.0 Internacional (CC BY-NC-SA 4.0).
+Este material didático e todo o seu código-fonte estão licenciados sob a Creative Commons Atribuição–NãoComercial–CompartilhaIgual 4.0 Internacional (CC BY-NC-SA 4.0).
 
-Você é livre para:
-* Compartilhar: copiar e redistribuir o material em qualquer suporte ou formato.
-* Adaptar: remixar, transformar e criar a partir do material para fins educacionais.
+1. Finalidade social e educacional
 
-Sob os seguintes termos:
+Este projeto foi desenvolvido originalmente para uso educacional na SEMAS, com o objetivo de oferecer ensino de informática e tecnologia a crianças, jovens e pessoas da comunidade que muitas vezes não possuem acesso próprio a computadores, cursos particulares ou outros recursos de formação tecnológica.
 
-1. ATRIBUIÇÃO (BY): Você deve dar o crédito apropriado ao autor original (Professor do curso) e à instituição (SEMAS), prover um link para a licença e indicar se mudanças foram feitas.
-2. NÃO COMERCIAL (NC) - PROIBIDA A VENDA: Você NÃO pode usar este material para fins comerciais ou de venda. É terminantemente PROIBIDA a comercialização, cobrança de mensalidades, taxas de acesso ou qualquer tipo de exploração financeira deste curso, de suas aulas, imagens ou códigos.
-3. COMPARTILHA IGUAL (SA): Se você remixar, transformar ou criar a partir do material, tem o dever de distribuir as suas contribuições sob a mesma licença do original.
+O autor disponibiliza este trabalho para que professores, escolas públicas, instituições sociais, projetos comunitários, alunos e famílias possam estudar, ensinar, adaptar e compartilhar o material gratuitamente.
+
+Este projeto possui finalidade social e educacional e não foi criado para gerar lucro para terceiros.
+
+2. Você é livre para
+
+Nos termos desta licença, você pode:
+
+Compartilhar: copiar e redistribuir o material em qualquer suporte ou formato;
+Adaptar: remixar, transformar e criar a partir do material;
+Utilizar para fins educacionais e sociais: inclusive em escolas públicas, universidades, ONGs, associações comunitárias, projetos sociais e iniciativas gratuitas de ensino.
+
+Esses direitos são concedidos desde que sejam respeitadas todas as condições desta licença.
+
+3. Condições obrigatórias
+3.1. Atribuição — BY
+
+Você deve:
+
+dar o crédito apropriado ao autor original;
+mencionar a instituição SEMAS quando aplicável;
+manter os avisos de autoria e licença;
+fornecer referência à licença utilizada;
+indicar claramente quando o material tiver sido alterado, adaptado ou modificado.
+
+Não é permitido remover os créditos de autoria nem apresentar o material, integralmente ou em partes substanciais, como criação própria.
+
+3.2. Uso Não Comercial — NC
+
+É proibida a utilização deste material para fins comerciais ou de exploração financeira, salvo mediante autorização prévia e expressa do autor.
+
+É expressamente proibido:
+
+vender cursos baseados neste material;
+vender apostilas, aulas, códigos ou pacotes derivados deste projeto;
+cobrar mensalidade, matrícula, assinatura ou taxa de acesso ao conteúdo;
+cobrar pelo acesso ao software ou às páginas desenvolvidas neste curso;
+revender, sublicenciar ou distribuir o projeto mediante pagamento;
+incorporar o material a produtos ou serviços comerciais;
+utilizar o conteúdo em plataformas pagas;
+oferecer o projeto como serviço pago ou plataforma SaaS;
+utilizar o conteúdo como parte de treinamentos comerciais remunerados;
+explorar financeiramente as aulas, imagens, textos, atividades ou códigos deste projeto.
+
+Este projeto não pode ser transformado em produto comercial por terceiros.
+
+4. CompartilhaIgual — SA
+
+Caso você remixe, transforme, adapte ou crie material derivado deste projeto, deverá distribuir suas contribuições sob a mesma licença CC BY-NC-SA 4.0, mantendo as mesmas condições de:
+
+atribuição;
+uso não comercial;
+compartilhamento sob licença equivalente.
+
+Não é permitido criar uma versão derivada e aplicar a ela uma licença mais restritiva que impeça os usos educacionais gratuitos autorizados pelo projeto original.
+
+5. Uso educacional gratuito
+
+O uso gratuito deste material é permitido e incentivado por:
+
+escolas públicas;
+professores;
+alunos;
+universidades;
+ONGs;
+associações comunitárias;
+projetos sociais;
+instituições sem fins lucrativos;
+famílias;
+iniciativas educacionais gratuitas.
+
+Adaptações destinadas a fins educacionais e não comerciais também são permitidas, desde que mantenham a atribuição ao projeto original e sejam distribuídas sob condições equivalentes.
+
+6. Proibição de apropriação comercial
+
+Nenhuma pessoa, empresa, instituição ou organização poderá apropriar-se deste projeto, integralmente ou em partes substanciais, para:
+
+comercializá-lo;
+revendê-lo;
+reembalá-lo como produto próprio;
+remover sua autoria;
+utilizá-lo como base de curso pago;
+inseri-lo em plataforma comercial;
+utilizá-lo para obtenção direta de receita.
+
+O fato de o código-fonte e os materiais estarem publicamente disponíveis não significa autorização para exploração comercial.
+
+7. Autorização para uso comercial
+
+Qualquer utilização comercial, direta ou indireta, deste projeto exige autorização prévia, expressa e por escrito do autor.
+
+A ausência de resposta ou manifestação do autor não constitui autorização.
+
+8. Preservação da finalidade do projeto
+
+A disponibilização pública deste material tem como objetivo ampliar o acesso ao conhecimento e permitir que outras pessoas e instituições possam ensinar e aprender gratuitamente.
+
+O propósito desta licença é garantir que o material continue servindo à educação e à comunidade, impedindo que terceiros se apropriem de um trabalho criado com finalidade social para transformá-lo em fonte de lucro sem autorização.
+
+9. Licença aplicável
+
+Creative Commons Atribuição–NãoComercial–CompartilhaIgual 4.0 Internacional
+CC BY-NC-SA 4.0
+
+Esta licença permite compartilhar e adaptar o material, desde que sejam respeitadas as condições de atribuição, uso não comercial e compartilhamento pela mesma licença.
