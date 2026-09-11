@@ -16,7 +16,7 @@ Bem-vindo(a) ao repositório do **Curso de Informática**! Este projeto foi dese
 
 ## 🚀 Como acessar o curso?
 O curso está publicado e pronto para uso através do **GitHub Pages**! 
-👉 **Clique aqui para acessar as aulas:** [INSIRA_O_LINK_DO_SEU_GITHUB_PAGES_AQUI]
+👉 **Clique aqui para acessar as aulas:** [https://github.com/Mana745/Curso-de-Inform-tica.git]
 
 ---
 
