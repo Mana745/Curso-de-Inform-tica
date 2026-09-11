@@ -327,21 +327,42 @@ _______________________________________________</div>
 <script>
 const lessonKey="semas_mod4_aula01_attempt";
 const questions=[
-["O que é um algoritmo?","Uma sequência de instruções para realizar uma tarefa ou resolver um problema","Um desenho do computador","Uma senha","Um navegador","Algoritmos descrevem procedimentos em passos."],
-["Por que a ordem dos passos pode ser importante?","Porque um passo pode depender de outro que vem antes","Porque deixa o papel mais bonito","Porque aumenta a internet","Porque muda a cor da tela","A sequência pode determinar se a tarefa consegue ser realizada."],
-["Nesta aula, o que significa usar lógica?","Organizar ideias e regras de forma coerente para resolver um problema","Decorar palavras difíceis","Usar somente matemática","Abrir muitos programas","Lógica ajuda a estruturar o raciocínio."],
-["Todo programa real executa sempre uma linha reta de cima para baixo?","Não","Sim","Somente no Windows","Somente em HTML","Programas podem ter decisões, repetições, eventos e outros fluxos."],
-["Se um colega não consegue seguir seu algoritmo sem perguntar, o que isso pode indicar?","Que alguma instrução pode estar pouco clara ou incompleta","Que o algoritmo está perfeito","Que o computador está quebrado","Que devemos apagar tudo","O teste ajuda a descobrir passos ambíguos ou ausentes."],
-["Encontrar um erro durante o teste significa o quê?","Que descobrimos algo que pode ser corrigido","Que devemos desistir","Que programação não funciona","Que o erro deve ser escondido","Testes servem justamente para revelar problemas."],
-["O que HTML faz principalmente?","Estrutura o conteúdo de páginas da Web","Substitui a internet","É um antivírus","É uma marca de computador","HTML define estrutura e significado do conteúdo Web."],
-["Qual é a ideia principal desta aula?","Dividir problemas em passos claros, testáveis e corrigíveis","Decorar comandos antes de entender","Fazer tudo de uma vez","Evitar testar","Pensamento passo a passo prepara o aluno para programação."]
+["O que é um algoritmo?","Uma sequência de instruções para realizar uma tarefa ou resolver um problema","Um desenho do computador","Uma senha","Um navegador",0,"Algoritmos descrevem procedimentos em passos."],
+["Por que a ordem dos passos pode ser importante?","Porque um passo pode depender de outro que vem antes","Porque deixa o papel mais bonito","Porque aumenta a internet","Porque muda a cor da tela",0,"A sequência pode determinar se a tarefa consegue ser realizada."],
+["Nesta aula, o que significa usar lógica?","Organizar ideias e regras de forma coerente para resolver um problema","Decorar palavras difíceis","Usar somente matemática","Abrir muitos programas",0,"Lógica ajuda a estruturar o raciocínio."],
+["Todo programa real executa sempre uma linha reta de cima para baixo?","Não","Sim","Somente no Windows","Somente em HTML",0,"Programas podem ter decisões, repetições, eventos e outros fluxos."],
+["Se um colega não consegue seguir seu algoritmo sem perguntar, o que isso pode indicar?","Que alguma instrução pode estar pouco clara ou incompleta","Que o algoritmo está perfeito","Que o computador está quebrado","Que devemos apagar tudo",0,"O teste ajuda a descobrir passos ambíguos ou ausentes."],
+["Encontrar um erro durante o teste significa o quê?","Que descobrimos algo que pode ser corrigido","Que devemos desistir","Que programação não funciona","Que o erro deve ser escondido",0,"Testes servem justamente para revelar problemas."],
+["O que HTML faz principalmente?","Estrutura o conteúdo de páginas da Web","Substitui a internet","É um antivírus","É uma marca de computador",0,"HTML define estrutura e significado do conteúdo Web."],
+["Qual é a ideia principal desta aula?","Dividir problemas em passos claros, testáveis e corrigíveis","Decorar comandos antes de entender","Fazer tudo de uma vez","Evitar testar",0,"Pensamento passo a passo prepara o aluno para programação."]
 ];
 let attempt=Number(sessionStorage.getItem(lessonKey)||0),completed=false,lastScore=null;
 const quiz=document.getElementById("quiz");
+function shuffleOptions(options){
+  const shuffled=[...options];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  return shuffled;
+}
+
 questions.forEach((q,i)=>{
- const d=document.createElement("div");d.className="quiz-item";
- d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+q.slice(1,5).map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")+`<div class="answer" id="a${i}"></div>`;
- quiz.appendChild(d);
+  const d=document.createElement("div");
+  d.className="quiz-item";
+
+  const options=q.slice(1,5).map((text,originalIndex)=>({
+    text,
+    originalIndex
+  }));
+
+  const shuffledOptions=shuffleOptions(options);
+
+  d.innerHTML=`<h3>${i+1}. ${q[0]}</h3>`+
+    shuffledOptions.map(o=>`<label><input type="radio" name="q${i}" value="${o.originalIndex}"> ${o.text}</label>`).join("")+
+    `<div class="answer" id="a${i}"></div>`;
+
+  quiz.appendChild(d);
 });
 function updateUI(){document.getElementById("result").innerHTML=`Tentativas utilizadas nesta sessão: ${attempt} de 2.`;if(attempt>=2){document.getElementById("checkBtn").disabled=true;document.getElementById("retryBtn").disabled=true}}
 updateUI();
@@ -351,8 +372,8 @@ function checkQuiz(){
  questions.forEach((q,i)=>{
   const s=document.querySelector(`input[name="q${i}"]:checked`),a=document.getElementById("a"+i);
   if(!s){all=false;a.textContent="Responda esta questão.";return}
-  if(+s.value===0){score++;a.textContent="Correta! "+q[5]}
-  else{wrong.push(i+1);a.textContent="Vale revisar: "+q[5]}
+  if(+s.value===q[5]){score++;a.textContent="Correta! "+q[6]}
+  else{wrong.push(i+1);a.textContent="Vale revisar: "+q[6]}
  });
  if(!all)return;
  attempt++;sessionStorage.setItem(lessonKey,attempt);completed=true;lastScore=score;
@@ -375,7 +396,7 @@ function saveResult(){
  let rows="";
  questions.forEach((q,i)=>{
   const s=document.querySelector(`input[name="q${i}"]:checked`),n=s?+s.value:-1;
-  rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===0?"Correta":"Revisar"}</td></tr>`;
+  rows+=`<tr><td>${i+1}</td><td>${esc(q[0])}</td><td>${n>=0?esc(q[n+1]):"Sem resposta"}</td><td>${n===q[5]?"Correta":"Revisar"}</td></tr>`;
  });
  const report=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial;max-width:900px;margin:30px auto;padding:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left}.algo{padding:12px;background:#f2f5f8;border-radius:8px;white-space:pre-wrap}</style></head><body><h1>SEMAS — Módulo 4 — Aula 01</h1><h2>O Pensamento dos Computadores (Lógica)</h2><p><strong>Aluno:</strong> ${esc(name)}<br><strong>Resultado:</strong> ${lastScore}/${questions.length}</p>${algo?`<p><strong>Meu algoritmo:</strong></p><div class="algo">${esc(algo)}</div>`:""}<table><tr><th>#</th><th>Pergunta</th><th>Resposta</th><th>Resultado</th></tr>${rows}</table><p>Não existe nota mínima. O objetivo é pensar em passos claros e testáveis.</p></body></html>`;
  const blob=new Blob([report],{type:"text/html;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),safe=name.replace(/[^a-zA-Z0-9À-ÿ _-]/g,"").replace(/\s+/g,"_");
